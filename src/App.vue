@@ -48,9 +48,19 @@ input:-webkit-autofill:active {
   font: 17px/1.3 'Poppins', sans-serif !important;
 }
 
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body * {
   border-radius: 0 !important;
 }
+.app {
+  max-width:60rem;
+}
+
 
 .lighter {
   opacity: 0.7;
