@@ -21,9 +21,8 @@ function getAccessTokenFromRefreshToken() {
   });
 }
 
-const BASE_URL = window.location.href.indexOf('localhost') > -1 ? 'http://localhost:5000/v1' : 'https://api.articl.net/v1';
 app.config.globalProperties.$http = axios.create({
-  baseURL: BASE_URL,
+  baseURL: 'https://api.articl.net/v1',
 });
 
 app.config.globalProperties.$http.interceptors.request.use(
