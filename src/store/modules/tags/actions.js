@@ -5,19 +5,7 @@ export default {
       name: data.name,
       description: data.desc,
     };
-    /*
-    const response = await fetch('/categories.json', {
-      method: 'PUT',
-      body: JSON.stringify(tagData),
-    });
 
-    // const responseData = await response.json();
-
-    if (!response.ok) {
-      console.log('wasnt ok');
-      // error ...
-    }
-*/
     context.commit('registerTag', {
       ...tagData,
       id: userId,

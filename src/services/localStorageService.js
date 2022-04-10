@@ -1,6 +1,5 @@
 export default {
   set(name, val) {
-    console.log('setting in local storage', val);
     localStorage.setItem(name, val);
     if (window.location.hostname === 'localhost') {
       // Chrome localhost bug
@@ -9,7 +8,6 @@ export default {
   },
   get(item) {
     const val = localStorage.getItem(item);
-    console.log('getting from local storage', val);
     return val;
   },
   clear() {
