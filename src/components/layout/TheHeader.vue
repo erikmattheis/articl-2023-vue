@@ -18,7 +18,11 @@
           <li v-else>
             <a href="#" @click.prevent="logout" class="nav-user"> logout </a>
           </li>
-          <li><router-link to="/categories" class="nav-user"> new category </router-link></li>
+          <li>
+            <router-link to="/categories" class="nav-user">
+              new category
+            </router-link>
+          </li>
           <li>
             <router-link to="/users/me">
               <user-icon size="1.5x"></user-icon>
@@ -31,9 +35,9 @@
 </template>
 
 <script>
-import { UserIcon } from '@zhuowenli/vue-feather-icons';
-import { mapGetters } from 'vuex';
-import localStorageService from '@/services/localStorageService';
+import { UserIcon } from "@zhuowenli/vue-feather-icons";
+import { mapGetters } from "vuex";
+import localStorageService from "@/services/localStorageService";
 
 export default {
   components: {
@@ -41,30 +45,30 @@ export default {
   },
   data() {
     return {
-      theme: 'light',
+      theme: "light",
       tokens: null,
     };
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'accessTokenExpires', 'refreshTokenExpires']),
+    ...mapGetters(["isLoggedIn", "accessTokenExpires", "refreshTokenExpires"]),
   },
   mounted() {
-    const theme = localStorageService.get('data-theme');
-    this.theme = theme !== 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', this.theme);
+    const theme = localStorageService.get("data-theme");
+    this.theme = theme !== "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", this.theme);
   },
   methods: {
     toggleTheme() {
-      this.theme = this.theme === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', this.theme);
-      localStorage.setItem('data-theme', this.theme);
+      this.theme = this.theme === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", this.theme);
+      localStorage.setItem("data-theme", this.theme);
     },
     logout() {
       this.$http({
-        method: 'POST',
-        url: '/auth/logout',
+        method: "POST",
+        url: "/auth/logout",
         data: {
-          refreshTokenValue: this.$store.getters.refreshTokenValue,
+          refreshToken: this.$store.getters.refreshTokenValue,
         },
       })
         .then((result) => {
@@ -73,11 +77,11 @@ export default {
           }
         })
         .catch((error) => {
-          this.$store.dispatch('setError', error);
+          this.$store.dispatch("setError", error);
         })
         .finally(() => {
           localStorage.clear();
-          this.$store.dispatch('logout');
+          this.$store.dispatch("logout");
         });
     },
   },

@@ -11,12 +11,20 @@
         id="email"
         autocomplete="email"
       />
-      <label for="password">Password
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        value=""
+        autocomplete="username"
+      />
+      <label for="password"
+        >Password
         <small class="lighter left-space" v-if="passwordComplexity < 3">
-          Please use uppercase and lowercase letters,
-        digits and special characters.</small>
-      <small class="lighter left-space" v-else-if="password.length < 8">
-        Please use 8 or more characters.
+          Use upper- and lowercase, numerical and special characters.
+        </small>
+        <small class="lighter left-space" v-else-if="password.length < 8">
+          Please use 8 or more characters.
         </small>
       </label>
       <div class="toggle-password">
@@ -74,17 +82,20 @@
         <span v-if="!buttonDisabled">Create Account</span>
       </button>
     </form>
-    <card-notification v-else success-message="Congradulations! Please check
-    your email to verify your email address"></card-notification>
+    <card-notification
+      v-else
+      success-message="Please check
+    your email to verify your email address"
+    ></card-notification>
   </article>
 </template>
 
 <script>
-import TheButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import CardNotification from '@/components/ui/CardNotification.vue';
+import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import CardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
-  name: 'RegisterPage',
+  name: "RegisterPage",
   components: {
     TheButtonToggleHidden,
     CardNotification,
@@ -102,7 +113,7 @@ export default {
       buttonDisabled: false,
       passwordMismatch: false,
       passwordComplexity: 0,
-      errorMessage: '',
+      errorMessage: "",
       success: false,
       result: null,
       chrs: 0,
@@ -118,10 +129,10 @@ export default {
   methods: {
     charCounts(val) {
       return {
-        numUpper: val.length - val.replace(/[A-Z]/g, '').length,
-        numLower: val.length - val.replace(/[a-z]/g, '').length,
-        numDigit: val.length - val.replace(/[0-9]/g, '').length,
-        numSpecial: val.length - val.replace(/\W|_/g, '').length,
+        numUpper: val.length - val.replace(/[A-Z]/g, "").length,
+        numLower: val.length - val.replace(/[a-z]/g, "").length,
+        numDigit: val.length - val.replace(/[0-9]/g, "").length,
+        numSpecial: val.length - val.replace(/\W|_/g, "").length,
       };
     },
     scoreChars(val) {
@@ -141,26 +152,26 @@ export default {
       this.passwordMismatch = false;
       this.success = null;
       this.result = null;
-      this.errorMessage = '';
+      this.errorMessage = "";
     },
     checkForm() {
       this.resetFormErrors();
       let passed = true;
       if (!this.validateEmail(this.email)) {
         this.emailInvalid = true;
-        this.errorMessage = 'Please enter a valid email.';
+        this.errorMessage = "Please enter a valid email.";
         passed = false;
       } else if (this.scoreChars(this.password) < 3) {
         this.passwordInvalid = true;
-        this.errorMessage = 'Please choose a more complex password.';
+        this.errorMessage = "Please choose a more complex password.";
         passed = false;
       } else if (this.password && this.password.length < 8) {
         this.passwordInvalid = true;
-        this.errorMessage = 'Please choose a longer password.';
+        this.errorMessage = "Please choose a longer password.";
         passed = false;
       } else if (this.password !== this.password2) {
         this.passwordMismatch = true;
-        this.errorMessage = 'The password fields must match.';
+        this.errorMessage = "The password fields must match.";
         passed = false;
       }
       return passed;
@@ -179,8 +190,8 @@ export default {
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
         this.$http({
-          method: 'POST',
-          url: '/auth/register',
+          method: "POST",
+          url: "/auth/register",
           data: {
             nameFirst: this.nameFirst,
             nameLast: this.nameLast,
@@ -195,13 +206,13 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch('setError', error);
+            this.$store.dispatch("setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch('setError', {
+        this.$store.dispatch("setError", {
           message: this.errorMessage,
         });
       }
@@ -223,10 +234,10 @@ export default {
   cursor: pointer;
   height: 2.2rem;
   width: 2.2rem;
-};
+}
 
 .success {
   border: 8px solid green;
-  background-color:honeydew;
+  background-color: honeydew;
 }
 </style>

@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  props: ['breadcrumbs'],
+  props: ["breadcrumbs"],
 };
 </script>
 

@@ -2,6 +2,13 @@
   <article>
     <h1>Reset password</h1>
     <form ng-if="!result">
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        value=""
+        autocomplete="username"
+      />
       <label for="password"> New Password</label>
       <div class="toggle-password">
         <input
@@ -59,10 +66,10 @@
 </template>
 
 <script>
-import TheButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 
 export default {
-  name: 'PasswordReset',
+  name: "PasswordReset",
   components: {
     TheButtonToggleHidden,
   },
@@ -90,21 +97,21 @@ export default {
     },
     checkForm() {
       let passed = true;
-      if (this.password === '') {
+      if (this.password === "") {
         this.passwordInvalid = true;
-        this.message += 'Password may not be empty';
+        this.message += "Password may not be empty";
         passed = false;
       }
-      if (this.password2 === '') {
+      if (this.password2 === "") {
         this.passwordInvalid = true;
-        this.message += this.message && this.message.length ? ', ' : '';
-        this.message += 'Password confirmation may not be empty';
+        this.message += this.message && this.message.length ? ", " : "";
+        this.message += "Password confirmation may not be empty";
         passed = false;
       }
       if (this.password !== this.password2) {
         this.dataInvalid = true;
-        this.message += this.message && this.message.length ? ', ' : '';
-        this.message = 'Confirmation password does not match';
+        this.message += this.message && this.message.length ? ", " : "";
+        this.message = "Confirmation password does not match";
         passed = false;
       }
       return passed;
@@ -114,20 +121,20 @@ export default {
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
         this.$http({
-          method: 'POST',
-          url: '/auth/reset-password',
+          method: "POST",
+          url: "/auth/reset-password",
           data: {
             token,
             password: this.password,
           },
         })
           .then(() => {
-            this.result = 'You have successfully changed your password.';
+            this.result = "You have successfully changed your password.";
           })
 
           .catch((error) => {
             this.dataInvalid = true;
-            this.$store.dispatch('setError', error);
+            this.$store.dispatch("setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;

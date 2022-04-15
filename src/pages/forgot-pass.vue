@@ -10,6 +10,13 @@
         id="email"
         autocomplete="email"
       />
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        value=""
+        autocomplete="username"
+      />
       <button
         type="submit"
         id="reset"
@@ -26,12 +33,12 @@
 
 <script>
 export default {
-  name: 'ForgotPass',
+  name: "ForgotPass",
   data() {
     return {
       email: null,
       emailInvalid: null,
-      errorMessage: '',
+      errorMessage: "",
       buttonDisabled: false,
       result: null,
     };
@@ -42,15 +49,15 @@ export default {
       this.result = null;
     },
     checkForm() {
-      return this.email !== '';
+      return this.email !== "";
     },
     async submitForm() {
       this.resetForm();
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
         this.$http({
-          method: 'POST',
-          url: '/auth/forgot-password',
+          method: "POST",
+          url: "/auth/forgot-password",
           data: {
             email: this.email,
           },
@@ -63,7 +70,7 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch('setError', error);
+            this.$store.dispatch("setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;

@@ -10,6 +10,13 @@
         id="email"
         autocomplete="email"
       />
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        value=""
+        autocomplete="username"
+      />
       <label for="password">Password</label>
       <div class="toggle-password">
         <input
@@ -47,12 +54,12 @@
 </template>
 
 <script>
-import TheButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { setTokensInLocalStorage, setTokensInVuex, convertStringDatesToMS } from '@/services/tokenService';
-import validateEmail from '@/services/emailValidationService';
+import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import { setTokens } from "@/services/tokenService";
+import validateEmail from "@/services/emailValidationService";
 
 export default {
-  name: 'LoginPage',
+  name: "LoginPage",
   components: {
     TheButtonToggleHidden,
   },
@@ -69,36 +76,35 @@ export default {
   methods: {
     handleLoginSuccess(serverResult) {
       if (serverResult.code > 309) {
-        this.$store.dispatch('setError', serverResult);
+        this.$store.dispatch("setError", serverResult);
         return;
       }
       this.resetFormErrors();
-      const result = convertStringDatesToMS(serverResult);
-      setTokensInLocalStorage(result.data.tokens);
-      setTokensInVuex(result.data.tokens);
+      setTokens(serverResult);
+
       if (
         this.$route.query.redirect &&
-    this.$route.query.redirect !== '/login'
+        this.$route.query.redirect !== "/login"
       ) {
         this.$router.push({
           path: this.$route.query.redirect,
         });
       } else {
         this.$router.push({
-          name: 'HomePage',
+          name: "HomePage",
         });
       }
     },
     resetFormErrors() {
-      this.errorMessage = '';
+      this.errorMessage = "";
     },
     checkForm() {
       let passed = true;
       if (!validateEmail.validateEmail(this.email)) {
-        this.errorMessage = 'Please enter a valid email.';
+        this.errorMessage = "Please enter a valid email.";
         passed = false;
       } else if (this.password && this.password.length < 8) {
-        this.errorMessage = 'Passwords are at least eight characters.';
+        this.errorMessage = "Passwords are at least eight characters.";
         passed = false;
       }
       return passed;
@@ -107,8 +113,8 @@ export default {
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
         this.$http({
-          method: 'POST',
-          url: '/auth/login',
+          method: "POST",
+          url: "/auth/login",
           data: {
             password: this.password,
             email: this.email,
@@ -117,18 +123,17 @@ export default {
           .then(this.handleLoginSuccess)
 
           .catch((error) => {
-            this.$store.dispatch('setError', error);
+            this.$store.dispatch("setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch('setError', {
+        this.$store.dispatch("setError", {
           message: this.errorMessage,
         });
       }
     },
-
   },
 };
 </script>

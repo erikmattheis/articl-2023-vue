@@ -3,6 +3,13 @@
     <article>
       <fieldset class="grid">
         <div>
+          <input
+            type="hidden"
+            name="username"
+            id="username"
+            value=""
+            autocomplete="username"
+          />
           <label for="nameFirst">First Name</label>
           <input
             v-model="nameFirst"
@@ -39,12 +46,7 @@
         id="institution"
       />
       <label for="education">Education</label>
-      <input
-        v-model="education"
-        type="text"
-        name="education"
-        id="education"
-      />
+      <input v-model="education" type="text" name="education" id="education" />
       <button
         type="submit"
         id="Login"
@@ -53,7 +55,6 @@
       >
         <span v-if="!buttonDisabled">Save Changes</span>
       </button>
-
     </article>
     <article>
       <label for="password">Current Password</label>
@@ -134,10 +135,7 @@
       >
         <span v-if="!buttonDisabled2">Update Password</span>
       </button>
-      <p
-        v-if="result"
-        class="invalid"
-      >{{ result }}</p>
+      <p v-if="result" class="invalid">{{ result }}</p>
 
       <p v-if="success">
         Please verify your email address by following the instructions sent to
@@ -148,20 +146,21 @@
 </template>
 
 <script>
-import TheButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import { mapGetters } from "vuex";
+import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 
 export default {
-  name: 'UserPage',
+  name: "UserPage",
   components: {
     TheButtonToggleHidden,
   },
   data() {
     return {
-      id: '',
-      nameFirst: '',
-      nameLast: '',
-      institution: '',
-      education: '',
+      id: "",
+      nameFirst: "",
+      nameLast: "",
+      institution: "",
+      education: "",
       email: null,
       emailInvalid: null,
       password: null,
@@ -183,17 +182,11 @@ export default {
       result: null,
     };
   },
+  computed: {
+    ...mapGetters(["isLoggedIn", "accessTokenExpires", "refreshTokenExpires"]),
+  },
   mounted() {
-    let id;
-    if (this.$route.params.userId) {
-      id = this.$route.params.userId;
-    } else if (this.$state.getters.userId) {
-      id = this.$state.getters.userId;
-    } else {
-      throw new Error('You must have an account to view others.');
-    }
-
-    this.getUser(id);
+    this.getUser("me");
   },
   methods: {
     resetUserForm() {
@@ -237,7 +230,7 @@ export default {
     async getUser(id) {
       if (id) {
         this.$http({
-          method: 'GET',
+          method: "GET",
           url: `/users/${id}`,
         })
           .then((result) => {
@@ -247,7 +240,7 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch('setError', error);
+            this.$store.dispatch("setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
@@ -259,20 +252,20 @@ export default {
       if (this.checkPasswordForm() === true) {
         this.buttonDisabled = true;
         this.$http({
-          method: 'POST',
-          url: '/auth/reset-password',
+          method: "POST",
+          url: "/auth/reset-password",
           data: {
             token,
             password: this.password,
           },
         })
           .then(() => {
-            this.result = 'You have successfully changed your password.';
+            this.result = "You have successfully changed your password.";
           })
 
           .catch((error) => {
             this.dataInvalid = true;
-            this.$store.dispatch('setError', error);
+            this.$store.dispatch("setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;

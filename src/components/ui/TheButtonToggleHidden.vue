@@ -1,9 +1,19 @@
 <template>
   <div>
     <template v-if="show">
-      <a @click.prevent="$emit('show'); show = !show" @keypress.esc="this.focus()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 440" alt="Unmask">
-        <title>Unmask password</title>
+      <a
+        @click.prevent="
+          $emit('show');
+          show = !show;
+        "
+        @keypress.esc="this.focus()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 750 440"
+          alt="Unmask"
+        >
+          <title>Unmask password</title>
           <path
             class="a"
             d="M286.5,277c0,1,0,2,.08,3L349,209.24A68,68,0,0,0,286.5,277Z"
@@ -38,9 +48,19 @@
       </a>
     </template>
     <template v-if="!show">
-      <a @click.prevent="$emit('show'); show = !show" @keypress.esc="this.focus()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 440" alt="Mask">
-        <title>Mask password</title>
+      <a
+        @click.prevent="
+          $emit('show');
+          show = !show;
+        "
+        @keypress.esc="this.focus()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 750 440"
+          alt="Mask"
+        >
+          <title>Mask password</title>
           <circle class="a" cx="280.8" cy="165.5" r="68" />
           <path
             class="a"
@@ -71,7 +91,7 @@ export default {
       show: false,
     };
   },
-  emits: ['show'],
+  emits: ["show"],
 };
 </script>
 

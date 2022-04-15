@@ -3,44 +3,36 @@
     <h1 v-if="!success">Create category</h1>
     <h1 v-else>Category created</h1>
     <form v-if="!success">
-      <label for="title">Title</label>
-      <input v-model="title" type="text" name="title" id="title" />
-      <label for="slug">Slug</label>
-      <input readonly v-model="slug" type="text" name="slug" id="slug" />
+      <label for="postTitle">Title</label>
+      <input v-model="postTitle" type="text" name="postTitle" id="postTitle" />
+      <label for="categorySlug">Category Slug</label>
       <input
+        v-model="categorySlug"
         type="text"
-        v-model="parentSlug"
-        name="parentSlug"
-        iD="parentSlug"
+        name="categorySlug"
+        id="categorySlug"
       />
-      <!--
-      <label for="parentSlug">Parent</label>
-        <select v-model="parentSlug" id="parentSlug>" name="parentSlug">
-            <option disabled value="">Please select one</option>
-            <option value="0">0</option>
-            <option v-for="category in categories" :key="category.slug">{{category.title}}</option>
-        </select>
-      -->
-      <label for="description">Description</label>
-      <textarea
-        name="description"
-        id="description"
-        rows="10"
-        cols="70"
-      ></textarea>
+      <label for="postStatus">Post Status</label>
+      <input
+        v-model="postStatus"
+        type="text"
+        name="postStatus"
+        id="postStatus"
+      />
+      <label for="type">Type</label>
+      <input v-model="type" type="text" name="type" id="type" />
       <button
         type="submit"
         id="Login"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()"
       >
-        <span v-if="!buttonDisabled">Create Category</span>
+        <span v-if="!buttonDisabled">Create Articl</span>
       </button>
     </form>
     <card-notification
       v-else
-      success-message="Please check
-    your email to verify your email address"
+      success-message="Articl Created"
     ></card-notification>
   </article>
 </template>
@@ -49,59 +41,39 @@
 import CardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
-  name: "CreateCategoryPage",
+  name: "CreateArticlPage",
   components: {
     CardNotification,
   },
   data() {
     return {
-      title: null,
-      description: null,
-      parentSlug: null,
-      categories: [],
-      buttonDisabled: null,
-      errorMessage: "",
+      categorySlug: "",
+      order: 0,
+      postStatus: "",
+      postTitle: "",
       success: false,
-      result: null,
-      chrs: 0,
+      result: "",
     };
-  },
-  computed: {
-    slug() {
-      if (!this.title) {
-        return "";
-      }
-      let str = this.title.replace(/\s/g, "-");
-      str = str.toLowerCase();
-      return encodeURIComponent(str);
-    },
-  },
-  mounted() {
-    this.parentSlug = this.$route.params.slug;
-  },
-  params: {
-    slug: String,
   },
   methods: {
     resetFormErrors() {
-      this.success = null;
+      this.success = false;
       this.result = null;
-      this.errorMessage = "";
     },
     checkForm() {
       this.resetFormErrors();
       let passed = true;
-      if (!this.title) {
-        this.titleInvalid = true;
+      if (!this.postTitle) {
         this.errorMessage = "Please enter a title.";
         passed = false;
-      } else if (!this.slug) {
-        this.slugInvalid = true;
+      } else if (!this.categorySlug) {
         this.errorMessage = "Please enter a slug.";
         passed = false;
-      } else if (!this.parentSlug) {
-        this.parentIdInvalid = true;
-        this.errorMessage = "Please eselect a parent category.";
+      } else if (!this.postStatus) {
+        this.errorMessage = "Please eelect a post status.";
+        passed = false;
+      } else if (!this.type) {
+        this.type = "Please select a type.";
         passed = false;
       }
       return passed;
@@ -143,10 +115,6 @@ export default {
 </script>
 
 <style scoped>
-*[readonly] {
-  cursor: not-allowed;
-}
-
 .success {
   border: 8px solid green;
   background-color: honeydew;

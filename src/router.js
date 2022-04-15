@@ -1,70 +1,82 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
-import HomePage from '@/pages/index.vue';
-import CategoryPage from '@/pages/d/index.vue';
-import RegisterPage from '@/pages/register.vue';
-import VerifyEmailPage from '@/pages/verify-email.vue';
-import LoginPage from '@/pages/login.vue';
-import ForgotPassPage from '@/pages/forgot-pass.vue';
-import ResetPasswordPage from '@/pages/reset-password.vue';
-import NotFound from '@/pages/NotFound.vue';
-import UserPage from '@/pages/users/index.vue';
-import CreateCategoryPage from '@/pages/categories/index.vue';
+import HomePage from "@/pages/index.vue";
+import CreateArticlPage from "@/pages/articls/index.vue";
+import CategoryPage from "@/pages/d/index.vue";
+import RegisterPage from "@/pages/register.vue";
+import VerifyEmailPage from "@/pages/verify-email.vue";
+import LoginPage from "@/pages/login.vue";
+import ForgotPassPage from "@/pages/forgot-pass.vue";
+import ResetPasswordPage from "@/pages/reset-password.vue";
+import NotFound from "@/pages/NotFound.vue";
+import UserPage from "@/pages/users/index.vue";
+import CreateCategoryPage from "@/pages/categories/index.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: 'HomePage',
-      path: '/',
+      name: "HomePage",
+      path: "/",
       component: HomePage,
     },
     {
-      name: 'CategoryPage',
-      path: '/d/:slug',
+      name: "CategoryPage",
+      path: "/d/:slug",
       component: CategoryPage,
     },
     {
-      name: 'register',
-      path: '/register',
+      name: "RegisterPage",
+      path: "/register",
       component: RegisterPage,
     },
     {
-      name: 'verify-email',
-      path: '/verify-email',
+      name: "VerifyEmail",
+      path: "/verify-email",
       component: VerifyEmailPage,
     },
     {
-      name: 'login',
-      path: '/login',
+      name: "LoginPage",
+      path: "/login",
       component: LoginPage,
     },
     {
-      name: 'send-verification-email',
-      path: '/send-verification-email',
+      name: "SendVerificationEmail",
+      path: "/send-verification-email",
       component: ResetPasswordPage,
     },
     {
-      name: 'forgot-pass',
-      path: '/forgot-pass',
+      name: "ForgotPassPage",
+      path: "/forgot-pass",
       component: ForgotPassPage,
     },
     {
-      name: 'reset-password',
-      path: '/reset-password',
+      name: "ResetPassword",
+      path: "/reset-password",
       component: ResetPasswordPage,
     },
     {
-      name: 'users',
-      path: '/users',
+      name: "UserPage",
+      path: "/users/:slug",
       component: UserPage,
-    }, {
-      name: 'createCategoryPage',
-      path: '/categories/:slug?',
+    },
+    {
+      name: "users",
+      path: "/users",
+      component: UserPage,
+    },
+    {
+      name: "createCategoryPage",
+      path: "/categories/:slug?",
       component: CreateCategoryPage,
     },
+    {
+      name: "createCategoryPage",
+      path: "/articls",
+      component: CreateArticlPage,
+    },
 
-    { path: '/:notFound(.*)', component: NotFound },
+    { name: "NotFound", path: "/:notFound(.*)", component: NotFound },
   ],
 });
 

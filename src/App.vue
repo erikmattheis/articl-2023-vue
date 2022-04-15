@@ -11,17 +11,18 @@
   <modal-error></modal-error>
 </template>
 
-<style lang="css">
-body {
-  border-radius: 0;
-  font-size: 12px;
-}
-</style>
+
 
 <script>
-import ModalError from '@/components/ui/ModalError.vue';
-import TheHeader from '@/components/layout/TheHeader.vue';
-import TheFooter from '@/components/layout/TheFooter.vue';
+import ModalError from "@/components/ui/ModalError.vue";
+import TheHeader from "@/components/layout/TheHeader.vue";
+import TheFooter from "@/components/layout/TheFooter.vue";
+
+/* 1939 .js
+ *  538 .vue
+ *
+ * 2706 .js
+ ****/
 
 export default {
   components: {
@@ -32,12 +33,21 @@ export default {
 };
 </script>
 
-<style>
-@import '~/node_modules/normalize.css/normalize.css';
-@import '~/node_modules/the-new-css-reset/css/reset.css';
-@import '~/node_modules/@picocss/pico/css/pico.css';
+<style lang="css">
+body {
+  border-radius: 0;
+  font-size: 12px;
+}
+</style>
 
-@import url('//fonts.googleapis.com/css2?family=Poppins&display=swap');
+<style lang="scss">
+@import "~/node_modules/normalize.css/normalize.css";
+@import "~/node_modules/the-new-css-reset/css/reset.css";
+@import "~/node_modules/@picocss/pico/css/pico.css";
+
+@import "~/node_modules/@picocss/pico/css/pico.css";
+
+@import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body,
 input:-webkit-autofill::first-line,
@@ -45,7 +55,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  font: 17px/1.3 'Poppins', sans-serif !important;
+  font: 17px/1.3 "Poppins", sans-serif !important;
 }
 
 body {
@@ -57,10 +67,14 @@ body {
 body * {
   border-radius: 0 !important;
 }
-.app {
-  max-width:60rem;
+
+ul {
+  padding-left: 0;
 }
 
+li {
+  list-style-type: none !important;
+}
 
 .lighter {
   opacity: 0.7;
@@ -92,5 +106,24 @@ body * {
 .scale-leave-to {
   opacity: 0;
   transform: scaleY(0.9);
+}
+
+@import "~/node_modules/@picocss/pico/scss/_variables.scss";
+@media (min-width: map-get($breakpoints, "xs")) {
+  #app {
+    width: 96%;
+  }
+}
+
+@media (min-width: map-get($breakpoints, "lg")) {
+  #app {
+    max-width: map-get($viewports, "lg");
+  }
+}
+
+@media (min-width: map-get($breakpoints, "xl")) {
+  #app {
+    width: map-get($viewports, "lg");
+  }
 }
 </style>

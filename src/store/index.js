@@ -1,4 +1,4 @@
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
 
 export default createStore({
   state() {
@@ -17,6 +17,8 @@ export default createStore({
       errorFileName: undefined,
       errorLineNumber: undefined,
       errorStack: undefined,
+      metaDescription: undefined,
+      documentTitle: undefined,
     };
   },
   mutations: {
@@ -50,49 +52,55 @@ export default createStore({
     SET_ERROR_STACK(state, payload) {
       state.errorStack = payload;
     },
+    SET_DOCUMENT_TITLE(state, payload) {
+      state.documentTitle = payload;
+    },
+    SET_META_DESCRIPTION(state, payload) {
+      state.metaDescription = payload;
+    },
   },
   actions: {
     logout(context) {
-      context.commit('SET_ACCESS_TOKEN_EXPIRES', '');
-      context.commit('SET_ACCESS_TOKEN_VALUE', '');
-      context.commit('SET_REFRESH_TOKEN_EXPIRES', '');
-      context.commit('SET_REFRESH_TOKEN_VALUE', '');
+      context.commit("SET_ACCESS_TOKEN_EXPIRES", "");
+      context.commit("SET_ACCESS_TOKEN_VALUE", "");
+      context.commit("SET_REFRESH_TOKEN_EXPIRES", "");
+      context.commit("SET_REFRESH_TOKEN_VALUE", "");
     },
     accessTokenExpires(context, payload) {
       if (payload) {
-        context.commit('SET_ACCESS_TOKEN_EXPIRES', payload);
+        context.commit("SET_ACCESS_TOKEN_EXPIRES", payload);
       }
     },
     accessTokenValue(context, payload) {
       if (payload) {
-        context.commit('SET_ACCESS_TOKEN_VALUE', payload);
+        context.commit("SET_ACCESS_TOKEN_VALUE", payload);
       }
     },
     refreshTokenExpires(context, payload) {
       if (payload) {
-        context.commit('SET_REFRESH_TOKEN_EXPIRES', payload);
+        context.commit("SET_REFRESH_TOKEN_EXPIRES", payload);
       }
     },
     refreshTokenValue(context, payload) {
       if (payload) {
-        context.commit('SET_REFRESH_TOKEN_VALUE', payload);
+        context.commit("SET_REFRESH_TOKEN_VALUE", payload);
       }
     },
     setUser(context, payload) {
-      context.commit('SET_USER', payload);
+      context.commit("SET_USER", payload);
     },
     setError(context, payload) {
-      let errorTitle = 'Error';
-      let errorMessage = 'Unknown error';
-      let errorFileName = '';
-      let errorLineNumber = '';
-      let errorStack = '';
+      let errorTitle = "Error";
+      let errorMessage = "Unknown error";
+      let errorFileName = "";
+      let errorLineNumber = "";
+      let errorStack = "";
 
       if (payload?.response?.data?.message) {
         errorMessage = payload.response.data.message;
       } else if (payload.message) {
         errorMessage = payload.message;
-      } else if (typeof payload === 'string' && payload.length) {
+      } else if (typeof payload === "string" && payload.length) {
         errorMessage = payload;
       }
 
@@ -115,7 +123,10 @@ export default createStore({
         errorLineNumber = payload.message;
       }
 
-      if (payload?.response?.data?.error && typeof payload?.response.data.error === 'string') {
+      if (
+        payload?.response?.data?.error &&
+        typeof payload?.response.data.error === "string"
+      ) {
         errorTitle = payload?.response.data.error;
       } else if (payload?.response?.data?.name) {
         errorTitle = payload.response.data.name;
@@ -123,18 +134,39 @@ export default createStore({
         errorTitle = payload.name;
       }
 
-      context.commit('SET_ERROR_TITLE', errorTitle);
-      context.commit('SET_ERROR_MESSAGE', errorMessage);
-      context.commit('SET_ERROR_FILE_NAME', errorFileName);
-      context.commit('SET_ERROR_LINE_NUMBER', errorLineNumber);
-      context.commit('SET_ERROR_STACK', errorStack);
+      context.commit("SET_ERROR_TITLE", errorTitle);
+      context.commit("SET_ERROR_MESSAGE", errorMessage);
+      context.commit("SET_ERROR_FILE_NAME", errorFileName);
+      context.commit("SET_ERROR_LINE_NUMBER", errorLineNumber);
+      context.commit("SET_ERROR_STACK", errorStack);
     },
     clearError(context) {
-      context.commit('SET_ERROR_TITLE', '');
-      context.commit('SET_ERROR_MESSAGE', '');
-      context.commit('SET_ERROR_FILE_NAME', '');
-      context.commit('SET_ERROR_LINE_NUMBER', '');
-      context.commit('SET_ERROR_STACK', '');
+      context.commit("SET_ERROR_TITLE", "");
+      context.commit("SET_ERROR_MESSAGE", "");
+      context.commit("SET_ERROR_FILE_NAME", "");
+      context.commit("SET_ERROR_LINE_NUMBER", "");
+      context.commit("SET_ERROR_STACK", "");
+    },
+    setMetaDescriptionAndDocumentTitle(
+      context,
+      { documentTitle, metaDescription }
+    ) {
+      context.commit("SET_DOCUMENT_TITLE", documentTitle);
+      context.commit("SET_META_DESCRIPTION", metaDescription);
+
+      document.title = documentTitle;
+      let meta = document.querySelector('meta[name="description"]');
+
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "description";
+        document
+          .getElementsByTagName("head")[0]
+          .appendChild(meta)
+          .setAttribute("content", metaDescription);
+      } else {
+        meta.content = metaDescription;
+      }
     },
   },
   getters: {
@@ -183,6 +215,12 @@ export default createStore({
     },
     errorStack(state) {
       return state.errorStack;
+    },
+    documentTitle(state) {
+      return state.documentTitle;
+    },
+    metaDescription(state) {
+      return state.metaDescription;
     },
   },
 });

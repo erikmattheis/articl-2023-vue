@@ -1,22 +1,23 @@
 <template>
   <article>
-    <h2>{{title}}</h2>
-        <ul>
+    <h2>{{ title }}</h2>
+    <ul>
+      <li v-for="category in categories || []" :key="category.slug">
+        <router-link
+          :to="{ name: 'CategoryPage', params: { slug: category.slug } }"
+        >
+          {{ category.title }}
+        </router-link>
+      </li>
 
-            <li v-for="category in categories || []" :key="category.slug">
-              <router-link :to="{ name: 'CategoryPage', params: { slug: category.slug }}">
-              {{category.title}}
-              </router-link>
-            </li>
-
-          <li>
-            <router-link :to="{ name: 'createCategoryPage', params: { slug: '0' }}">
-              New Category
-            </router-link>
-          </li>
-
-        </ul>
-
+      <li>
+        <router-link
+          :to="{ name: 'createCategoryPage', params: { slug: '0' } }"
+        >
+          New Category
+        </router-link>
+      </li>
+    </ul>
   </article>
 </template>
 
@@ -25,13 +26,13 @@
 // import CategoryChildren from '@/components/layout/CategoryChildren.vue';
 
 export default {
-  name: 'CategoryPage',
+  name: "CategoryPage",
   // components: { TheBreadcrumbs, CategoryChildren },
   data() {
     return {
       isLoading: true,
       slug: null,
-      title: '',
+      title: "",
       categories: [],
     };
   },
@@ -39,7 +40,7 @@ export default {
     this.categories = this.fetchData(this.$route.params.slug);
   },
   watch: {
-    '$route.params.slug': {
+    "$route.params.slug": {
       handler(slug) {
         this.fetchData(slug);
       },
@@ -48,22 +49,32 @@ export default {
   },
   methods: {
     async fetchData(slug) {
-      const category = await this.getCategoryPageBySlug(slug);
-      this.title = category.category.length ? category.category[0].title : '';
-      this.categories = category.categories;
+      try {
+        const result = await this.getCategoryPageBySlug(slug);
+        const documentTitle = result?.category[0]?.title;
+        this.title = documentTitle;
+        const metaDescription = result?.category[0]?.description;
+        this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+          documentTitle,
+          metaDescription,
+        });
+        this.categories = result.categories;
+      } catch (error) {
+        this.$store.dispatch("setError", error);
+      }
     },
     getCategoryPageBySlug(slug) {
       return this.$http({
-        method: 'GET',
-        url: `/d/${slug || ''}`,
+        method: "GET",
+        url: `/d/${slug || ""}`,
       })
         .then((result) => {
           if (result.data) {
             return result.data;
           }
-          return this.$store.dispatch('setError', result);
+          return this.$store.dispatch("setError", result);
         })
-        .catch((error) => this.$store.dispatch('setError', error));
+        .catch((error) => this.$store.dispatch("setError", error));
     },
   },
 };

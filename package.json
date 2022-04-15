@@ -56,7 +56,15 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "src/**/*.js",
+          "src/**/*.vue"
+        ]
+      }
+    ]
   },
   "browserslist": [
     "> 0.25%",
