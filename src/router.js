@@ -54,7 +54,7 @@ const router = createRouter({
       name: "ResetPassword",
       path: "/reset-password",
       component: ResetPasswordPage,
-    },Correct na
+    },
     {
       name: "UserPage",
       path: "/users/:slug",

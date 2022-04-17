@@ -12,9 +12,9 @@ import App from "./App.vue";
 const app = createApp(App);
 
 const baseURL =
-  window.location.protocol === "https"
-    ? "https://api.articl.net/v1"
-    : "http://localhost:5000/v1";
+  window.location.hostname === "192.168.1.130"
+    ? "http://localhost:5000/v1"
+    : "https://api.articl.net/v1";
 
 app.config.globalProperties.$http = axios.create({
   baseURL,
@@ -48,21 +48,26 @@ function createAxiosResponseInterceptor() {
         app.config.globalProperties.$http.interceptors.response.eject(
           interceptor
         );
+        const refreshToken = getRefreshTokenValue();
+        if (!refreshToken) {
+          router.push("auth//login");
+          return Promise.reject(error);
+        }
 
         return app.config.globalProperties.$http
           .post("/auth/refresh-tokens", {
-            refreshToken: getRefreshTokenValue(),
+            refreshToken,
           })
           .then((response) => {
             setTokens(response);
-
+            const accessToken = getAccessTokenValue();
             app.config.globalProperties.$http.interceptors.response.config.headers[
               "Authorization"
-            ] = "Bearer " + getAccessTokenValue();
+            ] = "Bearer " + accessToken;
             return axios(error.response.config);
           })
           .catch((error) => {
-            router.push("/login");
+            router.push("auth//login");
             return Promise.reject(error);
           })
           .finally(createAxiosResponseInterceptor);
