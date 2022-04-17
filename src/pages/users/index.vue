@@ -234,9 +234,9 @@ export default {
           url: `/users/${id}`,
         })
           .then((result) => {
-            if (result.data) {
+            if (result?.data) {
               this.success = true;
-              this.result = result.data;
+              this.result = result?.data;
             }
           })
           .catch((error) => {

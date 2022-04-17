@@ -48,9 +48,9 @@ function createAxiosResponseInterceptor() {
         app.config.globalProperties.$http.interceptors.response.eject(
           interceptor
         );
+
         const refreshToken = getRefreshTokenValue();
         if (!refreshToken) {
-          router.push("auth//login");
           return Promise.reject(error);
         }
 
@@ -66,9 +66,14 @@ function createAxiosResponseInterceptor() {
             ] = "Bearer " + accessToken;
             return axios(error.response.config);
           })
-          .catch((error) => {
-            router.push("auth//login");
-            return Promise.reject(error);
+          .catch(() => {
+            router.push({
+              name: "LoginPage",
+              query: {
+                redirect: window.location.pathname + window.location.search,
+              },
+            });
+            //return Promise.reject(error);
           })
           .finally(createAxiosResponseInterceptor);
       }
