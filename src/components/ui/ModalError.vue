@@ -2,7 +2,7 @@
   <div class="modal-container" v-if="errorTitle" @click.prevent="close()">
     <transition name="scale" mode="out-in">
       <dialog open class="modal">
-        <article>
+        <article class="max-container-width">
           <header>
             <a
               href="#close"
@@ -21,10 +21,7 @@
                 <li v-if="errorMessage">{{ errorMessage }}</li>
                 <li v-if="errorFileName">{{ errorFileName }}</li>
                 <li v-if="errorLineNumber">{{ errorLineNumber }}</li>
-                <li v-if="errorStack">
-                  <a @click="showErrorStack = true">Show error stack</a>
-                </li>
-                <li v-if="showErrorStack">{{ errorStack }}</li>
+                <li v-if="!showErrorStack">{{ errorStack }}</li>
               </ul>
             </div>
           </section>
@@ -108,7 +105,7 @@ section div {
 }
 
 #app > div > dialog > article > section > div.info {
-  height: 6rem;
+  min-height: 6rem;
   padding: 2rem;
   background-color: #fca;
   color: #f00;
@@ -139,19 +136,7 @@ dialog article header h2 {
   margin-bottom: 0;
 }
 dialog article ul li {
-  max-width: 40rem;
   white-space: pre-wrap;
   word-break: break-all;
-}
-
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 0.1s ease;
-}
-
-.scale-enter-from,
-.scale-leave-to {
-  opacity: 0;
-  transform: scaleY(0.9);
 }
 </style>

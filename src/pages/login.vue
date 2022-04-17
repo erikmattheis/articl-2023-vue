@@ -50,6 +50,8 @@
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
+    <router-link to="/forgot-pass">Forgot pass</router-link>
+    <router-link to="/reset-password">Reset password</router-link>
   </article>
 </template>
 

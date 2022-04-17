@@ -109,20 +109,24 @@ li {
 }
 
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";
+
 @media (min-width: map-get($breakpoints, "xs")) {
-  #app {
+  #app,
+  .max-container-width {
     width: 96%;
   }
 }
 
 @media (min-width: map-get($breakpoints, "lg")) {
-  #app {
+  #app,
+  .max-container-width {
     max-width: map-get($viewports, "lg");
   }
 }
 
 @media (min-width: map-get($breakpoints, "xl")) {
-  #app {
+  #app,
+  .max-container-width {
     width: map-get($viewports, "lg");
   }
 }
