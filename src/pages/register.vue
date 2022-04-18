@@ -126,7 +126,18 @@ export default {
       },
     },
   },
+  mounted() {
+    this.setTitleAndDescription();
+  },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net Registration";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     charCounts(val) {
       return {
         numUpper: val.length - val.replace(/[A-Z]/g, "").length,

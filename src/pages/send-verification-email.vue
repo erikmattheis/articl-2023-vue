@@ -24,7 +24,18 @@ export default {
       .catch((error) => {
         this.$store.dispatch("setError", error);
       });
+
+    this.setTitleAndDescription();
   },
+  methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net Send Verification Email";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
 };
 </script>
 

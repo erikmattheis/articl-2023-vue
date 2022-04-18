@@ -187,8 +187,17 @@ export default {
   },
   mounted() {
     this.getUser("me");
+    this.setTitleAndDescription();
   },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net User";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     resetUserForm() {
       this.emailInvalid = null;
       this.success = null;

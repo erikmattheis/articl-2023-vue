@@ -24,7 +24,8 @@ app.config.globalProperties.$http.interceptors.request.use(
   function (request) {
     const req = request;
     const accessTokenValue = getAccessTokenValue();
-    if (accessTokenValue) {
+
+    if (accessTokenValue && req.url !== "/auth/refresh-tokens") {
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
     }
     return Promise.resolve(req);
@@ -41,7 +42,7 @@ function createAxiosResponseInterceptor() {
     app.config.globalProperties.$http.interceptors.response.use(
       (response) => response,
       (error) => {
-        if (error.response.status !== 401) {
+        if (error?.response?.status !== 401) {
           return Promise.reject(error);
         }
 
@@ -50,6 +51,7 @@ function createAxiosResponseInterceptor() {
         );
 
         const refreshToken = getRefreshTokenValue();
+        console.log("refreshToken", refreshToken);
         if (!refreshToken) {
           return Promise.reject(error);
         }
@@ -64,7 +66,7 @@ function createAxiosResponseInterceptor() {
             app.config.globalProperties.$http.interceptors.response.config.headers[
               "Authorization"
             ] = "Bearer " + accessToken;
-            return axios(error.response.config);
+            return app.config.globalProperties.$http(error.response.config);
           })
           .catch(() => {
             router.push({
@@ -73,7 +75,7 @@ function createAxiosResponseInterceptor() {
                 redirect: window.location.pathname + window.location.search,
               },
             });
-            //return Promise.reject(error);
+            return Promise.resolve(error);
           })
           .finally(createAxiosResponseInterceptor);
       }

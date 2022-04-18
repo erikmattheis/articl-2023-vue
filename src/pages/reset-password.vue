@@ -87,7 +87,18 @@ export default {
       message: null,
     };
   },
+  mounted() {
+    this.setTitleAndDescription();
+  },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net Reset Password";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     resetForm() {
       this.passwordInvalid = null;
       this.passwordInvalid2 = null;

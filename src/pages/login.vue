@@ -75,7 +75,18 @@ export default {
       buttonDisabled: false,
     };
   },
+  mounted() {
+    this.setTitleAndDescription();
+  },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net Login";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     handleLoginSuccess(serverResult) {
       if (serverResult.code > 309) {
         this.$store.dispatch("setError", serverResult);

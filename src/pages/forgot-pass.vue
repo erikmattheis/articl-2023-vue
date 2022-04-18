@@ -43,7 +43,18 @@ export default {
       result: null,
     };
   },
+  mounted() {
+    this.setTitleAndDescription();
+  },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net Forgot Password";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     resetForm() {
       this.emailInvalid = null;
       this.result = null;

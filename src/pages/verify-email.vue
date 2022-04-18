@@ -14,7 +14,19 @@ export default {
       result: null,
     };
   },
+  mounted() {
+    this.submitForm();
+    this.setTitleAndDescription();
+  },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net Forgot Password";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     async submitForm() {
       this.buttonDisabled = true;
       this.$http({
@@ -22,7 +34,7 @@ export default {
         url: `/auth/verify-email?token=${this.$route.query.token}`,
       })
         .then((response) => {
-          if (response.status === 204) {
+          if (response?.status === 204) {
             this.resultTitle = "Email verified";
             this.result = `Your email address is verified. Please <a href="/login">log in</a> to continue.`;
           } else {
@@ -36,9 +48,6 @@ export default {
           this.buttonDisabled = false;
         });
     },
-  },
-  mounted() {
-    this.submitForm();
   },
 };
 </script>

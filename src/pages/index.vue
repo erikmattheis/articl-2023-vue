@@ -39,7 +39,18 @@ export default {
   created() {
     this.categories = this.fetchData("0");
   },
+  mounted() {
+    this.setTitleAndDescription();
+  },
   methods: {
+    setTitleAndDescription() {
+      const documentTitle = "Articl.net";
+      const metaDescription = "";
+      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+    },
     async fetchData(slug) {
       try {
         const result = await this.getCategoryPageBySlug(slug);
