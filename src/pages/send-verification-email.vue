@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     setTitleAndDescription() {
-      const documentTitle = "Articl.net Send Verification Email";
+      const documentTitle = "Articl.net Send";
       const metaDescription = "";
       this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
         documentTitle,

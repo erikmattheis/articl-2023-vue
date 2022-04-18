@@ -9,12 +9,14 @@
   </main>
   <the-footer></the-footer>
   <modal-error></modal-error>
+  <modal-success></modal-success>
 </template>
 
 
 
 <script>
 import ModalError from "@/components/ui/ModalError.vue";
+import ModalSuccess from "@/components/ui/ModalSuccess.vue";
 import TheHeader from "@/components/layout/TheHeader.vue";
 import TheFooter from "@/components/layout/TheFooter.vue";
 
@@ -29,6 +31,7 @@ export default {
     TheHeader,
     TheFooter,
     ModalError,
+    ModalSuccess,
   },
 };
 </script>

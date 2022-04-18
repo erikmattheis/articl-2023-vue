@@ -93,6 +93,7 @@
 <script>
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import CardNotification from "@/components/ui/CardNotification.vue";
+import userService from "@/services/userService";
 
 export default {
   name: "RegisterPage",
@@ -103,12 +104,8 @@ export default {
   data() {
     return {
       email: null,
-      emailInvalid: null,
       password: null,
-      passwordInvalid: null,
       showPassword: false,
-      password2: null,
-      passwordInvalid2: null,
       showPassword2: false,
       buttonDisabled: false,
       passwordMismatch: false,
@@ -122,7 +119,7 @@ export default {
   watch: {
     password: {
       handler(val) {
-        this.passwordComplexity = this.scoreChars(val);
+        this.passwordComplexity = userService.scoreChars(val);
       },
     },
   },
@@ -138,29 +135,7 @@ export default {
         metaDescription,
       });
     },
-    charCounts(val) {
-      return {
-        numUpper: val.length - val.replace(/[A-Z]/g, "").length,
-        numLower: val.length - val.replace(/[a-z]/g, "").length,
-        numDigit: val.length - val.replace(/[0-9]/g, "").length,
-        numSpecial: val.length - val.replace(/\W|_/g, "").length,
-      };
-    },
-    scoreChars(val) {
-      if (!val) {
-        return 0;
-      }
-      const chars = this.charCounts(val);
-      const a = chars.numUpper > 0 ? 1 : 0;
-      const b = chars.numLower > 0 ? 1 : 0;
-      const c = chars.numDigit > 0 ? 1 : 0;
-      const d = chars.numSpecial > 0 ? 1 : 0;
-      return a + b + c + d;
-    },
     resetFormErrors() {
-      this.emailInvalid = false;
-      this.passwordInvalid = false;
-      this.passwordMismatch = false;
       this.success = null;
       this.result = null;
       this.errorMessage = "";
@@ -168,34 +143,22 @@ export default {
     checkForm() {
       this.resetFormErrors();
       let passed = true;
-      if (!this.validateEmail(this.email)) {
-        this.emailInvalid = true;
+      if (!userService.validateEmail(this.email)) {
         this.errorMessage = "Please enter a valid email.";
         passed = false;
-      } else if (this.scoreChars(this.password) < 3) {
-        this.passwordInvalid = true;
+      } else if (userService.scoreChars(this.password) < 3) {
         this.errorMessage = "Please choose a more complex password.";
         passed = false;
       } else if (this.password && this.password.length < 8) {
-        this.passwordInvalid = true;
         this.errorMessage = "Please choose a longer password.";
         passed = false;
       } else if (this.password !== this.password2) {
-        this.passwordMismatch = true;
         this.errorMessage = "The password fields must match.";
         passed = false;
       }
       return passed;
     },
-    validateEmail(email) {
-      if (!email) {
-        return false;
-      }
-      return email.match(
-        // eslint-disable-next-line
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-    },
+
     async submitForm() {
       this.resetFormErrors();
       if (this.checkForm() === true) {
@@ -204,8 +167,6 @@ export default {
           method: "POST",
           url: "/auth/register",
           data: {
-            nameFirst: this.nameFirst,
-            nameLast: this.nameLast,
             password: this.password,
             email: this.email,
           },

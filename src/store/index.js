@@ -12,6 +12,8 @@ export default createStore({
       refreshTokenExpires: undefined,
       refreshTokenValue: undefined,
       isLoggedIn: undefined,
+      successMessage: undefined,
+      successTitle: undefined,
       errorMessage: undefined,
       errorTitle: undefined,
       errorFileName: undefined,
@@ -36,6 +38,12 @@ export default createStore({
     },
     SET_USER(state, payload) {
       state.user = payload;
+    },
+    SET_SUCCESS_TITLE(state, payload) {
+      state.successTitle = payload;
+    },
+    SET_SUCCESS_MESSAGE(state, payload) {
+      state.successMessage = payload;
     },
     SET_ERROR_TITLE(state, payload) {
       state.errorTitle = payload;
@@ -89,6 +97,16 @@ export default createStore({
     setUser(context, payload) {
       context.commit("SET_USER", payload);
     },
+    setSuccessTitle(context, payload) {
+      context.commit("SET_SUCCESS_TITLE", payload);
+    },
+    setSuccessMessage(context, payload) {
+      context.commit("SET_SUCCESS_MESSAGE", payload);
+    },
+    clearSuccess(context) {
+      context.commit("SET_SUCCESS_TITLE", "");
+      context.commit("SET_SUCCESS_MESSAGE", "");
+    },
     setError(context, payload) {
       let errorTitle = "Error";
       let errorMessage = "Unknown error";
@@ -125,9 +143,9 @@ export default createStore({
 
       if (
         payload?.response?.data?.error &&
-        typeof payload?.response.data.error === "string"
+        typeof payload?.response?.data?.error === "string"
       ) {
-        errorTitle = payload?.response.data.error;
+        errorTitle = payload.response.data.error;
       } else if (payload?.response?.data?.name) {
         errorTitle = payload.response.data.name;
       } else if (payload.name) {
@@ -197,6 +215,13 @@ export default createStore({
     isLoggedIn(state) {
       const now = Date.now();
       return state.accessTokenExpires > now;
+    },
+    successMessage(state) {
+      return state.successMessage;
+    },
+    successTitle(state) {
+      // console.error(state.error.title);
+      return state.successTitle;
     },
     errorMessage(state) {
       return state.errorMessage;

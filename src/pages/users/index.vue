@@ -65,17 +65,12 @@
         <span v-if="!buttonDisabled">Update Account</span>
       </button>
     </form>
-    <card-notification
-      v-else
-      success-message="Please check
-    your email to verify your email address"
-    ></card-notification>
   </article>
 </template>
 
 <script>
 //import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import CardNotification from "@/components/ui/CardNotification.vue";
+
 import userService from "@/services/userService";
 /*
   mounted() {
@@ -94,11 +89,9 @@ import userService from "@/services/userService";
 +    },
 +  },
 */
+
 export default {
   name: "UserPage",
-  components: {
-    CardNotification,
-  },
   data() {
     return {
       theme: null,
@@ -150,7 +143,7 @@ export default {
           this.nameFirst = result.nameFirst ? result.nameFirst : "";
           this.nameLast = result.nameLast ? result.nameLast : "";
           this.email = result.email ? result.email : "";
-          this.institution = result.instition ? result.instition : "";
+          this.institution = result.institution ? result.institution : "";
           this.education = result.education ? result.education : "";
         }
       } catch (error) {
@@ -203,6 +196,11 @@ export default {
             if (result?.data) {
               this.success = true;
               this.result = result.data;
+              this.$store.dispatch("setSuccessTitle", "User Updated");
+              this.$store.dispatch(
+                "setSuccessMessage",
+                "Your account information was successfully updated."
+              );
             }
           })
           .catch((error) => {

@@ -1,0 +1,126 @@
+<template>
+  <div class="modal-container" v-if="successTitle" @click.prevent="close()">
+    <transition name="scale" mode="out-in">
+      <dialog open class="modal">
+        <article class="max-container-width">
+          <header>
+            <a
+              href="#close"
+              aria-label="Close"
+              class="close"
+              @click.prevent="close()"
+            ></a>
+            <h2>{{ successTitle }}</h2>
+          </header>
+          <section>
+            <div class="tab" title="success">
+              <vue-feather size="3rem" type="alert-triangle"></vue-feather>
+            </div>
+            <div class="info">
+              <ul>
+                <li v-if="successMessage">{{ successMessage }}</li>
+              </ul>
+            </div>
+          </section>
+          <button @click.prevent="close()">OK</button>
+        </article>
+      </dialog>
+    </transition>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import VueFeather from "vue-feather";
+
+export default {
+  components: {
+    VueFeather,
+  },
+  computed: {
+    ...mapGetters(["successTitle", "successMessage"]),
+  },
+  methods: {
+    close() {
+      this.$store.dispatch("clearSuccess");
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: black;
+  display: flex;
+}
+
+.modal {
+  margin: auto;
+  width: 90%;
+  background-color: white;
+  border: 0.2rem;
+}
+
+article {
+  max-width: 100%;
+}
+
+section {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+section div {
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab {
+  width: 6rem;
+  height: 6rem;
+}
+
+#app > div > dialog > article > section > div.info {
+  min-height: 6rem;
+  padding: 2rem;
+  background-color: #cfa;
+  color: #0a0;
+}
+
+.tab,
+dialog article button {
+  background-color: #0a0;
+  color: #fff;
+}
+
+dialog article header a {
+  color: #cfa;
+}
+
+dialog article header a {
+  color: #fff;
+}
+
+dialog article header,
+dialog article button:hover {
+  background-color: #0b8119;
+  transition: background-color 0.5s ease;
+}
+
+dialog article header h2 {
+  color: #fff;
+  margin-bottom: 0;
+}
+dialog article ul li {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+</style>
