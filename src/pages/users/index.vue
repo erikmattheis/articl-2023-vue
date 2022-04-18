@@ -1,15 +1,10 @@
 <template>
-  <form>
-    <article>
+  <article>
+    <h1 v-if="!success">Articl.net User: {{ fullName }}</h1>
+    <h1 v-else>Account Updated</h1>
+    <form v-if="!success">
       <fieldset class="grid">
         <div>
-          <input
-            type="hidden"
-            name="username"
-            id="username"
-            value=""
-            autocomplete="username"
-          />
           <label for="nameFirst">First Name</label>
           <input
             v-model="nameFirst"
@@ -38,214 +33,176 @@
         id="email"
         autocomplete="email"
       />
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        value=""
+        autocomplete="username"
+      />
       <label for="institution">Institution</label>
       <input
         v-model="institution"
         type="text"
         name="institution"
         id="institution"
+        autocomplete="organization"
       />
       <label for="education">Education</label>
-      <input v-model="education" type="text" name="education" id="education" />
+      <input
+        v-model="education"
+        type="text"
+        name="education"
+        id="education"
+        autocomplete="education"
+      />
       <button
         type="submit"
         id="Login"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitUserForm()"
+        @click.prevent="submitForm()"
       >
-        <span v-if="!buttonDisabled">Save Changes</span>
+        <span v-if="!buttonDisabled">Update Account</span>
       </button>
-    </article>
-    <article>
-      <label for="password">Current Password</label>
-      <div class="toggle-password">
-        <input
-          v-if="showPassword"
-          v-model="password"
-          type="text"
-          name="password"
-          id="password"
-          autocomplete="current-password"
-        />
-        <input
-          v-if="!showPassword"
-          v-model="password"
-          type="password"
-          name="password"
-          id="password"
-          autocomplete="current-password"
-        />
-        <the-button-toggle-hidden
-          class="togglePasswordMask"
-          @show="showPassword = !showPassword"
-        ></the-button-toggle-hidden>
-      </div>
-      <label for="newPassword">New Password</label>
-      <div class="toggle-password">
-        <input
-          v-if="showNewPassword"
-          v-model="newPassword"
-          type="text"
-          name="newPassword"
-          id="newPassword"
-          autocomplete="new-password"
-        />
-        <input
-          v-if="!showNewPassword"
-          v-model="newPassword"
-          type="password"
-          name="newPassword"
-          id="newPassword"
-          autocomplete="new-password"
-        />
-        <the-button-toggle-hidden
-          class="togglePasswordMask"
-          @show="showNewPassword = !showNewPassword"
-        ></the-button-toggle-hidden>
-      </div>
-      <label for="password2">Confirm Password</label>
-      <div class="toggle-password">
-        <input
-          v-if="showNewPassword2"
-          v-model="newPassword2"
-          type="text"
-          name="newPassword2"
-          id="newPassword2"
-          autocomplete="new-password"
-        />
-        <input
-          v-if="!showPassword2"
-          v-model="newPassword2"
-          type="password"
-          name="newPassword2"
-          id="newPassword2"
-          autocomplete="new-password"
-        />
-        <the-button-toggle-hidden
-          class="togglePasswordMask"
-          @show="showNewPassword2 = !showNewPassword2"
-        ></the-button-toggle-hidden>
-      </div>
-      <div v-if="newPasswordInvalid"></div>
-      <button
-        type="submit"
-        id="passwordButton"
-        :aria-busy="buttonDisabled2"
-        @click.prevent="submitPasswordForm()"
-      >
-        <span v-if="!buttonDisabled2">Update Password</span>
-      </button>
-      <p v-if="result" class="invalid">{{ result }}</p>
-
-      <p v-if="success">
-        Please verify your email address by following the instructions sent to
-        {{ email }}.
-      </p>
-    </article>
-  </form>
+    </form>
+    <card-notification
+      v-else
+      success-message="Please check
+    your email to verify your email address"
+    ></card-notification>
+  </article>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+//import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import CardNotification from "@/components/ui/CardNotification.vue";
+import userService from "@/services/userService";
+/*
+  mounted() {
+    this.setTitleAndDescription();
+    const theme = sessionStorage.getItem('data-theme');
+    this.theme = theme !== 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', this.theme);
 
+  },
++  methods: {
++    toggle() {
++      this.theme = this.theme === 'light' ? 'dark' : 'light';
++      document.documentElement.setAttribute('data-theme', this.theme);
++      sessionStorage.setItem('data-theme', this.theme);
++      console.log(this.theme);
++    },
++  },
+*/
 export default {
   name: "UserPage",
   components: {
-    TheButtonToggleHidden,
+    CardNotification,
   },
   data() {
     return {
-      id: "",
+      theme: null,
       nameFirst: "",
       nameLast: "",
-      institution: "",
-      education: "",
       email: null,
-      emailInvalid: null,
+      institution: null,
+      education: null,
       password: null,
-      passwordInvalid: null,
       showPassword: false,
-      password2: null,
-      passwordInvalid2: null,
       showPassword2: false,
-      newPassword: null,
-      newPasswordInvalid: null,
-      showNewPassword: false,
-      newPassword2: null,
-      newPasswordInvalid2: null,
-      showNewPassword2: false,
       buttonDisabled: false,
-      buttonDisabled2: false,
       passwordMismatch: false,
-      success: null,
+      passwordComplexity: 0,
+      errorMessage: "",
+      success: false,
       result: null,
+      chrs: 0,
     };
   },
+  watch: {
+    password: {
+      handler(val) {
+        this.passwordComplexity = userService.scoreChars(val);
+      },
+    },
+  },
   computed: {
-    ...mapGetters(["isLoggedIn", "accessTokenExpires", "refreshTokenExpires"]),
+    fullName() {
+      return this.nameFirst + " " + this.nameLast;
+    },
   },
   mounted() {
-    this.getUser("me");
-    this.setTitleAndDescription();
+    this.fetchData();
   },
   methods: {
     setTitleAndDescription() {
-      const documentTitle = "Articl.net User";
+      const documentTitle = "Articl.net Registration";
       const metaDescription = "";
       this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
     },
-    resetUserForm() {
-      this.emailInvalid = null;
+    async fetchData() {
+      try {
+        const result = await this.getUser("me");
+        if (result) {
+          this.nameFirst = result.nameFirst ? result.nameFirst : "";
+          this.nameLast = result.nameLast ? result.nameLast : "";
+          this.email = result.email ? result.email : "";
+          this.institution = result.instition ? result.instition : "";
+          this.education = result.education ? result.education : "";
+        }
+      } catch (error) {
+        this.$store.dispatch("setError", error);
+      }
+    },
+    getUser() {
+      return this.$http({
+        method: "GET",
+        url: "/users/me",
+      })
+        .then((result) => {
+          if (result?.data) {
+            return result.data;
+          }
+          return this.$store.dispatch("setError", result);
+        })
+        .catch((error) => this.$store.dispatch("setError", error));
+    },
+    resetFormErrors() {
       this.success = null;
       this.result = null;
+      this.errorMessage = "";
     },
-    checkUserForm() {
+    checkForm() {
+      this.resetFormErrors();
       let passed = true;
-      if (!this.validateEmail(this.email)) {
-        this.emailInvalid = true;
+      if (!userService.validateEmail(this.email)) {
+        this.errorMessage = "Please enter a valid email.";
         passed = false;
       }
       return passed;
     },
-    checkPasswordForm() {
-      let passed = true;
-      if (!this.validatePassword(this.newPassword)) {
-        this.passwordInvalid = true;
-        passed = false;
-      }
-      if (!this.validatePassword(this.newPassword2)) {
-        this.passwordInvalid2 = true;
-        passed = false;
-      }
-      if (this.password !== this.newPassword2) {
-        this.passwordMismatch = true;
-        passed = false;
-      }
-      return passed;
-    },
-    validateEmail(email) {
-      return email.match(
-        // eslint-disable-next-line
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-    },
-    validatePassword(password) {
-      return password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
-    },
-    async getUser(id) {
-      if (id) {
+    async submitForm() {
+      this.resetFormErrors();
+      if (this.checkForm() === true) {
+        this.buttonDisabled = true;
         this.$http({
-          method: "GET",
-          url: `/users/${id}`,
+          method: "PATCH",
+          url: "/users/me",
+          data: {
+            nameFirst: this.nameFirst,
+            nameLast: this.nameLast,
+            email: this.email,
+            institution: this.institution,
+            education: this.education,
+          },
         })
           .then((result) => {
             if (result?.data) {
               this.success = true;
-              this.result = result?.data;
+              this.result = result.data;
             }
           })
           .catch((error) => {
@@ -254,31 +211,10 @@ export default {
           .finally(() => {
             this.buttonDisabled = false;
           });
-      }
-    },
-    async submitPasswordForm() {
-      const { token } = this.$route.query;
-      if (this.checkPasswordForm() === true) {
-        this.buttonDisabled = true;
-        this.$http({
-          method: "POST",
-          url: "/auth/reset-password",
-          data: {
-            token,
-            password: this.password,
-          },
-        })
-          .then(() => {
-            this.result = "You have successfully changed your password.";
-          })
-
-          .catch((error) => {
-            this.dataInvalid = true;
-            this.$store.dispatch("setError", error);
-          })
-          .finally(() => {
-            this.buttonDisabled = false;
-          });
+      } else {
+        this.$store.dispatch("setError", {
+          message: this.errorMessage,
+        });
       }
     },
   },
@@ -299,4 +235,10 @@ export default {
   height: 2.2rem;
   width: 2.2rem;
 }
+
+.success {
+  border: 8px solid green;
+  background-color: honeydew;
+}
 </style>
+
