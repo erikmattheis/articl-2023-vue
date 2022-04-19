@@ -51,6 +51,7 @@
       </button>
     </form>
     <router-link to="/forgot-pass">Forgot pass</router-link>
+    <router-link to="/register" class="right">Create account</router-link>
   </article>
 </template>
 
@@ -58,6 +59,7 @@
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { setTokens } from "@/services/tokenService";
 import validateEmail from "@/services/emailValidationService";
+import localStorageService from "@/services/localStorageService";
 
 export default {
   name: "LoginPage",
@@ -112,14 +114,17 @@ export default {
           },
         })
           .then((result) => {
-            console.log("serverResult", result);
             if (result?.status > 309) {
               this.$store.dispatch("setError", result);
               return;
             }
             this.resetFormErrors();
-            setTokens(result.data);
+            setTokens(result);
 
+            const theme =
+              result?.data?.user?.theme !== "dark" ? "light" : "dark";
+            localStorageService.set("data-theme", theme);
+            document.documentElement.setAttribute("data-theme", theme);
             if (
               this.$route.query.redirect &&
               this.$route.query.redirect !== "/login"
@@ -163,5 +168,9 @@ export default {
   cursor: pointer;
   height: 2.2rem;
   width: 2.2rem;
+}
+
+.right {
+  float: right;
 }
 </style>

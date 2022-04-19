@@ -137,7 +137,6 @@ export default {
           this.education = result.education ? result.education : "";
         }
       } catch (error) {
-        console.log("ok");
         this.$store.dispatch("setError", error);
       }
     },
