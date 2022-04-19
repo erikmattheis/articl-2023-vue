@@ -137,23 +137,17 @@ html[data-theme="dark"] article {
   background-color: #141e26;
 }
 
-#app > div > dialog > article > section > div.info,
-#app > div > dialog > article > section > div.info ul li {
+html[data-theme="dark"] #app > div > dialog > article > section > div.info,
+html[data-theme="dark"]
+  #app
+  > div
+  > dialog
+  > article
+  > section
+  > div.info
+  ul
+  li {
   background-color: #cfa;
   color: black !important;
-}
-
-.tab,
-dialog article button {
-  background-color: #0a0;
-  color: #fff;
-}
-
-dialog article header a {
-  color: #cfa;
-}
-
-dialog article header a {
-  color: #fff;
 }
 </style>

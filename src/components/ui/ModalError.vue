@@ -140,4 +140,29 @@ dialog article ul li {
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+html[data-theme="dark"] .modal-container {
+  background-color: black;
+}
+
+html[data-theme="dark"] .modal {
+  background-color: black;
+}
+
+html[data-theme="dark"] article {
+  background-color: #141e26;
+}
+
+html[data-theme="dark"] #app > div > dialog > article > section > div.info,
+html[data-theme="dark"]
+  #app
+  > div
+  > dialog
+  > article
+  > section
+  > div.info
+  ul
+  li {
+  color: black !important;
+}
 </style>
