@@ -74,6 +74,11 @@ export default {
           },
         })
           .then((result) => {
+            this.$store.dispatch("setSuccessTitle", "Email sent");
+            this.$store.dispatch(
+              "setSuccessMessage",
+              "Check your email for instructions how to reset your password."
+            );
             if (result?.data?.message) {
               this.result = result?.data?.message;
             } else {

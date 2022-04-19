@@ -51,7 +51,6 @@
       </button>
     </form>
     <router-link to="/forgot-pass">Forgot pass</router-link>
-    <router-link to="/reset-password">Reset password</router-link>
   </article>
 </template>
 
@@ -87,27 +86,6 @@ export default {
         metaDescription,
       });
     },
-    handleLoginSuccess(serverResult) {
-      if (serverResult.code > 309) {
-        this.$store.dispatch("setError", serverResult);
-        return;
-      }
-      this.resetFormErrors();
-      setTokens(serverResult);
-
-      if (
-        this.$route.query.redirect &&
-        this.$route.query.redirect !== "/login"
-      ) {
-        this.$router.push({
-          path: this.$route.query.redirect,
-        });
-      } else {
-        this.$router.push({
-          name: "HomePage",
-        });
-      }
-    },
     resetFormErrors() {
       this.errorMessage = "";
     },
@@ -133,7 +111,28 @@ export default {
             email: this.email,
           },
         })
-          .then(this.handleLoginSuccess)
+          .then((result) => {
+            console.log("serverResult", result);
+            if (result?.status > 309) {
+              this.$store.dispatch("setError", result);
+              return;
+            }
+            this.resetFormErrors();
+            setTokens(result.data);
+
+            if (
+              this.$route.query.redirect &&
+              this.$route.query.redirect !== "/login"
+            ) {
+              this.$router.push({
+                path: this.$route.query.redirect,
+              });
+            } else {
+              this.$router.push({
+                name: "HomePage",
+              });
+            }
+          })
 
           .catch((error) => {
             this.$store.dispatch("setError", error);

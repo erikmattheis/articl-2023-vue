@@ -9,7 +9,23 @@
         value=""
         autocomplete="username"
       />
-      <label for="password"> New Password</label>
+
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        value=""
+        autocomplete="username"
+      />
+      <label for="password"
+        >New password
+        <small class="lighter left-space" v-if="passwordComplexity < 3">
+          Use upper- and lowercase, numerical and special characters.
+        </small>
+        <small class="lighter left-space" v-else-if="password.length < 8">
+          Please use 8 or more characters.
+        </small>
+      </label>
       <div class="toggle-password">
         <input
           v-if="showPassword"
@@ -17,6 +33,7 @@
           type="text"
           name="password"
           id="password"
+          autocomplete="new-password"
         />
         <input
           v-if="!showPassword"
@@ -24,13 +41,14 @@
           type="password"
           name="password"
           id="password"
+          autocomplete="new-password"
         />
         <the-button-toggle-hidden
           class="togglePasswordMask"
-          @show-password="showPassword = !showPassword"
+          @show="showPassword = !showPassword"
         ></the-button-toggle-hidden>
       </div>
-      <label for="password2"> Confirm Password</label>
+      <label for="password2">Confirm new password</label>
       <div class="toggle-password">
         <input
           v-if="showPassword2"
@@ -38,19 +56,23 @@
           type="text"
           name="password2"
           id="password2"
+          autocomplete="new-password"
         />
         <input
           v-if="!showPassword2"
           v-model="password2"
           type="password"
-          name="password"
+          name="password2"
           id="password2"
+          autocomplete="new-password"
         />
         <the-button-toggle-hidden
           class="togglePasswordMask"
-          @show-password="showPassword2 = !showPassword2"
+          @show="showPassword2 = !showPassword2"
         ></the-button-toggle-hidden>
       </div>
+      <div v-if="passwordInvalid"></div>
+
       <div v-if="dataInvalid"></div>
       <button
         type="submit"
@@ -67,6 +89,7 @@
 
 <script>
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import userService from "@/services/userService";
 
 export default {
   name: "PasswordReset",
@@ -75,16 +98,17 @@ export default {
   },
   data() {
     return {
+      email: null,
       password: null,
-      passwordInvalid: null,
       showPassword: false,
-      password2: null,
-      passwordInvalid2: null,
       showPassword2: false,
       buttonDisabled: false,
-      dataInvalid: null,
+      passwordMismatch: false,
+      passwordComplexity: 0,
+      errorMessage: "",
+      success: false,
       result: null,
-      message: null,
+      chrs: 0,
     };
   },
   mounted() {
@@ -107,22 +131,19 @@ export default {
       this.result = null;
     },
     checkForm() {
+      this.resetFormErrors();
       let passed = true;
-      if (this.password === "") {
-        this.passwordInvalid = true;
-        this.message += "Password may not be empty";
+      if (!userService.validateEmail(this.email)) {
+        this.errorMessage = "Please enter a valid email.";
         passed = false;
-      }
-      if (this.password2 === "") {
-        this.passwordInvalid = true;
-        this.message += this.message && this.message.length ? ", " : "";
-        this.message += "Password confirmation may not be empty";
+      } else if (userService.scoreChars(this.password) < 3) {
+        this.errorMessage = "Please choose a more complex password.";
         passed = false;
-      }
-      if (this.password !== this.password2) {
-        this.dataInvalid = true;
-        this.message += this.message && this.message.length ? ", " : "";
-        this.message = "Confirmation password does not match";
+      } else if (this.password && this.password.length < 8) {
+        this.errorMessage = "Please choose a longer password.";
+        passed = false;
+      } else if (this.password !== this.password2) {
+        this.errorMessage = "The password fields must match.";
         passed = false;
       }
       return passed;
@@ -140,7 +161,11 @@ export default {
           },
         })
           .then(() => {
-            this.result = "You have successfully changed your password.";
+            this.$store.dispatch("setSuccessTitle", "Password updated");
+            this.$store.dispatch(
+              "setSuccessMessage",
+              "You have successfully changed your password."
+            );
           })
 
           .catch((error) => {
@@ -155,3 +180,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.toggle-password {
+  position: relative;
+}
+
+.togglePasswordMask {
+  position: absolute;
+  right: 1rem;
+  top: 40%;
+  transform: translateY(-40%);
+  cursor: pointer;
+  height: 2.2rem;
+  width: 2.2rem;
+}
+
+.success {
+  border: 8px solid green;
+  background-color: honeydew;
+}
+</style>

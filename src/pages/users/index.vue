@@ -85,24 +85,6 @@
 import userService from "@/services/userService";
 import localStorageService from "@/services/localStorageService";
 
-/*
-  mounted() {
-    this.setTitleAndDescription();
-    const theme = sessionStorage.getItem('data-theme');
-    this.theme = theme !== 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', this.theme);
-
-  },
-+  methods: {
-+    toggle() {
-+      this.theme = this.theme === 'light' ? 'dark' : 'light';
-+      document.documentElement.setAttribute('data-theme', this.theme);
-+      sessionStorage.setItem('data-theme', this.theme);
-+      console.log(this.theme);
-+    },
-+  },
-*/
-
 export default {
   name: "UserPage",
   data() {
@@ -113,24 +95,11 @@ export default {
       email: null,
       institution: null,
       education: null,
-      password: null,
-      showPassword: false,
-      showPassword2: false,
       buttonDisabled: false,
-      passwordMismatch: false,
-      passwordComplexity: 0,
       errorMessage: "",
       success: false,
       result: null,
-      chrs: 0,
     };
-  },
-  watch: {
-    password: {
-      handler(val) {
-        this.passwordComplexity = userService.scoreChars(val);
-      },
-    },
   },
   computed: {
     fullName() {
@@ -168,6 +137,7 @@ export default {
           this.education = result.education ? result.education : "";
         }
       } catch (error) {
+        console.log("ok");
         this.$store.dispatch("setError", error);
       }
     },

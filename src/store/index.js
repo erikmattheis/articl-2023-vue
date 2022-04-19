@@ -116,22 +116,22 @@ export default createStore({
 
       if (payload?.response?.data?.message) {
         errorMessage = payload.response.data.message;
-      } else if (payload.message) {
-        errorMessage = payload.message;
+      } else if (payload?.message) {
+        errorMessage = payload?.message;
       } else if (typeof payload === "string" && payload.length) {
         errorMessage = payload;
       }
 
       if (payload?.response?.data?.fileName) {
         errorFileName = payload.response.data.fileName;
-      } else if (payload.fileName) {
+      } else if (payload?.fileName) {
         errorFileName = payload.fileName;
       }
 
       if (payload?.response?.data?.stack) {
         errorStack = payload.response.data.stack;
         errorStack = `${errorStack.slice(0, 100)} ${errorStack.slice(100)}`;
-      } else if (payload.stack) {
+      } else if (payload?.stack) {
         errorStack = payload.stack;
       }
 
@@ -148,7 +148,7 @@ export default createStore({
         errorTitle = payload.response.data.error;
       } else if (payload?.response?.data?.name) {
         errorTitle = payload.response.data.name;
-      } else if (payload.name) {
+      } else if (payload?.name) {
         errorTitle = payload.name;
       }
 

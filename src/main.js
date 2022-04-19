@@ -1,10 +1,7 @@
 import { createApp } from "vue";
 import axios from "axios";
-import {
-  getAccessTokenValue,
-  getRefreshTokenValue,
-  setTokens,
-} from "@/services/tokenService";
+//import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { getAccessTokenValue } from "@/services/tokenService";
 import router from "./router";
 import store from "./store/index";
 
@@ -39,15 +36,25 @@ app.use(router);
 app.use(store);
 
 function createAxiosResponseInterceptor() {
-  const interceptor =
-    app.config.globalProperties.$http.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        if (error?.response?.status !== 401) {
-          console.log("not a 401");
-          return Promise.reject(error);
-        }
-        console.log("a 401");
+  app.config.globalProperties.$http.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      store.dispatch("setError", error);
+      if (
+        error?.response?.status === 401 &&
+        router.currentRoute.path !== "/login"
+      ) {
+        router.push({
+          name: "LoginPage",
+          query: {
+            redirect: window.location.pathname + window.location.search,
+          },
+        });
+        return Promise.reject(error);
+      }
+
+      return Promise.reject(error);
+      /*
         app.config.globalProperties.$http.interceptors.response.eject(
           interceptor
         );
@@ -65,7 +72,7 @@ function createAxiosResponseInterceptor() {
           .then((response) => {
             console.log("a successful response from refresh-tokens");
             console.log("response", response);
-            setTokens(response);
+            setTokens(response.data);
             const accessToken = getAccessTokenValue();
             app.config.globalProperties.$http.interceptors.response.config.headers[
               "Authorization"
@@ -83,8 +90,9 @@ function createAxiosResponseInterceptor() {
             return Promise.resolve(error);
           })
           .finally(createAxiosResponseInterceptor);
-      }
-    );
+          */
+    }
+  );
 }
 
 createAxiosResponseInterceptor();
