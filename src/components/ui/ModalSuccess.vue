@@ -14,7 +14,7 @@
           </header>
           <section>
             <div class="tab" title="success">
-              <vue-feather size="3rem" type="alert-triangle"></vue-feather>
+              <vue-feather size="3rem" type="check"></vue-feather>
             </div>
             <div class="info">
               <ul>
@@ -123,5 +123,37 @@ dialog article header h2 {
 dialog article ul li {
   white-space: pre-wrap;
   word-break: break-all;
+}
+
+html[data-theme="dark"] .modal-container {
+  background-color: black;
+}
+
+html[data-theme="dark"] .modal {
+  background-color: black;
+}
+
+html[data-theme="dark"] article {
+  background-color: #141e26;
+}
+
+#app > div > dialog > article > section > div.info,
+#app > div > dialog > article > section > div.info ul li {
+  background-color: #cfa;
+  color: black !important;
+}
+
+.tab,
+dialog article button {
+  background-color: #0a0;
+  color: #fff;
+}
+
+dialog article header a {
+  color: #cfa;
+}
+
+dialog article header a {
+  color: #fff;
 }
 </style>
