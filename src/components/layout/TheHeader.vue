@@ -8,25 +8,16 @@
           </li>
         </ul>
         <ul class="right">
-          <li v-if="!isLoggedIn">
-            <router-link to="/login" class="nav-user"> login </router-link>
-
-            <router-link to="/register" class="nav-user">
-              create account
-            </router-link>
-          </li>
-          <li v-else>
+          <li v-if="isLoggedIn">
+            <router-link to="/users/me"
+              ><user-icon size="1.5x"></user-icon
+            ></router-link>
             <a href="#" @click.prevent="logout" class="nav-user"> logout </a>
           </li>
-          <li>
-            <router-link to="/categories" class="nav-user">
-              new category
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/users/me">
-              <user-icon size="1.5x"></user-icon>
-            </router-link>
+          <li v-else>
+            <router-link to="/login"
+              ><user-icon size="1.5x"></user-icon
+            ></router-link>
           </li>
         </ul>
       </nav>
@@ -38,6 +29,7 @@
 import { UserIcon } from "@zhuowenli/vue-feather-icons";
 import { mapGetters } from "vuex";
 import localStorageService from "@/services/localStorageService";
+import { getRefreshTokenValue } from "@/services/tokenService";
 
 export default {
   components: {
@@ -64,25 +56,32 @@ export default {
       localStorage.setItem("data-theme", this.theme);
     },
     logout() {
-      this.$http({
-        method: "POST",
-        url: "/auth/logout",
-        data: {
-          refreshToken: this.$store.getters.refreshTokenValue,
-        },
-      })
-        .then((result) => {
-          if (result.data) {
-            this.loggedin = false;
-          }
+      const refreshToken = getRefreshTokenValue();
+      if (refreshToken) {
+        this.$http({
+          method: "POST",
+          url: "/auth/logout",
+          data: {
+            refreshToken,
+          },
         })
-        .catch((error) => {
-          this.$store.dispatch("setError", error);
-        })
-        .finally(() => {
-          localStorage.clear();
-          this.$store.dispatch("logout");
-        });
+          .then((result) => {
+            if (result.data) {
+              this.loggedin = false;
+            }
+          })
+          .catch((error) => {
+            this.$store.dispatch("setError", error);
+          })
+          .finally(() => {
+            localStorage.clear();
+            this.$store.dispatch("logout");
+          });
+      } else {
+        this.loggedin = false;
+        localStorage.clear();
+        this.$store.dispatch("logout");
+      }
     },
   },
 };

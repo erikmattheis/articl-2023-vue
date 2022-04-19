@@ -90,7 +90,8 @@ section div {
 
 #app > div > dialog > article > section > div.info {
   min-height: 6rem;
-  padding: 2rem;
+  min-width: calc(100% - 6rem);
+  padding: 1rem;
   background-color: #cfa;
   color: #0a0;
 }

@@ -44,9 +44,10 @@ function createAxiosResponseInterceptor() {
       (response) => response,
       (error) => {
         if (error?.response?.status !== 401) {
+          console.log("not a 401");
           return Promise.reject(error);
         }
-
+        console.log("a 401");
         app.config.globalProperties.$http.interceptors.response.eject(
           interceptor
         );
@@ -62,11 +63,14 @@ function createAxiosResponseInterceptor() {
             refreshToken,
           })
           .then((response) => {
+            console.log("a successful response from refresh-tokens");
+            console.log("response", response);
             setTokens(response);
             const accessToken = getAccessTokenValue();
             app.config.globalProperties.$http.interceptors.response.config.headers[
               "Authorization"
             ] = "Bearer " + accessToken;
+            console.log("error.response.config is", error.response.config);
             return app.config.globalProperties.$http(error.response.config);
           })
           .catch(() => {
