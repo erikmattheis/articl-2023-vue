@@ -70,6 +70,9 @@ body {
 body * {
   border-radius: 0 !important;
 }
+body div form input[role="switch"] {
+  border-radius: 1rem !important;
+}
 
 ul {
   padding-left: 0;

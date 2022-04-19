@@ -25,6 +25,19 @@
           />
         </div>
       </fieldset>
+      <fieldset>
+        <label for="theme">Theme</label>
+
+        <input
+          @click="toggleTheme()"
+          type="checkbox"
+          id="theme"
+          name="theme"
+          role="switch"
+          :checked="theme === 'dark'"
+        />
+        {{ theme }}
+      </fieldset>
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -69,9 +82,9 @@
 </template>
 
 <script>
-//import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-
 import userService from "@/services/userService";
+import localStorageService from "@/services/localStorageService";
+
 /*
   mounted() {
     this.setTitleAndDescription();
@@ -126,6 +139,9 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.theme = localStorageService.get("data-theme");
+    this.theme = this.theme === "light" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", this.theme);
   },
   methods: {
     setTitleAndDescription() {
@@ -135,6 +151,11 @@ export default {
         documentTitle,
         metaDescription,
       });
+    },
+    toggleTheme() {
+      this.theme = this.theme === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", this.theme);
+      localStorageService.set("data-theme", this.theme);
     },
     async fetchData() {
       try {
@@ -190,6 +211,7 @@ export default {
             email: this.email,
             institution: this.institution,
             education: this.education,
+            theme: this.theme,
           },
         })
           .then((result) => {

@@ -50,11 +50,6 @@ export default {
     document.documentElement.setAttribute("data-theme", this.theme);
   },
   methods: {
-    toggleTheme() {
-      this.theme = this.theme === "light" ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", this.theme);
-      localStorage.setItem("data-theme", this.theme);
-    },
     logout() {
       const refreshToken = getRefreshTokenValue();
       if (refreshToken) {
