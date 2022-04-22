@@ -41,7 +41,7 @@
 import CardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
-  name: "CreateArticlPage",
+  name: "createArticlPage",
   components: {
     CardNotification,
   },

@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "VerifyEmailPage",
+  name: "verifyEmailPage",
   data() {
     return {
       resultTitle: null,

@@ -96,7 +96,7 @@ import CardNotification from "@/components/ui/CardNotification.vue";
 import userService from "@/services/userService";
 
 export default {
-  name: "RegisterPage",
+  name: "registerPage",
   components: {
     TheButtonToggleHidden,
     CardNotification,

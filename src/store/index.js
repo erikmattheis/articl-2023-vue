@@ -133,6 +133,7 @@ export default createStore({
         errorStack = `${errorStack.slice(0, 100)} ${errorStack.slice(100)}`;
       } else if (payload?.stack) {
         errorStack = payload.stack;
+        errorStack = `${errorStack.slice(0, 100)} ${errorStack.slice(100)}`;
       }
 
       if (payload?.response?.data?.lineNumber) {

@@ -4,7 +4,7 @@
     <ul>
       <li v-for="category in categories || []" :key="category.slug">
         <router-link
-          :to="{ name: 'CategoryPage', params: { slug: category.slug } }"
+          :to="{ name: 'categoryPage', params: { slug: category.slug } }"
         >
           {{ category.title }}
         </router-link>
@@ -26,7 +26,7 @@
 // import CategoryChildren from '@/components/layout/CategoryChildren.vue';
 
 export default {
-  name: "HomePage",
+  name: "homePage",
   // components: { TheBreadcrumbs, CategoryChildren },
   data() {
     return {

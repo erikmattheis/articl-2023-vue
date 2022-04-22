@@ -1,79 +1,85 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import HomePage from "@/pages/index.vue";
-import CreateArticlPage from "@/pages/articls/index.vue";
-import CategoryPage from "@/pages/d/index.vue";
-import RegisterPage from "@/pages/register.vue";
-import VerifyEmailPage from "@/pages/verify-email.vue";
-import LoginPage from "@/pages/login.vue";
-import ForgotPassPage from "@/pages/forgot-pass.vue";
-import ResetPasswordPage from "@/pages/reset-password.vue";
+import homePage from "@/pages/index.vue";
+import createArticlPage from "@/pages/articls/index.vue";
+import categoryPage from "@/pages/d/index.vue";
+import importCategoriesPage from "@/pages/categories/import-categories.vue";
+import registerPage from "@/pages/register.vue";
+import verifyEmailPage from "@/pages/verify-email.vue";
+import loginPage from "@/pages/login.vue";
+import forgotPassPage from "@/pages/forgot-pass.vue";
+import resetPasswordPage from "@/pages/reset-password.vue";
 import NotFound from "@/pages/NotFound.vue";
-import UserPage from "@/pages/users/index.vue";
-import CreateCategoryPage from "@/pages/categories/index.vue";
+import usersPage from "@/pages/users/index.vue";
+import createCategoryPage from "@/pages/categories/index.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: "HomePage",
+      name: "homePage",
       path: "/",
-      component: HomePage,
+      component: homePage,
     },
     {
-      name: "CategoryPage",
+      name: "categoryPage",
       path: "/d/:slug",
-      component: CategoryPage,
+      component: categoryPage,
     },
     {
-      name: "RegisterPage",
+      name: "registerPage",
       path: "/register",
-      component: RegisterPage,
+      component: registerPage,
     },
     {
-      name: "VerifyEmail",
+      name: "verifyEmailPage",
       path: "/verify-email",
-      component: VerifyEmailPage,
+      component: verifyEmailPage,
     },
     {
-      name: "LoginPage",
+      name: "loginPage",
       path: "/login",
-      component: LoginPage,
+      component: loginPage,
     },
     {
-      name: "SendVerificationEmail",
+      name: "sendVerificationEmail",
       path: "/send-verification-email",
-      component: ResetPasswordPage,
+      component: resetPasswordPage,
     },
     {
-      name: "ForgotPassPage",
+      name: "forgotPassPage",
       path: "/forgot-pass",
-      component: ForgotPassPage,
+      component: forgotPassPage,
     },
     {
-      name: "ResetPassword",
+      name: "resetPasswordPage",
       path: "/reset-password",
-      component: ResetPasswordPage,
+      component: resetPasswordPage,
     },
     {
-      name: "UserPage",
+      name: "usersPage",
       path: "/users/:slug",
-      component: UserPage,
+      component: usersPage,
     },
     {
       name: "users",
       path: "/users",
-      component: UserPage,
+      component: usersPage,
+    },
+    {
+      name: "importCategoriesPage",
+      path: "/categories/:slug?",
+      component: importCategoriesPage,
     },
     {
       name: "createCategoryPage",
       path: "/categories/:slug?",
-      component: CreateCategoryPage,
+      component: createCategoryPage,
     },
     {
-      name: "CreateArticlPage",
+      name: "createArticlPage",
       path: "/articls",
-      component: CreateArticlPage,
+      component: createArticlPage,
     },
 
     { name: "NotFound", path: "/:notFound(.*)", component: NotFound },

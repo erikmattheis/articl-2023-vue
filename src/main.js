@@ -45,7 +45,7 @@ function createAxiosResponseInterceptor() {
         router.currentRoute.path !== "/login"
       ) {
         router.push({
-          name: "LoginPage",
+          name: "loginPage",
           query: {
             redirect: window.location.pathname + window.location.search,
           },
@@ -82,7 +82,7 @@ function createAxiosResponseInterceptor() {
           })
           .catch(() => {
             router.push({
-              name: "LoginPage",
+              name: "loginPage",
               query: {
                 redirect: window.location.pathname + window.location.search,
               },

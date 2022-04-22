@@ -49,7 +49,7 @@
 import CardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
-  name: "CreateCategoryPage",
+  name: "createCategoryPage",
   components: {
     CardNotification,
   },

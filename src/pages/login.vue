@@ -62,7 +62,7 @@ import validateEmail from "@/services/emailValidationService";
 import localStorageService from "@/services/localStorageService";
 
 export default {
-  name: "LoginPage",
+  name: "loginPage",
   components: {
     TheButtonToggleHidden,
   },
@@ -134,7 +134,7 @@ export default {
               });
             } else {
               this.$router.push({
-                name: "HomePage",
+                name: "homePage",
               });
             }
           })

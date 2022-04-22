@@ -86,7 +86,7 @@ import userService from "@/services/userService";
 import localStorageService from "@/services/localStorageService";
 
 export default {
-  name: "UserPage",
+  name: "usersPage",
   data() {
     return {
       theme: null,
