@@ -2,7 +2,7 @@
   <article>
     <h1 v-if="!success">Articl.net User: {{ fullName }}</h1>
     <h1 v-else>Account Updated</h1>
-    <form v-if="!success">
+    <form>
       <fieldset class="grid">
         <div>
           <label for="nameFirst">First Name</label>

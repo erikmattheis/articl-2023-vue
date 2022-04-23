@@ -3,12 +3,13 @@
     <dialog open class="modal">
       <article class="max-container-width">
         <header>
-          <a
-            href="#close"
+          <vue-feather
+            size="20"
+            type="x-square"
+            @click.prevent="close()"
             aria-label="Close"
             class="close"
-            @click.prevent="close()"
-          ></a>
+          ></vue-feather>
           <h2>{{ errorTitle }}</h2>
         </header>
         <section>
@@ -107,23 +108,16 @@ section div {
   min-width: calc(100% - 6rem);
   padding: 1rem;
   background-color: #fca;
-  color: #f00;
+  color: #dd2c00;
 }
-
 .tab,
 dialog article button {
-  background-color: #f00;
+  background-color: #dd2c00;
   color: #fff;
 }
-
-dialog article header a {
-  color: #fca;
+.close {
+  cursor: pointer;
 }
-
-dialog article header a {
-  color: #fff;
-}
-
 dialog article header,
 dialog article button:hover {
   background-color: #b30202;

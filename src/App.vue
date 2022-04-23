@@ -99,17 +99,6 @@ li {
   color: #d8000c;
 }
 
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 0.1s ease;
-}
-
-.scale-enter-from,
-.scale-leave-to {
-  opacity: 0;
-  transform: scaleY(0.9);
-}
-
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";
 
 @media (min-width: map-get($breakpoints, "xs")) {

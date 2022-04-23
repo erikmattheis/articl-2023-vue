@@ -91,26 +91,23 @@ section div {
   min-width: calc(100% - 6rem);
   padding: 1rem;
   background-color: #cfa;
-  color: #0a0;
+  color: #00701a;
 }
 
 .tab,
 dialog article button {
-  background-color: #0a0;
+  background-color: #00701a;
   color: #fff;
 }
 
+#app > div > dialog > article > header > a,
 dialog article header a {
   color: #cfa;
 }
 
-dialog article header a {
-  color: #fff;
-}
-
 dialog article header,
 dialog article button:hover {
-  background-color: #0b8119;
+  background-color: #43a047;
   transition: background-color 0.5s ease;
 }
 
