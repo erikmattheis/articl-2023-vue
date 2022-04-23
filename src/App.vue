@@ -99,15 +99,32 @@ li {
   color: #d8000c;
 }
 
+header article,
+footer article {
+  background-color: #efefef;
+}
+
+html[data-theme="dark"] header article,
+html[data-theme="dark"] footer article {
+  background-color: #0f191c;
+}
+
 header article {
-  margin-top: 0;
+  margin-top: 0.5rem;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
 }
-
 main article {
-  margin-top: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+main form {
+  margin-bottom: 0;
+}
+footer article {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";

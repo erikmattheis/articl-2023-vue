@@ -61,7 +61,7 @@ function getDB(url) {
 
   return "";
 }
-
+/*
 function clearTable(result) {
   result.title = "";
   result.authors = "";
@@ -72,7 +72,7 @@ function clearTable(result) {
   result.abstract = "";
   result.authors = "";
 }
-
+*/
 //Handle the Async fetch of Pubmed Data
 async function api(searchbar) {
   let base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
@@ -83,14 +83,13 @@ async function api(searchbar) {
   let request = new Request(
     `${base_url}${mode}.fcgi?db=${db}&id=${id}&rettype=abstract&retmode=${type}`
   );
-  let result = {};
-  fetch(request).then((results) => {
+
+  return fetch(request).then((results) => {
     // results returns XML. lets cast this to a string, then create
     // a new DOM object out of it!
-    results.text().then((str) => {
+    return results.text().then((str) => {
       let responseDoc = new DOMParser().parseFromString(str, "application/xml");
-      clearTable();
-
+      let result = {};
       switch (db) {
         case "pmc":
           try {
@@ -202,6 +201,7 @@ async function api(searchbar) {
           }
           break;
       }
+      return Promise.resolve(result);
     });
   });
 }
@@ -220,7 +220,7 @@ function scrape(searchbar) {
       var parser = new DOMParser();
       var responseDoc = parser.parseFromString(html, "text/html");
       // Manipulate DOM Objects
-      clearTable();
+
       let result = {};
       switch (db) {
         case "pmc":
@@ -379,6 +379,6 @@ function download(filename, text) {
 
 async function fetchData(url) {
   const result = await api(url);
-  console.log("result.result", result);
+  return result;
 }
 export { copyToClipboard, api, scrape, generateJSON, fetchData };

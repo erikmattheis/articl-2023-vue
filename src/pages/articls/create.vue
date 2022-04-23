@@ -10,67 +10,35 @@
         name="articlUrl1"
         id="articlUrl1"
       />
-      <div class="row">
-        <div class="col-xl">
-          <div align="center">
-            <h1><b>Welcome to your extracting board Naveen</b></h1>
-            <br />
 
-            <button
-              type="button"
-              :aria-busy="buttonDisabled"
-              @click.prevent="fetchData()"
-            >
-              FETCH DATA
-            </button>
-          </div>
-          <br />
-          <table width="100%">
-            <tr onclick="copyToClipboard(1)">
-              <td>Article Title</td>
-              <td>
-                <div id="title"></div>
-              </td>
-            </tr>
-            <tr onclick="copyToClipboard(2)">
-              <td>Authors</td>
-              <td>
-                <div id="authors"></div>
-              </td>
-            </tr>
-            <tr onclick="copyToClipboard(3)">
-              <td>Affiliation</td>
-              <td>
-                <div id="affiliation"></div>
-              </td>
-            </tr>
-            <tr onclick="copyToClipboard(4)">
-              <td>Journal</td>
-              <td>
-                <div id="journal"></div>
-              </td>
-            </tr>
-            <tr onclick="copyToClipboard(5)">
-              <td>Pubblication Year</td>
-              <td>
-                <div id="year"></div>
-              </td>
-            </tr>
-            <tr onclick="copyToClipboard(6)">
-              <td>Pubblication Month</td>
-              <td>
-                <div id="month"></div>
-              </td>
-            </tr>
-            <tr onclick="copyToClipboard(7)">
-              <td>Abstract</td>
-              <td>
-                <div id="abstract"></div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
+      <button
+        type="button"
+        :aria-busy="buttonDisabled"
+        @click.prevent="submitForm()"
+      >
+        FETCH DATA
+      </button>
+
+      <label for="">Article Title</label>
+      <input v-model="title" name="" id="" autocomplete="off" />
+
+      <label for="">Authors</label>
+      <input v-model="authors" name="" id="" autocomplete="off" />
+
+      <label for="">Affiliation</label>
+      <input v-model="affiliation" name="" id="" autocomplete="off" />
+
+      <label for="">Journal</label>
+      <input v-model="journal" name="" id="" autocomplete="off" />
+
+      <label for="">Pubblication Year</label>
+      <input v-model="year" name="" id="" autocomplete="off" />
+
+      <label for="">Pubblication Month</label>
+      <input v-model="month" name="" id="" autocomplete="off" />
+
+      <label for="">Abstract</label>
+      <input v-model="abstract" name="" id="" autocomplete="off" />
     </form>
     <card-notification
       v-else
@@ -92,15 +60,28 @@ export default {
       buttonDisabled: false,
       success: false,
       articlUrl: "",
+      title: "",
+      authors: "",
+      affiliation: "",
+      journal: "",
+      year: "",
+      month: "",
+      abstract: "",
     };
   },
   methods: {
-    async fetchData() {
+    async submitForm() {
+      const results = await this.getData();
+      console.log("await", results);
+    },
+    async getData() {
       if (this.articlUrl) {
         try {
           this.buttonDisabled = true;
           const result = await fetchData(this.articlUrl);
-          console.log(result);
+          Object.assign(this, result);
+          console.log("result needed", result);
+          return result;
         } catch (error) {
           this.$store.dispatch("setError", error);
         } finally {
