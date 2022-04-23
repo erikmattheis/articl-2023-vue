@@ -7,7 +7,8 @@
           <router-link to="/d/:category.slug">
             {{ category.title }}
           </router-link>
-          <router-link to="/categories"> New Category </router-link>
+          <router-link to="/categories"> New Category Here </router-link>
+          <router-link to="/articls/create"> New Articl Here </router-link>
         </li>
       </ul>
     </nav>

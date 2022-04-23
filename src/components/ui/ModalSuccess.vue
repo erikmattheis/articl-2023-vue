@@ -1,31 +1,29 @@
 <template>
   <div class="modal-container" v-if="successTitle" @click.prevent="close()">
-    <transition name="scale" mode="out-in">
-      <dialog open class="modal">
-        <article class="max-container-width">
-          <header>
-            <a
-              href="#close"
-              aria-label="Close"
-              class="close"
-              @click.prevent="close()"
-            ></a>
-            <h2>{{ successTitle }}</h2>
-          </header>
-          <section>
-            <div class="tab" title="success">
-              <vue-feather size="3rem" type="check"></vue-feather>
-            </div>
-            <div class="info">
-              <ul>
-                <li v-if="successMessage">{{ successMessage }}</li>
-              </ul>
-            </div>
-          </section>
-          <button @click.prevent="close()">OK</button>
-        </article>
-      </dialog>
-    </transition>
+    <dialog open class="modal">
+      <article class="max-container-width">
+        <header>
+          <a
+            href="#close"
+            aria-label="Close"
+            class="close"
+            @click.prevent="close()"
+          ></a>
+          <h2>{{ successTitle }}</h2>
+        </header>
+        <section>
+          <div class="tab" title="success">
+            <vue-feather size="3rem" type="check"></vue-feather>
+          </div>
+          <div class="info">
+            <ul>
+              <li v-if="successMessage">{{ successMessage }}</li>
+            </ul>
+          </div>
+        </section>
+        <button @click.prevent="close()">OK</button>
+      </article>
+    </dialog>
   </div>
 </template>
 

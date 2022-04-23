@@ -19,6 +19,30 @@
         name="postStatus"
         id="postStatus"
       />
+      <label for="author">Type</label>
+      <input v-model="author" type="text" name="author" id="author" />
+
+      <label for="abstract">Abstract</label>
+      <input v-model="abstract" type="text" name="abstract" id="abstract" />
+
+      <label for="authors">Authors</label>
+      <input v-model="authors" type="text" name="authors" id="authors" />
+
+      <label for="type">Type</label>
+      <input v-model="type" type="text" name="type" id="type" />
+
+      <label for="type">Type</label>
+      <input v-model="type" type="text" name="type" id="type" />
+
+      <label for="type">Type</label>
+      <input v-model="type" type="text" name="type" id="type" />
+
+      <label for="type">Type</label>
+      <input v-model="type" type="text" name="type" id="type" />
+
+      <label for="type">Type</label>
+      <input v-model="type" type="text" name="type" id="type" />
+
       <label for="type">Type</label>
       <input v-model="type" type="text" name="type" id="type" />
       <button
@@ -47,12 +71,171 @@ export default {
   },
   data() {
     return {
-      categorySlug: "",
-      order: 0,
-      postStatus: "",
-      postTitle: "",
       success: false,
       result: "",
+      buttonDisabled: "",
+      author: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      category: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      categorySlug: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      order: {
+        type: Number,
+        required: true,
+        trim: true,
+        default: 0,
+      },
+      postId: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      postStatus: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      postTitle: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      postType: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      abstract: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      authors: { type: String, required: false, trim: true },
+      city: { type: String, required: false, trim: true },
+      country: { type: String, required: false, trim: true },
+      dateEnd: { type: String, required: false, trim: true },
+      dateStart: { type: String, required: false, trim: true },
+      description: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      fullText: { type: String, required: false, trim: true },
+      type: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      year: {
+        type: Number,
+        required: false,
+        trim: true,
+      },
+      thumbnailImage: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      url: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      venue: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      imageCaption: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      imageLocalPath: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      imageOriginalUrl: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      imageRemotePath: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      institution: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      journal: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      month: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      resourceType: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      reviewSource: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      reviewUrl: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      shortTitle: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      source: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      sourceId: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      sourceIdType: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      startDate: {
+        type: String,
+        required: false,
+        trim: true,
+      },
+      state: {
+        type: String,
+        required: false,
+        trim: true,
+      },
     };
   },
   methods: {

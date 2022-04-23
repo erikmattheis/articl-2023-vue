@@ -1,34 +1,32 @@
 <template>
   <div class="modal-container" v-if="errorTitle" @click.prevent="close()">
-    <transition name="scale" mode="out-in">
-      <dialog open class="modal">
-        <article class="max-container-width">
-          <header>
-            <a
-              href="#close"
-              aria-label="Close"
-              class="close"
-              @click.prevent="close()"
-            ></a>
-            <h2>{{ errorTitle }}</h2>
-          </header>
-          <section>
-            <div class="tab" title="error">
-              <vue-feather size="3rem" type="alert-triangle"></vue-feather>
-            </div>
-            <div class="info">
-              <ul>
-                <li v-if="errorMessage">{{ errorMessage }}</li>
-                <li v-if="errorFileName">{{ errorFileName }}</li>
-                <li v-if="errorLineNumber">{{ errorLineNumber }}</li>
-                <li v-if="!showErrorStack">{{ errorStack }}</li>
-              </ul>
-            </div>
-          </section>
-          <button @click.prevent="close()">OK</button>
-        </article>
-      </dialog>
-    </transition>
+    <dialog open class="modal">
+      <article class="max-container-width">
+        <header>
+          <a
+            href="#close"
+            aria-label="Close"
+            class="close"
+            @click.prevent="close()"
+          ></a>
+          <h2>{{ errorTitle }}</h2>
+        </header>
+        <section>
+          <div class="tab" title="error">
+            <vue-feather size="3rem" type="alert-triangle"></vue-feather>
+          </div>
+          <div class="info">
+            <ul>
+              <li v-if="errorMessage">{{ errorMessage }}</li>
+              <li v-if="errorFileName">{{ errorFileName }}</li>
+              <li v-if="errorLineNumber">{{ errorLineNumber }}</li>
+              <li v-if="!showErrorStack">{{ errorStack }}</li>
+            </ul>
+          </div>
+        </section>
+        <button @click.prevent="close()">OK</button>
+      </article>
+    </dialog>
   </div>
 </template>
 

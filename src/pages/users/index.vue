@@ -128,6 +128,7 @@ export default {
     },
     async fetchData() {
       try {
+        this.buttonDisabled = true;
         const result = await this.getUser("me");
         if (result) {
           this.nameFirst = result.nameFirst ? result.nameFirst : "";
@@ -138,6 +139,8 @@ export default {
         }
       } catch (error) {
         this.$store.dispatch("setError", error);
+      } finally {
+        this.buttonDisabled = false;
       }
     },
     getUser() {

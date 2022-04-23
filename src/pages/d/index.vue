@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h2>{{ title }}</h2>
+    <h2>{{ title }} <span :aria-busy="isLoading"></span></h2>
     <ul>
       <li v-for="category in categories || []" :key="category.slug">
         <router-link
@@ -15,6 +15,11 @@
           :to="{ name: 'createCategoryPage', params: { slug: '0' } }"
         >
           New Category
+        </router-link>
+      </li>
+      <li>
+        <router-link :to="{ name: 'createArticlPage', params: { slug: '0' } }">
+          New Articl Here
         </router-link>
       </li>
     </ul>
@@ -50,6 +55,7 @@ export default {
   methods: {
     async fetchData(slug) {
       try {
+        this.isLoading = true;
         const result = await this.getCategoryPageBySlug(slug);
         const documentTitle = result?.category[0]?.title;
         this.title = documentTitle;
@@ -61,6 +67,8 @@ export default {
         this.categories = result.categories;
       } catch (error) {
         this.$store.dispatch("setError", error);
+      } finally {
+        this.isLoading = false;
       }
     },
     getCategoryPageBySlug(slug) {

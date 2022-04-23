@@ -59,7 +59,7 @@ export default {
       description: null,
       parentSlug: null,
       categories: [],
-      buttonDisabled: null,
+      buttonDisabled: false,
       errorMessage: "",
       success: false,
       result: null,

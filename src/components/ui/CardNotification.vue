@@ -38,6 +38,10 @@ section div {
   align-items: center;
   justify-content: center;
 }
+#app > main > article > section > div.info,
+#app > main > article > section > div.info > aside {
+  min-width: calc(100% - 6rem) !important;
+}
 .tab {
   width: 4rem;
   height: 4rem;

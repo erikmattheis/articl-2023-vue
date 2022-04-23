@@ -15,7 +15,7 @@
     </form>
   </article>
 </template>
-
+ 
 <script>
 export default {
   name: "importCategoriesPage",
