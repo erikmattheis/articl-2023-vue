@@ -54,7 +54,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  font: 17px/1.3 "Poppins", sans-serif !important;
+  font: 17px/1.6 "Poppins", sans-serif !important;
 }
 
 body {
@@ -97,6 +97,17 @@ li {
 
 .error li {
   color: #d8000c;
+}
+
+header article {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+main article {
+  margin-top: 0.5rem;
 }
 
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";
