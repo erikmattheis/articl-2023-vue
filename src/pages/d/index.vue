@@ -36,7 +36,7 @@
       <li v-for="articl in articls || []" :key="articl.id">
         <h3>{{ articl.title }}</h3>
         <small>{{ articl.authors }}</small>
-        <small>{{ articl. }}</small>
+        <small>{{ articl.journal }}</small>
       </li>
     </ul>
   </article>
