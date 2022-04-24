@@ -80,6 +80,7 @@ const router = createRouter({
       name: "createArticlPage",
       path: "/articls/create",
       component: createArticlPage,
+      props: true,
     },
 
     { name: "NotFound", path: "/:notFound(.*)", component: NotFound },

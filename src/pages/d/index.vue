@@ -12,13 +12,21 @@
 
       <li>
         <router-link
-          :to="{ name: 'createCategoryPage', params: { slug: '0' } }"
+          :to="{
+            name: 'createCategoryPage',
+            params: { parentSlug: $route.params.slug },
+          }"
         >
           New Category
         </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'createArticlPage', params: { slug: '0' } }">
+        <router-link
+          :to="{
+            name: 'createArticlPage',
+            query: { slug: $route.params.slug },
+          }"
+        >
           New Articl Here
         </router-link>
       </li>

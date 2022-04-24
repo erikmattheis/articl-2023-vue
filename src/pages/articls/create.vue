@@ -1,15 +1,10 @@
 <template>
   <article>
-    <h1 v-if="!success">Create category</h1>
-    <h1 v-else>Category created</h1>
+    <h1 v-if="!success">Create articl</h1>
+    <h1 v-else>Articl created</h1>
     <form v-if="!success">
-      <label for="articlUrl1">URL</label>
-      <input
-        v-model="articlUrl"
-        type="text"
-        name="articlUrl1"
-        id="articlUrl1"
-      />
+      <label for="articlUrl">URL</label>
+      <input v-model="articlUrl" type="text" name="articlUrl" id="articlUrl" />
 
       <button
         type="button"
@@ -19,7 +14,7 @@
         FETCH DATA
       </button>
 
-      <label for="">Article Title</label>
+      <label for="">Title</label>
       <input v-model="title" name="" id="" autocomplete="off" />
 
       <label for="">Authors</label>
@@ -31,31 +26,30 @@
       <label for="">Journal</label>
       <input v-model="journal" name="" id="" autocomplete="off" />
 
-      <label for="">Pubblication Year</label>
+      <label for="">Publication Year</label>
       <input v-model="year" name="" id="" autocomplete="off" />
 
-      <label for="">Pubblication Month</label>
+      <label for="">Publication Month</label>
       <input v-model="month" name="" id="" autocomplete="off" />
 
       <label for="">Abstract</label>
       <input v-model="abstract" name="" id="" autocomplete="off" />
 
-      <label for="">Status</label>
+      <label for="status">Status</label>
       <select v-model="status" name="status" id="status">
         <option value="Publish">Publish</option>
         <option value="Draft">Draft</option>
         <option value="Pending">Pending</option>
         <option value="Trash">Trash</option>
       </select>
-      t:
+
+      <label for="typeaheadQuery">Category slug</label>
       <typeahead
-        type="text"
         src="/categories/titles"
-        placeholder="..."
-        v-model="categorySlug"
         @update-value="onTypeaheadHit"
+        :query="categorySlug"
       />
-      categorySlug:{{ categorySlug }}
+
       <button
         type="button"
         :aria-busy="buttonDisabled"
@@ -93,16 +87,14 @@ export default {
       categorySlug: "",
       journal: "",
       month: "",
-      status: "",
+      status: "Publish",
       success: false,
       title: "",
       year: "",
     };
   },
-  computed: {
-    getTitlesUrl() {
-      return `/categories/titles?q=${this.categorySlug}`;
-    },
+  mounted() {
+    this.categorySlug = this.$route.query.slug;
   },
   methods: {
     async getData() {
@@ -158,10 +150,18 @@ export default {
         this.buttonDisabled = true;
         this.$http({
           method: "POST",
-          url: "/articl",
+          url: "/articls",
           data: {
-            password: this.password,
-            email: this.email,
+            abstract: this.abstract,
+            affiliation: this.affiliation,
+            articlUrl: this.articlUrl,
+            authors: this.authors,
+            categorySlug: this.categorySlug,
+            journal: this.journal,
+            month: this.month,
+            status: this.status,
+            title: this.title,
+            year: this.year,
           },
         })
           .then((result) => {

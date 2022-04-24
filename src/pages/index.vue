@@ -18,7 +18,7 @@
         </router-link>
       </li>
       <li>
-        <router-link :to="{ name: 'createArticlPage', params: { slug: '0' } }">
+        <router-link :to="{ name: 'createArticlPage', query: { slug: '0' } }">
           New Articl Here
         </router-link>
       </li>

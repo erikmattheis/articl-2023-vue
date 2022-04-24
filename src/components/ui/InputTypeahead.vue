@@ -6,20 +6,19 @@
       <i class="fa fa-search" v-show="isEmpty"></i>
       <i class="fa fa-times" v-show="isDirty" @click="reset"></i>
     </template>
-
     <!-- the input field -->
     <input
       type="text"
       autocomplete="off"
-      v-model="query"
+      v-model="queryString"
       @keydown.down="down"
       @keydown.up="up"
       @keydown.enter="hit"
       @keydown.esc="reset"
       @blur="reset"
       @input="update"
+      id="typeaheadQuery"
     />
-    query:{{ query }}
     <!-- the list -->
     <ul v-show="hasItems">
       <!-- for vue@1.0 use: ($item, item) -->
@@ -37,15 +36,15 @@
 </template>
 <script>
 export default {
-  props: ["src"],
+  props: ["src", "query"],
   data() {
     return {
       items: [],
-      query: "",
       current: -1,
       loading: false,
       selectFirst: true,
       queryParamName: "q",
+      queryString: "",
     };
   },
 
@@ -55,26 +54,30 @@ export default {
     },
 
     isEmpty() {
-      return !this.query;
+      return !this.queryString;
     },
 
     isDirty() {
-      return !!this.query;
+      return !!this.queryString;
     },
   },
-
+  watch: {
+    query() {
+      this.queryString = this.query;
+    },
+  },
   methods: {
     async update() {
       this.cancel();
 
-      if (!this.query) {
+      if (!this.queryString) {
         return this.reset();
       }
 
       this.loading = true;
 
       this.fetchData().then((response) => {
-        if (response && this.query) {
+        if (response && this.queryString) {
           let data = response.data;
           this.items = data.slice(0, 7);
           this.current = -1;
@@ -88,10 +91,10 @@ export default {
     },
 
     async fetchData() {
-      const src = this.queryParamName ? this.src : this.src + this.query;
+      const src = this.queryParamName ? this.src : this.src + this.queryString;
 
       const params = this.queryParamName
-        ? Object.assign({ [this.queryParamName]: this.query }, this.data)
+        ? Object.assign({ [this.queryParamName]: this.queryString }, this.data)
         : this.data;
 
       let cancel = new Promise((resolve) => (this.cancel = resolve));
@@ -106,7 +109,7 @@ export default {
 
     reset() {
       this.items = [];
-      //this.query = "";
+      //this.queryString = "";
       this.loading = false;
     },
 
@@ -145,7 +148,7 @@ export default {
     },
 
     onHit(e) {
-      this.query = e.title;
+      this.queryString = e.title;
       this.$emit("updateValue", e.title);
     },
   },
@@ -153,6 +156,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+li {
+  padding: 0.2rem 0.5rem;
+}
 .active {
   background-color: #1095c1;
 }
