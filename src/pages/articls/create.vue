@@ -53,7 +53,7 @@
         src="/categories/titles"
         placeholder="..."
         v-model="categorySlug"
-        @update="onTypeaheadHit"
+        @update-value="onTypeaheadHit"
       />
       categorySlug:{{ categorySlug }}
       <button
@@ -182,8 +182,8 @@ export default {
         });
       }
     },
-    onTypeaheadHit(e) {
-      console.log("update", e);
+    onTypeaheadHit(slug) {
+      this.categorySlug = slug;
     },
   },
 };

@@ -10,7 +10,6 @@
     <!-- the input field -->
     <input
       type="text"
-      placeholder="..."
       autocomplete="off"
       v-model="query"
       @keydown.down="down"
@@ -20,7 +19,7 @@
       @blur="reset"
       @input="update"
     />
-
+    query:{{ query }}
     <!-- the list -->
     <ul v-show="hasItems">
       <!-- for vue@1.0 use: ($item, item) -->
@@ -45,7 +44,7 @@ export default {
       query: "",
       current: -1,
       loading: false,
-      selectFirst: false,
+      selectFirst: true,
       queryParamName: "q",
     };
   },
@@ -72,19 +71,12 @@ export default {
         return this.reset();
       }
 
-      if (this.minChars && this.query.length < this.minChars) {
-        return;
-      }
-
       this.loading = true;
 
       this.fetchData().then((response) => {
         if (response && this.query) {
           let data = response.data;
-          data = this.prepareResponseData
-            ? this.prepareResponseData(data)
-            : data;
-          this.items = this.limit ? data.slice(0, this.limit) : data;
+          this.items = data.slice(0, 7);
           this.current = -1;
           this.loading = false;
 
@@ -96,14 +88,6 @@ export default {
     },
 
     async fetchData() {
-      if (!this.$http) {
-        return console.log("You need to provide a HTTP client", this);
-      }
-
-      if (!this.src) {
-        return console.log("You need to set the `src` property", this);
-      }
-
       const src = this.queryParamName ? this.src : this.src + this.query;
 
       const params = this.queryParamName
@@ -122,7 +106,7 @@ export default {
 
     reset() {
       this.items = [];
-      this.query = "";
+      //this.query = "";
       this.loading = false;
     },
 
@@ -161,9 +145,15 @@ export default {
     },
 
     onHit(e) {
-      console.log("onHit", e);
-      this.$emit("update", e);
+      this.query = e.title;
+      this.$emit("updateValue", e.title);
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.active {
+  background-color: #1095c1;
+}
+</style>
