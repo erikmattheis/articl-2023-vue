@@ -31,6 +31,14 @@
         </router-link>
       </li>
     </ul>
+
+    <ul>
+      <li v-for="articl in articls || []" :key="articl.id">
+        <h3>{{ articl.title }}</h3>
+        <small>{{ articl.authors }}</small>
+        <small>{{ articl. }}</small>
+      </li>
+    </ul>
   </article>
 </template>
 
@@ -47,6 +55,7 @@ export default {
       slug: null,
       title: "",
       categories: [],
+      articls: [],
     };
   },
   created() {
@@ -73,6 +82,7 @@ export default {
           metaDescription,
         });
         this.categories = result.categories;
+        this.articls = result.articls;
       } catch (error) {
         this.$store.dispatch("setError", error);
       } finally {
