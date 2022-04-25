@@ -192,6 +192,7 @@ export default {
             abstract: this.abstract,
             affiliation: this.affiliation,
             articlUrl: this.articlUrl,
+            type: this.type,
             authors: this.authors,
             categorySlug: this.categorySlug,
             journal: this.journal,
@@ -227,4 +228,13 @@ export default {
 </script>
 
 <style scoped>
+form input.another {
+  padding-right: 4.6em;
+}
+form input.another button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4.4em;
+}
 </style>

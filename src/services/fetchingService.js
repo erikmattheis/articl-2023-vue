@@ -74,11 +74,11 @@ function clearTable(result) {
 }
 */
 //Handle the Async fetch of Pubmed Data
-async function api(searchbar) {
+async function api(surl) {
   let base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
   let mode = "efetch";
-  let db = getDB(searchbar);
-  let id = getId(searchbar);
+  let db = getDB(surl);
+  let id = getId(surl);
   let type = "xml";
   let request = new Request(
     `${base_url}${mode}.fcgi?db=${db}&id=${id}&rettype=abstract&retmode=${type}`
@@ -89,7 +89,9 @@ async function api(searchbar) {
     // a new DOM object out of it!
     return results.text().then((str) => {
       let responseDoc = new DOMParser().parseFromString(str, "application/xml");
-      let result = {};
+      let result = {
+        authors: "",
+      };
       switch (db) {
         case "pmc":
           try {
@@ -102,12 +104,15 @@ async function api(searchbar) {
             const authors = responseDoc.querySelectorAll("contrib");
             authors.forEach(function (elem) {
               if (elem.querySelector("surname").textContent !== "undefined") {
-                result.authors +=
-                  elem.querySelector("surname").textContent + " ";
-                result.authors +=
-                  elem.querySelector("given-names").textContent + " ";
-                result.authors +=
-                  elem.querySelector("degrees").textContent + "<br><br>";
+                result.authors += elem.querySelector("surname")
+                  ? elem.querySelector("surname").textContent + " "
+                  : "";
+                result.authors += elem.querySelector("given-names")
+                  ? elem.querySelector("given-names").textContent + " "
+                  : "";
+                result.authors += elem.querySelector("degrees")
+                  ? elem.querySelector("degrees").textContent + "<br><br>"
+                  : "";
               }
             });
           } catch (error) {
@@ -158,11 +163,12 @@ async function api(searchbar) {
           try {
             const authors = responseDoc.querySelectorAll("Author");
             authors.forEach(function (elem) {
-              result.authors +=
-                elem.querySelector("LastName").textContent +
-                " " +
-                elem.querySelector("ForeName").textContent +
-                ",";
+              result.authors += elem.querySelector("LastName")
+                ? elem.querySelector("LastName").textContent + " "
+                : "";
+              result.authors += elem.querySelector("ForeName")
+                ? elem.querySelector("ForeName").textContent + ","
+                : "<br><br>";
             });
           } catch (error) {
             console.error(error);
@@ -206,20 +212,17 @@ async function api(searchbar) {
   });
 }
 
-function scrape(searchbar) {
-  const url = "https://cors-anywhere.herokuapp.com/" + searchbar;
-  let db = getDB(searchbar);
+async function scrape(surl) {
+  const url = "https://cors-anywhere.herokuapp.com/" + surl;
+  let db = getDB(surl);
 
-  fetch(url)
+  return fetch(url)
     .then(function (response) {
-      // The API call was successful!
       return response.text();
     })
     .then(function (html) {
-      // Convert the HTML string into a document object
       var parser = new DOMParser();
       var responseDoc = parser.parseFromString(html, "text/html");
-      // Manipulate DOM Objects
 
       let result = {};
       switch (db) {
@@ -234,7 +237,11 @@ function scrape(searchbar) {
           try {
             result.authors = responseDoc.querySelectorAll(
               '[class="contrib-group fm-author"]'
-            )[0].textContent;
+            )
+              ? responseDoc.querySelectorAll(
+                  '[class="contrib-group fm-author"]'
+                )[0].textContent
+              : "";
           } catch (error) {
             console.error(error);
           }
@@ -280,7 +287,10 @@ function scrape(searchbar) {
           try {
             result.authors = responseDoc.querySelectorAll(
               '[class="authors-list"]'
-            )[0].textContent;
+            )
+              ? responseDoc.querySelectorAll('[class="authors-list"]')[0]
+                  .textContent
+              : "";
           } catch (error) {
             console.error(error);
           }
@@ -377,8 +387,54 @@ function download(filename, text) {
   document.body.removeChild(element);
 }
 
+const scraper = async (url) => {
+  switch (new URL(url).hostname) {
+    case "pubmed.ncbi.nlm.nih.gov":
+      return api(url);
+    case "www.ncbi.nlm.nih.gov":
+      return api(url);
+    case "pubs.rsna.org":
+      return Promise.reject("pubs.rsna.org not implemented");
+    /*
+    loadDOIMetadata(
+      a.pathname.split("/")[a.pathname.split("/").length - 2] +
+        "/" +
+        a.pathname.split("/")[a.pathname.split("/").length - 1],
+      callback
+    );
+    */
+    case "www.ajronline.org":
+      return Promise.reject("www.ajronline.org not implemented");
+    /*
+    loadDOIMetadata(
+      a.pathname.split("/")[a.pathname.split("/").length - 2] +
+        "/" +
+        a.pathname.split("/")[a.pathname.split("/").length - 1]
+    );
+    */
+    case "www.jultrasoundmed.org":
+      return Promise.reject("wwww.jultrasoundmed.org not implemented");
+    //loadMetadataFromDocumentWithDOIInMetaTag(
+    case "jnm.snmjournals.org":
+      return Promise.reject("jnm.snmjournals.org not implemented");
+    //loadMetadataFromDocumentWithDOIInMetaTag();
+    case "www.ajnr.org":
+      return Promise.reject("wwww.ajnr.org not implemented");
+    //loadMetadataFromDocumentWithDOIInMetaTag();
+    case "www.jvir.org":
+      return Promise.reject("www.jvir.org not implemented");
+    case "www.youtube.com":
+      return Promise.reject("wwww.youtube.com not implemented");
+    case "journals.aps.org":
+      return api(url);
+    case "journals.xxxxx.org":
+      return scrape(url);
+    default:
+      return Promise.reject("Unknown domain not implemented");
+  }
+};
 async function fetchData(url) {
-  const result = await api(url);
+  const result = await scraper(url);
   return result;
 }
-export { copyToClipboard, api, scrape, generateJSON, fetchData };
+export { copyToClipboard, generateJSON, fetchData };

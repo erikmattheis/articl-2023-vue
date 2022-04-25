@@ -31,12 +31,16 @@
         </router-link>
       </li>
     </ul>
-
     <ul>
-      <li v-for="articl in articls || []" :key="articl.id">
-        <h3>{{ articl.title }}</h3>
-        <small>{{ articl.authors }}</small>
-        <small>{{ articl.journal }}</small>
+      <li v-for="type in articls || []" :key="type">
+        <h2>{{ type[0].type }}</h2>
+        <ul>
+          <li v-for="articl in type || []" :key="articl.id">
+            <h3>{{ articl.title }}</h3>
+            <small>{{ articl.authors }}</small>
+            <small>{{ articl.journal }}</small>
+          </li>
+        </ul>
       </li>
     </ul>
   </article>
@@ -82,7 +86,10 @@ export default {
           metaDescription,
         });
         this.categories = result.categories;
-        this.articls = result.articls;
+        //console.log("esult.articls", result.articls);
+        console.log("before", result.articls);
+        this.articls = result.articls.groupBy((articl) => articl.type);
+        console.log("after", this.articls);
       } catch (error) {
         this.$store.dispatch("setError", error);
       } finally {
