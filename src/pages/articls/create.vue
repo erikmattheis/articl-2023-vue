@@ -17,23 +17,59 @@
       <label for="">Title</label>
       <input v-model="title" name="" id="" autocomplete="off" />
 
-      <label for="">Authors</label>
-      <input v-model="authors" name="" id="" autocomplete="off" />
+      <label for="authors">Authors</label>
+      <input v-model="authors" name="authors" id="authors" autocomplete="off" />
 
-      <label for="">Affiliation</label>
-      <input v-model="affiliation" name="" id="" autocomplete="off" />
+      <label for="affiliation">Affiliation</label>
+      <input
+        v-model="affiliation"
+        name="affiliation"
+        id="affiliation"
+        autocomplete="off"
+      />
 
-      <label for="">Journal</label>
-      <input v-model="journal" name="" id="" autocomplete="off" />
+      <label for="journal">Journal</label>
+      <input v-model="journal" name="journal" id="journal" autocomplete="off" />
 
       <label for="">Publication Year</label>
-      <input v-model="year" name="" id="" autocomplete="off" />
+      <input v-model="year" name="year" id="year" autocomplete="off" />
 
       <label for="">Publication Month</label>
-      <input v-model="month" name="" id="" autocomplete="off" />
+      <input v-model="month" name="month" id="month" autocomplete="off" />
 
       <label for="">Abstract</label>
-      <input v-model="abstract" name="" id="" autocomplete="off" />
+      <input
+        v-model="abstract"
+        name="abstract"
+        id="abstract"
+        autocomplete="off"
+      />
+
+      <label for="type">Link type</label>
+      <select v-model="type" name="type" id="type" autocomplete="off">
+        <optgroup value="Resources">
+          <option value="Conferences">Conferences</option>
+          <option value="Books">Books</option>
+          <option value="Journals">Journals</option>
+          <option value="Societies">Societies</option>
+          <option value="Websites">Websites</option>
+        </optgroup>
+
+        <optgroup value="Resources">
+          <option value="Review (OA)">Review (OA)</option>
+          <option value="Review (OA)">Review (PA)</option>
+          <option value="Research (OA)">Research (OA)</option>
+          <option value="Research (PA)">Research (PA)</option>
+          <option value="Web">Web</option>
+          <option value="on-medical journal articles">
+            Non-medical journal articles
+          </option>
+          <option value="Images">Images</option>
+          <option value="Presentations">Presentations</option>
+          <option value="Videos">Videos</option>
+          <option value="Podcast">Podcast</option>
+        </optgroup>
+      </select>
 
       <label for="status">Status</label>
       <select v-model="status" name="status" id="status">
@@ -90,6 +126,7 @@ export default {
       status: "Publish",
       success: false,
       title: "",
+      type: "",
       year: "",
     };
   },
