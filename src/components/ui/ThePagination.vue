@@ -5,7 +5,6 @@
         href="#"
         @click.prevent="onClickFirstPage"
         :class="isInFirstPage ? 'disabled' : ''"
-        :disabled="isInFirstPage"
         >First</a
       >
     </li>
@@ -14,7 +13,6 @@
         href="#"
         @click.prevent="onClickPreviousPage"
         :class="isInFirstPage ? 'disabled' : ''"
-        :disabled="isInFirstPage"
         >«</a
       >
     </li>
@@ -31,7 +29,6 @@
         href="#"
         @click.prevent="onClickNextPage"
         :class="isInLastPage ? 'disabled' : ''"
-        :disabled="isInLastPage"
         >»</a
       >
     </li>
@@ -40,7 +37,6 @@
         href="#"
         @click.prevent="onClickLastPage"
         :class="isInLastPage ? 'disabled' : ''"
-        :disabled="isInLastPage"
         >Last</a
       >
     </li>
@@ -52,10 +48,9 @@
 export default {
   name: "ThePagination",
   props: {
-    maxVisibleButtons: {
+    numberOfButtons: {
       type: Number,
-      required: false,
-      default: 7,
+      required: true,
     },
     totalPages: {
       type: Number,
@@ -77,29 +72,26 @@ export default {
       return this.currentPage === this.totalPages;
     },
     startPage() {
-      // When on the first page
       if (this.currentPage === 1) {
         return 1;
       }
-      // When on the last page
-      if (this.totalPages < this.maxVisibleButtons) {
+      if (this.totalPages < this.numberOfButtons) {
         return 1;
       }
       if (this.currentPage === this.totalPages) {
-        return this.totalPages - this.maxVisibleButtons + 1;
+        return this.totalPages - this.numberOfButtons + 1;
       }
-      // When in between
       return this.currentPage - 1;
     },
     endPage() {
       if (this.totalPages === 0) {
         return 1;
       }
-      if (this.totalPages < this.maxVisibleButtons) {
+      if (this.totalPages < this.numberOfButtons) {
         return this.totalPages;
       }
       return Math.min(
-        this.startPage + this.maxVisibleButtons - 1,
+        this.startPage + this.numberOfButtons - 1,
         this.totalPages
       );
     },
@@ -137,7 +129,6 @@ export default {
       this.$emit("pagechanged", this.currentPage + 1);
     },
     onClickLastPage() {
-      console.log("onClickLastPage");
       if (this.isInLastPage) {
         return false;
       }
@@ -153,30 +144,24 @@ export default {
 .pagination {
   list-style-type: none;
   float: right;
-  margin: 10px 0;
+  margin: 1rem 0;
   .pagination-item {
     display: inline-block;
     color: #ddd;
     a {
       text-decoration: none;
-      margin: 5px;
-      color: #2c3e50;
+      margin: 0.5rem;
     }
     a.disabled {
       color: #ccc;
-      cursor: no-drop;
+      cursor: default;
     }
     .active {
-      background-color: tomato;
+      background-color: --primary;
       color: #ffffff !important;
       font-weight: bold;
       padding: 3px 8px;
     }
   }
-}
-button[disabled],
-html input[disabled] {
-  cursor: default;
-  color: lightgray;
 }
 </style>

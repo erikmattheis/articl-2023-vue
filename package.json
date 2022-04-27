@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "@picocss/pico": "^1.5.0",
-    "@zhuowenli/vue-feather-icons": "^5.0.2",
     "axios": "^0.26.1",
     "core-js": "^3.8.3",
     "express": "^4.17.3",
@@ -65,7 +64,7 @@
     ]
   },
   "browserslist": [
-    "> 2%",
+    "> 1%",
     "not ie 11",
     "not op_mini all"
   ]
