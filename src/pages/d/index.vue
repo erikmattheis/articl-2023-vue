@@ -86,10 +86,7 @@ export default {
           metaDescription,
         });
         this.categories = result.categories;
-        //console.log("esult.articls", result.articls);
-        console.log("before", result.articls);
         this.articls = result.articls.groupBy((articl) => articl.type);
-        console.log("after", this.articls);
       } catch (error) {
         this.$store.dispatch("setError", error);
       } finally {

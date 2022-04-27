@@ -25,13 +25,21 @@
         <ul class="right">
           <li v-if="isLoggedIn">
             <router-link to="/users/me"
-              ><user-icon size="1.5x"></user-icon
+              ><vue-feather
+                size="2rem"
+                type="user"
+                aria-label="User"
+              ></vue-feather
             ></router-link>
             <a href="#" @click.prevent="logout" class="nav-user"> logout </a>
           </li>
           <li v-else>
             <router-link to="/login"
-              ><user-icon size="1.5x"></user-icon
+              ><vue-feather
+                size="2rem"
+                type="user"
+                aria-label="User"
+              ></vue-feather
             ></router-link>
           </li>
         </ul>
@@ -41,14 +49,14 @@
 </template>
 
 <script>
-import { UserIcon } from "@zhuowenli/vue-feather-icons";
+import VueFeather from "vue-feather";
 import { mapGetters } from "vuex";
 import localStorageService from "@/services/localStorageService";
 import { getRefreshTokenValue } from "@/services/tokenService";
 
 export default {
   components: {
-    UserIcon,
+    VueFeather,
   },
   data() {
     return {

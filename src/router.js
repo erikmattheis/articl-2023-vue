@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import homePage from "@/pages/index.vue";
 import createArticlPage from "@/pages/articls/create.vue";
+import listArticlsPage from "@/pages/articls/index.vue";
 import categoryPage from "@/pages/d/index.vue";
 import importCategoriesPage from "@/pages/categories/import-categories.vue";
 import registerPage from "@/pages/register.vue";
@@ -82,7 +83,11 @@ const router = createRouter({
       component: createArticlPage,
       props: true,
     },
-
+    {
+      name: "listArticlsPage",
+      path: "/articls",
+      component: listArticlsPage,
+    },
     { name: "NotFound", path: "/:notFound(.*)", component: NotFound },
   ],
 });
