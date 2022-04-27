@@ -31,12 +31,9 @@
         id="year"
         autocomplete="off"
       >
-        <option
-          value="i"
-          v-bind="year"
-          v-for="year in years"
-          v-bind:key="year"
-        ></option>
+        <option value="i" v-bind="year" v-for="year in years" v-bind:key="year">
+          {{ year }}
+        </option>
       </select>
 
       <label for="source">Source</label>
@@ -120,17 +117,15 @@ export default {
       buttonDisabled: false,
       totalPages: 1,
       pageNum: 1,
-      years: () => {
-        const year = new Date().getFullYear();
-        return Array.from(
-          { length: year - 1900 },
-          (value, index) => 1901 + index
-        );
-      },
+      years: 0,
     };
   },
   mounted() {
     this.articls = this.getArticls();
+    const now = new Date().getUTCFullYear();
+    this.years = Array(now - (now - 82))
+      .fill("")
+      .map((v, idx) => now - idx);
   },
   methods: {
     onTypeaheadHit(e) {
@@ -158,6 +153,9 @@ export default {
 </script>
 
 <style scoped>
+select {
+  overflow: scroll;
+}
 .containerClass {
   background-color: red;
 }

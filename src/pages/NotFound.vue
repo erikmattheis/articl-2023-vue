@@ -7,7 +7,8 @@
   </article>
 </template>
 
-
+<script>
+export default {
   mounted() {
     this.setTitleAndDescription();
   },
@@ -20,3 +21,6 @@
         metaDescription,
       });
     },
+  },
+};
+</script>
