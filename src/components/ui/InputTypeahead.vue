@@ -17,7 +17,8 @@
       @keydown.esc="reset"
       @blur="reset"
       @input="update"
-      id="typeaheadQuery"
+      :id="query"
+      :name="query"
     />
     <!-- the list -->
     <ul v-show="hasItems">
@@ -149,7 +150,7 @@ export default {
 
     onHit(e) {
       this.queryString = e.title;
-      this.$emit("updateValue", e.title);
+      //this.$emit("updateValue", e.title);
     },
   },
 };

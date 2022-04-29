@@ -42,8 +42,6 @@ body {
 </style>
 
 <style lang="scss">
-@import "~/node_modules/normalize.css/normalize.css";
-@import "~/node_modules/the-new-css-reset/css/reset.css";
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");

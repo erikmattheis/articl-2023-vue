@@ -3,36 +3,41 @@
     <h1>Articls</h1>
 
     <form>
+      <label for="title">Title</label>
+      <input-typeahead
+        src="/articls/title"
+        @update-value="onTypeaheadHit"
+        query="title"
+        @blur="getArticls"
+      />
+
+      <label for="journal">Journal</label>
+      <input-typeahead
+        src="/articls/journal"
+        @update-value="onTypeaheadHit"
+        query="journal"
+        @blur="getArticls"
+      />
+
       <label for="author">Author</label>
       <input-typeahead
         src="/articls/authors"
         @update-value="onTypeaheadHit"
         query="author"
+        @blur="getArticls"
       />
 
-      <label for="typeaheadQuery">Title</label>
-      <input-typeahead
-        src="/articls/title"
-        @update-value="onTypeaheadHit"
-        query="title"
-      />
-
-      <label for="journal">Journals</label>
-      <input-typeahead
-        src="/articls/journal"
-        @update-value="onTypeaheadHit"
-        query="journal"
-      />
-
+      <label for="year">Year</label>
       <select
         multiple="true"
         v-model="year"
         name="year"
         id="year"
         autocomplete="off"
+        @blur="getArticls"
       >
-        <option value="i" v-bind="year" v-for="year in years" v-bind:key="year">
-          {{ year }}
+        <option v-for="i in years" v-bind:key="i" @click="cclass = '#ff0000'">
+          {{ i }}
         </option>
       </select>
 
@@ -41,6 +46,7 @@
         src="/articls/source"
         @update-value="onTypeaheadHit"
         query="source"
+        @blur="getArticls"
       />
 
       <label for="type">Link type</label>
@@ -50,9 +56,10 @@
         name="type"
         id="type"
         autocomplete="off"
+        @blur="getArticls"
       >
         <option value="Review (OA)">Review (OA)</option>
-        <option value="Review (OA)">Review (PA)</option>
+        <option value="Review (PA)">Review (PA)</option>
         <option value="Research (OA)">Research (OA)</option>
         <option value="Research (PA)">Research (PA)</option>
         <option value="Web">Web</option>
@@ -65,12 +72,13 @@
         <option value="Podcast">Podcast</option>
       </select>
 
-      <label for="typeaheadQuery">Status</label>
-      <input-typeahead
-        src="/articls/status"
-        @update-value="onTypeaheadHit"
-        query="status"
-      />
+      <label for="status">Status</label>
+      <select v-model="status" name="status" id="status" @blur="getArticls">
+        <option value="Publish">Publish</option>
+        <option value="Draft">Draft</option>
+        <option value="Pending">Pending</option>
+        <option value="Trash">Trash</option>
+      </select>
     </form>
 
     <ul>
@@ -84,26 +92,8 @@
       @pagechanged="changePage"
       :number-of-buttons="5"
     />
-    <button
-      type="submit"
-      id="Create"
-      :aria-busy="buttonDisabled"
-      @click.prevent="
-        $router.push({
-          name: 'createaArticlPage',
-          params: { categorySlug: '0' },
-        })
-      "
-    >
-      <span v-if="!buttonDisabled">Create articl</span>
-    </button>
   </article>
 </template>
-
-
-    
-
-
 
 <script>
 import ThePagination from "@/components/ui/ThePagination.vue";
@@ -114,33 +104,56 @@ export default {
   data() {
     return {
       articls: [],
+      title: "",
+      journal: "",
+      authors: "",
+      year: [],
       buttonDisabled: false,
       totalPages: 1,
       pageNum: 1,
-      years: 0,
+      yearsStart: 1944,
+      years: [],
+      source: "",
+      type: ["Review (OA)"],
+      status: "Publish",
     };
   },
   mounted() {
     this.articls = this.getArticls();
-    const now = new Date().getUTCFullYear();
-    this.years = Array(now - (now - 82))
-      .fill("")
-      .map((v, idx) => now - idx);
+    this.years = [
+      ...Array(new Date().getUTCFullYear() - (this.yearsStart - 1)).keys(),
+    ]
+      .map((x) => this.yearsStart + x++)
+      .reverse();
+    console.log(this.years);
   },
   methods: {
     onTypeaheadHit(e) {
       console.log("e", e);
     },
-    getArticls() {
-      return this.$http({
+    async getArticls() {
+      const data = {
+        ...(this.title && { title: this.title }),
+        ...(this.journal && { journal: this.journal }),
+        ...(this.authors && { authors: this.authors }),
+
+        ...(this.year && { year: this.year }),
+        ...(this.source && { source: this.source }),
+        ...(this.type && { type: this.type }),
+        ...(this.status && { status: this.status }),
+      };
+
+      return await this.$http({
         method: "GET",
         url: "/articls",
+        data,
       })
         .then((result) => {
           if (result?.data) {
-            return result.data;
+            console.log("result.data.results", result.data.results);
+            return result.data.results;
           }
-          return this.$store.dispatch("setError", result);
+          this.$store.dispatch("setError", result);
         })
         .catch((error) => this.$store.dispatch("setError", error));
     },
@@ -152,15 +165,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 select {
   overflow: scroll;
-}
-.containerClass {
-  background-color: red;
-}
-.success {
-  border: 8px solid green;
-  background-color: honeydew;
 }
 </style>
