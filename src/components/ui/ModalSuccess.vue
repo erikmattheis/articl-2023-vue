@@ -1,6 +1,6 @@
 <template>
   <div class="modal-container" v-if="successTitle" @click.prevent="close()">
-    <dialog open class="modal">
+    <dialog open class="modal" @click.stop>
       <article class="max-container-width">
         <header>
           <a

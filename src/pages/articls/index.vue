@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>Articls</h1>
+    <h1>Articls {{ articls.length }}</h1>
 
     <form>
       <label for="title">Title</label>
@@ -8,7 +8,7 @@
         src="/articls/title"
         @update-value="onTypeaheadHit"
         query="title"
-        @blur="getArticls"
+        @blur="updateArticls"
       />
 
       <label for="journal">Journal</label>
@@ -16,7 +16,7 @@
         src="/articls/journal"
         @update-value="onTypeaheadHit"
         query="journal"
-        @blur="getArticls"
+        @blur="updateArticls"
       />
 
       <label for="author">Author</label>
@@ -24,7 +24,7 @@
         src="/articls/authors"
         @update-value="onTypeaheadHit"
         query="author"
-        @blur="getArticls"
+        @blur="updateArticls"
       />
 
       <label for="year">Year</label>
@@ -34,7 +34,7 @@
         name="year"
         id="year"
         autocomplete="off"
-        @blur="getArticls"
+        @blur="updateArticls"
       >
         <option v-for="i in years" v-bind:key="i" @click="cclass = '#ff0000'">
           {{ i }}
@@ -46,7 +46,7 @@
         src="/articls/source"
         @update-value="onTypeaheadHit"
         query="source"
-        @blur="getArticls"
+        @blur="updateArticls"
       />
 
       <label for="type">Link type</label>
@@ -56,7 +56,7 @@
         name="type"
         id="type"
         autocomplete="off"
-        @blur="getArticls"
+        @blur="updateArticls"
       >
         <option value="Review (OA)">Review (OA)</option>
         <option value="Review (PA)">Review (PA)</option>
@@ -73,7 +73,7 @@
       </select>
 
       <label for="status">Status</label>
-      <select v-model="status" name="status" id="status" @blur="getArticls">
+      <select v-model="status" name="status" id="status" @blur="updateArticls">
         <option value="Publish">Publish</option>
         <option value="Draft">Draft</option>
         <option value="Pending">Pending</option>
@@ -119,7 +119,7 @@ export default {
     };
   },
   mounted() {
-    this.articls = this.getArticls();
+    //this.articls = this.getArticls();
     this.years = [
       ...Array(new Date().getUTCFullYear() - (this.yearsStart - 1)).keys(),
     ]
@@ -129,9 +129,14 @@ export default {
   },
   methods: {
     onTypeaheadHit(e) {
+      this.updateArticls();
       console.log("e", e);
     },
+    async updateArticls() {
+      this.articls = await this.getArticls();
+    },
     async getArticls() {
+      console.log("updateArticls");
       const data = {
         ...(this.title && { title: this.title }),
         ...(this.journal && { journal: this.journal }),
@@ -142,7 +147,7 @@ export default {
         ...(this.type && { type: this.type }),
         ...(this.status && { status: this.status }),
       };
-
+      console.log("data", data);
       return await this.$http({
         method: "GET",
         url: "/articls",
@@ -151,7 +156,7 @@ export default {
         .then((result) => {
           if (result?.data) {
             console.log("result.data.results", result.data.results);
-            return result.data.results;
+            return JSON.parse(result.data.results);
           }
           this.$store.dispatch("setError", result);
         })
