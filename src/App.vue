@@ -65,10 +65,6 @@ ul {
   padding-left: 0;
 }
 
-li {
-  list-style-type: none !important;
-}
-
 small {
   opacity: 0.7;
 }
