@@ -86,33 +86,90 @@
         @keyup="updateArticls"
       />
 
-      <label for="type"
-        >Link type
-        <small v-for="t in type" v-bind:key="t"> {{ t }} </small>
-      </label>
-      <select
-        multiple="true"
-        v-model="type"
-        name="type"
-        id="type"
-        autocomplete="off"
-        @blur="updateArticls"
-        @change="updateArticls"
-      >
-        <option value="Review (OA)">Review (OA)</option>
-        <option value="Review (PA)">Review (PA)</option>
-        <option value="Research (OA)">Research (OA)</option>
-        <option value="Research (PA)">Research (PA)</option>
-        <option value="Web">Web</option>
-        <option value="on-medical journal articles">
-          Non-medical journal articles
-        </option>
-        <option value="Images">Images</option>
-        <option value="Presentations">Presentations</option>
-        <option value="Videos">Videos</option>
-        <option value="Podcast">Podcast</option>
-      </select>
-
+      <fieldset>
+        Type
+        <label for="reviewOpenAccess">
+          <input
+            type="checkbox"
+            id="reviewOpenAccess"
+            value="Review (OA)"
+            v-model="type"
+            checked="checked"
+          />Review (OA)</label
+        >
+        <label for="reviewPaidAccess">
+          <input
+            type="checkbox"
+            id="reviewPaidAccess"
+            value="Review (PA)"
+            v-model="type"
+            checked="checked"
+          />Review (PA)</label
+        >
+        <label for="researchOpenAccess">
+          <input
+            type="checkbox"
+            id="researchOpenAccess"
+            value="Research (OA)"
+            v-model="type"
+            checked="checked"
+          />Research (OA)</label
+        >
+        <label for="researchPaidAccess">
+          <input
+            type="checkbox"
+            id="researchPaidAccess"
+            value="Research (PA)"
+            v-model="type"
+            checked="checked"
+          />Research (PA)</label
+        >
+        <label for="web">
+          <input
+            type="checkbox"
+            id="web"
+            value="Web"
+            v-model="type"
+            checked="checked"
+          />Web</label
+        >
+        <label for="nonMedicalJournal">
+          <input
+            type="checkbox"
+            id="nonMedicalJournal"
+            value="Non-medical journal articles"
+            v-model="type"
+            checked="checked"
+          />Non-medical journal articles</label
+        >
+        <label for="images">
+          <input
+            type="checkbox"
+            id="images"
+            value="Images"
+            v-model="type"
+            checked="checked"
+          />Images</label
+        >
+        <label for="presentations">
+          <input
+            type="checkbox"
+            id="presentations"
+            value="Presentations"
+            v-model="type"
+            checked="checked"
+          />Presentations</label
+        >
+        <label for="videos">
+          <input
+            type="checkbox"
+            id="videos"
+            value="Videos"
+            v-model="type"
+            checked="checked"
+          />Videos</label
+        >
+      </fieldset>
       <label for="status">Status</label>
       <select v-model="status" name="status" id="status" @blur="updateArticls">
         <option value="Publish">Publish</option>
@@ -157,7 +214,17 @@ export default {
       yearsStart: 1944,
       years: [],
       source: "",
-      type: ["Review (OA)"],
+      type: [
+        "Review (OA)",
+        "Review (PA)",
+        "Research (OA)",
+        "Research (PA)",
+        "Web",
+        "Non-medical journal articles",
+        "Images",
+        "Presentations",
+        "Videos",
+      ],
       status: "Publish",
       paramsCurrent: {},
     };
@@ -205,11 +272,7 @@ export default {
         ...(obj.yearComparison && { yearComparison: obj.yearComparison }),
         ...(obj.year && { year: obj.year }),
         ...(obj.source && { source: obj.source }),
-        ...(obj.type?.length && {
-          type: Object.values(obj.type)
-            .map((n, index) => `type[${index}]=${n}`)
-            .join("&"),
-        }),
+        ...(obj.type?.length && obj.type.length !== 9 && { type: obj.type }),
         ...(obj.status && { status: obj.status }),
       };
       if (!isEqual(params, this.paramsCurrent)) {
