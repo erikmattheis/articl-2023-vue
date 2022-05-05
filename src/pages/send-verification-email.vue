@@ -1,6 +1,6 @@
 <template>
   <article>
-    <p v-html="result"></p>
+    <p v-text="result"></p>
   </article>
 </template>
 

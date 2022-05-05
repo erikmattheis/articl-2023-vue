@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1>{{ resultTitle }}</h1>
-    <p v-html="result"></p>
+    <p v-text="result"></p>
   </article>
 </template>
 

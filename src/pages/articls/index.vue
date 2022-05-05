@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>Articls {{ articls?.length }}</h1>
+    <h1>Articls</h1>
     <div class="grid">
       <form>
         <label for="title">Title</label>
@@ -72,7 +72,7 @@
           autocomplete="off"
           @change="updateArticls"
         >
-          <option v-for="i in years" v-bind:key="i" @click="cclass = '#ff0000'">
+          <option v-for="i in years" v-bind:key="i">
             {{ i }}
           </option>
         </select>
@@ -198,22 +198,31 @@
           </fieldset>
         </div>
       </form>
-
-      <ol>
-        <li
-          v-for="(articl, index) in articls"
-          :key="articl.id"
-          :class="{ 'light-bg': index % 2 === 0 }"
-        >
-          {{ index % 2 === 0 }}<br />
-          {{ articl.title }}
-        </li>
-      </ol>
+      <div>
+        <ul>
+          <li v-text="descriptionTitle"></li>
+          <li v-text="descriptionAuthors"></li>
+          <li v-text="descriptionJournal"></li>
+          <li v-text="descriptionYear"></li>
+          <li v-text="descriptionType"></li>
+          <li v-text="descriptionStatus"></li>
+        </ul>
+        <ol>
+          <li
+            v-for="(articl, index) in articls"
+            :key="articl.id"
+            :class="{ 'light-bg': index % 2 === 0 }"
+          >
+            {{ index % 2 === 0 }}<br />
+            {{ articl.title }}
+          </li>
+        </ol>
+      </div>
     </div>
     <the-pagination
       v-if="totalPages > 1"
       :total-pages="totalPages"
-      :current-page="pageNum"
+      :current-page="page"
       @pagechanged="changePage"
       :number-of-buttons="5"
     />
@@ -237,7 +246,7 @@ export default {
       yearComparison: "after",
       buttonDisabled: false,
       totalPages: 1,
-      pageNum: 1,
+      page: 1,
       yearsStart: 1944,
       years: [],
       source: "",
@@ -257,26 +266,47 @@ export default {
     };
   },
   mounted() {
-    //this.articls = this.getArticls();
     this.years = [
       ...Array(new Date().getUTCFullYear() - (this.yearsStart - 1)).keys(),
     ]
       .map((x) => this.yearsStart + x++)
       .reverse();
   },
+  computed: {
+    descriptionTitle() {
+      return this.title ? `Title begins with ${this.title}` : ``;
+    },
+    descriptionAuthors() {
+      return this.authors ? `Authors contains ${this.authors}` : ``;
+    },
+    descriptionJournal() {
+      return this.journal ? `Journal is ${this.journal}` : ``;
+    },
+    descriptionYear() {
+      return this.year ? `Year is ${this.yearComparison} ${this.year}` : ``;
+    },
+    descriptionType() {
+      return this.type ? `Type is one of ${this.type.map((x) => " " + x)}` : "";
+    },
+    descriptionStatus() {
+      return this.status ? `Status is one of ${this.status}` : ``;
+    },
+  },
+
   methods: {
     onTypeaheadHit() {
       this.updateArticls();
     },
     async updateArticls() {
-      console.log("updateArticls");
       const params = this.assembleParams(this);
       if (params) {
-        this.articls = await this.getArticls(params);
+        const result = await this.getArticls(params);
+        this.result = result.results;
+        this.totalPages = result.totalPages;
+        this.page = result.page;
       }
     },
     async getArticls(params) {
-      console.log("params", params);
       return await this.$http({
         method: "GET",
         url: "/articls",
@@ -284,14 +314,13 @@ export default {
       })
         .then((result) => {
           if (result?.data) {
-            return result.data.results;
+            return result.data;
           }
           this.$store.dispatch("setError", result);
         })
         .catch((error) => this.$store.dispatch("setError", error));
     },
     assembleParams(obj) {
-      console.log("yearComparison", this.yearComparison);
       const params = {
         ...(obj.title && { title: obj.title }),
         ...(obj.journal && { journal: obj.journal }),
@@ -305,14 +334,12 @@ export default {
       };
       if (!isEqual(params, this.paramsCurrent)) {
         this.paramsCurrent = structuredClone(params);
-        console.log(params);
         return params;
       }
       return false;
     },
     changePage(page) {
-      console.log("page", page);
-      this.pageNum = page;
+      this.page = page;
     },
   },
 };

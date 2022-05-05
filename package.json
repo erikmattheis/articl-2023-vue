@@ -62,7 +62,15 @@
           "src/**/*.vue"
         ]
       }
-    ]
+    ],
+    "rules": {
+      "max-len": [
+        "warning",
+        {
+          "code": 120
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",
