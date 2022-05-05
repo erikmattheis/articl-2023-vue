@@ -85,98 +85,119 @@
         @blur="updateArticls"
         @keyup="updateArticls"
       />
+      <div class="grid">
+        <fieldset>
+          Type
+          <label>
+            <input
+              type="checkbox"
+              value="Review (OA)"
+              v-model="type"
+              checked="checked"
+            />Review (OA)</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Review (PA)"
+              v-model="type"
+              checked="checked"
+            />Review (PA)</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Research (OA)"
+              v-model="type"
+              checked="checked"
+            />Research (OA)</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Research (PA)"
+              v-model="type"
+              checked="checked"
+            />Research (PA)</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Web"
+              v-model="type"
+              checked="checked"
+            />Web</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Non-medical journal articles"
+              v-model="type"
+              checked="checked"
+            />Non-medical journal articles</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Images"
+              v-model="type"
+              checked="checked"
+            />Images</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Presentations"
+              v-model="type"
+              checked="checked"
+            />Presentations</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Videos"
+              v-model="type"
+              checked="checked"
+            />Videos</label
+          >
+        </fieldset>
 
-      <fieldset>
-        Type
-        <label for="reviewOpenAccess">
-          <input
-            type="checkbox"
-            id="reviewOpenAccess"
-            value="Review (OA)"
-            v-model="type"
-            checked="checked"
-          />Review (OA)</label
-        >
-        <label for="reviewPaidAccess">
-          <input
-            type="checkbox"
-            id="reviewPaidAccess"
-            value="Review (PA)"
-            v-model="type"
-            checked="checked"
-          />Review (PA)</label
-        >
-        <label for="researchOpenAccess">
-          <input
-            type="checkbox"
-            id="researchOpenAccess"
-            value="Research (OA)"
-            v-model="type"
-            checked="checked"
-          />Research (OA)</label
-        >
-        <label for="researchPaidAccess">
-          <input
-            type="checkbox"
-            id="researchPaidAccess"
-            value="Research (PA)"
-            v-model="type"
-            checked="checked"
-          />Research (PA)</label
-        >
-        <label for="web">
-          <input
-            type="checkbox"
-            id="web"
-            value="Web"
-            v-model="type"
-            checked="checked"
-          />Web</label
-        >
-        <label for="nonMedicalJournal">
-          <input
-            type="checkbox"
-            id="nonMedicalJournal"
-            value="Non-medical journal articles"
-            v-model="type"
-            checked="checked"
-          />Non-medical journal articles</label
-        >
-        <label for="images">
-          <input
-            type="checkbox"
-            id="images"
-            value="Images"
-            v-model="type"
-            checked="checked"
-          />Images</label
-        >
-        <label for="presentations">
-          <input
-            type="checkbox"
-            id="presentations"
-            value="Presentations"
-            v-model="type"
-            checked="checked"
-          />Presentations</label
-        >
-        <label for="videos">
-          <input
-            type="checkbox"
-            id="videos"
-            value="Videos"
-            v-model="type"
-            checked="checked"
-          />Videos</label
-        >
-      </fieldset>
-      <label for="status">Status</label>
-      <select v-model="status" name="status" id="status" @blur="updateArticls">
-        <option value="Publish">Publish</option>
-        <option value="Draft">Draft</option>
-        <option value="Pending">Pending</option>
-        <option value="Trash">Trash</option>
-      </select>
+        <fieldset>
+          Status
+          <label>
+            <input
+              type="checkbox"
+              value="Published"
+              v-model="status"
+              checked="checked"
+            />Published</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Draft"
+              v-model="status"
+              checked="checked"
+            />Draft</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Pending"
+              v-model="status"
+              checked="checked"
+            />Pending</label
+          >
+          <label>
+            <input
+              type="checkbox"
+              value="Trash"
+              v-model="status"
+              checked="checked"
+            />Trash</label
+          >
+        </fieldset>
+      </div>
     </form>
 
     <ul>
@@ -225,7 +246,7 @@ export default {
         "Presentations",
         "Videos",
       ],
-      status: "Publish",
+      status: ["Published", "Draft", "Pending", "Trash"],
       paramsCurrent: {},
     };
   },
@@ -273,7 +294,8 @@ export default {
         ...(obj.year && { year: obj.year }),
         ...(obj.source && { source: obj.source }),
         ...(obj.type?.length && obj.type.length !== 9 && { type: obj.type }),
-        ...(obj.status && { status: obj.status }),
+        ...(obj.status?.length &&
+          obj.status.length !== 4 && { status: obj.status }),
       };
       if (!isEqual(params, this.paramsCurrent)) {
         this.paramsCurrent = structuredClone(params);
