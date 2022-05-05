@@ -20,10 +20,10 @@
       />
       <label for="password"
         >Password
-        <small class="lighter left-space" v-if="passwordComplexity < 3">
+        <small class="left-space" v-if="passwordComplexity < 3">
           Use upper- and lowercase, numerical and special characters.
         </small>
-        <small class="lighter left-space" v-else-if="password.length < 8">
+        <small class="left-space" v-else-if="password.length < 8">
           Please use 8 or more characters.
         </small>
       </label>

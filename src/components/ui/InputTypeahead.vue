@@ -19,6 +19,7 @@
       @input="update"
       :id="query"
       :name="query"
+      ref="input"
     />
     <!-- the list -->
     <ul v-show="hasItems">
@@ -48,7 +49,15 @@ export default {
       queryString: "",
     };
   },
-
+  mounted() {
+    this.$refs.input.addEventListener(
+      "blur",
+      () => {
+        // it will work now
+      },
+      true
+    );
+  },
   computed: {
     hasItems() {
       return this.items.length > 0;
@@ -112,6 +121,7 @@ export default {
       this.items = [];
       //this.queryString = "";
       this.loading = false;
+      this.$emit("updateValue", this.queryString);
     },
 
     setActive(index) {

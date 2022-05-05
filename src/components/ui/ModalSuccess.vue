@@ -91,7 +91,7 @@ section div {
   min-width: calc(100% - 6rem);
   padding: 1rem;
   background-color: #cfa;
-  color: #00701a;
+  color: #0071001a;
 }
 
 .tab,

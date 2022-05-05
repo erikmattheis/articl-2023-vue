@@ -10,19 +10,11 @@
   <modal-success></modal-success>
 </template>
 
-
-
 <script>
 import ModalError from "@/components/ui/ModalError.vue";
 import ModalSuccess from "@/components/ui/ModalSuccess.vue";
 import TheHeader from "@/components/layout/TheHeader.vue";
 import TheFooter from "@/components/layout/TheFooter.vue";
-
-/* 1939 .js
- *  538 .vue
- *
- * 2706 .js
- ****/
 
 export default {
   components: {
@@ -35,16 +27,16 @@ export default {
 </script>
 
 <style lang="css">
-body {
-  border-radius: 0;
-  font-size: 12px;
-}
 </style>
 
 <style lang="scss">
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+body {
+  border-radius: 0;
+}
 
 body,
 input:-webkit-autofill::first-line,
@@ -64,7 +56,8 @@ body {
 body * {
   border-radius: 0 !important;
 }
-body div form input[role="switch"] {
+body div form input[role="switch"],
+body div form input[type="radio"] {
   border-radius: 1rem !important;
 }
 
@@ -76,7 +69,7 @@ li {
   list-style-type: none !important;
 }
 
-.lighter {
+small {
   opacity: 0.7;
 }
 

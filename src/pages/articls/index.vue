@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>Articls {{ articls.length }}</h1>
+    <h1>Articls {{ articls?.length }}</h1>
 
     <form>
       <label for="title">Title</label>
@@ -9,6 +9,7 @@
         @update-value="onTypeaheadHit"
         query="title"
         @blur="updateArticls"
+        @keyup="updateArticls"
       />
 
       <label for="journal">Journal</label>
@@ -17,6 +18,7 @@
         @update-value="onTypeaheadHit"
         query="journal"
         @blur="updateArticls"
+        @keyup="updateArticls"
       />
 
       <label for="author">Author</label>
@@ -25,16 +27,50 @@
         @update-value="onTypeaheadHit"
         query="author"
         @blur="updateArticls"
+        @keyup="updateArticls"
       />
+
+      <label>Year published</label>
+
+      <label class="horizontal" for="after">
+        <input
+          name="yearComparison"
+          type="radio"
+          id="after"
+          value="after"
+          v-model="yearComparison"
+          checked="checked"
+        />
+        after
+      </label>
+      <label class="horizontal" for="before">
+        <input
+          name="yearComparison"
+          type="radio"
+          id="before"
+          value="before"
+          v-model="yearComparison"
+        />
+        before
+      </label>
+      <label for="exactly" class="horizontal"
+        ><input
+          name="yearComparison"
+          type="radio"
+          id="exactly"
+          value="exactly"
+          v-model="yearComparison"
+        />
+        exactly
+      </label>
 
       <label for="year">Year</label>
       <select
-        multiple="true"
         v-model="year"
         name="year"
         id="year"
         autocomplete="off"
-        @blur="updateArticls"
+        @change="updateArticls"
       >
         <option v-for="i in years" v-bind:key="i" @click="cclass = '#ff0000'">
           {{ i }}
@@ -47,9 +83,13 @@
         @update-value="onTypeaheadHit"
         query="source"
         @blur="updateArticls"
+        @keyup="updateArticls"
       />
 
-      <label for="type">Link type</label>
+      <label for="type"
+        >Link type
+        <small v-for="t in type" v-bind:key="t"> {{ t }} </small>
+      </label>
       <select
         multiple="true"
         v-model="type"
@@ -57,6 +97,7 @@
         id="type"
         autocomplete="off"
         @blur="updateArticls"
+        @change="updateArticls"
       >
         <option value="Review (OA)">Review (OA)</option>
         <option value="Review (PA)">Review (PA)</option>
@@ -96,6 +137,7 @@
 </template>
 
 <script>
+import { isEqual } from "lodash";
 import ThePagination from "@/components/ui/ThePagination.vue";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 export default {
@@ -107,7 +149,8 @@ export default {
       title: "",
       journal: "",
       authors: "",
-      year: [],
+      year: 1944,
+      yearComparison: "after",
       buttonDisabled: false,
       totalPages: 1,
       pageNum: 1,
@@ -116,6 +159,7 @@ export default {
       source: "",
       type: ["Review (OA)"],
       status: "Publish",
+      paramsCurrent: {},
     };
   },
   mounted() {
@@ -125,42 +169,55 @@ export default {
     ]
       .map((x) => this.yearsStart + x++)
       .reverse();
-    console.log(this.years);
   },
   methods: {
-    onTypeaheadHit(e) {
+    onTypeaheadHit() {
       this.updateArticls();
-      console.log("e", e);
     },
     async updateArticls() {
-      this.articls = await this.getArticls();
-    },
-    async getArticls() {
       console.log("updateArticls");
-      const data = {
-        ...(this.title && { title: this.title }),
-        ...(this.journal && { journal: this.journal }),
-        ...(this.authors && { authors: this.authors }),
-
-        ...(this.year && { year: this.year }),
-        ...(this.source && { source: this.source }),
-        ...(this.type && { type: this.type }),
-        ...(this.status && { status: this.status }),
-      };
-      console.log("data", data);
+      const params = this.assembleParams(this);
+      if (params) {
+        this.articls = await this.getArticls(params);
+      }
+    },
+    async getArticls(params) {
+      console.log("params", params);
       return await this.$http({
         method: "GET",
         url: "/articls",
-        data,
+        params,
       })
         .then((result) => {
           if (result?.data) {
-            console.log("result.data.results", result.data.results);
-            return JSON.parse(result.data.results);
+            return result.data.results;
           }
           this.$store.dispatch("setError", result);
         })
         .catch((error) => this.$store.dispatch("setError", error));
+    },
+    assembleParams(obj) {
+      console.log("yearComparison", this.yearComparison);
+      const params = {
+        ...(obj.title && { title: obj.title }),
+        ...(obj.journal && { journal: obj.journal }),
+        ...(obj.authors && { authors: obj.authors }),
+        ...(obj.yearComparison && { yearComparison: obj.yearComparison }),
+        ...(obj.year && { year: obj.year }),
+        ...(obj.source && { source: obj.source }),
+        ...(obj.type?.length && {
+          type: Object.values(obj.type)
+            .map((n, index) => `type[${index}]=${n}`)
+            .join("&"),
+        }),
+        ...(obj.status && { status: obj.status }),
+      };
+      if (!isEqual(params, this.paramsCurrent)) {
+        this.paramsCurrent = structuredClone(params);
+        console.log(params);
+        return params;
+      }
+      return false;
     },
     changePage(page) {
       console.log("page", page);
@@ -170,8 +227,12 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 select {
   overflow: scroll;
+}
+.horizontal {
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 </style>
