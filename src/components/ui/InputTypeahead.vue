@@ -1,12 +1,5 @@
 <template>
   <div>
-    <!-- optional indicators -->
-    <i class="fa fa-spinner fa-spin" v-if="loading"></i>
-    <template v-else>
-      <i class="fa fa-search" v-show="isEmpty"></i>
-      <i class="fa fa-times" v-show="isDirty" @click="reset"></i>
-    </template>
-    <!-- the input field -->
     <input
       type="text"
       autocomplete="off"
@@ -160,7 +153,7 @@ export default {
 
     onHit(e) {
       this.queryString = e.title;
-      //this.$emit("updateValue", e.title);
+      this.$emit("updateValue", { value: e.title, field: this.query });
     },
   },
 };

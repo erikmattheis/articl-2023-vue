@@ -1,6 +1,8 @@
 <template>
   <article>
     <h1>Articls</h1>
+    totalPages:{{ totalPages }}<br />
+    page:{{ page }}<br />
     <div class="grid">
       <form>
         <label for="title">Title</label>
@@ -12,7 +14,7 @@
           @keyup="updateArticls"
         />
 
-        <label for="journal">Journal</label>
+        <label for="journal">Journal {{ journal }}</label>
         <input-typeahead
           src="/articls/journal"
           @update-value="onTypeaheadHit"
@@ -199,14 +201,16 @@
         </div>
       </form>
       <div>
-        <ul>
-          <li v-text="descriptionTitle"></li>
-          <li v-text="descriptionAuthors"></li>
-          <li v-text="descriptionJournal"></li>
-          <li v-text="descriptionYear"></li>
-          <li v-text="descriptionType"></li>
-          <li v-text="descriptionStatus"></li>
-        </ul>
+        <small>
+          <ul>
+            <li v-text="descriptionTitle"></li>
+            <li v-text="descriptionAuthors"></li>
+            <li v-text="journal"></li>
+            <li v-text="descriptionYear"></li>
+            <li v-text="descriptionType"></li>
+            <li v-text="descriptionStatus"></li>
+          </ul>
+        </small>
         <ol>
           <li
             v-for="(articl, index) in articls"
@@ -274,6 +278,7 @@ export default {
   },
   computed: {
     descriptionTitle() {
+      console.log(this.title ? `Title begins with ${this.title}` : ``);
       return this.title ? `Title begins with ${this.title}` : ``;
     },
     descriptionAuthors() {
@@ -286,22 +291,27 @@ export default {
       return this.year ? `Year is ${this.yearComparison} ${this.year}` : ``;
     },
     descriptionType() {
-      return this.type ? `Type is one of ${this.type.map((x) => " " + x)}` : "";
+      return this.type.length !== 9
+        ? `Type is one of ${this.type.map((x) => " " + x)}`
+        : "";
     },
     descriptionStatus() {
-      return this.status ? `Status is one of ${this.status}` : ``;
+      return this.status.length !== 4
+        ? `Status is one of ${this.status.map((x) => " " + x)}`
+        : "";
     },
   },
-
   methods: {
-    onTypeaheadHit() {
+    onTypeaheadHit(e) {
+      console.log("onTypeaheadHit", e);
+      this[e.field] = e.value;
       this.updateArticls();
     },
     async updateArticls() {
       const params = this.assembleParams(this);
       if (params) {
         const result = await this.getArticls(params);
-        this.result = result.results;
+        this.articls = result.results;
         this.totalPages = result.totalPages;
         this.page = result.page;
       }

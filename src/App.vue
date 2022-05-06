@@ -26,9 +26,6 @@ export default {
 };
 </script>
 
-<style lang="css">
-</style>
-
 <style lang="scss">
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
@@ -63,6 +60,11 @@ body div form input[type="radio"] {
 
 ul {
   padding-left: 0;
+  list-style-type: none !important;
+}
+
+ul li {
+  list-style-type: none !important;
 }
 
 small {
