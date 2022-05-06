@@ -1,8 +1,6 @@
 <template>
   <article>
     <h1>Articls</h1>
-    totalPages:{{ totalPages }}<br />
-    page:{{ page }}<br />
     <div class="grid">
       <form>
         <label for="title">Title</label>
@@ -217,7 +215,6 @@
             :key="articl.id"
             :class="{ 'light-bg': index % 2 === 0 }"
           >
-            {{ index % 2 === 0 }}<br />
             {{ articl.title }}
           </li>
         </ol>
@@ -276,6 +273,14 @@ export default {
       .map((x) => this.yearsStart + x++)
       .reverse();
   },
+  watch: {
+    page: {
+      handler(newValue) {
+        this.page = newValue;
+        this.updateArticls();
+      },
+    },
+  },
   computed: {
     descriptionTitle() {
       console.log(this.title ? `Title begins with ${this.title}` : ``);
@@ -312,7 +317,7 @@ export default {
         const result = await this.getArticls(params);
         this.articls = result.results;
         this.totalPages = result.totalPages;
-        this.page = result.page;
+        //this.page = result.page;
       }
     },
     async getArticls(params) {
@@ -340,8 +345,8 @@ export default {
         ...(obj.type?.length && obj.type.length !== 9 && { type: obj.type }),
         ...(obj.status?.length &&
           obj.status.length !== 4 && { status: obj.status }),
-        ...{ page: obj.page },
-        ...{ page: obj.page },
+        ...(obj.page && { page: obj.page }),
+        ...(obj.limit && { limit: obj.limit }),
       };
       if (!isEqual(params, this.paramsCurrent)) {
         this.paramsCurrent = structuredClone(params);
@@ -366,7 +371,7 @@ select {
   margin-right: 0.5rem;
 }
 ol {
-  padding: 20px !important;
+  padding: 1rem !important;
   list-style-type: decimal !important;
 }
 .light-bg {
