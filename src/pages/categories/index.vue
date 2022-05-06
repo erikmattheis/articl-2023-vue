@@ -7,20 +7,14 @@
       <input v-model="title" type="text" name="title" id="title" />
       <label for="slug">Slug</label>
       <input readonly v-model="slug" type="text" name="slug" id="slug" />
+      <label for="title">Parent slug</label>
       <input
         type="text"
         v-model="parentSlug"
         name="parentSlug"
-        iD="parentSlug"
+        id="parentSlug"
       />
-      <!--
-      <label for="parentSlug">Parent</label>
-        <select v-model="parentSlug" id="parentSlug>" name="parentSlug">
-            <option disabled value="">Please select one</option>
-            <option value="0">0</option>
-            <option v-for="category in categories" :key="category.slug">{{category.title}}</option>
-        </select>
-      -->
+
       <label for="description">Description</label>
       <textarea
         name="description"
@@ -37,11 +31,12 @@
         <span v-if="!buttonDisabled">Create Category</span>
       </button>
     </form>
-    <card-notification
-      v-else
-      success-message="Please check
-    your email to verify your email address"
-    ></card-notification>
+    <template v-else>
+      <card-notification
+        success-message="Category created."
+      ></card-notification>
+      <a href @click="$router.go()">Create another category</a>
+    </template>
   </article>
 </template>
 
@@ -77,7 +72,7 @@ export default {
     },
   },
   mounted() {
-    this.parentSlug = this.$route.params.slug;
+    this.parentSlug = this.$route.query.parentSlug;
   },
   params: {
     slug: String,

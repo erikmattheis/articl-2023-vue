@@ -4,7 +4,6 @@ import homePage from "@/pages/index.vue";
 import createArticlPage from "@/pages/articls/create.vue";
 import listArticlsPage from "@/pages/articls/index.vue";
 import categoryPage from "@/pages/d/index.vue";
-import importCategoriesPage from "@/pages/categories/import-categories.vue";
 import registerPage from "@/pages/register.vue";
 import verifyEmailPage from "@/pages/verify-email.vue";
 import loginPage from "@/pages/login.vue";
@@ -67,11 +66,7 @@ const router = createRouter({
       path: "/users",
       component: usersPage,
     },
-    {
-      name: "importCategoriesPage",
-      path: "/categories/:slug?",
-      component: importCategoriesPage,
-    },
+
     {
       name: "createCategoryPage",
       path: "/categories/:slug?",
@@ -91,5 +86,13 @@ const router = createRouter({
     { name: "NotFound", path: "/:notFound(.*)", component: NotFound },
   ],
 });
+
+/*
+    {
+      name: "importCategoriesPage",
+      path: "/categories/:slug?",
+      component: importCategoriesPage,
+    },
+*/
 
 export default router;

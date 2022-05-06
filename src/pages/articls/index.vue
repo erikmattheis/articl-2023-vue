@@ -303,7 +303,6 @@ export default {
   },
   methods: {
     onTypeaheadHit(e) {
-      console.log("e is", e);
       this[e.field] = e.value;
       this.updateArticls();
     },

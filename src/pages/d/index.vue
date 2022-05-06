@@ -14,10 +14,10 @@
         <router-link
           :to="{
             name: 'createCategoryPage',
-            params: { parentSlug: $route.params.slug },
+            query: { parentSlug: $route.params.slug },
           }"
         >
-          New Category
+          New Category Here
         </router-link>
       </li>
       <li>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { groupBy } from "lodash";
 // import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
 // import CategoryChildren from '@/components/layout/CategoryChildren.vue';
 
@@ -86,7 +87,7 @@ export default {
           metaDescription,
         });
         this.categories = result.categories;
-        this.articls = result.articls.groupBy((articl) => articl.type);
+        this.articls = groupBy(result.articls, (articl) => articl.type);
       } catch (error) {
         this.$store.dispatch("setError", error);
       } finally {

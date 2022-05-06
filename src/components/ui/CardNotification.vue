@@ -52,5 +52,6 @@ section div {
   height: 4rem;
   background: #dcedc8;
   padding: 0 1rem;
+  color: black;
 }
 </style>

@@ -48,14 +48,6 @@
       <label for="type">Link type</label>
       <select v-model="type" name="type" id="type" autocomplete="off">
         <optgroup value="Resources">
-          <option value="Conferences">Conferences</option>
-          <option value="Books">Books</option>
-          <option value="Journals">Journals</option>
-          <option value="Societies">Societies</option>
-          <option value="Websites">Websites</option>
-        </optgroup>
-
-        <optgroup value="Resources">
           <option value="Review (OA)">Review (OA)</option>
           <option value="Review (OA)">Review (PA)</option>
           <option value="Research (OA)">Research (OA)</option>
@@ -73,7 +65,7 @@
 
       <label for="status">Status</label>
       <select v-model="status" name="status" id="status">
-        <option value="Publish">Publish</option>
+        <option value="Published">Published</option>
         <option value="Draft">Draft</option>
         <option value="Pending">Pending</option>
         <option value="Trash">Trash</option>
@@ -83,7 +75,7 @@
       <typeahead
         src="/categories/titles"
         @update-value="onTypeaheadHit"
-        :query="categorySlug"
+        query="categorySlug"
       />
 
       <button
@@ -220,8 +212,9 @@ export default {
         });
       }
     },
-    onTypeaheadHit(slug) {
-      this.categorySlug = slug;
+    onTypeaheadHit(e) {
+      console.log("e", e);
+      this.categorySlug = e.value.value;
     },
   },
 };

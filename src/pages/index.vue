@@ -12,7 +12,7 @@
 
       <li>
         <router-link
-          :to="{ name: 'createCategoryPage', params: { slug: '0' } }"
+          :to="{ name: 'createCategoryPage', query: { parentSlug: '0' } }"
         >
           New Category Here
         </router-link>
