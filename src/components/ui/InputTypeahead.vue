@@ -10,6 +10,7 @@
       @keydown.esc="reset"
       @blur="reset"
       @input="update"
+      @change="update"
       :id="query"
       :name="query"
       ref="input"
@@ -71,13 +72,16 @@ export default {
   },
   methods: {
     async update() {
+      console.log("update");
       this.cancel();
 
       if (!this.queryString) {
+        console.log("reset");
         return this.reset();
       }
-
+      console.log("still update");
       this.loading = true;
+      this.hit();
 
       this.fetchData().then((response) => {
         if (response && this.queryString) {
@@ -85,10 +89,7 @@ export default {
           this.items = data.slice(0, 7);
           this.current = -1;
           this.loading = false;
-
-          if (this.selectFirst) {
-            this.down();
-          }
+          this.hit();
         }
       });
     },
@@ -114,7 +115,7 @@ export default {
       this.items = [];
       //this.queryString = "";
       this.loading = false;
-      this.$emit("updateValue", this.queryString);
+      this.$emit("updateValue", { value: this.queryString, field: this.query });
     },
 
     setActive(index) {
@@ -129,7 +130,7 @@ export default {
 
     hit() {
       if (this.current !== -1) {
-        this.onHit(this.items[this.current]);
+        this.onHit({ title: this.items[this.current].title });
       }
     },
 
@@ -152,6 +153,7 @@ export default {
     },
 
     onHit(e) {
+      console.log("onHit", e.title);
       this.queryString = e.title;
       this.$emit("updateValue", { value: e.title, field: this.query });
     },

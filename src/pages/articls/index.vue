@@ -303,7 +303,7 @@ export default {
   },
   methods: {
     onTypeaheadHit(e) {
-      console.log("onTypeaheadHit", e);
+      console.log("e is", e);
       this[e.field] = e.value;
       this.updateArticls();
     },
@@ -341,6 +341,8 @@ export default {
         ...(obj.type?.length && obj.type.length !== 9 && { type: obj.type }),
         ...(obj.status?.length &&
           obj.status.length !== 4 && { status: obj.status }),
+        ...{ page: obj.page },
+        ...{ page: obj.page },
       };
       if (!isEqual(params, this.paramsCurrent)) {
         this.paramsCurrent = structuredClone(params);
@@ -350,6 +352,7 @@ export default {
     },
     changePage(page) {
       this.page = page;
+      this.updateArticls();
     },
   },
 };
