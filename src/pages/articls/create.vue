@@ -86,11 +86,10 @@
         CREATE ARTICL
       </button>
     </form>
-
-    <card-notification
-      v-else
-      success-message="Articl Created"
-    ></card-notification>
+    <template v-else>
+      <card-notification success-message="Articl Created"></card-notification>
+      <a href @click="$router.go()">Create another articl</a>
+    </template>
   </article>
 </template>
 <script>
