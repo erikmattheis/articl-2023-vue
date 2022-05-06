@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import homePage from "@/pages/index.vue";
+import searchArticls from "@/pages/articls/index.vue";
 import createArticlPage from "@/pages/articls/create.vue";
 import listArticlsPage from "@/pages/articls/index.vue";
 import categoryPage from "@/pages/d/index.vue";
@@ -21,6 +22,12 @@ const router = createRouter({
       path: "/",
       component: homePage,
     },
+    {
+      name: "searchArticls",
+      path: "/articls",
+      component: searchArticls,
+    },
+
     {
       name: "categoryPage",
       path: "/d/:slug",

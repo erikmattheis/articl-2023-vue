@@ -212,7 +212,6 @@ export default {
       }
     },
     onTypeaheadHit(e) {
-      console.log("e", e);
       this.categorySlug = e.value.value;
     },
   },

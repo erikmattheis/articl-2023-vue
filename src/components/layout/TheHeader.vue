@@ -23,6 +23,13 @@
           <li><router-link to="/">Articl.net </router-link></li>
         </ul>
         <ul class="right">
+          <router-link :to="{ name: 'searchArticls' }" class="search-articls">
+            <vue-feather
+              size="2rem"
+              type="search"
+              aria-label="Search"
+            ></vue-feather>
+          </router-link>
           <li v-if="isLoggedIn">
             <router-link to="/users/me"
               ><vue-feather
@@ -115,6 +122,9 @@ svg {
 }
 articl nav {
   overflow: auto;
+}
+.search-articls {
+  margin-right: 1rem;
 }
 .nav-user a {
   width: 5rem;
