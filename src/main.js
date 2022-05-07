@@ -8,11 +8,20 @@ import store from "./store/index";
 import App from "./App.vue";
 
 const app = createApp(App);
-
-const baseURL =
-  window.location.hostname === "192.168.1.130"
-    ? "http://localhost:5000/v1"
-    : "https://api.articl.net/v1";
+const port = process.env.PORT || 3000;
+let baseURL;
+console.log("port", port);
+console.log("process.env", process.env);
+if (
+  window.location.hostname === "192.168.1.130" ||
+  window.location.hostname === "localhost"
+) {
+  baseURL = "http://localhost:5000/v1";
+} else if (process.env.NODE_ENV === "development") {
+  baseURL = "https://articl-api-dev.herokuapp.com/v1";
+} else {
+  baseURL = "https://api.articl.net/v1";
+}
 
 app.config.globalProperties.$http = axios.create({
   baseURL,

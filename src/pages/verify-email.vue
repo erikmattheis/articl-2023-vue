@@ -1,7 +1,10 @@
 <template>
   <article>
     <h1>{{ resultTitle }}</h1>
-    <p v-text="result"></p>
+    <p v-if="resultTitle">
+      Your email address is verified. Please <a href="/login">log in</a> to
+      continue.
+    </p>
   </article>
 </template>
 
@@ -36,7 +39,6 @@ export default {
         .then((response) => {
           if (response?.status === 204) {
             this.resultTitle = "Email verified";
-            this.result = `Your email address is verified. Please <a href="/login">log in</a> to continue.`;
           } else {
             this.$store.dispatch("setError", response);
           }

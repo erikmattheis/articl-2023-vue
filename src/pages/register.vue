@@ -72,7 +72,6 @@
           @show="showPassword2 = !showPassword2"
         ></the-button-toggle-hidden>
       </div>
-      <div v-if="passwordInvalid"></div>
       <button
         type="submit"
         id="Login"

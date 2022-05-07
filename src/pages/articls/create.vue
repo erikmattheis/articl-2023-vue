@@ -72,10 +72,12 @@
       </select>
 
       <label for="typeaheadQuery">Category slug</label>
-      <typeahead
+      <input-typeahead
         src="/categories/titles"
         @update-value="onTypeaheadHit"
-        query="categorySlug"
+        query="category"
+        @blur="onTypeaheadHit"
+        @keyup="onTypeaheadHit"
       />
 
       <button
@@ -94,14 +96,14 @@
 </template>
 <script>
 import CardNotification from "@/components/ui/CardNotification.vue";
-import typeahead from "@/components/ui/InputTypeahead.vue";
+import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
 
 export default {
   name: "createArticlPage",
   components: {
     CardNotification,
-    typeahead,
+    inputTypeahead,
   },
   data() {
     return {
@@ -123,6 +125,8 @@ export default {
   },
   mounted() {
     this.categorySlug = this.$route.query.slug;
+    this.onTypeaheadHit({ value: this.categorySlug });
+    console.log(this.categorySlug);
   },
   methods: {
     async getData() {
@@ -212,7 +216,8 @@ export default {
       }
     },
     onTypeaheadHit(e) {
-      this.categorySlug = e.value.value;
+      console.log("e.value.", e.value);
+      this.categorySlug = e.value;
     },
   },
 };
