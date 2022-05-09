@@ -72,14 +72,11 @@ export default {
   },
   methods: {
     async update() {
-      console.log("update");
       this.cancel();
 
       if (!this.queryString) {
-        console.log("reset");
         return this.reset();
       }
-      console.log("still update");
       this.loading = true;
       this.hit();
 

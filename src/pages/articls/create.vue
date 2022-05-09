@@ -116,17 +116,16 @@ export default {
       categorySlug: "",
       journal: "",
       month: "",
-      status: "Publish",
+      status: "Published",
       success: false,
       title: "",
-      type: "",
+      type: "Review (OA)",
       year: "",
     };
   },
   mounted() {
     this.categorySlug = this.$route.query.slug;
     this.onTypeaheadHit({ value: this.categorySlug });
-    console.log(this.categorySlug);
   },
   methods: {
     async getData() {
@@ -216,7 +215,7 @@ export default {
       }
     },
     onTypeaheadHit(e) {
-      console.log("e.value.", e.value);
+      console.log("onTypeaheadHit", e);
       this.categorySlug = e.value;
     },
   },

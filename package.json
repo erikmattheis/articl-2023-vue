@@ -63,12 +63,7 @@
       }
     ],
     "rules": {
-      "max-len": [
-        1,
-        {
-          "code": 160
-        }
-      ]
+      "max-len": "off"
     }
   },
   "browserslist": [

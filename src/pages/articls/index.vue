@@ -284,7 +284,7 @@ export default {
   computed: {
     descriptionTitle() {
       console.log(this.title ? `Title begins with ${this.title}` : ``);
-      return this.title ? `Title begins with ${this.title}` : ``;
+      return this.title ? `Title contains ${this.title}` : ``;
     },
     descriptionAuthors() {
       return this.authors ? `Authors contains ${this.authors}` : ``;
@@ -308,6 +308,7 @@ export default {
   },
   methods: {
     onTypeaheadHit(e) {
+      console.log("onTypeaheadHit", e);
       this[e.field] = e.value;
       this.updateArticls();
     },

@@ -27,10 +27,4 @@ export default {
 articl nav {
   overflow: auto;
 }
-.nav-user a {
-  width: 5rem;
-}
-.nav-user {
-  margin: 0 1rem;
-}
 </style>

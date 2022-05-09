@@ -47,16 +47,15 @@ function getId(url) {
 }
 
 function getDB(url) {
-  console.log("GETDB - URL:  ", url);
   try {
     if (url.includes("pmc")) return "pmc";
   } catch (error) {
-    console.log("GET DB - PMC ERR");
+    this.$store.dispatch("setError", error);
   }
   try {
     if (url.includes("pubmed.")) return "pubmed";
   } catch (error) {
-    console.log("GET DB - PUBMED ERR");
+    this.$store.dispatch("setError", error);
   }
 
   return "";
@@ -231,10 +230,7 @@ async function scrape(surl) {
             result.title = responseDoc.querySelectorAll(
               'h1[class="content-title"]'
             )[0].textContent;
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             result.authors = responseDoc.querySelectorAll(
               '[class="contrib-group fm-author"]'
             )
@@ -242,33 +238,20 @@ async function scrape(surl) {
                   '[class="contrib-group fm-author"]'
                 )[0].textContent
               : "";
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             const temp = responseDoc.querySelectorAll('[class="fm-affl"]');
             temp.forEach(function (elem) {
               result.affiliation += elem.textContent + "<br><br>";
             });
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             result.journal = responseDoc.querySelectorAll(
               'li[class="archive"]'
             )[0].textContent;
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             result.year = responseDoc.querySelectorAll(
               'li[class="issue-page"]'
             )[0].textContent;
-          } catch (error) {
-            console.error(error);
-          }
 
-          try {
             result.abstract =
               responseDoc.querySelectorAll('[class="tsec sec"]')[0].textContent;
           } catch (error) {
@@ -281,68 +264,40 @@ async function scrape(surl) {
             result.title = responseDoc.querySelectorAll(
               '[class="heading-title"]'
             )[0].textContent;
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             result.authors = responseDoc.querySelectorAll(
               '[class="authors-list"]'
             )
               ? responseDoc.querySelectorAll('[class="authors-list"]')[0]
                   .textContent
               : "";
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             result.affiliation = responseDoc.querySelectorAll(
               '[class="affiliations"] ul'
             )[0].textContent;
-          } catch (error) {
-            console.error(error);
-          }
-          try {
+
             result.journal = responseDoc.querySelectorAll(
               "#full-view-journal-trigger"
             )[0].textContent;
-          } catch (error) {
-            console.error(error);
-          }
-          /*
-                        try {
-                           result.year = responseDoc.querySelectorAll('span[class="cit"]')[0].textContent;
-                        } catch (error) {
-                          console.error(error);
-                        }
-                        */
-          try {
+
             let yearTry =
               responseDoc.querySelectorAll('span[class="cit"]')[0].textContent;
             result.year = yearTry.split(" ")[0];
-          } catch (error) {
-            console.error(error);
-          }
 
-          try {
             let monthTry =
               responseDoc.querySelectorAll('span[class="cit"]')[0].textContent;
             result.month = monthTry.split(" ")[1];
-          } catch (error) {
-            console.error(error);
-          }
 
-          try {
             result.abstract =
               responseDoc.querySelectorAll("#enc-abstract")[0].textContent;
           } catch (error) {
-            console.error(error);
+            this.$store.dispatch("setError", error);
           }
           break;
       }
     })
-    .catch(function (err) {
-      // There was an error
-      console.warn("Something went wrong.", err);
+    .catch(function (error) {
+      this.$store.dispatch("setError", error);
     });
 }
 

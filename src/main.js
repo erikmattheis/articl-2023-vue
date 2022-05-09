@@ -8,10 +8,9 @@ import store from "./store/index";
 import App from "./App.vue";
 
 const app = createApp(App);
-const port = process.env.PORT || 3000;
+
 let baseURL;
-console.log("port", port);
-console.log("process.env", process.env);
+
 if (
   window.location.hostname === "192.168.1.130" ||
   window.location.hostname === "localhost"
