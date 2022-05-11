@@ -9,7 +9,8 @@
         <label for="journal">Journal {{ journal }}</label>
         <input-typeahead
           src="/articls/journal"
-          @update-value="updateValue"
+          @typeahead-updated="onTypeaheadUpdated"
+          :input-value="journal"
           query="journal"
           @blur="onBlur"
           @keyup="onKeyup"
@@ -18,8 +19,9 @@
         <label for="author">Author</label>
         <input-typeahead
           src="/articls/authors"
-          @update-value="updateValue"
-          query="author"
+          @typeahead-updated="onTypeaheadUpdated"
+          :input-value="authors"
+          query="authors"
           @blur="onBlur"
           @keyup="onKeyup"
         />
@@ -74,7 +76,8 @@
         <label for="source">Source</label>
         <input-typeahead
           src="/articls/source"
-          @update-value="updateValue"
+          @typeahead-updated="onTypeaheadUpdated"
+          :input-value="source"
           query="source"
           @blur="onBlur"
           @keyup="onKeyup"
@@ -197,7 +200,7 @@
           <ul>
             <li v-text="descriptionTitle"></li>
             <li v-text="descriptionAuthors"></li>
-            <li v-text="journal"></li>
+            <li v-text="descriptionJournal"></li>
             <li v-text="descriptionYear"></li>
             <li v-text="descriptionType"></li>
             <li v-text="descriptionStatus"></li>
@@ -301,9 +304,9 @@ export default {
     },
   },
   methods: {
-    onTypeaheadHit(e) {
-      console.log("onTypeaheadHit e.value", e.value);
-      console.log("onTypeaheadHit e.field", e.field);
+    onTypeaheadUpdated(e) {
+      console.log("onTypeaheadUpdated e.value", e.value);
+      console.log("onTypeaheadUpdated e.field", e.field);
       this[e.field] = e.value;
       this.updateValue(this);
     },
