@@ -4,30 +4,24 @@
     <div class="grid">
       <form>
         <label for="title">Title</label>
-        <input-typeahead
-          src="/articls/title"
-          @update-value="onTypeaheadHit"
-          query="title"
-          @blur="updateArticls"
-          @keyup="updateArticls"
-        />
+        <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
 
         <label for="journal">Journal {{ journal }}</label>
         <input-typeahead
           src="/articls/journal"
-          @update-value="onTypeaheadHit"
+          @update-value="updateValue"
           query="journal"
-          @blur="updateArticls"
-          @keyup="updateArticls"
+          @blur="onBlur"
+          @keyup="onKeyup"
         />
 
         <label for="author">Author</label>
         <input-typeahead
           src="/articls/authors"
-          @update-value="onTypeaheadHit"
+          @update-value="updateValue"
           query="author"
-          @blur="updateArticls"
-          @keyup="updateArticls"
+          @blur="onBlur"
+          @keyup="onKeyup"
         />
 
         <label>Year published</label>
@@ -70,7 +64,7 @@
           name="year"
           id="year"
           autocomplete="off"
-          @change="updateArticls"
+          @change="updateValue"
         >
           <option v-for="i in years" v-bind:key="i">
             {{ i }}
@@ -80,10 +74,10 @@
         <label for="source">Source</label>
         <input-typeahead
           src="/articls/source"
-          @update-value="onTypeaheadHit"
+          @update-value="updateValue"
           query="source"
-          @blur="updateArticls"
-          @keyup="updateArticls"
+          @blur="onBlur"
+          @keyup="onKeyup"
         />
         <div class="grid">
           <fieldset>
@@ -231,7 +225,7 @@
 </template>
 
 <script>
-import { isEqual } from "lodash";
+import { isEqual, debounce } from "lodash";
 import ThePagination from "@/components/ui/ThePagination.vue";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 export default {
@@ -266,24 +260,24 @@ export default {
       paramsCurrent: {},
     };
   },
-  mounted() {
+  created() {
     this.years = [
       ...Array(new Date().getUTCFullYear() - (this.yearsStart - 1)).keys(),
     ]
       .map((x) => this.yearsStart + x++)
       .reverse();
+    this.onKeyup = debounce(this.onKeyup, 200);
   },
   watch: {
     page: {
       handler(newValue) {
         this.page = newValue;
-        this.updateArticls();
+        this.updateValue();
       },
     },
   },
   computed: {
     descriptionTitle() {
-      console.log(this.title ? `Title begins with ${this.title}` : ``);
       return this.title ? `Title contains ${this.title}` : ``;
     },
     descriptionAuthors() {
@@ -308,12 +302,20 @@ export default {
   },
   methods: {
     onTypeaheadHit(e) {
-      console.log("onTypeaheadHit", e);
+      console.log("onTypeaheadHit e.value", e.value);
+      console.log("onTypeaheadHit e.field", e.field);
       this[e.field] = e.value;
-      this.updateArticls();
+      this.updateValue(this);
     },
-    async updateArticls() {
-      const params = this.assembleParams(this);
+    onKeyup() {
+      this.updateValue(this);
+    },
+    onBlur(e) {
+      console.log("onBlur e.value", e.value);
+      this.updateValue(this);
+    },
+    async updateValue(obj) {
+      const params = this.assembleParams(obj);
       if (params) {
         const result = await this.getArticls(params);
         this.articls = result.results;
@@ -322,6 +324,7 @@ export default {
       }
     },
     async getArticls(params) {
+      console.log("getArticls", params);
       return await this.$http({
         method: "GET",
         url: "/articls",
@@ -357,7 +360,7 @@ export default {
     },
     changePage(page) {
       this.page = page;
-      this.updateArticls();
+      this.updateValue();
     },
   },
 };

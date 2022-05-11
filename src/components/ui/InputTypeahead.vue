@@ -67,6 +67,7 @@ export default {
   },
   watch: {
     query() {
+      console.log("NoWER");
       this.queryString = this.query;
     },
   },
@@ -150,7 +151,6 @@ export default {
     },
 
     onHit(e) {
-      console.log("onHit", e.title);
       this.queryString = e.title;
       this.$emit("updateValue", { value: e.title, field: this.query });
     },
