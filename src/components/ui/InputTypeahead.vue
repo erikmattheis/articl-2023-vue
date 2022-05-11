@@ -69,7 +69,6 @@ export default {
   },
   methods: {
     async update() {
-      console.log("update");
       this.cancel();
 
       if (!this.stringValue) {
@@ -77,9 +76,11 @@ export default {
       }
       this.loading = true;
       this.hit();
-
+      this.$emit("typeaheadUpdated", {
+        field: this.query,
+        value: this.stringValue,
+      });
       this.fetchData().then((response) => {
-        console.log("response", response.data);
         let data = response.data;
         this.items = data.slice(0, 7);
         this.current = -1;
@@ -103,9 +104,7 @@ export default {
 
     reset() {
       this.items = [];
-      //this.inputValue = "";
       this.loading = false;
-      this.$emit("typeaheadUpdated", { field: this.query, value: "" });
     },
 
     setActive(index) {
@@ -119,12 +118,8 @@ export default {
     },
 
     hit() {
-      if (
-        this.current !== -1 &&
-        this.items &&
-        this.items[this.current] &&
-        !!this.query
-      ) {
+      if (this.current !== -1 && this.items && this.items[this.current]) {
+        console.log("this.items[this.current]", this.items[this.current]);
         this.onHit(this.items[this.current]);
       }
     },
