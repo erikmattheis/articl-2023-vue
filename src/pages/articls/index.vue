@@ -77,37 +77,13 @@
             <div>
               <fieldset>
                 Status
-                <label>
+                <label v-for="(status, index) in allStatuses" :key="index">
                   <input
                     type="checkbox"
-                    value="Published"
-                    v-model="status"
+                    :value="status"
+                    v-model="statuses"
                     checked="checked"
-                  />Published</label
-                >
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Draft"
-                    v-model="status"
-                    checked="checked"
-                  />Draft</label
-                >
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Pending"
-                    v-model="status"
-                    checked="checked"
-                  />Pending</label
-                >
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Trash"
-                    v-model="status"
-                    checked="checked"
-                  />Trash</label
+                  />{{ status }}</label
                 >
               </fieldset>
             </div>
@@ -130,12 +106,14 @@
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
             </li>
             <li v-if="types?.length !== 9">
-              Type is <span v-if="status?.length > 1">one of </span>
+              Type is <span v-if="types?.length > 1">one of </span>
               <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
             </li>
-            <li v-if="status?.length !== 4">
-              Status is <span v-if="status?.length > 1">one of </span>
-              <strong>{{ toListWithOptionalConjuction(status, "or") }}</strong>
+            <li v-if="statuses?.length !== 4">
+              Status is <span v-if="statuses?.length > 1">one of </span>
+              <strong>{{
+                toListWithOptionalConjuction(statuses, "or")
+              }}</strong>
             </li>
           </ul>
         </small>
@@ -194,8 +172,9 @@ export default {
         "Presentations",
         "Videos",
       ],
-      sllTypes: [],
-      status: ["Published", "Draft", "Pending", "Trash"],
+      allTypes: [],
+      statuses: ["Published", "Draft", "Pending", "Trash"],
+      allStatuses: [],
       paramsCurrent: {},
     };
   },
@@ -206,6 +185,7 @@ export default {
       .map((x) => this.yearsStart + x++)
       .reverse();
     this.allTypes = this.types.slice();
+    this.allStatuses = this.statuses.slice();
     this.onKeyup = debounce(this.onKeyup, 200);
   },
   watch: {
