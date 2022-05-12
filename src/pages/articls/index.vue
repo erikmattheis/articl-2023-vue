@@ -94,25 +94,35 @@
           <ul>
             <li v-if="!!title">
               Title contains <strong>{{ title }}</strong>
+              <a @click="title = ''"
+                ><vue-feather size="1rem" type="x-square"
+              /></a>
             </li>
             <li v-if="!!journal">
               Journal is <strong>{{ journal }}</strong>
+              <a @click="journal = ''"
+                ><vue-feather size="1rem" type="x-square" />
+              </a>
             </li>
             <li v-if="!!authors">
               Authors contains <strong>{{ authors }}</strong>
+              <vue-feather size="1rem" type="x-square" />
             </li>
             <li v-if="!!year && Number(year) !== 1944">
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
+              <vue-feather size="1rem" type="x-square" />
             </li>
             <li v-if="types?.length !== 9">
               Type is <span v-if="types?.length > 1">one of </span>
               <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
+              <vue-feather size="1rem" type="x-square" />
             </li>
             <li v-if="statuses?.length !== 4">
               Status is <span v-if="statuses?.length > 1">one of </span>
               <strong>{{
                 toListWithOptionalConjuction(statuses, "or")
               }}</strong>
+              <vue-feather size="1rem" type="x-square" />
             </li>
           </ul>
         </small>
@@ -160,11 +170,12 @@
 
 <script>
 import { isEqual, debounce } from "lodash";
+import VueFeather from "vue-feather";
 import ThePagination from "@/components/ui/ThePagination.vue";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 export default {
   name: "listArticlsPage",
-  components: { ThePagination, InputTypeahead },
+  components: { VueFeather, ThePagination, InputTypeahead },
   data() {
     return {
       advanced: null,
@@ -314,5 +325,8 @@ strong {
   background-color: rgb(181, 228, 133);
   color: black;
   padding: 0.2rem 0;
+}
+small svg {
+  fill: #ff0000;
 }
 </style>

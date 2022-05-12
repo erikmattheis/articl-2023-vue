@@ -77,6 +77,13 @@ export default {
       return !!this.stringValue;
     },
   },
+  watch: {
+    inputValue: {
+      handler(val) {
+        this.stringValue = val;
+      },
+    },
+  },
   methods: {
     async update() {
       this.cancel();
