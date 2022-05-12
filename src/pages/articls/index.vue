@@ -111,6 +111,7 @@
                 ><vue-feather size="1.2rem" type="x-square" />
               </a>
             </li>
+            <!--
             Number(year):{{
               Number(year)
             }}<br />
@@ -121,6 +122,7 @@
             year && Number(year) !== yearsStart:{{
               year && Number(year) !== yearsStart
             }}
+            -->
             <li v-if="year && Number(year) !== yearsStart">
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
               <a @click.prevent="clearValue('year')"
@@ -215,16 +217,19 @@
               </li>
             </ul>
           </li>
-          <infinite-loading @infinite="infiniteHandler">
-            <!--
+          <li>
+            <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+          </li>
+
+          <!--
             <template v-slot:spinner>Loading...</template>
             <template v-slot:no-more>No more message</template>
             <template v-slot:no-results>No results message</template>
             -->
-          </infinite-loading>
         </ol>
       </div>
     </div>
+    <!--
     <the-pagination
       v-if="totalPages > 1"
       :total-pages="totalPages"
@@ -232,19 +237,20 @@
       @pagechanged="changePage"
       :number-of-buttons="5"
     />
+    -->
   </article>
 </template>
 
 <script>
 import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
-import ThePagination from "@/components/ui/ThePagination.vue";
+//import ThePagination from "@/components/ui/ThePagination.vue";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css";
 export default {
   name: "listArticlsPage",
-  components: { VueFeather, ThePagination, InputTypeahead, InfiniteLoading },
+  components: { VueFeather, InputTypeahead, InfiniteLoading },
   data() {
     return {
       advanced: null,
@@ -292,8 +298,8 @@ export default {
   },
   watch: {
     page: {
-      handler(newValue) {
-        this.page = newValue;
+      handler() {
+        //this.page = newValue;
         this.updateValues(this);
       },
     },
@@ -341,29 +347,32 @@ export default {
     onBlur() {
       this.updateValues(this);
     },
-    async infiniteHandler($state) {
+    async infiniteHandler() {
       console.log("infiniteHandler");
       this.page = this.page + 1;
       const params = this.assembleParams(this);
       if (params) {
         const result = await this.getArticls(params);
-
+        console.log("result.results.length", result.results.length);
         this.articls.push(result.results);
         this.totalPages = result.totalPages;
-        this.page = result.page;
+        //this.page = result.page;
         this.limit = result.limit;
         this.totalResults = result.totalResults;
-        if (result.totalResults <= this.limit * this.page) $state.complete();
+        //if (result.totalResults <= this.limit * this.page) $state.complete();
       }
     },
     async updateValues(obj) {
       const params = this.assembleParams(obj);
-      console.log("params", params);
+
       if (params) {
+        console.log("params", params);
         const result = await this.getArticls(params);
         this.articls = result.results;
         this.totalPages = result.totalPages;
         this.page = result.page;
+        this.limit = result.limit;
+        this.totalResults = result.totalResults;
       }
     },
     async getArticls(params) {
@@ -388,14 +397,15 @@ export default {
         ...(obj?.yearComparison &&
           Number(obj?.year) !== 1944 && { yearComparison: obj.yearComparison }),
         ...(obj?.year && Number(obj.year) !== 1944 && { year: obj.year }),
-        ...(obj?.types && obj.types.length !== 9 && { types: obj.types }),
+        ...(obj?.types &&
+          obj.types.length !== 9 && { types: obj.types.join(",") }),
         ...(obj?.statuses?.length &&
-          obj.statuses.length !== 4 && { statuses: obj.statuses }),
+          obj.statuses.length !== 4 && { statuses: obj.statuses.join(",") }),
         ...(obj?.page && { page: obj.page }),
         ...(obj?.limit && { limit: obj.limit }),
       };
       if (!isEqual(params, this.paramsCurrent)) {
-        console.log("something not equal");
+        params.page = 1;
         this.paramsCurrent = structuredClone(params);
         return params;
       }
