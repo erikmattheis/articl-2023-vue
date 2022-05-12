@@ -128,19 +128,17 @@
                 {{
                   articl.title.substring(
                     0,
-                    articl.title.toLowerCase().indexOf(title.toLowerCase())
+                    titleMatchIndex(articl.title, title)
                   )
                 }}<strong>{{
                   articl.title.substring(
-                    articl.title.toLowerCase().indexOf(title.toLowerCase()),
-                    articl.title.toLowerCase().indexOf(title.toLowerCase()) +
-                      title.length
+                    titleMatchIndex(articl.title, title),
+                    titleMatchIndex(articl.title, title) + title.length
                   )
                 }}</strong
                 >{{
                   articl.title.substring(
-                    articl.title.toLowerCase().indexOf(title.toLowerCase()) +
-                      title.length,
+                    titleMatchIndex(articl.title, title) + title.length,
                     articl.title.length - 2
                   )
                 }}
@@ -219,6 +217,9 @@ export default {
     },
   },
   methods: {
+    titleMatchIndex(str, subStr) {
+      return str.toLowerCase().indexOf(subStr.toLowerCase());
+    },
     onTypeaheadUpdated(e) {
       this[e.field] = e.value;
       this.updateValue(this);
