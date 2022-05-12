@@ -1,10 +1,11 @@
 <template>
   <article>
     <h1>Articls</h1>
+    advanced:{{ advanced }}
     <div class="grid">
       <form>
         <details open>
-          <summary role="button">Seatch text</summary>
+          <summary role="button" class="secondary">Search text</summary>
           <label for="title">Title</label>
           <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
 
@@ -29,7 +30,7 @@
           />
         </details>
         <details>
-          <summary role="button">Advanced</summary>
+          <summary role="button" class="secondary">Advanced</summary>
           <label><h3>Year published</h3></label>
 
           <label
@@ -168,6 +169,7 @@ export default {
   components: { ThePagination, InputTypeahead },
   data() {
     return {
+      advanced: null,
       articls: [],
       title: "",
       journal: "",
