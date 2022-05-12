@@ -92,6 +92,7 @@
       <div>
         <small>
           <ul>
+            <li v-if="!!totalResults">Results: {{ totalResults }}</li>
             <li v-if="!!title">
               Title contains <strong>{{ title }}</strong>
               <a href @click.prevent="clearValue('title')"
@@ -110,7 +111,17 @@
                 ><vue-feather size="1.2rem" type="x-square" />
               </a>
             </li>
-            <li v-if="!!year && Number(year) !== 1944">
+            Number(year):{{
+              Number(year)
+            }}<br />
+            Number(year)!== yearsStart:
+            {{
+              Number(year) !== yearsStart
+            }}<br />
+            year && Number(year) !== yearsStart:{{
+              year && Number(year) !== yearsStart
+            }}
+            <li v-if="year && Number(year) !== yearsStart">
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
               <a @click.prevent="clearValue('year')"
                 ><vue-feather size="1.2rem" type="x-square"
@@ -134,7 +145,7 @@
             </li>
           </ul>
         </small>
-        <ol>
+        <ol class="scroll">
           <li
             v-for="(articl, index) in articls"
             :key="articl.id"
@@ -199,11 +210,18 @@
                   )
                 }}
               </li>
-              <li v-if="year && yearComparison">
+              <li v-if="year && Number(year) !== yearsStart">
                 {{ yearComparison }} <strong>{{ year }}</strong>
               </li>
             </ul>
           </li>
+          <infinite-loading @infinite="infiniteHandler">
+            <!--
+            <template v-slot:spinner>Loading...</template>
+            <template v-slot:no-more>No more message</template>
+            <template v-slot:no-results>No results message</template>
+            -->
+          </infinite-loading>
         </ol>
       </div>
     </div>
@@ -222,9 +240,11 @@ import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
 import ThePagination from "@/components/ui/ThePagination.vue";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
 export default {
   name: "listArticlsPage",
-  components: { VueFeather, ThePagination, InputTypeahead },
+  components: { VueFeather, ThePagination, InputTypeahead, InfiniteLoading },
   data() {
     return {
       advanced: null,
@@ -232,12 +252,13 @@ export default {
       title: "",
       journal: "",
       authors: "",
-      year: 1944,
+      year: 0,
       yearComparison: "after",
       comparisons: ["after", "before", "exactly"],
       buttonDisabled: false,
       totalPages: 1,
       page: 1,
+      totalResults: "--",
       yearsStart: 1944,
       years: [],
       source: "",
@@ -264,6 +285,7 @@ export default {
     ]
       .map((x) => this.yearsStart + x++)
       .reverse();
+    this.year = this.yearsStart;
     this.allTypes = this.types.slice();
     this.allStatuses = this.statuses.slice();
     this.onKeyup = debounce(this.onKeyup, 200);
@@ -319,6 +341,21 @@ export default {
     onBlur() {
       this.updateValues(this);
     },
+    async infiniteHandler($state) {
+      console.log("infiniteHandler");
+      this.page = this.page + 1;
+      const params = this.assembleParams(this);
+      if (params) {
+        const result = await this.getArticls(params);
+
+        this.articls.push(result.results);
+        this.totalPages = result.totalPages;
+        this.page = result.page;
+        this.limit = result.limit;
+        this.totalResults = result.totalResults;
+        if (result.totalResults <= this.limit * this.page) $state.complete();
+      }
+    },
     async updateValues(obj) {
       const params = this.assembleParams(obj);
       console.log("params", params);
@@ -353,7 +390,7 @@ export default {
         ...(obj?.year && Number(obj.year) !== 1944 && { year: obj.year }),
         ...(obj?.types && obj.types.length !== 9 && { types: obj.types }),
         ...(obj?.statuses?.length &&
-          obj.statuses.length !== 4 && { status: obj.statuses }),
+          obj.statuses.length !== 4 && { statuses: obj.statuses }),
         ...(obj?.page && { page: obj.page }),
         ...(obj?.limit && { limit: obj.limit }),
       };
@@ -391,7 +428,10 @@ ol {
   padding: 1rem !important;
   list-style-type: decimal !important;
 }
-
+ol.scroll {
+  height: 10rem;
+  overflow: scroll;
+}
 ol li {
   margin-bottom: 1rem;
   padding: 0.4rem;
