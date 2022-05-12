@@ -129,7 +129,6 @@ export default {
 
     hit() {
       if (this.current !== -1 && this.items && this.items[this.current]) {
-        console.log("this.items[this.current]", this.items[this.current]);
         this.onHit(this.items[this.current]);
       }
     },
@@ -161,6 +160,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ul {
+  position: absolute;
+  z-index: 1;
+  background-color: #11191f;
+  width: 100%;
+}
 li {
   padding: 0.2rem 0.5rem;
 }
@@ -173,5 +178,9 @@ label .icon {
   position: absolute;
   top: 0.7rem;
   right: 0.4rem;
+}
+.active {
+  background-color: #1095c1;
+  cursor: pointer;
 }
 </style>
