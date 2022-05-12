@@ -82,6 +82,10 @@ export default {
       this.cancel();
 
       if (!this.stringValue) {
+        this.$emit("typeaheadUpdated", {
+          field: this.query,
+          value: "",
+        });
         return this.removeItems();
       }
       this.loading = true;
