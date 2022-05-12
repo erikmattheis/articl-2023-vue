@@ -120,9 +120,32 @@
           <li
             v-for="(articl, index) in articls"
             :key="articl.id"
+            class="grid"
             :class="{ 'light-bg': index % 2 === 0 }"
           >
-            {{ articl.title }}
+            <ul>
+              <li v-if="title">
+                {{
+                  articl.title.substring(
+                    0,
+                    articl.title.toLowerCase().indexOf(title.toLowerCase())
+                  )
+                }}<strong>{{
+                  articl.title.substring(
+                    articl.title.toLowerCase().indexOf(title.toLowerCase()),
+                    articl.title.toLowerCase().indexOf(title.toLowerCase()) +
+                      title.length
+                  )
+                }}</strong
+                >{{
+                  articl.title.substring(
+                    articl.title.toLowerCase().indexOf(title.toLowerCase()) +
+                      title.length,
+                    articl.title.length - 2
+                  )
+                }}
+              </li>
+            </ul>
           </li>
         </ol>
       </div>
@@ -197,8 +220,6 @@ export default {
   },
   methods: {
     onTypeaheadUpdated(e) {
-      console.log("onTypeaheadUpdated e.value", e.value);
-      console.log("onTypeaheadUpdated e.field", e.field);
       this[e.field] = e.value;
       this.updateValue(this);
     },
@@ -258,7 +279,6 @@ export default {
       this.updateValue();
     },
     toListWithOptionalConjuction(arr, conj = "") {
-      console.log(arr, conj);
       return (
         arr.slice(0, arr.length - 1).join(", ") +
         (arr.length > 1 ? " " + conj + " " : "") +
@@ -288,5 +308,10 @@ ol li {
 }
 .light-bg {
   background-color: #20303d;
+}
+strong {
+  background-color: rgb(181, 228, 133);
+  color: black;
+  padding: 0.2rem 0;
 }
 </style>

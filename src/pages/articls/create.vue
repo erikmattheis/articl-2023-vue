@@ -78,6 +78,7 @@
         query="category"
         @blur="onTypeaheadHit"
         @keyup="onTypeaheadHit"
+        input-value=""
       />
 
       <button
