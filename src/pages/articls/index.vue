@@ -52,7 +52,7 @@
             name="year"
             id="year"
             autocomplete="off"
-            @change="updateValue"
+            @change="updateValues"
           >
             <option v-for="i in years" v-bind:key="i">
               {{ i }}
@@ -94,35 +94,43 @@
           <ul>
             <li v-if="!!title">
               Title contains <strong>{{ title }}</strong>
-              <a @click="title = ''"
-                ><vue-feather size="1rem" type="x-square"
+              <a href @click.prevent="clearValue('title')"
+                ><vue-feather size="1.2rem" type="x-square"
               /></a>
             </li>
             <li v-if="!!journal">
               Journal is <strong>{{ journal }}</strong>
-              <a @click="journal = ''"
-                ><vue-feather size="1rem" type="x-square" />
+              <a @click.prevent="clearValue('journal')"
+                ><vue-feather size="1.2rem" type="x-square" />
               </a>
             </li>
             <li v-if="!!authors">
               Authors contains <strong>{{ authors }}</strong>
-              <vue-feather size="1rem" type="x-square" />
+              <a @click.prevent="clearValue('authors')"
+                ><vue-feather size="1.2rem" type="x-square" />
+              </a>
             </li>
             <li v-if="!!year && Number(year) !== 1944">
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
-              <vue-feather size="1rem" type="x-square" />
+              <a @click.prevent="clearValue('year')"
+                ><vue-feather size="1.2rem" type="x-square"
+              /></a>
             </li>
             <li v-if="types?.length !== 9">
               Type is <span v-if="types?.length > 1">one of </span>
               <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
-              <vue-feather size="1rem" type="x-square" />
+              <a @click.prevent="resetValue('types')"
+                ><vue-feather size="1.2rem" type="x-square"
+              /></a>
             </li>
             <li v-if="statuses?.length !== 4">
               Status is <span v-if="statuses?.length > 1">one of </span>
               <strong>{{
                 toListWithOptionalConjuction(statuses, "or")
               }}</strong>
-              <vue-feather size="1rem" type="x-square" />
+              <a @click.prevent="resetValue('statuses')"
+                ><vue-feather size="1.2rem" type="x-square"
+              /></a>
             </li>
           </ul>
         </small>
@@ -223,26 +231,43 @@ export default {
     page: {
       handler(newValue) {
         this.page = newValue;
-        this.updateValue();
+        this.updateValues();
       },
     },
   },
   methods: {
+    resetValues(arrName) {
+      switch (arrName) {
+        case "statuses": {
+          this.statuses = this.allStatuses;
+          break;
+        }
+        case "types": {
+          this.types = this.allTypes;
+          break;
+        }
+      }
+      this.updateValues(this);
+    },
+    clearValue(varName) {
+      this[varName] = null;
+      this.updateValues(this);
+    },
     titleMatchIndex(str, subStr) {
       return str.toLowerCase().indexOf(subStr.toLowerCase());
     },
     onTypeaheadUpdated(e) {
       this[e.field] = e.value;
-      this.updateValue(this);
+      this.updateValues(this);
     },
     onKeyup() {
-      this.updateValue(this);
+      this.updateValues(this);
     },
     onBlur(e) {
       console.log("onBlur e.value", e.value);
-      this.updateValue(this);
+      this.updateValues(this);
     },
-    async updateValue(obj) {
+    async updateValues(obj) {
       const params = this.assembleParams(obj);
       if (params) {
         const result = await this.getArticls(params);
@@ -288,7 +313,7 @@ export default {
     },
     changePage(page) {
       this.page = page;
-      this.updateValue();
+      this.updateValues();
     },
     toListWithOptionalConjuction(arr, conj = "") {
       return (
@@ -318,15 +343,26 @@ ol li {
   margin-bottom: 1rem;
   padding: 0.4rem;
 }
+ul li {
+  display: flex;
+  align-items: center;
+}
+#app > main > article > div > div > small > ul > li > a {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  color: red !important;
+}
+ul li {
+  display: flex;
+  align-items: center;
+}
 .light-bg {
   background-color: #20303d;
 }
 strong {
   background-color: rgb(181, 228, 133);
   color: black;
-  padding: 0.2rem 0;
-}
-small svg {
-  fill: #ff0000;
+  padding: 0.2rem 0.1rem;
 }
 </style>
