@@ -1,18 +1,26 @@
 <template>
   <div>
-    <input
-      type="text"
-      autocomplete="off"
-      v-model="stringValue"
-      @keydown.down="down"
-      @keydown.up="up"
-      @keydown.enter="hit"
-      @keydown.esc="removeItems"
-      @blur="removeItems"
-      @keyup="update"
-      ref="input"
-    />
-    <!-- the list -->
+    <label>
+      <vue-feather
+        class="icon"
+        size="2.2rem"
+        type="search"
+        aria-label="Search"
+      ></vue-feather>
+      <input
+        type="text"
+        autocomplete="off"
+        v-model="stringValue"
+        @keydown.down="down"
+        @keydown.up="up"
+        @keydown.enter="hit"
+        @keydown.esc="removeItems"
+        @blur="removeItems"
+        @keyup="update"
+        ref="input"
+      />
+    </label>
+
     <ul v-show="hasItems">
       <!-- for vue@1.0 use: ($item, item) -->
       <li
@@ -28,9 +36,11 @@
   </div>
 </template>
 <script>
+import VueFeather from "vue-feather";
 import { debounce } from "lodash";
 export default {
   props: ["src", "query", "inputValue"],
+  components: { VueFeather },
   data() {
     return {
       items: [],
@@ -154,7 +164,14 @@ export default {
 li {
   padding: 0.2rem 0.5rem;
 }
-.active {
-  background-color: #1095c1;
+label {
+  position: relative;
+}
+
+label .icon {
+  opacity: 50%;
+  position: absolute;
+  top: 0.7rem;
+  right: 0.4rem;
 }
 </style>

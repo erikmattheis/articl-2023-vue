@@ -1,7 +1,6 @@
 <template>
   <article>
     <h1>Articls</h1>
-    advanced:{{ advanced }}
     <div class="grid">
       <form>
         <details open>
@@ -9,7 +8,7 @@
           <label for="title">Title</label>
           <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
 
-          <label for="journal">Journal {{ journal }}</label>
+          <label for="journal">Journal</label>
           <input-typeahead
             src="/articls/journal"
             @typeahead-updated="onTypeaheadUpdated"
@@ -94,13 +93,13 @@
         <small>
           <ul>
             <li v-if="!!title">
-              Title contains <strong>"{{ title }}"</strong>
-            </li>
-            <li v-if="!!authors">
-              Authors contains <strong>"{{ authors }}"</strong>
+              Title contains <strong>{{ title }}</strong>
             </li>
             <li v-if="!!journal">
-              Journal is <strong>"{{ journal }}"</strong>
+              Journal is <strong>{{ journal }}</strong>
+            </li>
+            <li v-if="!!authors">
+              Authors contains <strong>{{ authors }}</strong>
             </li>
             <li v-if="!!year && Number(year) !== 1944">
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
@@ -281,6 +280,11 @@ select {
 ol {
   padding: 1rem !important;
   list-style-type: decimal !important;
+}
+
+ol li {
+  margin-bottom: 1rem;
+  padding: 0.4rem;
 }
 .light-bg {
   background-color: #20303d;
