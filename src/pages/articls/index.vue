@@ -3,207 +3,139 @@
     <h1>Articls</h1>
     <div class="grid">
       <form>
-        <label for="title">Title</label>
-        <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
+        <details open>
+          <summary role="button">Seatch text</summary>
+          <label for="title">Title</label>
+          <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
 
-        <label for="journal">Journal {{ journal }}</label>
-        <input-typeahead
-          src="/articls/journal"
-          @typeahead-updated="onTypeaheadUpdated"
-          :input-value="journal"
-          query="journal"
-          @blur="onBlur"
-          @keyup="onKeyup"
-        />
-
-        <label for="author">Author</label>
-        <input-typeahead
-          src="/articls/authors"
-          @typeahead-updated="onTypeaheadUpdated"
-          :input-value="authors"
-          query="authors"
-          @blur="onBlur"
-          @keyup="onKeyup"
-        />
-
-        <label>Year published</label>
-
-        <label class="horizontal" for="after">
-          <input
-            name="yearComparison"
-            type="radio"
-            id="after"
-            value="after"
-            v-model="yearComparison"
-            checked="checked"
+          <label for="journal">Journal {{ journal }}</label>
+          <input-typeahead
+            src="/articls/journal"
+            @typeahead-updated="onTypeaheadUpdated"
+            :input-value="journal"
+            query="journal"
+            @blur="onBlur"
+            @keyup="onKeyup"
           />
-          after
-        </label>
-        <label class="horizontal" for="before">
-          <input
-            name="yearComparison"
-            type="radio"
-            id="before"
-            value="before"
-            v-model="yearComparison"
-          />
-          before
-        </label>
-        <label for="exactly" class="horizontal"
-          ><input
-            name="yearComparison"
-            type="radio"
-            id="exactly"
-            value="exactly"
-            v-model="yearComparison"
-          />
-          exactly
-        </label>
 
-        <label for="year">Year</label>
-        <select
-          v-model="year"
-          name="year"
-          id="year"
-          autocomplete="off"
-          @change="updateValue"
-        >
-          <option v-for="i in years" v-bind:key="i">
-            {{ i }}
-          </option>
-        </select>
+          <label for="author">Author</label>
+          <input-typeahead
+            src="/articls/authors"
+            @typeahead-updated="onTypeaheadUpdated"
+            :input-value="authors"
+            query="authors"
+            @blur="onBlur"
+            @keyup="onKeyup"
+          />
+        </details>
+        <details>
+          <summary role="button">Advanced</summary>
+          <label><h3>Year published</h3></label>
 
-        <label for="source">Source</label>
-        <input-typeahead
-          src="/articls/source"
-          @typeahead-updated="onTypeaheadUpdated"
-          :input-value="source"
-          query="source"
-          @blur="onBlur"
-          @keyup="onKeyup"
-        />
-        <div class="grid">
-          <fieldset>
-            Type
-            <label>
-              <input
-                type="checkbox"
-                value="Review (OA)"
-                v-model="type"
-                checked="checked"
-              />Review (OA)</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Review (PA)"
-                v-model="type"
-                checked="checked"
-              />Review (PA)</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Research (OA)"
-                v-model="type"
-                checked="checked"
-              />Research (OA)</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Research (PA)"
-                v-model="type"
-                checked="checked"
-              />Research (PA)</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Web"
-                v-model="type"
-                checked="checked"
-              />Web</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Non-medical journal articles"
-                v-model="type"
-                checked="checked"
-              />Non-medical journal articles</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Images"
-                v-model="type"
-                checked="checked"
-              />Images</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Presentations"
-                v-model="type"
-                checked="checked"
-              />Presentations</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Videos"
-                v-model="type"
-                checked="checked"
-              />Videos</label
-            >
-          </fieldset>
-          <fieldset>
-            Status
-            <label>
-              <input
-                type="checkbox"
-                value="Published"
-                v-model="status"
-                checked="checked"
-              />Published</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Draft"
-                v-model="status"
-                checked="checked"
-              />Draft</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Pending"
-                v-model="status"
-                checked="checked"
-              />Pending</label
-            >
-            <label>
-              <input
-                type="checkbox"
-                value="Trash"
-                v-model="status"
-                checked="checked"
-              />Trash</label
-            >
-          </fieldset>
-        </div>
+          <label
+            class="horizontal"
+            v-for="(comparison, index) in comparisons"
+            :key="index"
+          >
+            <input
+              name="yearComparison"
+              type="radio"
+              :value="comparison"
+              v-model="yearComparison"
+            />
+            {{ comparison }}
+          </label>
+
+          <label for="year">Year</label>
+          <select
+            v-model="year"
+            name="year"
+            id="year"
+            autocomplete="off"
+            @change="updateValue"
+          >
+            <option v-for="i in years" v-bind:key="i">
+              {{ i }}
+            </option>
+          </select>
+
+          <div class="grid">
+            <div>
+              <fieldset>
+                Type
+                <label v-for="(type, index) in allTypes" :key="index">
+                  <input
+                    type="checkbox"
+                    :value="type"
+                    v-model="types"
+                    checked="checked"
+                  />{{ type }}</label
+                >
+              </fieldset>
+            </div>
+            <div>
+              <fieldset>
+                Status
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Published"
+                    v-model="status"
+                    checked="checked"
+                  />Published</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Draft"
+                    v-model="status"
+                    checked="checked"
+                  />Draft</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Pending"
+                    v-model="status"
+                    checked="checked"
+                  />Pending</label
+                >
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Trash"
+                    v-model="status"
+                    checked="checked"
+                  />Trash</label
+                >
+              </fieldset>
+            </div>
+          </div>
+        </details>
       </form>
       <div>
         <small>
           <ul>
-            <li v-text="descriptionTitle"></li>
-            <li v-text="descriptionAuthors"></li>
-            <li v-text="descriptionJournal"></li>
-            <li v-text="descriptionYear"></li>
-            <li v-text="descriptionType"></li>
-            <li v-text="descriptionStatus"></li>
+            <li v-if="!!title">
+              Title contains <strong>"{{ title }}"</strong>
+            </li>
+            <li v-if="!!authors">
+              Authors contains <strong>"{{ authors }}"</strong>
+            </li>
+            <li v-if="!!journal">
+              Journal is <strong>"{{ journal }}"</strong>
+            </li>
+            <li v-if="!!year && Number(year) !== 1944">
+              Year is <strong>{{ yearComparison }} {{ year }}</strong>
+            </li>
+            <li v-if="types?.length !== 9">
+              Type is <span v-if="status?.length > 1">one of </span>
+              <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
+            </li>
+            <li v-if="status?.length !== 4">
+              Status is <span v-if="status?.length > 1">one of </span>
+              <strong>{{ toListWithOptionalConjuction(status, "or") }}</strong>
+            </li>
           </ul>
         </small>
         <ol>
@@ -242,13 +174,14 @@ export default {
       authors: "",
       year: 1944,
       yearComparison: "after",
+      comparisons: ["after", "before", "exactly"],
       buttonDisabled: false,
       totalPages: 1,
       page: 1,
       yearsStart: 1944,
       years: [],
       source: "",
-      type: [
+      types: [
         "Review (OA)",
         "Review (PA)",
         "Research (OA)",
@@ -259,6 +192,7 @@ export default {
         "Presentations",
         "Videos",
       ],
+      sllTypes: [],
       status: ["Published", "Draft", "Pending", "Trash"],
       paramsCurrent: {},
     };
@@ -269,6 +203,7 @@ export default {
     ]
       .map((x) => this.yearsStart + x++)
       .reverse();
+    this.allTypes = this.types.slice();
     this.onKeyup = debounce(this.onKeyup, 200);
   },
   watch: {
@@ -277,30 +212,6 @@ export default {
         this.page = newValue;
         this.updateValue();
       },
-    },
-  },
-  computed: {
-    descriptionTitle() {
-      return this.title ? `Title contains ${this.title}` : ``;
-    },
-    descriptionAuthors() {
-      return this.authors ? `Authors contains ${this.authors}` : ``;
-    },
-    descriptionJournal() {
-      return this.journal ? `Journal is ${this.journal}` : ``;
-    },
-    descriptionYear() {
-      return this.year ? `Year is ${this.yearComparison} ${this.year}` : ``;
-    },
-    descriptionType() {
-      return this.type.length !== 9
-        ? `Type is one of ${this.type.map((x) => " " + x)}`
-        : "";
-    },
-    descriptionStatus() {
-      return this.status.length !== 4
-        ? `Status is one of ${this.status.map((x) => " " + x)}`
-        : "";
     },
   },
   methods: {
@@ -323,7 +234,7 @@ export default {
         const result = await this.getArticls(params);
         this.articls = result.results;
         this.totalPages = result.totalPages;
-        //this.page = result.page;
+        this.page = result.page;
       }
     },
     async getArticls(params) {
@@ -346,10 +257,10 @@ export default {
         ...(obj.title && { title: obj.title }),
         ...(obj.journal && { journal: obj.journal }),
         ...(obj.authors && { authors: obj.authors }),
-        ...(obj.yearComparison && { yearComparison: obj.yearComparison }),
-        ...(obj.year && { year: obj.year }),
-        ...(obj.source && { source: obj.source }),
-        ...(obj.type?.length && obj.type.length !== 9 && { type: obj.type }),
+        ...(obj.yearComparison &&
+          Number(obj.year) !== 1944 && { yearComparison: obj.yearComparison }),
+        ...(obj.year && Number(obj.year) !== 1944 && { year: obj.year }),
+        ...(obj.types && obj.types.length !== 9 && { types: obj.types }),
         ...(obj.status?.length &&
           obj.status.length !== 4 && { status: obj.status }),
         ...(obj.page && { page: obj.page }),
@@ -364,6 +275,14 @@ export default {
     changePage(page) {
       this.page = page;
       this.updateValue();
+    },
+    toListWithOptionalConjuction(arr, conj = "") {
+      console.log(arr, conj);
+      return (
+        arr.slice(0, arr.length - 1).join(", ") +
+        (arr.length > 1 ? " " + conj + " " : "") +
+        arr[arr.length - 1]
+      );
     },
   },
 };

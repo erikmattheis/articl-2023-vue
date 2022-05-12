@@ -7,8 +7,8 @@
       @keydown.down="down"
       @keydown.up="up"
       @keydown.enter="hit"
-      @keydown.esc="reset"
-      @blur="reset"
+      @keydown.esc="removeItems"
+      @blur="removeItems"
       @keyup="update"
       ref="input"
     />
@@ -72,7 +72,7 @@ export default {
       this.cancel();
 
       if (!this.stringValue) {
-        return this.reset();
+        return this.removeItems();
       }
       this.loading = true;
       this.hit();
@@ -102,7 +102,7 @@ export default {
       // used to cancel after request made
     },
 
-    reset() {
+    removeItems() {
       this.items = [];
       this.loading = false;
     },

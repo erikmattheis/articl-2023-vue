@@ -42,7 +42,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   font: "Poppins", sans-serif;
-  font-size: 17px;
+  font-size: 0.9em;
+  line-height: 1.5em;
 }
 
 body {
