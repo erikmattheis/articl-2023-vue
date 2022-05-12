@@ -119,7 +119,7 @@
             <li v-if="types?.length !== 9">
               Type is <span v-if="types?.length > 1">one of </span>
               <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
-              <a @click.prevent="resetValue('types')"
+              <a @click.prevent="resetValues('types')"
                 ><vue-feather size="1.2rem" type="x-square"
               /></a>
             </li>
@@ -128,7 +128,7 @@
               <strong>{{
                 toListWithOptionalConjuction(statuses, "or")
               }}</strong>
-              <a @click.prevent="resetValue('statuses')"
+              <a @click.prevent="resetValues('statuses')"
                 ><vue-feather size="1.2rem" type="x-square"
               /></a>
             </li>
@@ -160,6 +160,47 @@
                     articl.title.length - 2
                   )
                 }}
+              </li>
+              <li v-if="authors">
+                {{
+                  articl.authors.substring(
+                    0,
+                    titleMatchIndex(articl.authors, authors)
+                  )
+                }}<strong>{{
+                  articl.authors.substring(
+                    titleMatchIndex(articl.authors, authors),
+                    titleMatchIndex(articl.authors, authors) + authors.length
+                  )
+                }}</strong
+                >{{
+                  articl.authors.substring(
+                    titleMatchIndex(articl.authors, authors) + authors.length,
+                    articl.authors.length - 2
+                  )
+                }}
+              </li>
+              <li v-if="journal">
+                {{
+                  articl.journal.substring(
+                    0,
+                    titleMatchIndex(articl.journal, journal)
+                  )
+                }}<strong>{{
+                  articl.journal.substring(
+                    titleMatchIndex(articl.journal, journal),
+                    titleMatchIndex(articl.journal, journal) + journal.length
+                  )
+                }}</strong
+                >{{
+                  articl.journal.substring(
+                    titleMatchIndex(articl.journal, journal) + journal.length,
+                    articl.journal.length - 2
+                  )
+                }}
+              </li>
+              <li v-if="year && yearComparison">
+                {{ yearComparison }} <strong>{{ year }}</strong>
               </li>
             </ul>
           </li>
@@ -231,8 +272,20 @@ export default {
     page: {
       handler(newValue) {
         this.page = newValue;
-        this.updateValues();
+        this.updateValues(this);
       },
+    },
+    types: {
+      handler() {
+        this.updateValues(this);
+      },
+      deep: true,
+    },
+    statuses: {
+      handler() {
+        this.updateValues(this);
+      },
+      deep: true,
     },
   },
   methods: {
@@ -263,12 +316,12 @@ export default {
     onKeyup() {
       this.updateValues(this);
     },
-    onBlur(e) {
-      console.log("onBlur e.value", e.value);
+    onBlur() {
       this.updateValues(this);
     },
     async updateValues(obj) {
       const params = this.assembleParams(obj);
+      console.log("params", params);
       if (params) {
         const result = await this.getArticls(params);
         this.articls = result.results;
@@ -277,7 +330,6 @@ export default {
       }
     },
     async getArticls(params) {
-      console.log("getArticls", params);
       return await this.$http({
         method: "GET",
         url: "/articls",
@@ -293,19 +345,20 @@ export default {
     },
     assembleParams(obj) {
       const params = {
-        ...(obj.title && { title: obj.title }),
-        ...(obj.journal && { journal: obj.journal }),
-        ...(obj.authors && { authors: obj.authors }),
-        ...(obj.yearComparison &&
-          Number(obj.year) !== 1944 && { yearComparison: obj.yearComparison }),
-        ...(obj.year && Number(obj.year) !== 1944 && { year: obj.year }),
-        ...(obj.types && obj.types.length !== 9 && { types: obj.types }),
-        ...(obj.status?.length &&
-          obj.status.length !== 4 && { status: obj.status }),
-        ...(obj.page && { page: obj.page }),
-        ...(obj.limit && { limit: obj.limit }),
+        ...(obj?.title && { title: obj.title }),
+        ...(obj?.journal && { journal: obj.journal }),
+        ...(obj?.authors && { authors: obj.authors }),
+        ...(obj?.yearComparison &&
+          Number(obj?.year) !== 1944 && { yearComparison: obj.yearComparison }),
+        ...(obj?.year && Number(obj.year) !== 1944 && { year: obj.year }),
+        ...(obj?.types && obj.types.length !== 9 && { types: obj.types }),
+        ...(obj?.statuses?.length &&
+          obj.statuses.length !== 4 && { status: obj.statuses }),
+        ...(obj?.page && { page: obj.page }),
+        ...(obj?.limit && { limit: obj.limit }),
       };
       if (!isEqual(params, this.paramsCurrent)) {
+        console.log("something not equal");
         this.paramsCurrent = structuredClone(params);
         return params;
       }
@@ -313,7 +366,7 @@ export default {
     },
     changePage(page) {
       this.page = page;
-      this.updateValues();
+      this.updateValues(this);
     },
     toListWithOptionalConjuction(arr, conj = "") {
       return (
