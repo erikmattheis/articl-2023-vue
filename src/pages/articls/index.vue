@@ -92,8 +92,8 @@
       <div>
         <small>
           <ul>
-            <li v-if="!!totalResults" :aria-busy="isLoading">
-              >Results: {{ totalResults }}
+            <li>
+              Results: {{ totalResults }}<span :aria-busy="isLoading"></span>
             </li>
             <li v-if="!!title">
               Title contains <strong>{{ title }}</strong>
@@ -189,14 +189,14 @@
               </li>
             </ul>
           </li>
-          <!--
-          <infinite-loading @infinite="updateValues"></infinite-loading>
 
-          
-            <template v-slot:spinner>Loading...</template>
-            <template v-slot:no-more>No more message</template>
-            <template v-slot:no-results>No results message</template>
-            -->
+          <infinite-loading @infinite="infiniteHandler">fff</infinite-loading>
+
+          <!--
+          <template v-slot:spinner>Loading...</template>
+          <template v-slot:no-more>No more message</template>
+          <template v-slot:no-results>No results message</template>
+          -->
         </ol>
       </div>
     </div>
@@ -207,11 +207,11 @@
 import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
-//import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css";
+import InfiniteLoading from "v3-infinite-loading";
+//import "v3-infinite-loading/lib/style.css";
 export default {
   name: "listArticlsPage",
-  components: { VueFeather, InputTypeahead },
+  components: { VueFeather, InputTypeahead, InfiniteLoading },
   data() {
     return {
       advanced: null,
@@ -256,7 +256,7 @@ export default {
     this.year = this.yearsStart;
     this.allTypes = this.types.slice();
     this.allStatuses = this.statuses.slice();
-    this.onKeyup = debounce(this.onKeyup, 1000);
+    this.onKeyup = debounce(this.onKeyup, 200);
   },
   watch: {
     types: {
@@ -325,19 +325,27 @@ export default {
     onBlur() {
       this.updateValues(this);
     },
+    infiniteHandler() {
+      this.page = this.page + 1;
+      this.updateValues(this);
+    },
     async updateValues(obj) {
       const params = this.assembleParams(obj);
 
       if (isEqual(params, {})) {
         this.articls = [];
+        this.totalResults = "--";
         return;
       }
 
       if (params) {
         const result = await this.getArticls(params);
 
-        if (Number(result.page === 1)) {
+        if (Number(result.page) === 1 || result.results.length === 0) {
+          console.log("xxx");
           this.articls = [];
+          this.totalResults = "--";
+          this.page = 0;
         }
         this.articls = this.articls.concat(result.results);
         this.totalPages = result.totalPages;
@@ -345,7 +353,8 @@ export default {
         this.limit = result.limit;
         this.totalResults = result.totalResults;
       } else {
-        this.articls = [];
+        console.log("clearing here");
+
         return;
       }
     },
@@ -411,6 +420,8 @@ select {
 ol {
   padding: 1rem !important;
   list-style-type: decimal !important;
+  height: 20rem;
+  overflow: scroll;
 }
 ol.scroll {
   height: 10rem;
