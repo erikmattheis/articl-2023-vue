@@ -147,52 +147,40 @@
             </li>
           </ul>
         </small>
+        articls.length: {{ articls.length }}<br />
+
+        articls[0].id: {{ articls[0]?.id }}
 
         <ol>
           <li
             v-for="(articl, index) in articls"
-            :key="index"
+            :key="articl.id"
             class="grid"
             :class="{ 'light-bg': index % 2 === 0 }"
           >
             <ul>
               <li v-if="articl.title && title">
-                {{
-                  articl.title.substring(
-                    0,
-                    titleMatchIndex(articl.title, title)
-                  )
+                {{ hilightSubstring(articl.title, title, "prefix")
                 }}<strong>{{
-                  articl.title.substring(
-                    titleMatchIndex(articl.title, title),
-                    titleMatchIndex(articl.title, title) + title.length
-                  )
+                  hilightSubstring(articl.title, title, "term")
                 }}</strong
-                >{{
-                  articl.title.substring(
-                    titleMatchIndex(articl.title, title) + title.length,
-                    articl.title.length - 2
-                  )
-                }}
+                >{{ hilightSubstring(articl.title, title, "suffix") }}
               </li>
-              articl.titleExcerpt:{{
-                articl.titleExcerpt
-              }}
               <li v-if="articl.titleExcerpt">
                 {{
                   articl.titleExcerpt.substring(
                     0,
-                    titleMatchIndex(articl.titleExcerpt, title)
+                    noCaseIndexOf(articl.titleExcerpt, title)
                   )
                 }}<strong>{{
                   articl.titleExcerpt.substring(
-                    titleMatchIndex(articl.titleExcerpt, title),
-                    titleMatchIndex(articl.titleExcerpt, title) + title.length
+                    noCaseIndexOf(articl.titleExcerpt, title),
+                    noCaseIndexOf(articl.titleExcerpt, title) + title.length
                   )
                 }}</strong
                 >{{
                   articl.titleExcerpt.substring(
-                    titleMatchIndex(articl.titleExcerpt, title) + title.length,
+                    noCaseIndexOf(articl.titleExcerpt, title) + title.length,
                     articl.titleExcerpt.length - 2
                   )
                 }}
@@ -201,17 +189,17 @@
                 {{
                   articl.authors.substring(
                     0,
-                    titleMatchIndex(articl.authors, authors)
+                    noCaseIndexOf(articl.authors, authors)
                   )
                 }}<strong>{{
                   articl.authors.substring(
-                    titleMatchIndex(articl.authors, authors),
-                    titleMatchIndex(articl.authors, authors) + authors.length
+                    noCaseIndexOf(articl.authors, authors),
+                    noCaseIndexOf(articl.authors, authors) + authors.length
                   )
                 }}</strong
                 >{{
                   articl.authors.substring(
-                    titleMatchIndex(articl.authors, authors) + authors.length,
+                    noCaseIndexOf(articl.authors, authors) + authors.length,
                     articl.authors.length - 2
                   )
                 }}
@@ -220,17 +208,17 @@
                 {{
                   articl.journal.substring(
                     0,
-                    titleMatchIndex(articl.journal, journal)
+                    noCaseIndexOf(articl.journal, journal)
                   )
                 }}<strong>{{
                   articl.journal.substring(
-                    titleMatchIndex(articl.journal, journal),
-                    titleMatchIndex(articl.journal, journal) + journal.length
+                    noCaseIndexOf(articl.journal, journal),
+                    noCaseIndexOf(articl.journal, journal) + journal.length
                   )
                 }}</strong
                 >{{
                   articl.journal.substring(
-                    titleMatchIndex(articl.journal, journal) + journal.length,
+                    noCaseIndexOf(articl.journal, journal) + journal.length,
                     articl.journal.length - 2
                   )
                 }}
@@ -323,6 +311,25 @@ export default {
     },
   },
   methods: {
+    hilightSubstring(str, subStr, part) {
+      if (!str || !subStr) {
+        return false;
+      }
+      if (part === "prefix") {
+        return str.substring(0, this.noCaseIndexOf(str, subStr));
+      }
+      if (part === "term")
+        return str.substring(
+          this.noCaseIndexOf(str, subStr),
+          this.noCaseIndexOf(str, subStr) + subStr.length
+        );
+      if (part === "suffix") {
+        return str.substring(
+          this.noCaseIndexOf(str, subStr) + subStr.length,
+          str.length - 1
+        );
+      }
+    },
     resetValues(arrName) {
       switch (arrName) {
         case "statuses": {
@@ -340,7 +347,7 @@ export default {
       this[varName] = null;
       this.updateValues(this);
     },
-    titleMatchIndex(str, subStr) {
+    noCaseIndexOf(str, subStr) {
       if (!str || !subStr) {
         return false;
       }
@@ -360,8 +367,9 @@ export default {
       const params = this.assembleParams(this, true);
       if (params) {
         const result = await this.getArticls(params);
-        //console.log(result.results);
+        console.log("this.articls.length", this.articls.length);
         this.articls.push(result.results.slice());
+        console.log("this.articls.length2", this.articls);
         this.totalPages = result.totalPages;
         this.limit = result.limit;
         this.totalResults = result.totalResults;
