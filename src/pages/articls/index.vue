@@ -92,7 +92,9 @@
       <div>
         <small>
           <ul>
-            <li v-if="!!totalResults">Results: {{ totalResults }}</li>
+            <li v-if="!!totalResults" :aria-busy="isLoading">
+              >Results: {{ totalResults }}
+            </li>
             <li v-if="!!title">
               Title contains <strong>{{ title }}</strong>
               <a href @click.prevent="clearValue('title')"
@@ -111,18 +113,6 @@
                 ><vue-feather size="1.2rem" type="x-square" />
               </a>
             </li>
-            <!--
-            Number(year):{{
-              Number(year)
-            }}<br />
-            Number(year)!== yearsStart:
-            {{
-              Number(year) !== yearsStart
-            }}<br />
-            year && Number(year) !== yearsStart:{{
-              year && Number(year) !== yearsStart
-            }}
-            -->
             <li v-if="year && Number(year) !== yearsStart">
               Year is <strong>{{ yearComparison }} {{ year }}</strong>
               <a @click.prevent="clearValue('year')"
@@ -147,91 +137,62 @@
             </li>
           </ul>
         </small>
-        articls.length: {{ articls.length }}<br />
-
-        articls[0].id: {{ articls[0]?.id }}
 
         <ol>
           <li
             v-for="(articl, index) in articls"
-            :key="articl.id"
-            class="grid"
+            :key="articl"
             :class="{ 'light-bg': index % 2 === 0 }"
           >
             <ul>
               <li v-if="articl.title && title">
-                {{ hilightSubstring(articl.title, title, "prefix")
-                }}<strong>{{
-                  hilightSubstring(articl.title, title, "term")
-                }}</strong
-                >{{ hilightSubstring(articl.title, title, "suffix") }}
+                {{ highlightedSubstring(articl.title, title, "prefix")
+                }}<strong
+                  :class="{
+                    'not-strong': noCaseIndexOf(articl.title, title) === -1,
+                  }"
+                  >{{
+                    highlightedSubstring(articl.title, title, "term")
+                  }}</strong
+                >{{ highlightedSubstring(articl.title, title, "suffix") }}
               </li>
-              <li v-if="articl.titleExcerpt">
-                {{
-                  articl.titleExcerpt.substring(
-                    0,
-                    noCaseIndexOf(articl.titleExcerpt, title)
-                  )
-                }}<strong>{{
-                  articl.titleExcerpt.substring(
-                    noCaseIndexOf(articl.titleExcerpt, title),
-                    noCaseIndexOf(articl.titleExcerpt, title) + title.length
-                  )
-                }}</strong
+              <li v-if="articl.titleExcerpt && title">
+                {{ highlightedSubstring(articl.titleExcerpt, title, "prefix")
+                }}<strong
+                  :class="{
+                    'not-strong':
+                      noCaseIndexOf(articl.titleExcerpt, title) === -1,
+                  }"
+                  >{{
+                    highlightedSubstring(articl.titleExcerpt, title, "term")
+                  }}</strong
                 >{{
-                  articl.titleExcerpt.substring(
-                    noCaseIndexOf(articl.titleExcerpt, title) + title.length,
-                    articl.titleExcerpt.length - 2
-                  )
+                  highlightedSubstring(articl.titleExcerpt, title, "suffix")
                 }}
               </li>
-              <li v-if="authors">
-                {{
-                  articl.authors.substring(
-                    0,
-                    noCaseIndexOf(articl.authors, authors)
-                  )
-                }}<strong>{{
-                  articl.authors.substring(
-                    noCaseIndexOf(articl.authors, authors),
-                    noCaseIndexOf(articl.authors, authors) + authors.length
-                  )
-                }}</strong
-                >{{
-                  articl.authors.substring(
-                    noCaseIndexOf(articl.authors, authors) + authors.length,
-                    articl.authors.length - 2
-                  )
-                }}
+              <li v-if="articl.authors && authors">
+                {{ highlightedSubstring(articl.authors, authors, "prefix")
+                }}<strong
+                  :class="{
+                    'not-strong': noCaseIndexOf(articl.authors, authors) === -1,
+                  }"
+                  >{{
+                    highlightedSubstring(articl.authors, authors, "term")
+                  }}</strong
+                >{{ highlightedSubstring(articl.authors, authors, "suffix") }}
               </li>
               <li v-if="journal">
-                {{
-                  articl.journal.substring(
-                    0,
-                    noCaseIndexOf(articl.journal, journal)
-                  )
-                }}<strong>{{
-                  articl.journal.substring(
-                    noCaseIndexOf(articl.journal, journal),
-                    noCaseIndexOf(articl.journal, journal) + journal.length
-                  )
-                }}</strong
-                >{{
-                  articl.journal.substring(
-                    noCaseIndexOf(articl.journal, journal) + journal.length,
-                    articl.journal.length - 2
-                  )
-                }}
+                <strong>{{ articl.journal }}</strong>
               </li>
-              <li v-if="year && Number(year) !== yearsStart">
-                {{ yearComparison }} <strong>{{ year }}</strong>
+              <li v-if="articl.yearComparison && Number(year) !== yearsStart">
+                <strong>{{ yearComparison }}{{ year }}</strong>
               </li>
             </ul>
           </li>
-
-          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-
           <!--
+          <infinite-loading @infinite="updateValues"></infinite-loading>
+
+          
             <template v-slot:spinner>Loading...</template>
             <template v-slot:no-more>No more message</template>
             <template v-slot:no-results>No results message</template>
@@ -246,11 +207,11 @@
 import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
-import InfiniteLoading from "v3-infinite-loading";
+//import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css";
 export default {
   name: "listArticlsPage",
-  components: { VueFeather, InputTypeahead, InfiniteLoading },
+  components: { VueFeather, InputTypeahead },
   data() {
     return {
       advanced: null,
@@ -260,6 +221,7 @@ export default {
       authors: "",
       buttonDisabled: false,
       comparisons: ["after", "before", "exactly"],
+      isLoading: false,
       journal: "",
       page: 0,
       paramsCurrent: {},
@@ -294,7 +256,7 @@ export default {
     this.year = this.yearsStart;
     this.allTypes = this.types.slice();
     this.allStatuses = this.statuses.slice();
-    this.onKeyup = debounce(this.onKeyup, 200);
+    this.onKeyup = debounce(this.onKeyup, 1000);
   },
   watch: {
     types: {
@@ -311,7 +273,7 @@ export default {
     },
   },
   methods: {
-    hilightSubstring(str, subStr, part) {
+    highlightedSubstring(str, subStr, part) {
       if (!str || !subStr) {
         return false;
       }
@@ -363,33 +325,32 @@ export default {
     onBlur() {
       this.updateValues(this);
     },
-    async infiniteHandler() {
-      const params = this.assembleParams(this, true);
-      if (params) {
-        const result = await this.getArticls(params);
-        console.log("this.articls.length", this.articls.length);
-        this.articls.push(result.results.slice());
-        console.log("this.articls.length2", this.articls);
-        this.totalPages = result.totalPages;
-        this.limit = result.limit;
-        this.totalResults = result.totalResults;
-        //if (result.totalResults <= this.limit * this.page) $state.complete();
-      }
-    },
     async updateValues(obj) {
       const params = this.assembleParams(obj);
 
+      if (isEqual(params, {})) {
+        this.articls = [];
+        return;
+      }
+
       if (params) {
         const result = await this.getArticls(params);
-        this.articls = result?.results?.slice();
+
+        if (Number(result.page === 1)) {
+          this.articls = [];
+        }
+        this.articls = this.articls.concat(result.results);
         this.totalPages = result.totalPages;
         this.page = result.page;
         this.limit = result.limit;
         this.totalResults = result.totalResults;
+      } else {
+        this.articls = [];
+        return;
       }
     },
     async getArticls(params) {
-      console.log("params", params);
+      this.isLoading = true;
       return await this.$http({
         method: "GET",
         url: "/articls",
@@ -397,12 +358,11 @@ export default {
       })
         .then((result) => {
           if (result?.data) {
-            console.log();
             return result.data;
           }
-          return {};
         })
-        .catch((error) => this.$store.dispatch("setError", error));
+        .catch((error) => this.$store.dispatch("setError", error))
+        .finally(() => (this.isLoading = false));
     },
     assembleParams(obj, force = false) {
       const params = {
@@ -469,7 +429,7 @@ ol li {
 .light-bg {
   background-color: #20303d;
 }
-strong {
+strong:not([class="not-strong"]) {
   background-color: rgb(181, 228, 133);
   color: black;
   padding: 0.2rem 0.1rem;
