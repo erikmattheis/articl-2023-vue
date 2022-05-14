@@ -42,8 +42,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   font: "Poppins", sans-serif;
-  font-size: 0.9em;
-  line-height: 1.5em;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 body {
@@ -116,6 +116,17 @@ main form {
 footer article {
   margin-top: 0;
   margin-bottom: 0.5rem;
+}
+
+form ul li,
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+select,
+textarea {
+  padding: 0.4rem 0.6rem !important;
+}
+form ul li,
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  height: initial;
 }
 
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";

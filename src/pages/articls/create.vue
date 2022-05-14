@@ -216,7 +216,6 @@ export default {
       }
     },
     onTypeaheadHit(e) {
-      console.log("onTypeaheadHit", e);
       this.categorySlug = e.value;
     },
   },
@@ -225,12 +224,12 @@ export default {
 
 <style scoped>
 form input.another {
-  padding-right: 4.6em;
+  padding-right: 4.6 rem;
 }
 form input.another button {
   position: absolute;
   top: 0;
   right: 0;
-  width: 4.4em;
+  width: 4.4rem;
 }
 </style>

@@ -3,7 +3,7 @@
     <label>
       <vue-feather
         class="icon"
-        size="2.2rem"
+        size="1.4rem"
         type="search"
         aria-label="Search"
       ></vue-feather>

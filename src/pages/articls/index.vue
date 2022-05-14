@@ -4,14 +4,14 @@
     <div class="grid">
       <form>
         <details open>
-          <summary role="button" class="secondary">Search text</summary>
+          <summary role="button">Search text</summary>
           <label for="title">Title</label>
           <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
 
           <label for="journal">Journal</label>
           <input-typeahead
             src="/articls/journal"
-            @typeahead-updated="onTypeaheadUpdated"
+            @typeahead-updated="onTypeaheadOptionClick"
             :input-value="journal"
             query="journal"
             @blur="onBlur"
@@ -21,7 +21,7 @@
           <label for="author">Author</label>
           <input-typeahead
             src="/articls/authors"
-            @typeahead-updated="onTypeaheadUpdated"
+            @typeahead-updated="onTypeaheadOptionClick"
             :input-value="authors"
             query="authors"
             @blur="onBlur"
@@ -29,7 +29,7 @@
           />
         </details>
         <details>
-          <summary role="button" class="secondary">Advanced</summary>
+          <summary role="button">Advanced</summary>
           <label><h3>Year published</h3></label>
 
           <label
@@ -147,15 +147,16 @@
             </li>
           </ul>
         </small>
-        <ol class="scroll">
+
+        <ol>
           <li
             v-for="(articl, index) in articls"
-            :key="articl.id"
+            :key="index"
             class="grid"
             :class="{ 'light-bg': index % 2 === 0 }"
           >
             <ul>
-              <li v-if="title">
+              <li v-if="articl.title && title">
                 {{
                   articl.title.substring(
                     0,
@@ -171,6 +172,28 @@
                   articl.title.substring(
                     titleMatchIndex(articl.title, title) + title.length,
                     articl.title.length - 2
+                  )
+                }}
+              </li>
+              articl.titleExcerpt:{{
+                articl.titleExcerpt
+              }}
+              <li v-if="articl.titleExcerpt">
+                {{
+                  articl.titleExcerpt.substring(
+                    0,
+                    titleMatchIndex(articl.titleExcerpt, title)
+                  )
+                }}<strong>{{
+                  articl.titleExcerpt.substring(
+                    titleMatchIndex(articl.titleExcerpt, title),
+                    titleMatchIndex(articl.titleExcerpt, title) + title.length
+                  )
+                }}</strong
+                >{{
+                  articl.titleExcerpt.substring(
+                    titleMatchIndex(articl.titleExcerpt, title) + title.length,
+                    articl.titleExcerpt.length - 2
                   )
                 }}
               </li>
@@ -217,9 +240,8 @@
               </li>
             </ul>
           </li>
-          <li>
-            <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-          </li>
+
+          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
 
           <!--
             <template v-slot:spinner>Loading...</template>
@@ -229,22 +251,12 @@
         </ol>
       </div>
     </div>
-    <!--
-    <the-pagination
-      v-if="totalPages > 1"
-      :total-pages="totalPages"
-      :current-page="page"
-      @pagechanged="changePage"
-      :number-of-buttons="5"
-    />
-    -->
   </article>
 </template>
 
 <script>
 import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
-//import ThePagination from "@/components/ui/ThePagination.vue";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 import InfiniteLoading from "v3-infinite-loading";
 import "v3-infinite-loading/lib/style.css";
@@ -254,35 +266,35 @@ export default {
   data() {
     return {
       advanced: null,
+      allStatuses: [],
+      allTypes: [],
       articls: [],
-      title: "",
-      journal: "",
       authors: "",
-      year: 0,
-      yearComparison: "after",
-      comparisons: ["after", "before", "exactly"],
       buttonDisabled: false,
-      totalPages: 1,
-      page: 1,
-      totalResults: "--",
-      yearsStart: 1944,
-      years: [],
+      comparisons: ["after", "before", "exactly"],
+      journal: "",
+      page: 0,
+      paramsCurrent: {},
       source: "",
+      statuses: ["Published", "Draft", "Pending", "Trash"],
+      title: "",
+      totalPages: 1,
+      totalResults: "--",
       types: [
         "Review (OA)",
         "Review (PA)",
         "Research (OA)",
         "Research (PA)",
-        "Web",
-        "Non-medical journal articles",
         "Images",
+        "Non-medical journal articles",
         "Presentations",
         "Videos",
+        "Web",
       ],
-      allTypes: [],
-      statuses: ["Published", "Draft", "Pending", "Trash"],
-      allStatuses: [],
-      paramsCurrent: {},
+      year: 0,
+      yearComparison: "after",
+      years: [],
+      yearsStart: 1944,
     };
   },
   created() {
@@ -297,12 +309,6 @@ export default {
     this.onKeyup = debounce(this.onKeyup, 200);
   },
   watch: {
-    page: {
-      handler() {
-        //this.page = newValue;
-        this.updateValues(this);
-      },
-    },
     types: {
       handler() {
         this.updateValues(this);
@@ -335,9 +341,12 @@ export default {
       this.updateValues(this);
     },
     titleMatchIndex(str, subStr) {
+      if (!str || !subStr) {
+        return false;
+      }
       return str.toLowerCase().indexOf(subStr.toLowerCase());
     },
-    onTypeaheadUpdated(e) {
+    onTypeaheadOptionClick(e) {
       this[e.field] = e.value;
       this.updateValues(this);
     },
@@ -348,15 +357,12 @@ export default {
       this.updateValues(this);
     },
     async infiniteHandler() {
-      console.log("infiniteHandler");
-      this.page = this.page + 1;
-      const params = this.assembleParams(this);
+      const params = this.assembleParams(this, true);
       if (params) {
         const result = await this.getArticls(params);
-        console.log("result.results.length", result.results.length);
-        this.articls.push(result.results);
+        //console.log(result.results);
+        this.articls.push(result.results.slice());
         this.totalPages = result.totalPages;
-        //this.page = result.page;
         this.limit = result.limit;
         this.totalResults = result.totalResults;
         //if (result.totalResults <= this.limit * this.page) $state.complete();
@@ -366,9 +372,8 @@ export default {
       const params = this.assembleParams(obj);
 
       if (params) {
-        console.log("params", params);
         const result = await this.getArticls(params);
-        this.articls = result.results;
+        this.articls = result?.results?.slice();
         this.totalPages = result.totalPages;
         this.page = result.page;
         this.limit = result.limit;
@@ -376,6 +381,7 @@ export default {
       }
     },
     async getArticls(params) {
+      console.log("params", params);
       return await this.$http({
         method: "GET",
         url: "/articls",
@@ -383,13 +389,14 @@ export default {
       })
         .then((result) => {
           if (result?.data) {
+            console.log();
             return result.data;
           }
-          this.$store.dispatch("setError", result);
+          return {};
         })
         .catch((error) => this.$store.dispatch("setError", error));
     },
-    assembleParams(obj) {
+    assembleParams(obj, force = false) {
       const params = {
         ...(obj?.title && { title: obj.title }),
         ...(obj?.journal && { journal: obj.journal }),
@@ -401,19 +408,18 @@ export default {
           obj.types.length !== 9 && { types: obj.types.join(",") }),
         ...(obj?.statuses?.length &&
           obj.statuses.length !== 4 && { statuses: obj.statuses.join(",") }),
-        ...(obj?.page && { page: obj.page }),
-        ...(obj?.limit && { limit: obj.limit }),
+        ...(obj?.page && Number(obj.page) !== 1 && { page: obj.page }),
+        ...(obj?.limit && Number(obj.limit) !== 10 && { limit: obj.limit }),
       };
       if (!isEqual(params, this.paramsCurrent)) {
-        params.page = 1;
+        this.paramsCurrent = structuredClone(params);
+        return params;
+      } else if (force) {
+        params.page = params.page + 1;
         this.paramsCurrent = structuredClone(params);
         return params;
       }
       return false;
-    },
-    changePage(page) {
-      this.page = page;
-      this.updateValues(this);
     },
     toListWithOptionalConjuction(arr, conj = "") {
       return (
@@ -446,19 +452,11 @@ ol li {
   margin-bottom: 1rem;
   padding: 0.4rem;
 }
-ul li {
-  display: flex;
-  align-items: center;
-}
 #app > main > article > div > div > small > ul > li > a {
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   cursor: pointer;
   color: red !important;
-}
-ul li {
-  display: flex;
-  align-items: center;
 }
 .light-bg {
   background-color: #20303d;
