@@ -93,7 +93,7 @@
         <small>
           <ul>
             <li>
-              Results: {{ totalResults }}<span :aria-busy="isLoading"></span>
+              Results: {{ totalResults }} <span :aria-busy="isLoading"></span>
             </li>
             <li v-if="!!title">
               Title contains <strong>{{ title }}</strong>
@@ -137,11 +137,10 @@
             </li>
           </ul>
         </small>
-
-        <ol>
-          <li
+        <ol class="scroll">
+          <div
             v-for="(articl, index) in articls"
-            :key="articl"
+            :key="articl.id"
             :class="{ 'light-bg': index % 2 === 0 }"
           >
             <ul>
@@ -188,10 +187,8 @@
                 <strong>{{ yearComparison }}{{ year }}</strong>
               </li>
             </ul>
-          </li>
-
-          <infinite-loading @infinite="infiniteHandler">fff</infinite-loading>
-
+          </div>
+          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
           <!--
           <template v-slot:spinner>Loading...</template>
           <template v-slot:no-more>No more message</template>
@@ -206,9 +203,11 @@
 <script>
 import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
-import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 import InfiniteLoading from "v3-infinite-loading";
-//import "v3-infinite-loading/lib/style.css";
+import InputTypeahead from "@/components/ui/InputTypeahead.vue";
+import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
+import "v3-infinite-loading/lib/style.css";
+
 export default {
   name: "listArticlsPage",
   components: { VueFeather, InputTypeahead, InfiniteLoading },
@@ -223,6 +222,7 @@ export default {
       comparisons: ["after", "before", "exactly"],
       isLoading: false,
       journal: "",
+      limit: 5,
       page: 0,
       paramsCurrent: {},
       source: "",
@@ -256,6 +256,8 @@ export default {
     this.year = this.yearsStart;
     this.allTypes = this.types.slice();
     this.allStatuses = this.statuses.slice();
+    this.highlightedSubstring = highlightedSubstring;
+    this.noCaseIndexOf = noCaseIndexOf;
     this.onKeyup = debounce(this.onKeyup, 200);
   },
   watch: {
@@ -273,25 +275,6 @@ export default {
     },
   },
   methods: {
-    highlightedSubstring(str, subStr, part) {
-      if (!str || !subStr) {
-        return false;
-      }
-      if (part === "prefix") {
-        return str.substring(0, this.noCaseIndexOf(str, subStr));
-      }
-      if (part === "term")
-        return str.substring(
-          this.noCaseIndexOf(str, subStr),
-          this.noCaseIndexOf(str, subStr) + subStr.length
-        );
-      if (part === "suffix") {
-        return str.substring(
-          this.noCaseIndexOf(str, subStr) + subStr.length,
-          str.length - 1
-        );
-      }
-    },
     resetValues(arrName) {
       switch (arrName) {
         case "statuses": {
@@ -309,12 +292,6 @@ export default {
       this[varName] = null;
       this.updateValues(this);
     },
-    noCaseIndexOf(str, subStr) {
-      if (!str || !subStr) {
-        return false;
-      }
-      return str.toLowerCase().indexOf(subStr.toLowerCase());
-    },
     onTypeaheadOptionClick(e) {
       this[e.field] = e.value;
       this.updateValues(this);
@@ -326,13 +303,16 @@ export default {
       this.updateValues(this);
     },
     infiniteHandler() {
+      console.log("infiniteHandler");
       this.page = this.page + 1;
       this.updateValues(this);
     },
     async updateValues(obj) {
+      console.log("updateValues");
       const params = this.assembleParams(obj);
 
       if (isEqual(params, {})) {
+        console.log("params is {}");
         this.articls = [];
         this.totalResults = "--";
         return;
@@ -340,21 +320,20 @@ export default {
 
       if (params) {
         const result = await this.getArticls(params);
-
         if (Number(result.page) === 1 || result.results.length === 0) {
-          console.log("xxx");
+          console.log(
+            "Number(result.page) === 1 || result.results.length === 0"
+          );
           this.articls = [];
           this.totalResults = "--";
-          this.page = 0;
         }
+
         this.articls = this.articls.concat(result.results);
         this.totalPages = result.totalPages;
-        this.page = result.page;
         this.limit = result.limit;
         this.totalResults = result.totalResults;
       } else {
-        console.log("clearing here");
-
+        console.log("no params");
         return;
       }
     },

@@ -86,7 +86,7 @@
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()"
       >
-        CREATE ARTICL
+        Create Articl
       </button>
     </form>
     <template v-else>
@@ -96,14 +96,14 @@
   </article>
 </template>
 <script>
-import CardNotification from "@/components/ui/CardNotification.vue";
+import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
 
 export default {
   name: "createArticlPage",
   components: {
-    CardNotification,
+    cardNotification,
     inputTypeahead,
   },
   data() {
