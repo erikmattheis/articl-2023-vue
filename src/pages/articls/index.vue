@@ -137,8 +137,8 @@
             </li>
           </ul>
         </small>
-        <ol class="scroll">
-          <div
+        <ol>
+          <li
             v-for="(articl, index) in articls"
             :key="articl.id"
             :class="{ 'light-bg': index % 2 === 0 }"
@@ -187,14 +187,9 @@
                 <strong>{{ yearComparison }}{{ year }}</strong>
               </li>
             </ul>
-          </div>
-          <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-          <!--
-          <template v-slot:spinner>Loading...</template>
-          <template v-slot:no-more>No more message</template>
-          <template v-slot:no-results>No results message</template>
-          -->
+          </li>
         </ol>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
       </div>
     </div>
   </article>
