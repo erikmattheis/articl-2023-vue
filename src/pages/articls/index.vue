@@ -2,198 +2,128 @@
   <article>
     <h1>Articls</h1>
     <div class="grid">
-      <form>
-        <details open>
-          <summary role="button">Search text</summary>
-          <label for="title">Title</label>
-          <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
-
-          <label for="journal">Journal</label>
-          <input-typeahead
-            src="/articls/journal"
-            @typeahead-updated="onTypeaheadOptionClick"
-            :input-value="journal"
-            query="journal"
-            @blur="onBlur"
-            @keyup="onKeyup"
-          />
-
-          <label for="author">Author</label>
-          <input-typeahead
-            src="/articls/authors"
-            @typeahead-updated="onTypeaheadOptionClick"
-            :input-value="authors"
-            query="authors"
-            @blur="onBlur"
-            @keyup="onKeyup"
-          />
-        </details>
-        <details>
-          <summary role="button">Advanced</summary>
-          <label><h3>Year published</h3></label>
-
-          <label
-            class="horizontal"
-            v-for="(comparison, index) in comparisons"
-            :key="index"
-          >
-            <input
-              name="yearComparison"
-              type="radio"
-              :value="comparison"
-              v-model="yearComparison"
-            />
-            {{ comparison }}
-          </label>
-
-          <label for="year">Year</label>
-          <select
-            v-model="year"
-            name="year"
-            id="year"
-            autocomplete="off"
-            @change="updateValues"
-          >
-            <option v-for="i in years" v-bind:key="i">
-              {{ i }}
-            </option>
-          </select>
-
-          <div class="grid">
-            <div>
-              <fieldset>
-                Type
-                <label v-for="(type, index) in allTypes" :key="index">
-                  <input
-                    type="checkbox"
-                    :value="type"
-                    v-model="types"
-                    checked="checked"
-                  />{{ type }}</label
-                >
-              </fieldset>
-            </div>
-            <div>
-              <fieldset>
-                Status
-                <label v-for="(status, index) in allStatuses" :key="index">
-                  <input
-                    type="checkbox"
-                    :value="status"
-                    v-model="statuses"
-                    checked="checked"
-                  />{{ status }}</label
-                >
-              </fieldset>
-            </div>
-          </div>
-        </details>
-      </form>
-      <div>
-        <small>
+      <the-articls-form-search @update-params="onParamsUpdated">
+      </the-articls-form-search>
+      <h2>Results displayed:{{ articls.length }}</h2>
+      <small>
+        <ul>
+          <li>
+            Results: {{ totalResults }} <span :aria-busy="isLoading"></span>
+          </li>
+          <li v-if="!!title">
+            params.title contains <strong>{{ params.title }}</strong>
+            <a href @click.prevent="clearValue('title')"
+              ><vue-feather size="1.2rem" type="x-square"
+            /></a>
+          </li>
+          <li v-if="!!journal">
+            Journal is <strong>{{ journal }}</strong>
+            <a @click.prevent="clearValue('journal')"
+              ><vue-feather size="1.2rem" type="x-square" />
+            </a>
+          </li>
+          <li v-if="!!authors">
+            params.authors contains <strong>{{ params.authors }}</strong>
+            <a @click.prevent="clearValue('authors')"
+              ><vue-feather size="1.2rem" type="x-square" />
+            </a>
+          </li>
+          <li v-if="year && Number(year) !== yearsStart">
+            Year is <strong>{{ yearComparison }} {{ year }}</strong>
+            <a @click.prevent="clearValue('year')"
+              ><vue-feather size="1.2rem" type="x-square"
+            /></a>
+          </li>
+          <li v-if="types?.length !== 9">
+            Type is <span v-if="types?.length > 1">one of </span>
+            <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
+            <a @click.prevent="resetValues('types')"
+              ><vue-feather size="1.2rem" type="x-square"
+            /></a>
+          </li>
+          <li v-if="statuses?.length !== 4">
+            Status is <span v-if="statuses?.length > 1">one of </span>
+            <strong>{{ toListWithOptionalConjuction(statuses, "or") }}</strong>
+            <a @click.prevent="resetValues('statuses')"
+              ><vue-feather size="1.2rem" type="x-square"
+            /></a>
+          </li>
+        </ul>
+      </small>
+      params.title:{{ params.title }}
+      <ol>
+        <li
+          v-for="(articl, index) in articls"
+          :key="articl.id"
+          :class="{ 'light-bg': index % 2 === 0 }"
+        >
           <ul>
-            <li>
-              Results: {{ totalResults }} <span :aria-busy="isLoading"></span>
+            <li v-if="articl.title">
+              {{ highlightedSubstring(articl.title, params.title, "prefix")
+              }}<strong
+                :class="{
+                  'not-strong':
+                    noCaseIndexOf(articl.title, params.title) === -1,
+                }"
+                >{{
+                  highlightedSubstring(articl.title, params.title, "term")
+                }}</strong
+              >{{ highlightedSubstring(articl.title, params.title, "suffix") }}
             </li>
-            <li v-if="!!title">
-              Title contains <strong>{{ title }}</strong>
-              <a href @click.prevent="clearValue('title')"
-                ><vue-feather size="1.2rem" type="x-square"
-              /></a>
+            <li v-if="articl.titleExcerpt && params.title">
+              {{
+                highlightedSubstring(
+                  articl.titleExcerpt,
+                  params.title,
+                  "prefix"
+                )
+              }}<strong
+                :class="{
+                  'not-strong':
+                    noCaseIndexOf(articl.titleExcerpt, params.title) === -1,
+                }"
+                >{{
+                  highlightedSubstring(
+                    articl.titleExcerpt,
+                    params.title,
+                    "term"
+                  )
+                }}</strong
+              >{{
+                highlightedSubstring(
+                  articl.titleExcerpt,
+                  params.title,
+                  "suffix"
+                )
+              }}
             </li>
-            <li v-if="!!journal">
-              Journal is <strong>{{ journal }}</strong>
-              <a @click.prevent="clearValue('journal')"
-                ><vue-feather size="1.2rem" type="x-square" />
-              </a>
+            <li v-if="articl.authors && params.authors">
+              {{ highlightedSubstring(articl.authors, params.authors, "prefix")
+              }}<strong
+                :class="{
+                  'not-strong':
+                    noCaseIndexOf(articl.authors, params.authors) === -1,
+                }"
+                >{{
+                  highlightedSubstring(articl.authors, params.authors, "term")
+                }}</strong
+              >{{
+                highlightedSubstring(articl.authors, params.authors, "suffix")
+              }}
             </li>
-            <li v-if="!!authors">
-              Authors contains <strong>{{ authors }}</strong>
-              <a @click.prevent="clearValue('authors')"
-                ><vue-feather size="1.2rem" type="x-square" />
-              </a>
+            <li v-if="journal">
+              <strong>{{ articl.journal }}</strong>
             </li>
-            <li v-if="year && Number(year) !== yearsStart">
-              Year is <strong>{{ yearComparison }} {{ year }}</strong>
-              <a @click.prevent="clearValue('year')"
-                ><vue-feather size="1.2rem" type="x-square"
-              /></a>
-            </li>
-            <li v-if="types?.length !== 9">
-              Type is <span v-if="types?.length > 1">one of </span>
-              <strong>{{ toListWithOptionalConjuction(types, "or") }}</strong>
-              <a @click.prevent="resetValues('types')"
-                ><vue-feather size="1.2rem" type="x-square"
-              /></a>
-            </li>
-            <li v-if="statuses?.length !== 4">
-              Status is <span v-if="statuses?.length > 1">one of </span>
-              <strong>{{
-                toListWithOptionalConjuction(statuses, "or")
-              }}</strong>
-              <a @click.prevent="resetValues('statuses')"
-                ><vue-feather size="1.2rem" type="x-square"
-              /></a>
+            <li v-if="articl.yearComparison && Number(year) !== yearsStart">
+              <strong>{{ yearComparison }}{{ year }}</strong>
             </li>
           </ul>
-        </small>
-        <ol>
-          <li
-            v-for="(articl, index) in articls"
-            :key="articl.id"
-            :class="{ 'light-bg': index % 2 === 0 }"
-          >
-            <ul>
-              <li v-if="articl.title && title">
-                {{ highlightedSubstring(articl.title, title, "prefix")
-                }}<strong
-                  :class="{
-                    'not-strong': noCaseIndexOf(articl.title, title) === -1,
-                  }"
-                  >{{
-                    highlightedSubstring(articl.title, title, "term")
-                  }}</strong
-                >{{ highlightedSubstring(articl.title, title, "suffix") }}
-              </li>
-              <li v-if="articl.titleExcerpt && title">
-                {{ highlightedSubstring(articl.titleExcerpt, title, "prefix")
-                }}<strong
-                  :class="{
-                    'not-strong':
-                      noCaseIndexOf(articl.titleExcerpt, title) === -1,
-                  }"
-                  >{{
-                    highlightedSubstring(articl.titleExcerpt, title, "term")
-                  }}</strong
-                >{{
-                  highlightedSubstring(articl.titleExcerpt, title, "suffix")
-                }}
-              </li>
-              <li v-if="articl.authors && authors">
-                {{ highlightedSubstring(articl.authors, authors, "prefix")
-                }}<strong
-                  :class="{
-                    'not-strong': noCaseIndexOf(articl.authors, authors) === -1,
-                  }"
-                  >{{
-                    highlightedSubstring(articl.authors, authors, "term")
-                  }}</strong
-                >{{ highlightedSubstring(articl.authors, authors, "suffix") }}
-              </li>
-              <li v-if="journal">
-                <strong>{{ articl.journal }}</strong>
-              </li>
-              <li v-if="articl.yearComparison && Number(year) !== yearsStart">
-                <strong>{{ yearComparison }}{{ year }}</strong>
-              </li>
-            </ul>
-          </li>
-        </ol>
-        <infinite-loading
-          class="scroll-spy"
-          @infinite="infiniteHandler"
-        ></infinite-loading>
-      </div>
+        </li>
+      </ol>
+      <infinite-loading
+        class="scroll-spy"
+        @infinite="infiniteHandler"
+      ></infinite-loading>
     </div>
   </article>
 </template>
@@ -201,14 +131,20 @@
 <script>
 import { isEqual, debounce } from "lodash";
 import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 import InfiniteLoading from "v3-infinite-loading";
-import InputTypeahead from "@/components/ui/InputTypeahead.vue";
+import TheArticlsFormSearch from "@/components/layout/TheArticlsFormSearch.vue";
+
 import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
 import "v3-infinite-loading/lib/style.css";
 
 export default {
   name: "listArticlsPage",
-  components: { VueFeather, InputTypeahead, InfiniteLoading },
+  components: {
+    TheArticlsFormSearch,
+    VueFeather,
+    InfiniteLoading,
+  },
   data() {
     return {
       advanced: null,
@@ -222,6 +158,7 @@ export default {
       journal: "",
       limit: 5,
       page: 0,
+      params: {},
       paramsCurrent: {},
       source: "",
       statuses: ["Published", "Draft", "Pending", "Trash"],
@@ -276,59 +213,34 @@ export default {
     this.allStatuses = this.statuses.slice();
     this.highlightedSubstring = highlightedSubstring;
     this.noCaseIndexOf = noCaseIndexOf;
-    this.onKeyup = debounce(this.onKeyup, 200);
+    this.dummy = debounce(() => {});
   },
   watch: {
-    types: {
-      handler() {
-        this.updateValues(this);
-      },
-      deep: true,
-    },
-    statuses: {
-      handler() {
-        this.updateValues(this);
+    params: {
+      handler(newValue) {
+        this.updateValues(newValue);
       },
       deep: true,
     },
   },
+  computed: {
+    ...mapGetters({
+      user: "auth/user",
+    }),
+  },
   methods: {
-    resetValues(arrName) {
-      switch (arrName) {
-        case "statuses": {
-          this.statuses = this.allStatuses;
-          break;
-        }
-        case "types": {
-          this.types = this.allTypes;
-          break;
-        }
-      }
-      this.updateValues(this);
-    },
-    clearValue(varName) {
-      this[varName] = null;
-      this.updateValues(this);
-    },
-    onTypeaheadOptionClick(e) {
-      this[e.field] = e.value;
-      this.updateValues(this);
-    },
-    onKeyup() {
-      this.updateValues(this);
-    },
-    onBlur() {
-      this.updateValues(this);
+    onParamsUpdated(params) {
+      console.log("onParamsUpdated");
+      this.updateValues(params);
     },
     infiniteHandler() {
       console.log("infiniteHandler");
-      this.page = this.page + 1;
-      this.updateValues(this);
+      this.params.page = this.params.page + 1;
+      this.updateValues(this.params);
     },
-    async updateValues(obj) {
-      console.log("updateValues");
-      const params = this.assembleParams(obj);
-
+    async updateValues(params) {
+      console.log("updateValues in parent");
+      this.params = params;
       if (isEqual(params, {})) {
         console.log("params is {}");
         this.articls = [];
@@ -340,7 +252,11 @@ export default {
         const result = await this.getArticls(params);
         if (Number(result.page) === 1 || result.results.length === 0) {
           console.log(
-            "Number(result.page) === 1 || result.results.length === 0"
+            "Number(result.page) === 1 || result.results.length === 0" +
+              Number(result.page)
+          );
+          console.log(
+            "Number(result.results.length === 0" + Number(result.results.length)
           );
           this.articls = [];
           this.totalResults = "--";
@@ -369,31 +285,6 @@ export default {
         })
         .catch((error) => this.$store.dispatch("setError", error))
         .finally(() => (this.isLoading = false));
-    },
-    assembleParams(obj, force = false) {
-      const params = {
-        ...(obj?.title && { title: obj.title }),
-        ...(obj?.journal && { journal: obj.journal }),
-        ...(obj?.authors && { authors: obj.authors }),
-        ...(obj?.yearComparison &&
-          Number(obj?.year) !== 1944 && { yearComparison: obj.yearComparison }),
-        ...(obj?.year && Number(obj.year) !== 1944 && { year: obj.year }),
-        ...(obj?.types &&
-          obj.types.length !== 9 && { types: obj.types.join(",") }),
-        ...(obj?.statuses?.length &&
-          obj.statuses.length !== 4 && { statuses: obj.statuses.join(",") }),
-        ...(obj?.page && Number(obj.page) !== 1 && { page: obj.page }),
-        ...(obj?.limit && Number(obj.limit) !== 10 && { limit: obj.limit }),
-      };
-      if (!isEqual(params, this.paramsCurrent)) {
-        this.paramsCurrent = structuredClone(params);
-        return params;
-      } else if (force) {
-        params.page = params.page + 1;
-        this.paramsCurrent = structuredClone(params);
-        return params;
-      }
-      return false;
     },
     toListWithOptionalConjuction(arr, conj = "") {
       return (
