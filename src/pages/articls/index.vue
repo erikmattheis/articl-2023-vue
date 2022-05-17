@@ -189,7 +189,10 @@
             </ul>
           </li>
         </ol>
-        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+        <infinite-loading
+          class="scroll-spy"
+          @infinite="infiniteHandler"
+        ></infinite-loading>
       </div>
     </div>
   </article>
@@ -243,6 +246,26 @@ export default {
     };
   },
   created() {
+    let observerOptions = {
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+
+    var observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    function observerCallback(entries) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log("intersect!");
+        }
+      });
+    }
+
+    document.querySelectorAll(".scroll-spy").forEach((i) => {
+      if (i) {
+        observer.observe(i);
+      }
+    });
     this.years = [
       ...Array(new Date().getUTCFullYear() - (this.yearsStart - 1)).keys(),
     ]

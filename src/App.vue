@@ -27,6 +27,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~/node_modules/@picocss/pico/css/pico.css";
+
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
