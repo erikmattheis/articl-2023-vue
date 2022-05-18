@@ -5,23 +5,20 @@
       <label for="title">Title</label>
       <input type="text" :value="title" @keyup="onTitleChange" />
 
-      <label for="journal">Journal</label>
+      <label for="journal">Journal {{ journal }}</label>
       <input-typeahead
         src="/articls/journal"
-        @typeahead-updated="onTypeaheadOptionClick"
+        @typeahead-updated="onJournalClick"
         :input-value="journal"
         query="journal"
-        @keyup="onKeyup"
       />
 
       <label for="author">Author</label>
       <input-typeahead
         src="/articls/authors"
-        @typeahead-updated="onTypeaheadOptionClick"
+        @typeahead-updated="onAuthorsClick"
         :input-value="authors"
         query="authors"
-        x
-        @keyup="onKeyup"
       />
     </details>
     <details>
@@ -59,7 +56,7 @@
         <div>
           <fieldset>
             Type
-            <label v-for="(type, index) in allTypes" :key="index">
+            <label v-for="type in allTypes" :key="type">
               <input
                 type="checkbox"
                 :value="type"
@@ -72,7 +69,7 @@
         <div>
           <fieldset>
             Status
-            <label v-for="(status, index) in allStatuses" :key="index">
+            <label v-for="status in allStatuses" :key="status">
               <input
                 type="checkbox"
                 :value="status"
@@ -91,13 +88,10 @@
 import { mapGetters, mapState } from "vuex";
 import { debounce } from "lodash";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
-import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
-import "v3-infinite-loading/lib/style.css";
 
 export default {
   name: "TheArticlsFormSearch",
   components: { InputTypeahead },
-  emits: ["updateParams"],
   data() {
     return {
       advanced: null,
@@ -107,53 +101,55 @@ export default {
   computed: {
     ...mapState({
       title: (state) => state.articlsParams.title,
+      journal: (state) => state.articlsParams.journal,
+      statuses: (state) => state.articlsParams.statuses,
+      types: (state) => state.articlsParams.types,
     }),
     ...mapGetters({
       allStatuses: "articlsParams/allStatuses",
       allTypes: "articlsParams/allTypes",
-      journal: "articlsParams/journal",
       authors: "articlsParams/authors",
+      comparison: "articlsParams/comparison",
       comparisons: "articlsParams/comparisons",
       year: "articlsParams/year",
       yearComparison: "articlsParams/yearComparison",
       years: "articlsParams/years",
-      types: ["articlsParams/types"],
-      statuses: "articlsParams/statuses",
       params: "articlsParams/params",
     }),
   },
-
   created() {
-    this.highlightedSubstring = highlightedSubstring;
-    this.noCaseIndexOf = noCaseIndexOf;
-    this.onKeyup = debounce(this.onKeyup, 200);
+    this.$store.dispatch("articlsParams/setStatuses", this.allStatuses.slice());
+    this.$store.dispatch("articlsParams/setTypes", this.allTypes.slice());
+    this.onTitleChange = debounce(this.onTitleChange, 200);
   },
   watch: {
+    /*
     types: {
-      handler() {
-        this.updateValues();
+      handler(newValue) {
+        this.$store.dispatch("articlsParams/setTypes", newValue);
       },
       deep: true,
     },
     statuses: {
-      handler() {
-        this.updateValues();
+      handler(newValue) {
+        this.$store.dispatch("articlsParams/setStatuses", newValue);
       },
       deep: true,
     },
+    */
   },
   methods: {
-    onTypeaheadOptionClick(e) {
-      this[e.field] = e.value;
-      this.updateValues();
+    onJournalClick(event) {
+      this.$store.dispatch("articlsParams/setJournal", event.value);
+      console.log("this.journal", this.journal);
+    },
+    onAuthorsClick(event) {
+      this.$store.dispatch("articlsParams/setAuthors", event.value);
+      console.log("this.authors", this.authors);
     },
     onTitleChange(event) {
       this.$store.dispatch("articlsParams/setTitle", event.target.value);
     },
-    onKeyup() {
-      this.updateValues();
-    },
-
     toListWithOptionalConjuction(arr, conj = "") {
       return (
         arr.slice(0, arr.length - 1).join(", ") +

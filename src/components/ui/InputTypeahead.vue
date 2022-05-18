@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     hasItems() {
-      return this.items.length > 0;
+      return this.items?.length > 0;
     },
 
     isEmpty() {
@@ -148,14 +148,14 @@ export default {
       if (this.current > 0) {
         this.current--;
       } else if (this.current === -1) {
-        this.current = this.items.length - 1;
+        this.current = this.items?.length - 1;
       } else {
         this.current = -1;
       }
     },
 
     down() {
-      if (this.current < this.items.length - 1) {
+      if (this.current < this.items?.length - 1) {
         this.current++;
       } else {
         this.current = -1;

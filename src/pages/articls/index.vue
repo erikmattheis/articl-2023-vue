@@ -5,14 +5,11 @@
       <the-articls-form-search @update-params="onParamsUpdated">
       </the-articls-form-search>
       <div>
-        <h2>Results displayed:{{ articls.length }}</h2>
+        <h2>Results displayed:{{ articls?.length }}</h2>
         <li>
           Results: {{ totalResults }} <span :aria-busy="isLoading"></span>
         </li>
-        <the-articls-search-params
-          @reset-values="resetValues"
-          :params="params"
-        ></the-articls-search-params>
+        <the-articls-search-params></the-articls-search-params>
         <ol>
           <li
             v-for="(articl, index) in articls"
@@ -83,8 +80,12 @@
               <li v-if="params.journal">
                 <strong>{{ articl.journal }}</strong>
               </li>
-              <li v-if="articl.yearComparison && Number(year) !== yearsStart">
-                <strong>{{ yearComparison }}{{ year }}</strong>
+              <li
+                v-if="
+                  articl.yearComparison && Number(articl.year) !== yearsStart
+                "
+              >
+                <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
               </li>
             </ul>
           </li>
@@ -117,7 +118,7 @@ export default {
     }),
   },
   watch: {
-    params: {
+    param3s: {
       handler(newValue) {
         console.log("watched params changed");
         this.updateValues(newValue);
@@ -160,13 +161,10 @@ export default {
 
       if (params) {
         const result = await this.getArticls(params);
-        if (Number(result.page) === 1 || result.results.length === 0) {
+        if (Number(result.page) === 1 || result?.results?.length === 0) {
+          console.log("Number(result.page)" + Number(result.page));
           console.log(
-            "Number(result.page) === 1 || result.results.length === 0" +
-              Number(result.page)
-          );
-          console.log(
-            "Number(result.results.length" + Number(result.results.length)
+            "Number(result.results?.length)" + Number(result?.results?.length)
           );
           this.articls = [];
           this.totalResults = "--";

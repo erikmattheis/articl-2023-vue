@@ -37,6 +37,9 @@ export default {
     SET_STATUSES(state, payload) {
       state.statuses = payload;
     },
+    SET_TYPES(state, payload) {
+      state.types = payload;
+    },
     SET_TITLE(state, payload) {
       state.title = payload;
     },
@@ -44,7 +47,7 @@ export default {
       state.year = payload;
     },
     SET_YEARS_COMPARISON(state, payload) {
-      state.yearsComparison = payload;
+      state.yearComparison = payload;
     },
   },
   actions: {
@@ -55,15 +58,23 @@ export default {
       context.commit("SET_JOURNAL", payload);
     },
     setStatuses(context, payload) {
+      console.log("setStatuses", payload);
       context.commit("SET_STATUSES", payload);
     },
     setTitle(context, payload) {
       context.commit("SET_TITLE", payload);
     },
+    title(context, payload) {
+      context.commit("SET_TITLE", payload);
+    },
+    setTypes(context, payload) {
+      console.log("setTypes", payload);
+      context.commit("SET_TYPES", payload);
+    },
     setYear(context, payload) {
       context.commit("SET_YEAR", payload);
     },
-    setYearsComparison(context, payload) {
+    setYearComparison(context, payload) {
       context.commit("SET_YEARS_COMPARISON", payload);
     },
   },
@@ -125,11 +136,11 @@ export default {
           }),
         ...(Number(state.year) !== state.yearsStart && { year: state.year }),
         ...(state.types &&
-          state.types.length !== state.allTypes.length && {
+          state?.types?.length !== state?.allTypes?.length && {
             types: state.allTypes.join(","),
           }),
-        ...(state.statuses.length &&
-          state.statuses.length !== state.allStatuses.length && {
+        ...(state?.statuses?.length &&
+          state?.statuses?.length !== state?.allStatuses?.length && {
             statuses: state.allStatuses.join(","),
           }),
         ...(state.page && Number(state.page) !== 1 && { page: state.page }),

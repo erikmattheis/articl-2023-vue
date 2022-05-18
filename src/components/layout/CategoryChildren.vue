@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h3>Children: {{ categories.length }}</h3>
+    <h3>Children: {{ categories?.length }}</h3>
     <nav>
       <ul>
         <li v-for="category in categories" :key="category.slug">

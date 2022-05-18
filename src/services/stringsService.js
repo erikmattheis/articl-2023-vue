@@ -1,4 +1,7 @@
 function highlightedSubstring(str, subStr, part) {
+  if (!subStr) {
+    return str;
+  }
   const position = noCaseIndexOf(str, subStr);
   if (!str) {
     return false;
@@ -6,9 +9,10 @@ function highlightedSubstring(str, subStr, part) {
   if (part === "prefix") {
     return str.substring(0, position);
   }
-  if (part === "term") return str.substring(position, position + subStr.length);
+  if (part === "term")
+    return str.substring(position, position + subStr?.length);
   if (part === "suffix") {
-    return str.substring(position + subStr.length);
+    return str.substring(position + subStr?.length);
   }
 }
 
@@ -36,7 +40,7 @@ function emphasizeSubstring(str, subStr, len) {
 }
 
 function toListWithOptionalConjuction(arr, conj = "") {
-  if (!arr || !arr.length) {
+  if (!arr || arr.length === 0) {
     return "";
   }
   return (
