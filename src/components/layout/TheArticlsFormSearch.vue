@@ -3,7 +3,7 @@
     <details open>
       <summary role="button">Search text</summary>
       <label for="title">Title</label>
-      <input type="text" v-model="title" @blur="onBlur" @keyup="onKeyup" />
+      <input type="text" :value="title" @keyup="onTitleChange" />
 
       <label for="journal">Journal</label>
       <input-typeahead
@@ -11,7 +11,6 @@
         @typeahead-updated="onTypeaheadOptionClick"
         :input-value="journal"
         query="journal"
-        @blur="onBlur"
         @keyup="onKeyup"
       />
 
@@ -21,7 +20,7 @@
         @typeahead-updated="onTypeaheadOptionClick"
         :input-value="authors"
         query="authors"
-        @blur="onBlur"
+        x
         @keyup="onKeyup"
       />
     </details>
@@ -31,8 +30,8 @@
 
       <label
         class="horizontal"
-        v-for="(comparison, index) in comparisons"
-        :key="index"
+        v-for="comparison in comparisons"
+        :key="comparison"
       >
         <input
           name="yearComparison"
@@ -89,79 +88,42 @@
 </template>
 
 <script>
-import { isEqual, debounce } from "lodash";
+import { mapGetters, mapState } from "vuex";
+import { debounce } from "lodash";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
 import "v3-infinite-loading/lib/style.css";
 
 export default {
-  name: "listArticlsPage",
+  name: "TheArticlsFormSearch",
   components: { InputTypeahead },
   emits: ["updateParams"],
   data() {
     return {
       advanced: null,
-      allStatuses: [],
-      allTypes: [],
-      articls: [],
-      authors: "",
-      comparisons: ["after", "before", "exactly"],
-      isLoading: false,
-      journal: "",
-      limit: 5,
-      page: 0,
-      paramsCurrent: {},
-      source: "",
-      statuses: ["Published", "Draft", "Pending", "Trash"],
-      title: "",
-      totalPages: 1,
-      totalResults: "--",
-      types: [
-        "Review (OA)",
-        "Review (PA)",
-        "Research (OA)",
-        "Research (PA)",
-        "Images",
-        "Non-medical journal articles",
-        "Presentations",
-        "Videos",
-        "Web",
-      ],
-      year: 0,
-      yearComparison: "after",
-      years: [],
-      yearsStart: 1944,
+      titleInputValue: this.title,
     };
   },
+  computed: {
+    ...mapState({
+      title: (state) => state.articlsParams.title,
+    }),
+    ...mapGetters({
+      allStatuses: "articlsParams/allStatuses",
+      allTypes: "articlsParams/allTypes",
+      journal: "articlsParams/journal",
+      authors: "articlsParams/authors",
+      comparisons: "articlsParams/comparisons",
+      year: "articlsParams/year",
+      yearComparison: "articlsParams/yearComparison",
+      years: "articlsParams/years",
+      types: ["articlsParams/types"],
+      statuses: "articlsParams/statuses",
+      params: "articlsParams/params",
+    }),
+  },
+
   created() {
-    let observerOptions = {
-      rootMargin: "0px",
-      threshold: 0.5,
-    };
-
-    var observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    function observerCallback(entries) {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          console.log("intersect!");
-        }
-      });
-    }
-
-    document.querySelectorAll(".scroll-spy").forEach((i) => {
-      if (i) {
-        observer.observe(i);
-      }
-    });
-    this.years = [
-      ...Array(new Date().getUTCFullYear() - (this.yearsStart - 1)).keys(),
-    ]
-      .map((x) => this.yearsStart + x++)
-      .reverse();
-    this.year = this.yearsStart;
-    this.allTypes = this.types.slice();
-    this.allStatuses = this.statuses.slice();
     this.highlightedSubstring = highlightedSubstring;
     this.noCaseIndexOf = noCaseIndexOf;
     this.onKeyup = debounce(this.onKeyup, 200);
@@ -169,82 +131,29 @@ export default {
   watch: {
     types: {
       handler() {
-        this.updateValues(this);
+        this.updateValues();
       },
       deep: true,
     },
     statuses: {
       handler() {
-        this.updateValues(this);
+        this.updateValues();
       },
       deep: true,
     },
   },
   methods: {
-    resetValues(arrName) {
-      switch (arrName) {
-        case "statuses": {
-          this.statuses = this.allStatuses;
-          break;
-        }
-        case "types": {
-          this.types = this.allTypes;
-          break;
-        }
-      }
-      this.updateValues(this);
-    },
-    clearValue(varName) {
-      this[varName] = null;
-      this.updateValues(this);
-    },
     onTypeaheadOptionClick(e) {
       this[e.field] = e.value;
-      this.updateValues(this);
+      this.updateValues();
+    },
+    onTitleChange(event) {
+      this.$store.dispatch("articlsParams/setTitle", event.target.value);
     },
     onKeyup() {
-      this.updateValues(this);
+      this.updateValues();
     },
-    onBlur() {
-      this.updateValues(this);
-    },
-    async updateValues(obj) {
-      console.log("updateValues in child");
-      const params = this.assembleParams(obj);
 
-      if (params) {
-        console.log("emitting event from child");
-        this.$emit("updateParams", params);
-      } else {
-        console.log("no params in child");
-        return;
-      }
-    },
-    assembleParams(obj, force = false) {
-      const params = {
-        ...(obj?.title && { title: obj.title }),
-        ...(obj?.journal && { journal: obj.journal }),
-        ...(obj?.authors && { authors: obj.authors }),
-        ...(obj?.yearComparison &&
-          Number(obj?.year) !== 1944 && { yearComparison: obj.yearComparison }),
-        ...(obj?.year && Number(obj.year) !== 1944 && { year: obj.year }),
-        ...(obj?.types &&
-          obj.types.length !== 9 && { types: obj.types.join(",") }),
-        ...(obj?.statuses?.length &&
-          obj.statuses.length !== 4 && { statuses: obj.statuses.join(",") }),
-        ...(obj?.page && Number(obj.page) !== 1 && { page: obj.page }),
-        ...(obj?.limit && Number(obj.limit) !== 10 && { limit: obj.limit }),
-      };
-      if (!isEqual(params, this.paramsCurrent)) {
-        this.paramsCurrent = structuredClone(params);
-        return params;
-      } else if (force) {
-        params.page = params.page + 1;
-        this.paramsCurrent = structuredClone(params);
-        return params;
-      }
-      return false;
-    },
     toListWithOptionalConjuction(arr, conj = "") {
       return (
         arr.slice(0, arr.length - 1).join(", ") +

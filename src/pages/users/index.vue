@@ -116,7 +116,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Registration";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -138,7 +138,7 @@ export default {
           this.education = result.education ? result.education : "";
         }
       } catch (error) {
-        this.$store.dispatch("setError", error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
@@ -152,9 +152,9 @@ export default {
           if (result?.data) {
             return result.data;
           }
-          return this.$store.dispatch("setError", result);
+          return this.$store.dispatch("errors/setError", result);
         })
-        .catch((error) => this.$store.dispatch("setError", error));
+        .catch((error) => this.$store.dispatch("errors/setError", error));
     },
     resetFormErrors() {
       this.success = null;
@@ -190,21 +190,21 @@ export default {
             if (result?.data) {
               this.success = true;
               this.result = result.data;
-              this.$store.dispatch("setSuccessTitle", "User Updated");
+              this.$store.dispatch("modals/setSuccessTitle", "User Updated");
               this.$store.dispatch(
-                "setSuccessMessage",
+                "modals/setSuccessMessage",
                 "Your account information was successfully updated."
               );
             }
           })
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch("setError", {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
       }

@@ -50,7 +50,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Forgot Password";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -74,9 +74,9 @@ export default {
           },
         })
           .then((result) => {
-            this.$store.dispatch("setSuccessTitle", "Email sent");
+            this.$store.dispatch("modals/setSuccessTitle", "Email sent");
             this.$store.dispatch(
-              "setSuccessMessage",
+              "modals/setSuccessMessage",
               "Check your email for instructions how to reset your password."
             );
             if (result?.data?.message) {
@@ -86,7 +86,7 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;

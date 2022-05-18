@@ -18,10 +18,10 @@
           </div>
           <div class="info">
             <ul>
-              <li v-if="errorMessage">{{ errorMessage }}</li>
-              <li v-if="errorFileName">{{ errorFileName }}</li>
-              <li v-if="errorLineNumber">{{ errorLineNumber }}</li>
-              <li v-if="!showErrorStack">{{ errorStack }}</li>
+              <li v-if="errorFileName">Error in file: {{ errorFileName }}</li>
+              <li v-if="errorLineNumber">On line: {{ errorLineNumber }}</li>
+              <li v-if="errorMessage">Message:{{ errorMessage }}</li>
+              <li v-if="errorStack">Stack: {{ errorStack }}</li>
             </ul>
           </div>
         </section>
@@ -46,18 +46,18 @@ export default {
     VueFeather,
   },
   computed: {
-    ...mapGetters([
-      "errorTitle",
-      "errorMessage",
-      "errorDetail",
-      "errorLineNumber",
-      "errorFileName",
-      "errorStack",
-    ]),
+    ...mapGetters({
+      errorTitle: "errors/errorTitle",
+      errorMessage: "errors/errorMessage",
+      errorDetail: "errors/errorDetail",
+      errorLineNumber: "errors/errorLineNumber",
+      errorFileName: "errors/errorFileName",
+      errorStack: "errors/errorStack",
+    }),
   },
   methods: {
     close() {
-      this.$store.dispatch("clearError");
+      this.$store.dispatch("errors/clearError");
     },
   },
 };

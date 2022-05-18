@@ -36,11 +36,14 @@ export default {
     VueFeather,
   },
   computed: {
-    ...mapGetters(["successTitle", "successMessage"]),
+    ...mapGetters({
+      successTitle: "modals/successTitle",
+      successMessage: "modals/successMessage",
+    }),
   },
   methods: {
     close() {
-      this.$store.dispatch("clearSuccess");
+      this.$store.dispatch("modals/clearSuccess");
     },
   },
 };

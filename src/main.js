@@ -1,7 +1,6 @@
 import "core-js/actual/array/group-by";
 import { createApp } from "vue";
 import axios from "axios";
-import { getAccessTokenValue } from "@/services/tokenService";
 import router from "./router";
 import store from "./store/index";
 
@@ -29,7 +28,7 @@ app.config.globalProperties.$http = axios.create({
 app.config.globalProperties.$http.interceptors.request.use(
   function (request) {
     const req = request;
-    const accessTokenValue = getAccessTokenValue();
+    const accessTokenValue = store.getters["tokens/accessTokenValue"];
 
     if (accessTokenValue && req.url !== "/auth/refresh-tokens") {
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
@@ -47,7 +46,7 @@ function createAxiosResponseInterceptor() {
   app.config.globalProperties.$http.interceptors.response.use(
     (response) => response,
     (error) => {
-      store.dispatch("setError", error);
+      store.dispatch("errors/setError", error);
       if (
         error?.response?.status === 401 &&
         router.currentRoute.path !== "/login"
@@ -62,43 +61,6 @@ function createAxiosResponseInterceptor() {
       }
 
       return Promise.reject(error);
-      /*
-        app.config.globalProperties.$http.interceptors.response.eject(
-          interceptor
-        );
-
-        const refreshToken = getRefreshTokenValue();
-        console.log("refreshToken", refreshToken);
-        if (!refreshToken) {
-          return Promise.reject(error);
-        }
-
-        return app.config.globalProperties.$http
-          .post("/auth/refresh-tokens", {
-            refreshToken,
-          })
-          .then((response) => {
-            console.log("a successful response from refresh-tokens");
-            console.log("response", response);
-            setTokens(response.data);
-            const accessToken = getAccessTokenValue();
-            app.config.globalProperties.$http.interceptors.response.config.headers[
-              "Authorization"
-            ] = "Bearer " + accessToken;
-            console.log("error.response.config is", error.response.config);
-            return app.config.globalProperties.$http(error.response.config);
-          })
-          .catch(() => {
-            router.push({
-              name: "loginPage",
-              query: {
-                redirect: window.location.pathname + window.location.search,
-              },
-            });
-            return Promise.resolve(error);
-          })
-          .finally(createAxiosResponseInterceptor);
-          */
     }
   );
 }

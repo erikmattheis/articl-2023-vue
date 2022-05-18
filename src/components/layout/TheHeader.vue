@@ -72,7 +72,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoggedIn", "accessTokenExpires", "refreshTokenExpires"]),
+    ...mapGetters({
+      isLoggedIn: "tokens/isLoggedIn",
+      accessTokenExpires: "tokens/accessTokenExpires",
+      refreshTokenExpires: "tokens/refreshTokenExpires",
+    }),
   },
   mounted() {
     const theme = localStorageService.get("data-theme");
@@ -96,16 +100,17 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
+            this.loggedin = false;
             localStorage.clear();
-            this.$store.dispatch("logout");
+            this.$store.dispatch("tokens/logout");
           });
       } else {
         this.loggedin = false;
         localStorage.clear();
-        this.$store.dispatch("logout");
+        this.$store.dispatch("tokens/logout");
       }
     },
   },

@@ -118,7 +118,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Reset Password";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -161,16 +161,16 @@ export default {
           },
         })
           .then(() => {
-            this.$store.dispatch("setSuccessTitle", "Password updated");
+            this.$store.dispatch("modals/setSuccessTitle", "Password updated");
             this.$store.dispatch(
-              "setSuccessMessage",
+              "modals/setSuccessMessage",
               "You have successfully changed your password."
             );
           })
 
           .catch((error) => {
             this.dataInvalid = true;
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;

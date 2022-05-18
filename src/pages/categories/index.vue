@@ -122,13 +122,13 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch("setError", {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
       }

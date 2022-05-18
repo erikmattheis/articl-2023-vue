@@ -51,7 +51,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -63,13 +63,13 @@ export default {
         const documentTitle = result?.data?.category[0]?.title;
         this.title = documentTitle;
         const metaDescription = result?.data?.category[0]?.description;
-        this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
           documentTitle,
           metaDescription,
         });
         this.categories = result.data.categories;
       } catch (error) {
-        this.$store.dispatch("setError", error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.isLoading = false;
       }

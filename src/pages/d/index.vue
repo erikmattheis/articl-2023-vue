@@ -82,14 +82,14 @@ export default {
         const documentTitle = result?.category[0]?.title;
         this.title = documentTitle;
         const metaDescription = result?.category[0]?.description;
-        this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+        this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
           documentTitle,
           metaDescription,
         });
         this.categories = result.categories;
         this.articls = groupBy(result.articls, (articl) => articl.type);
       } catch (error) {
-        this.$store.dispatch("setError", error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.isLoading = false;
       }
@@ -103,9 +103,9 @@ export default {
           if (result.data) {
             return result.data;
           }
-          return this.$store.dispatch("setError", result);
+          return this.$store.dispatch("errors/setError", result);
         })
-        .catch((error) => this.$store.dispatch("setError", error));
+        .catch((error) => this.$store.dispatch("errors/setError", error));
     },
   },
 };

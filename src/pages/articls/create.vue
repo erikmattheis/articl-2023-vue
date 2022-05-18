@@ -136,18 +136,18 @@ export default {
           const result = await fetchData(this.articlUrl);
           Object.assign(this, result);
         } catch (error) {
-          this.$store.dispatch("setError", error);
+          this.$store.dispatch("errors/setError", error);
         } finally {
           this.buttonFetchDisabled = false;
         }
       } else {
-        this.$store.dispatch("setError", "Please enter a URL");
+        this.$store.dispatch("errors/setError", "Please enter a URL");
       }
     },
     setTitleAndDescription() {
       const documentTitle = "Articl.net Registration";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -204,13 +204,13 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch("setError", {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
       }

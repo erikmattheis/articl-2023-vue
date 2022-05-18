@@ -2,44 +2,47 @@ import store from "@/store/index";
 import localStorageService from "@/services/localStorageService";
 
 export function getAccessTokenExpires() {
-  let { accessTokenExpires } = store.getters;
+  let { accessTokenExpires } = store.getters.tokens;
   if (!accessTokenExpires) {
     accessTokenExpires = localStorageService.get("accessTokenExpires");
     if (accessTokenExpires) {
-      store.dispatch("accessTokenExpires", accessTokenExpires);
+      store.dispatch("tokens/accessTokenExpires", accessTokenExpires);
     }
   }
   return accessTokenExpires;
 }
 
 export function getAccessTokenValue() {
-  let { accessTokenValue } = store.getters;
+  let { accessTokenValue } = store.getters.tokens;
   if (!accessTokenValue) {
     accessTokenValue = localStorageService.get("accessTokenValue");
     if (accessTokenValue) {
-      store.dispatch("accessTokenValue", accessTokenValue);
+      store.dispatch("tokens/accessTokenValue", accessTokenValue);
     }
   }
   return accessTokenValue;
 }
 
 export function getRefreshTokenExpires() {
-  let { refreshTokenExpires } = store.getters;
+  let { refreshTokenExpires } = store.getters.tokens;
   if (!refreshTokenExpires) {
     refreshTokenExpires = localStorageService.get("refreshTokenExpires");
     if (refreshTokenExpires) {
-      store.dispatch("refreshTokenExpires", refreshTokenExpires);
+      store.dispatch("tokens/refreshTokenExpires", refreshTokenExpires);
     }
   }
   return refreshTokenExpires;
 }
 
 export function getRefreshTokenValue() {
-  let { refreshTokenValue } = store.getters;
+  let { refreshTokenValue } = store.getters.tokens;
   if (!refreshTokenValue) {
     refreshTokenValue = localStorageService.get("refreshTokenValue");
     if (refreshTokenValue) {
-      store.dispatch("refreshTokenValue", refreshTokenValue);
+      store.dispatch(
+        "tokens/tokens/tokens/refreshTokenValue",
+        refreshTokenValue
+      );
     }
   }
   return refreshTokenValue;
@@ -47,10 +50,10 @@ export function getRefreshTokenValue() {
 
 export function setTokensInVuex(val) {
   if (val?.access?.token) {
-    store.dispatch("accessTokenValue", val.access.token);
-    store.dispatch("accessTokenExpires", val.access.expires);
-    store.dispatch("refreshTokenValue", val.refresh.token);
-    store.dispatch("refreshTokenExpires", val.refresh.expires);
+    store.dispatch("tokens/accessTokenValue", val.access.token);
+    store.dispatch("tokens/accessTokenExpires", val.access.expires);
+    store.dispatch("tokens/refreshTokenValue", val.refresh.token);
+    store.dispatch("tokens/refreshTokenExpires", val.refresh.expires);
   }
 }
 

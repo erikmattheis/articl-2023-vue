@@ -25,7 +25,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Forgot Password";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -40,11 +40,11 @@ export default {
           if (response?.status === 204) {
             this.resultTitle = "Email verified";
           } else {
-            this.$store.dispatch("setError", response);
+            this.$store.dispatch("errors/setError", response);
           }
         })
         .catch((error) => {
-          this.$store.dispatch("setError", error);
+          this.$store.dispatch("errors/setError", error);
         })
         .finally(() => {
           this.buttonDisabled = false;

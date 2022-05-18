@@ -83,7 +83,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Login";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -115,7 +115,7 @@ export default {
         })
           .then((result) => {
             if (result?.status > 309) {
-              this.$store.dispatch("setError", result);
+              this.$store.dispatch("errors/setError", result);
               return;
             }
             this.resetFormErrors();
@@ -140,13 +140,13 @@ export default {
           })
 
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch("setError", {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
       }

@@ -129,7 +129,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Registration";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });
@@ -177,13 +177,13 @@ export default {
             }
           })
           .catch((error) => {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           })
           .finally(() => {
             this.buttonDisabled = false;
           });
       } else {
-        this.$store.dispatch("setError", {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
       }

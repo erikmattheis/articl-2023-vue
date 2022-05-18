@@ -22,7 +22,7 @@ export default {
       })
 
       .catch((error) => {
-        this.$store.dispatch("setError", error);
+        this.$store.dispatch("errors/setError", error);
       });
 
     this.setTitleAndDescription();
@@ -31,7 +31,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Send";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });

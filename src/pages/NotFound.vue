@@ -16,7 +16,7 @@ export default {
     setTitleAndDescription() {
       const documentTitle = "Articl.net Forgot Password";
       const metaDescription = "";
-      this.$store.dispatch("setMetaDescriptionAndDocumentTitle", {
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
         documentTitle,
         metaDescription,
       });

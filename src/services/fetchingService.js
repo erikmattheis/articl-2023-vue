@@ -50,12 +50,12 @@ function getDB(url) {
   try {
     if (url.includes("pmc")) return "pmc";
   } catch (error) {
-    this.$store.dispatch("setError", error);
+    this.$store.dispatch("errors/setError", error);
   }
   try {
     if (url.includes("pubmed.")) return "pubmed";
   } catch (error) {
-    this.$store.dispatch("setError", error);
+    this.$store.dispatch("errors/setError", error);
   }
 
   return "";
@@ -291,13 +291,13 @@ async function scrape(surl) {
             result.abstract =
               responseDoc.querySelectorAll("#enc-abstract")[0].textContent;
           } catch (error) {
-            this.$store.dispatch("setError", error);
+            this.$store.dispatch("errors/setError", error);
           }
           break;
       }
     })
     .catch(function (error) {
-      this.$store.dispatch("setError", error);
+      this.$store.dispatch("errors/setError", error);
     });
 }
 
