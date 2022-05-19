@@ -1,4 +1,6 @@
 <template>
+  <h2>Results displayed: {{ articls?.length }}</h2>
+  <li>Results: {{ totalResults }} <span :aria-busy="isLoading"></span></li>
   <small>
     <ul>
       <li v-if="params.title">
@@ -20,12 +22,6 @@
           ><vue-feather size="1.2rem" type="x-square" />
         </a>
       </li>
-      params.yearComparison:{{
-        params.yearComparison
-      }}
-      params.year:{{
-        params.year
-      }}
       <li v-if="params.year && Number(params.year) !== yearsStart">
         Year is
         <strong>{{ params.yearComparison }} {{ params.year }}</strong>
@@ -118,6 +114,21 @@ export default {
 </script>
 
 <style scoped>
+#app > main > article > div > div > small > ul > li > a {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  color: red !important;
+}
+.light-bg {
+  background-color: #20303d;
+}
+strong:not([class="not-strong"]) {
+  background-color: rgb(181, 228, 133);
+  color: black;
+  padding: 0.2rem 0.1rem;
+}
+
 #app > main > article > div > div > small > ul > li > a {
   margin-left: 0.5rem;
   margin-top: 0.5rem;
