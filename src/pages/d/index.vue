@@ -49,11 +49,10 @@
 <script>
 import { groupBy } from "lodash";
 // import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
-// import CategoryChildren from '@/components/layout/CategoryChildren.vue';
 
 export default {
   name: "categoryPage",
-  // components: { TheBreadcrumbs, CategoryChildren },
+  // components: { TheBreadcrumbs },
   data() {
     return {
       isLoading: true,

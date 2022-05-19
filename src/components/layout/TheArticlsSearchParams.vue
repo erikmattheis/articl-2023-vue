@@ -20,10 +20,15 @@
           ><vue-feather size="1.2rem" type="x-square" />
         </a>
       </li>
-
-      <li v-if="params?.year && Number(params?.year) !== yearsStart">
+      params.yearComparison:{{
+        params.yearComparison
+      }}
+      params.year:{{
+        params.year
+      }}
+      <li v-if="params.year && Number(params.year) !== yearsStart">
         Year is
-        <strong>{{ params?.yearComparison }} {{ params?.year }}</strong>
+        <strong>{{ params.yearComparison }} {{ params.year }}</strong>
         <a @click.prevent="resetValue('year')"
           ><vue-feather size="1.2rem" type="x-square"
         /></a>
@@ -34,7 +39,7 @@
           params?.types?.length && params?.types?.length !== allTypes?.length
         "
       >
-        Type is <span v-if="params.types?.length > 1">one of </span>
+        Type is <span v-if="params?.types?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.types, "or") }}</strong>
         <a @click.prevent="resetValue('types')"
           ><vue-feather size="1.2rem" type="x-square"
@@ -84,29 +89,25 @@ export default {
       switch (arrName) {
         case "statuses": {
           this.$store.dispatch(
-            "articlsParams/setStatuses",
-            this.allStatuses?.slice()
+            "articlsParams/statuses",
+            this.allStatuses.slice()
           );
           break;
         }
         case "types": {
-          this.$store.dispatch(
-            "articlsParams/setTypes",
-            this.allTypes?.slice()
-          );
+          this.$store.dispatch("articlsParams/types", this.allTypes.slice());
           break;
         }
         case "title": {
-          this.$store.dispatch("articlsParams/setTitle", "");
+          this.$store.dispatch("articlsParams/title", "");
           break;
         }
-
         case "journal": {
-          this.$store.dispatch("articlsParams/setJournal", "");
+          this.$store.dispatch("articlsParams/journal", "");
           break;
         }
         case "authors": {
-          this.$store.dispatch("articlsParams/setAuthors", "");
+          this.$store.dispatch("articlsParams/authors", "");
           break;
         }
       }

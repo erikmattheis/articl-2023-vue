@@ -28,11 +28,10 @@
 
 <script>
 // import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
-// import CategoryChildren from '@/components/layout/CategoryChildren.vue';
 
 export default {
   name: "homePage",
-  // components: { TheBreadcrumbs, CategoryChildren },
+  // components: { TheBreadcrumbs },
   data() {
     return {
       isLoading: true,

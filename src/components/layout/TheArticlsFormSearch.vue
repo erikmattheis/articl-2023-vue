@@ -2,13 +2,14 @@
   <form>
     <details open>
       <summary role="button">Search text</summary>
-      <label for="title">Title</label>
-      <input type="text" :value="title" @keyup="onTitleChange" />
 
-      <label for="journal">Journal {{ journal }}</label>
+      <label for="title">Title</label>
+      <input type="text" id="title" v-model="title" />
+
+      <label for="journal">Journal</label>
       <input-typeahead
         src="/articls/journal"
-        @typeahead-updated="onJournalClick"
+        @typeahead-updated="onJournalChange"
         :input-value="journal"
         query="journal"
       />
@@ -16,7 +17,7 @@
       <label for="author">Author</label>
       <input-typeahead
         src="/articls/authors"
-        @typeahead-updated="onAuthorsClick"
+        @typeahead-updated="onAuthorsChange"
         :input-value="authors"
         query="authors"
       />
@@ -24,30 +25,23 @@
     <details>
       <summary role="button">Advanced</summary>
       <label><h3>Year published</h3></label>
-
+      <h3 v-if="Number(year) === yearsStart">After</h3>
       <label
+        v-else
         class="horizontal"
-        v-for="comparison in comparisons"
+        v-for="comparison in yearComparisons"
         :key="comparison"
-      >
-        <input
-          name="yearComparison"
+        ><input
           type="radio"
-          :value="comparison"
           v-model="yearComparison"
+          :value="comparison"
+          @change="onYearComparisonChange"
         />
         {{ comparison }}
       </label>
-
       <label for="year">Year</label>
-      <select
-        v-model="year"
-        name="year"
-        id="year"
-        autocomplete="off"
-        @change="updateValues"
-      >
-        <option v-for="i in years" v-bind:key="i">
+      <select v-model="year" autocomplete="off" @change="onYearChange">
+        <option v-for="i in years" :key="i">
           {{ i }}
         </option>
       </select>
@@ -85,71 +79,131 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
 import { debounce } from "lodash";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 
 export default {
-  name: "TheArticlsFormSearch",
+  name: "theArticlsFormSearch",
   components: { InputTypeahead },
   data() {
     return {
-      advanced: null,
-      titleInputValue: this.title,
+      advanced: undefined,
+      allStatuses: this.$store.state.articlsParams.allStatuses,
+      allTypes: this.$store.state.articlsParams.allTypes,
+      yearsStart: this.$store.state.articlsParams.yearsStart,
+      yearComparisons: this.$store.state.articlsParams.yearComparisons,
+      years: this.$store.state.articlsParams.years,
     };
   },
   computed: {
-    ...mapState({
-      title: (state) => state.articlsParams.title,
-      journal: (state) => state.articlsParams.journal,
-      statuses: (state) => state.articlsParams.statuses,
-      types: (state) => state.articlsParams.types,
-    }),
-    ...mapGetters({
-      allStatuses: "articlsParams/allStatuses",
-      allTypes: "articlsParams/allTypes",
-      authors: "articlsParams/authors",
-      comparison: "articlsParams/comparison",
-      comparisons: "articlsParams/comparisons",
-      year: "articlsParams/year",
-      yearComparison: "articlsParams/yearComparison",
-      years: "articlsParams/years",
-      params: "articlsParams/params",
-    }),
+    title: {
+      get() {
+        return this.$store.state.articlsParams.title;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/title", value);
+      },
+    },
+    journal: {
+      get() {
+        return this.$store.state.articlsParams.journal;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/journal", value);
+      },
+    },
+    authors: {
+      get() {
+        return this.$store.state.articlsParams.authors;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/authors", value);
+      },
+    },
+    yearComparison: {
+      get() {
+        return this.$store.state.articlsParams.yearComparison;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/yearComparison", value);
+      },
+    },
+    year: {
+      get() {
+        return this.$store.state.articlsParams.year;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/year", value);
+      },
+    },
+    types: {
+      get() {
+        return this.$store.state.articlsParams.types;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/types", value);
+      },
+    },
+    statuses: {
+      get() {
+        return this.$store.state.articlsParams.statuses;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/statuses", value);
+      },
+    },
   },
   created() {
-    this.$store.dispatch("articlsParams/setStatuses", this.allStatuses.slice());
-    this.$store.dispatch("articlsParams/setTypes", this.allTypes.slice());
+    this.$store.dispatch(
+      "articlsParams/statuses",
+      this.$store.state.articlsParams.allStatuses
+    );
+    this.$store.dispatch(
+      "articlsParams/types",
+      this.$store.state.articlsParams.allTypes
+    );
     this.onTitleChange = debounce(this.onTitleChange, 200);
   },
   watch: {
-    /*
-    types: {
+    yearComparison: {
       handler(newValue) {
-        this.$store.dispatch("articlsParams/setTypes", newValue);
+        console.log("watch yearComparison handler", newValue);
+        this.$store.dispatch("articlsParams/setYearComparison", newValue);
       },
       deep: true,
     },
-    statuses: {
-      handler(newValue) {
-        this.$store.dispatch("articlsParams/setStatuses", newValue);
-      },
-      deep: true,
-    },
-    */
   },
   methods: {
-    onJournalClick(event) {
-      this.$store.dispatch("articlsParams/setJournal", event.value);
-      console.log("this.journal", this.journal);
+    onTypesChange(event) {
+      this.$store.dispatch("articlsParams/types", this.types);
+      console.log("onTypesChange", event);
     },
-    onAuthorsClick(event) {
-      this.$store.dispatch("articlsParams/setAuthors", event.value);
-      console.log("this.authors", this.authors);
+    onYearChange(event) {
+      //console.log("onYearChange", event.target.value);
+      this.$store.dispatch("articlsParams/setYear", event.target.value);
+    },
+    onJournalChange(event) {
+      this.$store.dispatch("articlsParams/journal", event.value);
+    },
+    onAuthorsChange(event) {
+      this.$store.dispatch("articlsParams/authors", event.value);
     },
     onTitleChange(event) {
       this.$store.dispatch("articlsParams/setTitle", event.target.value);
     },
+    onYearComparisonChange(event) {
+      console.log("onYearComparisonChange", event.target.value);
+      this.$store.dispatch(
+        "articlsParams/setYearComparison",
+        event.target.value
+      );
+    },
+    /*
+    onTypesChange(event) {
+      console.log("event.target.value", event.target.value);
+      this.$store.dispatch("articlsParams/types", event.target.value);
+    },
+    */
     toListWithOptionalConjuction(arr, conj = "") {
       return (
         arr.slice(0, arr.length - 1).join(", ") +

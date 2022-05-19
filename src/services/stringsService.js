@@ -40,7 +40,8 @@ function emphasizeSubstring(str, subStr, len) {
 }
 
 function toListWithOptionalConjuction(arr, conj = "") {
-  if (!arr || arr.length === 0) {
+  if (!arr || arr.length === 0 || !Array.isArray(arr)) {
+    console.log("ddd");
     return "";
   }
   return (

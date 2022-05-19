@@ -2,10 +2,9 @@
   <article>
     <h1>Articls</h1>
     <div class="grid">
-      <the-articls-form-search @update-params="onParamsUpdated">
-      </the-articls-form-search>
+      <the-articls-form-search />
       <div>
-        <h2>Results displayed:{{ articls?.length }}</h2>
+        <h2>Results displayed: {{ articls?.length }}</h2>
         <li>
           Results: {{ totalResults }} <span :aria-busy="isLoading"></span>
         </li>
@@ -96,7 +95,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { isEqual } from "lodash";
 import TheArticlsFormSearch from "@/components/layout/TheArticlsFormSearch.vue";
 import TheArticlsSearchParams from "@/components/layout/TheArticlsSearchParams.vue";
@@ -111,14 +109,9 @@ export default {
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
   },
-  computed: {
-    ...mapGetters({
-      title: "articlsParams/title",
-      params: "articlsParams/params",
-    }),
-  },
+
   watch: {
-    param3s: {
+    params: {
       handler(newValue) {
         console.log("watched params changed");
         this.updateValues(newValue);
@@ -129,28 +122,13 @@ export default {
   methods: {
     noCaseIndexOf,
     highlightedSubstring,
-    resetValues(varName) {
-      if (varName === "statuses") {
-        return this.$store.dispatch("articlsParams/statuses", []);
-      }
-      if (varName === "types") {
-        return this.$store.dispatch("articlsParams/types", []);
-      } else {
-        return this.$store.dispatch(`articlsParams/${varName}`, "");
-      }
-    },
 
     onParamsUpdated(params) {
       console.log("onParamsUpdated");
       this.updateValues(params);
     },
-    infiniteHandler() {
-      this.$store.dispatch("articlsParams/page", this.page + 1);
-      const params = this.$store.getters.articlsParams.params;
-      this.updateValues(params);
-    },
     async updateValues(params) {
-      console.log("updateValues in parent");
+      console.log("updateValues in list");
 
       if (isEqual(params, {})) {
         console.log("params is {}");

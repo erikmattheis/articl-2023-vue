@@ -15,7 +15,7 @@ export default {
         "Web",
       ],
       authors: "",
-      comparisons: ["after", "before", "exactly"],
+      yearComparisons: ["after", "before", "exactly"],
       journal: "",
       paramsCurrent: {},
       statuses: [],
@@ -46,36 +46,32 @@ export default {
     SET_YEAR(state, payload) {
       state.year = payload;
     },
-    SET_YEARS_COMPARISON(state, payload) {
+    SET_YEAR_COMPARISON(state, payload) {
       state.yearComparison = payload;
     },
   },
   actions: {
-    setAuthors(context, payload) {
+    authors(context, payload) {
       context.commit("SET_AUTHORS", payload);
     },
-    setJournal(context, payload) {
+    journal(context, payload) {
       context.commit("SET_JOURNAL", payload);
     },
-    setStatuses(context, payload) {
-      console.log("setStatuses", payload);
-      context.commit("SET_STATUSES", payload);
-    },
-    setTitle(context, payload) {
-      context.commit("SET_TITLE", payload);
+    statuses(context, payload) {
+      context.commit("SET_STATUSES", payload.slice());
     },
     title(context, payload) {
       context.commit("SET_TITLE", payload);
     },
-    setTypes(context, payload) {
-      console.log("setTypes", payload);
-      context.commit("SET_TYPES", payload);
+    types(context, payload) {
+      context.commit("SET_TYPES", payload.slice());
     },
-    setYear(context, payload) {
+    year(context, payload) {
       context.commit("SET_YEAR", payload);
     },
-    setYearComparison(context, payload) {
-      context.commit("SET_YEARS_COMPARISON", payload);
+    yearComparison(context, payload) {
+      console.log("setYearComparison vuex", payload);
+      context.commit("SET_YEAR_COMPARISON", payload);
     },
   },
   getters: {
@@ -91,8 +87,8 @@ export default {
     authors(state) {
       return state.authors;
     },
-    comparisons(state) {
-      return state.comparisons;
+    yearComparisons(state) {
+      return state.yearComparisons;
     },
     journal(state) {
       return state.journal;
@@ -130,18 +126,19 @@ export default {
         ...(state.title && { title: state.title }),
         ...(state.journal && { journal: state.journal }),
         ...(state.authors && { authors: state.authors }),
-        ...(state.yearComparison &&
-          Number(state.year) !== state.yearsStart && {
+        ...(state.yearComparison !== "after" ||
+          (Number(state.year) !== state.yearsStart && {
             yearComparison: state.yearComparison,
-          }),
-        ...(Number(state.year) !== state.yearsStart && { year: state.year }),
+          })),
+        ...(state.yearComparison !== "after" ||
+          (Number(state.year) !== state.yearsStart && { year: state.year })),
         ...(state.types &&
           state?.types?.length !== state?.allTypes?.length && {
-            types: state.allTypes.join(","),
+            types: state.types,
           }),
         ...(state?.statuses?.length &&
           state?.statuses?.length !== state?.allStatuses?.length && {
-            statuses: state.allStatuses.join(","),
+            statuses: state.statuses,
           }),
         ...(state.page && Number(state.page) !== 1 && { page: state.page }),
         ...(state.limit && Number(state.limit) !== 5 && { limit: state.limit }),
