@@ -35,7 +35,7 @@
           type="radio"
           v-model="yearComparison"
           :value="comparison"
-          @change="onYearComparisonChange"
+          name="yearComparison"
         />
         {{ comparison }}
       </label>
@@ -236,19 +236,5 @@ ol.scroll {
 ol li {
   margin-bottom: 1rem;
   padding: 0.4rem;
-}
-#app > main > article > div > div > small > ul > li > a {
-  margin-left: 0.5rem;
-  margin-top: 0.5rem;
-  cursor: pointer;
-  color: red !important;
-}
-.light-bg {
-  background-color: #20303d;
-}
-strong:not([class="not-strong"]) {
-  background-color: rgb(181, 228, 133);
-  color: black;
-  padding: 0.2rem 0.1rem;
 }
 </style>

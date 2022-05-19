@@ -87,9 +87,7 @@ export default {
     authors(state) {
       return state.authors;
     },
-    yearComparisons(state) {
-      return state.yearComparisons;
-    },
+
     journal(state) {
       return state.journal;
     },
@@ -110,6 +108,9 @@ export default {
     },
     yearComparison(state) {
       return state.yearComparison;
+    },
+    yearComparisons(state) {
+      return state.yearComparisons;
     },
     years(state) {
       return [

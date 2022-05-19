@@ -141,4 +141,13 @@ export default {
   cursor: pointer;
   color: red !important;
 }
+.light-bg {
+  background-color: #20303d;
+}
+
+strong:not([class="not-strong"]) {
+  background-color: #749157;
+  color: black;
+  padding: 0.2rem 0.1rem;
+}
 </style>

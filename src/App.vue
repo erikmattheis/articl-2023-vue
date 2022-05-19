@@ -69,10 +69,6 @@ ul li {
   list-style-type: none !important;
 }
 
-small {
-  opacity: 0.7;
-}
-
 .left-space {
   padding-left: 2rem;
 }
