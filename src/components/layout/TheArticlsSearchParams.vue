@@ -117,6 +117,10 @@ export default {
           this.$store.dispatch("articlsParams/authors", "");
           break;
         }
+        case "year": {
+          this.$store.dispatch("articlsParams/year", this.yearsStart);
+          break;
+        }
       }
     },
     toListWithOptionalConjuction,
