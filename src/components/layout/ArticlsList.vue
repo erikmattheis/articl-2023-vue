@@ -105,25 +105,22 @@ export default {
         this.limit = result.limit;
         this.totalResults = result.totalResults;
       } else {
-        console.log("no params");
         return;
       }
     },
     async getArticls(params) {
-      console.log("getArticls");
       this.isLoading = true;
-      return await this.$http({
+      const result = await this.$http({
         method: "GET",
         url: "/articls",
         params,
-      })
-        .then((result) => {
-          if (result?.data) {
-            return result.data;
-          }
-        })
-        .catch((error) => this.$store.dispatch("errors/setError", error))
-        .finally(() => (this.isLoading = false));
+      });
+
+      if (result?.data) {
+        return result.data;
+      }
+
+      this.isLoading = false;
     },
     highlightedSubstring,
     noCaseIndexOf,

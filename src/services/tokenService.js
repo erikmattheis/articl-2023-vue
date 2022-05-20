@@ -1,7 +1,7 @@
 import store from "@/store/index";
 import localStorageService from "@/services/localStorageService";
 
-export function getAccessTokenExpires() {
+function getAccessTokenExpires() {
   let { accessTokenExpires } = store.getters.tokens;
   if (!accessTokenExpires) {
     accessTokenExpires = localStorageService.get("accessTokenExpires");
@@ -12,7 +12,7 @@ export function getAccessTokenExpires() {
   return accessTokenExpires;
 }
 
-export function getAccessTokenValue() {
+function getAccessTokenValue() {
   let { accessTokenValue } = store.getters.tokens;
   if (!accessTokenValue) {
     accessTokenValue = localStorageService.get("accessTokenValue");
@@ -23,7 +23,7 @@ export function getAccessTokenValue() {
   return accessTokenValue;
 }
 
-export function getRefreshTokenExpires() {
+function getRefreshTokenExpires() {
   let { refreshTokenExpires } = store.getters.tokens;
   if (!refreshTokenExpires) {
     refreshTokenExpires = localStorageService.get("refreshTokenExpires");
@@ -34,7 +34,7 @@ export function getRefreshTokenExpires() {
   return refreshTokenExpires;
 }
 
-export function getRefreshTokenValue() {
+function getRefreshTokenValue() {
   let { refreshTokenValue } = store.getters.tokens;
   if (!refreshTokenValue) {
     refreshTokenValue = localStorageService.get("refreshTokenValue");
@@ -48,7 +48,7 @@ export function getRefreshTokenValue() {
   return refreshTokenValue;
 }
 
-export function setTokensInVuex(val) {
+function setTokensInVuex(val) {
   if (val?.access?.token) {
     store.dispatch("tokens/accessTokenValue", val.access.token);
     store.dispatch("tokens/accessTokenExpires", val.access.expires);
@@ -57,7 +57,7 @@ export function setTokensInVuex(val) {
   }
 }
 
-export function setTokensInLocalStorage(val) {
+function setTokensInLocalStorage(val) {
   if (val?.access?.token) {
     localStorageService.set("accessTokenValue", val.access.token);
     localStorageService.set("accessTokenExpires", val.access.expires);
@@ -66,7 +66,7 @@ export function setTokensInLocalStorage(val) {
   }
 }
 
-export function convertStringDatesToMS(serverResult) {
+function convertStringDatesToMS(serverResult) {
   if (serverResult?.data?.tokens) {
     const result = JSON.parse(JSON.stringify(serverResult));
     result.data.tokens.access.expires = Date.parse(
@@ -80,8 +80,19 @@ export function convertStringDatesToMS(serverResult) {
   return {};
 }
 
-export function setTokens(response) {
+function setTokens(response) {
   const result = convertStringDatesToMS(response);
   setTokensInLocalStorage(result.data.tokens);
   setTokensInVuex(result.data.tokens);
 }
+
+export {
+  getAccessTokenExpires,
+  getAccessTokenValue,
+  getRefreshTokenExpires,
+  getRefreshTokenValue,
+  setTokensInVuex,
+  setTokensInLocalStorage,
+  convertStringDatesToMS,
+  setTokens,
+};

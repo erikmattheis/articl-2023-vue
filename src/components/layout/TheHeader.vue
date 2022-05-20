@@ -84,29 +84,20 @@ export default {
     document.documentElement.setAttribute("data-theme", this.theme);
   },
   methods: {
-    logout() {
+    async logout() {
       const refreshToken = getRefreshTokenValue();
       if (refreshToken) {
-        this.$http({
+        await this.$http({
           method: "POST",
           url: "/auth/logout",
           data: {
             refreshToken,
           },
-        })
-          .then((result) => {
-            if (result.data) {
-              this.loggedin = false;
-            }
-          })
-          .catch((error) => {
-            this.$store.dispatch("errors/setError", error);
-          })
-          .finally(() => {
-            this.loggedin = false;
-            localStorage.clear();
-            this.$store.dispatch("tokens/logout");
-          });
+        });
+
+        this.loggedin = false;
+        localStorage.clear();
+        this.$store.dispatch("tokens/logout");
       } else {
         this.loggedin = false;
         localStorage.clear();
