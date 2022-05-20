@@ -2,8 +2,7 @@
   <article>
     <h1>{{ resultTitle }}</h1>
     <p v-if="resultTitle">
-      Your email address is verified. Please <a href="/login">log in</a> to
-      continue.
+      Please <a href="/login?redirect=/articls/create">log in</a> to continue.
     </p>
   </article>
 </template>

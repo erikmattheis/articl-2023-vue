@@ -2,41 +2,47 @@
   <article>
     <h1 v-if="!success">Create category</h1>
     <h1 v-else>Category created</h1>
-    <form v-if="!success">
-      <label for="title">Title</label>
-      <input v-model="title" type="text" name="title" id="title" />
-      <label for="slug">Slug</label>
-      <input readonly v-model="slug" type="text" name="slug" id="slug" />
-      <label for="title">Parent slug</label>
-      <input
-        type="text"
-        v-model="parentSlug"
-        name="parentSlug"
-        id="parentSlug"
-      />
 
-      <label for="description">Description</label>
-      <textarea
-        name="description"
-        id="description"
-        rows="10"
-        cols="70"
-      ></textarea>
-      <button
-        type="submit"
-        id="Login"
-        :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
-        <span v-if="!buttonDisabled">Create Category</span>
-      </button>
-    </form>
-    <template v-else>
-      <card-notification
-        success-message="Category created."
-      ></card-notification>
-      <a href @click="$router.go()">Create another category</a>
+    <template v-if="$store.getters['tokens/isLoggedIn']">
+      <form v-if="!success">
+        <label for="title">Title</label>
+        <input v-model="title" type="text" name="title" id="title" />
+        <label for="slug">Slug</label>
+        <input readonly v-model="slug" type="text" name="slug" id="slug" />
+        <label for="title">Parent slug</label>
+        <input
+          type="text"
+          v-model="parentSlug"
+          name="parentSlug"
+          id="parentSlug"
+        />
+
+        <label for="description">Description</label>
+        <textarea
+          name="description"
+          id="description"
+          rows="10"
+          cols="70"
+        ></textarea>
+        <button
+          type="submit"
+          id="Login"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()"
+        >
+          <span v-if="!buttonDisabled">Create Category</span>
+        </button>
+      </form>
+      <template v-else>
+        <card-notification
+          success-message="Category created."
+        ></card-notification>
+        <a href @click="$router.go()">Create another category</a>
+      </template>
     </template>
+    <p v-else>
+      Please <a href="/login?reditect=/categories">log in</a> to continue.
+    </p>
   </article>
 </template>
 

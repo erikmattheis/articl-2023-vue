@@ -2,97 +2,117 @@
   <article>
     <h1 v-if="!success">Create articl</h1>
     <h1 v-else>Articl created</h1>
-    <form v-if="!success">
-      <label for="articlUrl">URL</label>
-      <input v-model="articlUrl" type="text" name="articlUrl" id="articlUrl" />
+    <template v-if="$store.getters['tokens/isLoggedIn']">
+      <form v-if="!success">
+        <label for="articlUrl">URL</label>
+        <input
+          v-model="articlUrl"
+          type="text"
+          name="articlUrl"
+          id="articlUrl"
+        />
 
-      <button
-        type="button"
-        :aria-busy="buttonFetchDisabled"
-        @click.prevent="getData()"
-      >
-        FETCH DATA
-      </button>
+        <button
+          type="button"
+          :aria-busy="buttonFetchDisabled"
+          @click.prevent="getData()"
+        >
+          FETCH DATA
+        </button>
 
-      <label for="">Title</label>
-      <input v-model="title" name="" id="" autocomplete="off" />
+        <label for="">Title</label>
+        <input v-model="title" name="" id="" autocomplete="off" />
 
-      <label for="authors">Authors</label>
-      <input v-model="authors" name="authors" id="authors" autocomplete="off" />
+        <label for="authors">Authors</label>
+        <input
+          v-model="authors"
+          name="authors"
+          id="authors"
+          autocomplete="off"
+        />
 
-      <label for="affiliation">Affiliation</label>
-      <input
-        v-model="affiliation"
-        name="affiliation"
-        id="affiliation"
-        autocomplete="off"
-      />
+        <label for="affiliation">Affiliation</label>
+        <input
+          v-model="affiliation"
+          name="affiliation"
+          id="affiliation"
+          autocomplete="off"
+        />
 
-      <label for="journal">Journal</label>
-      <input v-model="journal" name="journal" id="journal" autocomplete="off" />
+        <label for="journal">Journal</label>
+        <input
+          v-model="journal"
+          name="journal"
+          id="journal"
+          autocomplete="off"
+        />
 
-      <label for="">Publication Year</label>
-      <input v-model="year" name="year" id="year" autocomplete="off" />
+        <label for="">Publication Year</label>
+        <input v-model="year" name="year" id="year" autocomplete="off" />
 
-      <label for="">Publication Month</label>
-      <input v-model="month" name="month" id="month" autocomplete="off" />
+        <label for="">Publication Month</label>
+        <input v-model="month" name="month" id="month" autocomplete="off" />
 
-      <label for="">Abstract</label>
-      <input
-        v-model="abstract"
-        name="abstract"
-        id="abstract"
-        autocomplete="off"
-      />
+        <label for="">Abstract</label>
+        <input
+          v-model="abstract"
+          name="abstract"
+          id="abstract"
+          autocomplete="off"
+        />
 
-      <label for="type">Link type</label>
-      <select v-model="type" name="type" id="type" autocomplete="off">
-        <optgroup value="Resources">
-          <option value="Review (OA)">Review (OA)</option>
-          <option value="Review (OA)">Review (PA)</option>
-          <option value="Research (OA)">Research (OA)</option>
-          <option value="Research (PA)">Research (PA)</option>
-          <option value="Web">Web</option>
-          <option value="on-medical journal articles">
-            Non-medical journal articles
-          </option>
-          <option value="Images">Images</option>
-          <option value="Presentations">Presentations</option>
-          <option value="Videos">Videos</option>
-          <option value="Podcast">Podcast</option>
-        </optgroup>
-      </select>
+        <label for="type">Link type</label>
+        <select v-model="type" name="type" id="type" autocomplete="off">
+          <optgroup value="Resources">
+            <option value="Review (OA)">Review (OA)</option>
+            <option value="Review (OA)">Review (PA)</option>
+            <option value="Research (OA)">Research (OA)</option>
+            <option value="Research (PA)">Research (PA)</option>
+            <option value="Web">Web</option>
+            <option value="on-medical journal articles">
+              Non-medical journal articles
+            </option>
+            <option value="Images">Images</option>
+            <option value="Presentations">Presentations</option>
+            <option value="Videos">Videos</option>
+            <option value="Podcast">Podcast</option>
+          </optgroup>
+        </select>
 
-      <label for="status">Status</label>
-      <select v-model="status" name="status" id="status">
-        <option value="Published">Published</option>
-        <option value="Draft">Draft</option>
-        <option value="Pending">Pending</option>
-        <option value="Trash">Trash</option>
-      </select>
+        <label for="status">Status</label>
+        <select v-model="status" name="status" id="status">
+          <option value="Published">Published</option>
+          <option value="Draft">Draft</option>
+          <option value="Pending">Pending</option>
+          <option value="Trash">Trash</option>
+        </select>
 
-      <label for="typeaheadQuery">Category slug</label>
-      <input-typeahead
-        src="/categories/titles"
-        @update-value="onTypeaheadHit"
-        query="category"
-        @blur="onTypeaheadHit"
-        @keyup="onTypeaheadHit"
-        input-value=""
-      />
+        <label for="typeaheadQuery">Category slug</label>
+        <input-typeahead
+          src="/categories/titles"
+          @update-value="onTypeaheadHit"
+          query="category"
+          @blur="onTypeaheadHit"
+          @keyup="onTypeaheadHit"
+          input-value=""
+        />
 
-      <button
-        type="button"
-        :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
-        Create Articl
-      </button>
-    </form>
-    <template v-else>
-      <card-notification success-message="Articl Created"></card-notification>
-      <a href @click="$router.go()">Create another articl</a>
+        <button
+          type="button"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()"
+        >
+          Create Articl
+        </button>
+      </form>
+      <template v-else>
+        <card-notification success-message="Articl Created"></card-notification>
+        <a href @click="$router.go()">Create another articl</a>
+      </template>
     </template>
+    <p v-else>
+      Please <a href="/login?reditect=/articls/create">log in</a> to continue.
+    </p>
   </article>
 </template>
 <script>
