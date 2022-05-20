@@ -14,6 +14,7 @@ export default {
         "Videos",
         "Web",
       ],
+      text: "",
       authors: "",
       yearComparisons: ["after", "before", "exactly"],
       journal: "",
@@ -28,6 +29,9 @@ export default {
     };
   },
   mutations: {
+    SET_TEXT(state, payload) {
+      state.text = payload;
+    },
     SET_AUTHORS(state, payload) {
       state.authors = payload;
     },
@@ -51,6 +55,9 @@ export default {
     },
   },
   actions: {
+    text(context, payload) {
+      context.commit("SET_TEXT", payload);
+    },
     authors(context, payload) {
       context.commit("SET_AUTHORS", payload);
     },
@@ -75,6 +82,9 @@ export default {
     },
   },
   getters: {
+    text(state) {
+      return state.text;
+    },
     documentTitle(state) {
       return state.documentTitle;
     },
@@ -124,6 +134,7 @@ export default {
     },
     params(state) {
       return {
+        ...(state.text && { text: state.text }),
         ...(state.title && { title: state.title }),
         ...(state.journal && { journal: state.journal }),
         ...(state.authors && { authors: state.authors }),

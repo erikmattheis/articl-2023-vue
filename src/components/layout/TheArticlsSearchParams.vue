@@ -1,6 +1,12 @@
 <template>
   <small>
     <ul>
+      <li v-if="params.text">
+        Search for <strong>{{ params.text }}</strong>
+        <a href @click.prevent="resetValue('text')"
+          ><vue-feather size="1.2rem" type="x-square"
+        /></a>
+      </li>
       <li v-if="params.title">
         Title contains <strong>{{ params.title }}</strong>
         <a href @click.prevent="resetValue('title')"
@@ -14,12 +20,14 @@
           ><vue-feather size="1.2rem" type="x-square" />
         </a>
       </li>
+
       <li v-if="params.authors">
         Authors contains <strong>{{ params.authors }}</strong>
         <a @click.prevent="resetValue('authors')"
           ><vue-feather size="1.2rem" type="x-square" />
         </a>
       </li>
+
       <li v-if="params.year && Number(params.year) !== yearsStart">
         Year is
         <strong>{{ params.yearComparison }} {{ params.year }}</strong>
@@ -39,6 +47,7 @@
           ><vue-feather size="1.2rem" type="x-square"
         /></a>
       </li>
+
       <li
         v-if="
           params?.statuses?.length &&
@@ -90,6 +99,10 @@ export default {
         }
         case "types": {
           this.$store.dispatch("articlsParams/types", this.allTypes.slice());
+          break;
+        }
+        case "text": {
+          this.$store.dispatch("articlsParams/text", "");
           break;
         }
         case "title": {

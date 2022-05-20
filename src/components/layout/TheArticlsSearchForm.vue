@@ -2,6 +2,12 @@
   <form>
     <details open>
       <summary role="button">Search text</summary>
+      <label for="text">Text</label>
+      <input type="text" id="text" v-model="text" />
+    </details>
+
+    <details>
+      <summary role="button">Advanced</summary>
 
       <label for="title">Title</label>
       <input type="text" id="title" v-model="title" />
@@ -96,6 +102,14 @@ export default {
     };
   },
   computed: {
+    text: {
+      get() {
+        return this.$store.state.articlsParams.text;
+      },
+      set(value) {
+        this.$store.dispatch("articlsParams/text", value);
+      },
+    },
     title: {
       get() {
         return this.$store.state.articlsParams.title;

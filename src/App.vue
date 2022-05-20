@@ -1,8 +1,8 @@
 <template>
   <the-header></the-header>
   <main>
-    <router-view v-slot="{ Component }"
-      ><component :is="Component" />
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
     </router-view>
   </main>
   <the-footer></the-footer>

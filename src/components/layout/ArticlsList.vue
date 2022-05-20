@@ -6,6 +6,7 @@
       :class="{ 'light-bg': index % 2 === 0 }"
     >
       <ul>
+        <li v-if="articl.score">score:{{ score }}</li>
         <li v-if="articl.title">
           {{ highlightedSubstring(articl.title, params.title, "prefix")
           }}<strong
