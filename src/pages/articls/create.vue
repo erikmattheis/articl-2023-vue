@@ -92,11 +92,9 @@
           src="/categories/titles"
           @update-value="onTypeaheadHit"
           query="category"
-          @blur="onTypeaheadHit"
           @keyup="onTypeaheadHit"
-          input-value=""
+          :input-value="categorySlug"
         />
-
         <button
           type="button"
           :aria-busy="buttonDisabled"
@@ -134,7 +132,7 @@ export default {
       authors: "",
       buttonDisabled: false,
       buttonFetchDisabled: false,
-      categorySlug: "",
+      categorySlug: this.$route.query.slug,
       journal: "",
       month: "",
       status: "Published",
