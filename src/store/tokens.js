@@ -53,6 +53,7 @@ export default {
   getters: {
     isLoggedIn(state) {
       const now = Date.now();
+      console.log("isLoggedIn", state.accessTokenExpires > now);
       return state.accessTokenExpires > now;
     },
     accessTokenExpires(state) {

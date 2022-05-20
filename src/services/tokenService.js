@@ -2,7 +2,7 @@ import store from "@/store/index";
 import localStorageService from "@/services/localStorageService";
 
 function getAccessTokenExpires() {
-  let { accessTokenExpires } = store.getters.tokens;
+  let accessTokenExpires = store.getters["tokens/accessTokenExpires"];
   if (!accessTokenExpires) {
     accessTokenExpires = localStorageService.get("accessTokenExpires");
     if (accessTokenExpires) {
@@ -13,7 +13,7 @@ function getAccessTokenExpires() {
 }
 
 function getAccessTokenValue() {
-  let { accessTokenValue } = store.getters.tokens;
+  let accessTokenValue = store.getters["tokens/accessTokenValue"];
   if (!accessTokenValue) {
     accessTokenValue = localStorageService.get("accessTokenValue");
     if (accessTokenValue) {
@@ -24,7 +24,7 @@ function getAccessTokenValue() {
 }
 
 function getRefreshTokenExpires() {
-  let { refreshTokenExpires } = store.getters.tokens;
+  let refreshTokenExpires = store.getters["tokens/refreshTokenExpires"];
   if (!refreshTokenExpires) {
     refreshTokenExpires = localStorageService.get("refreshTokenExpires");
     if (refreshTokenExpires) {
@@ -35,14 +35,11 @@ function getRefreshTokenExpires() {
 }
 
 function getRefreshTokenValue() {
-  let { refreshTokenValue } = store.getters.tokens;
+  let refreshTokenValue = store.getters["tokens/refreshTokenValue"];
   if (!refreshTokenValue) {
     refreshTokenValue = localStorageService.get("refreshTokenValue");
     if (refreshTokenValue) {
-      store.dispatch(
-        "tokens/tokens/tokens/refreshTokenValue",
-        refreshTokenValue
-      );
+      store.dispatch("tokens/refreshTokenValue", refreshTokenValue);
     }
   }
   return refreshTokenValue;

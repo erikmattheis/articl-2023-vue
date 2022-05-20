@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       theme: "light",
-      tokens: null,
+      li: this.$store.getters.isLoggedIn,
     };
   },
   computed: {
@@ -94,12 +94,9 @@ export default {
             refreshToken,
           },
         });
-
-        this.loggedin = false;
         localStorage.clear();
         this.$store.dispatch("tokens/logout");
       } else {
-        this.loggedin = false;
         localStorage.clear();
         this.$store.dispatch("tokens/logout");
       }

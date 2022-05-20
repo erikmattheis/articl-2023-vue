@@ -10,7 +10,7 @@
         </router-link>
       </li>
 
-      <li>
+      <li v-if="$store.getters['tokens/isLoggedIn']">
         <router-link
           :to="{
             name: 'createCategoryPage',
@@ -20,7 +20,7 @@
           New Category Here
         </router-link>
       </li>
-      <li>
+      <li v-if="$store.getters['tokens/isLoggedIn']">
         <router-link
           :to="{
             name: 'createArticlPage',
