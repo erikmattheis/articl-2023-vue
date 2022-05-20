@@ -1,13 +1,13 @@
 <template>
   <form>
     <details open>
-      <summary role="button">Search text</summary>
+      <summary role="button">Weighted search</summary>
       <label for="text">Text</label>
       <input type="text" id="text" v-model="text" />
     </details>
 
     <details>
-      <summary role="button">Advanced</summary>
+      <summary role="button">Text search</summary>
 
       <label for="title">Title</label>
       <input type="text" id="title" v-model="title" />
@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { debounce } from "lodash";
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 
@@ -98,10 +99,12 @@ export default {
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
-      years: this.$store.state.articlsParams.years,
     };
   },
   computed: {
+    ...mapGetters({
+      years: "articlsParams/years",
+    }),
     text: {
       get() {
         return this.$store.state.articlsParams.text;
@@ -147,6 +150,9 @@ export default {
         return this.$store.state.articlsParams.year;
       },
       set(value) {
+        if (Number(value) === Number(this.yearsStart)) {
+          this.$store.dispatch("articlsParams/yearComparison", "after");
+        }
         this.$store.dispatch("articlsParams/year", value);
       },
     },
@@ -182,7 +188,7 @@ export default {
     yearComparison: {
       handler(newValue) {
         console.log("watch yearComparison handler", newValue);
-        this.$store.dispatch("articlsParams/setYearComparison", newValue);
+        this.$store.dispatch("articlsParams/yearComparison", newValue);
       },
       deep: true,
     },
@@ -193,8 +199,8 @@ export default {
       console.log("onTypesChange", event);
     },
     onYearChange(event) {
-      //console.log("onYearChange", event.target.value);
-      this.$store.dispatch("articlsParams/setYear", event.target.value);
+      console.log("onYearChange", event.target.value);
+      this.$store.dispatch("articlsParams/year", event.target.value);
     },
     onJournalChange(event) {
       this.$store.dispatch("articlsParams/journal", event.value);
@@ -203,14 +209,11 @@ export default {
       this.$store.dispatch("articlsParams/authors", event.value);
     },
     onTitleChange(event) {
-      this.$store.dispatch("articlsParams/setTitle", event.target.value);
+      this.$store.dispatch("articlsParams/title", event.target.value);
     },
     onYearComparisonChange(event) {
       console.log("onYearComparisonChange", event.target.value);
-      this.$store.dispatch(
-        "articlsParams/setYearComparison",
-        event.target.value
-      );
+      this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
     /*
     onTypesChange(event) {
@@ -218,13 +221,6 @@ export default {
       this.$store.dispatch("articlsParams/types", event.target.value);
     },
     */
-    toListWithOptionalConjuction(arr, conj = "") {
-      return (
-        arr.slice(0, arr.length - 1).join(", ") +
-        (arr.length > 1 ? " " + conj + " " : "") +
-        arr[arr.length - 1]
-      );
-    },
   },
 };
 </script>

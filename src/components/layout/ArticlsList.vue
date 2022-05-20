@@ -96,10 +96,6 @@ export default {
       if (params) {
         const result = await this.getArticls(params);
         if (Number(result.page) === 1 || result?.results?.length === 0) {
-          console.log("Number(result.page)" + Number(result.page));
-          console.log(
-            "Number(result.results?.length)" + Number(result?.results?.length)
-          );
           this.articls = [];
           this.totalResults = "--";
         }

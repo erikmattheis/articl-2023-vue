@@ -73,8 +73,11 @@ export default {
     types(context, payload) {
       context.commit("SET_TYPES", payload.slice());
     },
-    year(context, payload) {
-      context.commit("SET_YEAR", payload);
+    year({ commit, state }, payload) {
+      if (payload === state.yearsStart) {
+        commit("SET_YEAR_COMPARISON", payload);
+      }
+      commit("SET_YEAR", payload);
     },
     yearComparison(context, payload) {
       console.log("setYearComparison vuex", payload);
@@ -123,6 +126,7 @@ export default {
       return state.yearComparisons;
     },
     years(state) {
+      console.log("getting years", state.yearsStart);
       return [
         ...Array(new Date().getUTCFullYear() - (state.yearsStart - 1)).keys(),
       ]
@@ -138,12 +142,10 @@ export default {
         ...(state.title && { title: state.title }),
         ...(state.journal && { journal: state.journal }),
         ...(state.authors && { authors: state.authors }),
-        ...(state.yearComparison !== "after" ||
-          (Number(state.year) !== state.yearsStart && {
-            yearComparison: state.yearComparison,
-          })),
-        ...(state.yearComparison !== "after" ||
-          (Number(state.year) !== state.yearsStart && { year: state.year })),
+        ...(!(Number(state.year) === Number(state.yearsStart)) && {
+          yearComparison: state.yearComparison,
+          year: state.year,
+        }),
         ...(state.types &&
           state?.types?.length !== state?.allTypes?.length && {
             types: state.types,
