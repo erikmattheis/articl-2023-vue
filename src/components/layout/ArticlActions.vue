@@ -3,13 +3,17 @@
     <ul class="right">
       <li v-if="!expanded">
         <a href @click.prevent="expanded = true"
-          ><vue-feather size="2rem" type="menu" aria-label="Actions"/ ></a
-        >
+          ><vue-feather
+            size="2rem"
+            type="menu"
+            aria-label="Actions"
+          ></vue-feather
+        ></a>
       </li>
       <li v-if="expanded">
         <a href @click.prevent="expanded = false"
-          ><vue-feather size="2rem" type="x" aria-label="Actions"/ ></a
-        >
+          ><vue-feather size="2rem" type="x" aria-label="Actions"></vue-feather
+        ></a>
       </li>
     </ul>
     <ul class="above right" v-if="expanded">
@@ -42,6 +46,8 @@ import localStorageService from "@/services/localStorageService";
 import { getRefreshTokenValue } from "@/services/tokenService";
 
 export default {
+  name: "ArticlActions",
+  props: ["id"],
   components: {
     VueFeather,
   },

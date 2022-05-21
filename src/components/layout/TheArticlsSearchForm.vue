@@ -1,12 +1,13 @@
 <template>
   <form>
+    <!---
     <details open>
       <summary role="button">Weighted search</summary>
       <label for="text">Text</label>
       <input type="text" id="text" v-model="text" />
     </details>
-
-    <details>
+-->
+    <details open>
       <summary role="button">Text search</summary>
 
       <label for="title">Title</label>

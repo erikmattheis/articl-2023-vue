@@ -1,73 +1,91 @@
 <template>
-  <ol>
-    <li v-if="$store.getters['tokens/isLoggedIn']"><a href=""><vue-feather
-            size="2rem"
-            type="move"
-            aria-label="move"
-          ></vue-feather></a></li>
-    <li
-      v-for="(articl, index) in articls"
-      :key="articl.id"
-      :class="{ 'light-bg': index % 2 === 0 }"
-    >
-      <ul>
-        <li v-if="articl.score">score:{{ score }}</li>
-        <li v-if="articl.title">
-          {{ highlightedSubstring(articl.title, params.title, "prefix")
-          }}<strong
-            :class="{
-              'not-strong': noCaseIndexOf(articl.title, params.title) === -1,
-            }"
+  <draggable tag="li" :articlst="articls" item-key="articl.id">
+    <ol>
+      <li
+        class="grid"
+        v-for="(articl, index) in articls"
+        :key="articl.id"
+        :class="{ 'light-bg': index % 2 === 0 }"
+      >
+        <div v-if="$store.getters['tokens/isLoggedIn']">
+          <a href=""
+            ><vue-feather
+              size="2rem"
+              type="move"
+              aria-label="move"
+            ></vue-feather
+          ></a>
+        </div>
+        <ul>
+          <li v-if="articl.score">score:{{ score }}</li>
+          <li v-if="articl.title">
+            {{ highlightedSubstring(articl.title, params.title, "prefix")
+            }}<strong
+              :class="{
+                'not-strong': noCaseIndexOf(articl.title, params.title) === -1,
+              }"
+              >{{
+                highlightedSubstring(articl.title, params.title, "term")
+              }}</strong
+            >{{ highlightedSubstring(articl.title, params.title, "suffix") }}
+          </li>
+          <li v-if="articl.titleExcerpt">
+            {{
+              highlightedSubstring(articl.titleExcerpt, params.title, "prefix")
+            }}<strong
+              :class="{
+                'not-strong':
+                  noCaseIndexOf(articl.titleExcerpt, params.title) === -1,
+              }"
+              >{{
+                highlightedSubstring(articl.titleExcerpt, params.title, "term")
+              }}</strong
             >{{
-              highlightedSubstring(articl.title, params.title, "term")
-            }}</strong
-          >{{ highlightedSubstring(articl.title, params.title, "suffix") }}
-        </li>
-        <li v-if="articl.titleExcerpt">
-          {{ highlightedSubstring(articl.titleExcerpt, params.title, "prefix")
-          }}<strong
-            :class="{
-              'not-strong':
-                noCaseIndexOf(articl.titleExcerpt, params.title) === -1,
-            }"
+              highlightedSubstring(articl.titleExcerpt, params.title, "suffix")
+            }}
+          </li>
+          <li v-if="params.authors">
+            {{ highlightedSubstring(articl.authors, params.authors, "prefix")
+            }}<strong
+              :class="{
+                'not-strong':
+                  noCaseIndexOf(articl.authors, params.authors) === -1,
+              }"
+              >{{
+                highlightedSubstring(articl.authors, params.authors, "term")
+              }}</strong
             >{{
-              highlightedSubstring(articl.titleExcerpt, params.title, "term")
-            }}</strong
-          >{{
-            highlightedSubstring(articl.titleExcerpt, params.title, "suffix")
-          }}
-        </li>
-        <li v-if="params.authors">
-          {{ highlightedSubstring(articl.authors, params.authors, "prefix")
-          }}<strong
-            :class="{
-              'not-strong':
-                noCaseIndexOf(articl.authors, params.authors) === -1,
-            }"
-            >{{
-              highlightedSubstring(articl.authors, params.authors, "term")
-            }}</strong
-          >{{ highlightedSubstring(articl.authors, params.authors, "suffix") }}
-        </li>
-        <li v-if="params.journal">
-          <strong>{{ articl.journal }}</strong>
-        </li>
-        <li v-if="articl.yearComparison && Number(articl.year) !== yearsStart">
-          <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
-        </li>
-      </ul>
-    </li>
-    <li v-if="$store.getters['tokens/isLoggedIn']"><articl-actions :id="articl.id"/></articl-actions></li>
-  </ol>
+              highlightedSubstring(articl.authors, params.authors, "suffix")
+            }}
+          </li>
+          <li v-if="params.journal">
+            <strong>{{ articl.journal }}</strong>
+          </li>
+          <li
+            v-if="articl.yearComparison && Number(articl.year) !== yearsStart"
+          >
+            <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
+          </li>
+        </ul>
+        <div v-if="$store.getters['tokens/isLoggedIn']">
+          <articl-actions :id="articl.id"></articl-actions>
+        </div>
+      </li>
+    </ol>
+  </draggable>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import draggable from "vue-draggable-next";
 import { isEqual } from "lodash";
+import VueFeather from "vue-feather";
 import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
+import ArticlActions from "@/components/layout/ArticlActions.vue";
 
 export default {
   name: "ArticlsList",
+  components: { draggable, VueFeather, ArticlActions },
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
   },
