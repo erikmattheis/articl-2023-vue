@@ -87,13 +87,14 @@ ul li {
   text-align: right;
 }
 
-.error {
-  padding: 1rem;
-  background-color: #ffbaba;
+.grid > li {
+  display: inline-block;
+  background-color: #d4d4d4;
 }
 
-.error li {
-  color: #d8000c;
+html[data-theme="dark"] .grid > li {
+  display: inline-block;
+  background-color: #17262b;
 }
 
 header article,
