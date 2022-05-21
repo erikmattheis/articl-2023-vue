@@ -1,27 +1,22 @@
 <template>
-  <ol>
-    <li
-      class="grid"
-      v-for="(articl, index) in articls"
-      :key="articl.id"
-      :class="{ 'light-bg': index % 2 === 0 }"
-    >
-      <draggable-element :key="articl.id">
-        <template #item> <articls-list-item :articl="articl" /></template
-      ></draggable-element>
-    </li>
-  </ol>
+  <draggable-items tag="ol" v-model="articls" item-key="authors">
+    <template #item="{ element }"
+      ><li>
+        <articls-list-item :articl="element"></articls-list-item>
+      </li>
+    </template>
+  </draggable-items>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import DraggableElement from "vuedraggable";
+import DraggableItems from "vuedraggable";
 import { isEqual } from "lodash";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
 
 export default {
   name: "ArticlsList",
-  components: { DraggableElement, ArticlsListItem },
+  components: { DraggableItems, ArticlsListItem },
   data() {
     return { articls: [], isLoading: false };
   },
@@ -75,6 +70,11 @@ export default {
       }
 
       this.isLoading = false;
+    },
+    getComponentData() {
+      return {
+        articls: this.articls,
+      };
     },
   },
 };

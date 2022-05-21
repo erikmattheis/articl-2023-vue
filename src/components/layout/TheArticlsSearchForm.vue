@@ -194,7 +194,7 @@ export default {
   watch: {
     yearComparison: {
       handler(newValue) {
-        console.log("watch yearComparison handler", newValue);
+        console.log("watch yearComparison handler foum", newValue);
         this.$store.dispatch("articlsParams/yearComparison", newValue);
       },
       deep: true,
@@ -226,7 +226,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 select {
   overflow: scroll;
 }

@@ -1,7 +1,5 @@
-   <template>
-  articl:{{ articl }}
+<template>
   <li>
-    now
     <div v-if="$store.getters['tokens/isLoggedIn']">
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
@@ -69,15 +67,7 @@ export default {
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
   },
-  watch: {
-    params: {
-      handler(newValue) {
-        console.log("watch params handler", newValue);
-        this.updateValues(newValue);
-      },
-      deep: true,
-    },
-  },
+
   computed: {
     ...mapGetters({
       params: "articlsParams/params",
