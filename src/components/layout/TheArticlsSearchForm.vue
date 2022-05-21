@@ -7,19 +7,19 @@
       <input type="text" id="text" v-model="text" />
     </details>
 -->
-    <ul class="grid">
+    <ul class="grid nav-tabs">
       <li :class="{ active: activeTab === 0 }">
-        <a href @click.prevent="activeTab = 0"><h2>Search title</h2></a>
+        <a href @click.prevent="activeTab = 0">Search</a>
       </li>
-      <li>
-        <a href @click.prevent="activeTab = 1"><h2>More options</h2></a>
+      <li :class="{ active: activeTab === 1 }">
+        <a href @click.prevent="activeTab = 1">More options</a>
       </li>
     </ul>
-    <div v-show="!activeTab || activeTab === 0" class="active">
+    <div v-show="activeTab === 0" class="active tab-content">
       <label for="title">Title</label>
       <input type="text" id="title" v-model="title" />
     </div>
-    <div v-show="activeTab === 1" class="active-bg">
+    <div v-show="activeTab === 1" class="active tab-content">
       <label for="journal">Journal</label>
       <input-typeahead
         src="/articls/journal"

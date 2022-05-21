@@ -1,9 +1,7 @@
 <template>
   <the-header></the-header>
   <main>
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+    <router-view />
   </main>
   <the-footer></the-footer>
   <modal-error></modal-error>
@@ -87,15 +85,39 @@ ul li {
   text-align: right;
 }
 
+/*
+* Nav btabs
+*/
+
 .grid > li {
   display: inline-block;
-  background-color: #d4d4d4;
+  margin-top: 0;
+  margin-bottom: 0;
+  column-gap: 0;
 }
 
-html[data-theme="dark"] .grid > li {
-  display: inline-block;
-  background-color: #17262b;
+.tab-content {
+  width: 100%;
+  padding: 1.2rem;
 }
+
+html[data-theme="light"] {
+  .nav-tabs li.active,
+  .active {
+    background-color: #d4d4d4;
+  }
+}
+
+html[data-theme="dark"] {
+  .nav-tabs li.active,
+  .active {
+    background-color: #17262b;
+  }
+}
+
+/*
+* End nav btabs
+*/
 
 header article,
 footer article {

@@ -6,8 +6,8 @@
       :key="articl.id"
       :class="{ 'light-bg': index % 2 === 0 }"
     >
-      <draggable-element :articls="articls" item-key="articl.id">
-        <template #item> <articls-list-item articl="articl" /></template
+      <draggable-element :key="articl.id">
+        <template #item> <articls-list-item :articl="articl" /></template
       ></draggable-element>
     </li>
   </ol>

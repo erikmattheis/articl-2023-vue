@@ -1,5 +1,7 @@
    <template>
+  articl:{{ articl }}
   <li>
+    now
     <div v-if="$store.getters['tokens/isLoggedIn']">
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
@@ -56,13 +58,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { isEqual } from "lodash";
 import VueFeather from "vue-feather";
 import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
 import ArticlActions from "@/components/layout/ArticlActions.vue";
 
 export default {
   name: "ArticlsListItem",
+  props: ["articl"],
   components: { VueFeather, ArticlActions },
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
@@ -84,49 +86,7 @@ export default {
       yearsStart: "articlsParams/yearsStart",
     }),
   },
-  methods: {
-    async updateValues(params) {
-      console.log("updateValues in list");
-
-      if (isEqual(params, {})) {
-        console.log("params is {}");
-        this.articls = [];
-        this.totalResults = "--";
-        return;
-      }
-
-      if (params) {
-        const result = await this.getArticls(params);
-        if (Number(result.page) === 1 || result?.results?.length === 0) {
-          this.articls = [];
-          this.totalResults = "--";
-        }
-
-        this.articls = this.articls.concat(result.results);
-        this.totalPages = result.totalPages;
-        this.limit = result.limit;
-        this.totalResults = result.totalResults;
-      } else {
-        return;
-      }
-    },
-    async getArticls(params) {
-      this.isLoading = true;
-      const result = await this.$http({
-        method: "GET",
-        url: "/articls",
-        params,
-      });
-
-      if (result?.data) {
-        return result.data;
-      }
-
-      this.isLoading = false;
-    },
-    highlightedSubstring,
-    noCaseIndexOf,
-  },
+  methods: { highlightedSubstring, noCaseIndexOf },
 };
 </script>
 
