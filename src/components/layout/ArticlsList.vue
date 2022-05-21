@@ -1,5 +1,10 @@
 <template>
   <ol>
+    <li v-if="$store.getters['tokens/isLoggedIn']"><a href=""><vue-feather
+            size="2rem"
+            type="move"
+            aria-label="move"
+          ></vue-feather></a></li>
     <li
       v-for="(articl, index) in articls"
       :key="articl.id"
@@ -52,6 +57,7 @@
         </li>
       </ul>
     </li>
+    <li v-if="$store.getters['tokens/isLoggedIn']"><articl-actions :id="articl.id"/></articl-actions></li>
   </ol>
 </template>
 
