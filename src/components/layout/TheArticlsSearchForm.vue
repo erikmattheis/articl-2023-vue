@@ -7,12 +7,19 @@
       <input type="text" id="text" v-model="text" />
     </details>
 -->
-    <details open>
-      <summary role="button">Text search</summary>
-
+    <ul class="grid">
+      <li :class="{ active: activeTab === 0 }">
+        <a href @click.prevent="activeTab = 0"><h2>Search title</h2></a>
+      </li>
+      <li>
+        <a href @click.prevent="activeTab = 1"><h2>More options</h2></a>
+      </li>
+    </ul>
+    <div v-show="!activeTab || activeTab === 0" class="active">
       <label for="title">Title</label>
       <input type="text" id="title" v-model="title" />
-
+    </div>
+    <div v-show="activeTab === 1" class="active-bg">
       <label for="journal">Journal</label>
       <input-typeahead
         src="/articls/journal"
@@ -28,8 +35,7 @@
         :input-value="authors"
         query="authors"
       />
-    </details>
-    <details>
+
       <summary role="button">Advanced</summary>
       <label><h3>Year published</h3></label>
       <h3 v-if="Number(year) === yearsStart">After</h3>
@@ -81,7 +87,7 @@
           </fieldset>
         </div>
       </div>
-    </details>
+    </div>
   </form>
 </template>
 
@@ -95,7 +101,7 @@ export default {
   components: { InputTypeahead },
   data() {
     return {
-      advanced: undefined,
+      activeTab: 0,
       allStatuses: this.$store.state.articlsParams.allStatuses,
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
