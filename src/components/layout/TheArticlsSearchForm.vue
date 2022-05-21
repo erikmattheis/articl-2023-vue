@@ -38,7 +38,7 @@
 
       <summary role="button">Advanced</summary>
       <label><h3>Year published</h3></label>
-      <h3 v-if="Number(year) === yearsStart">After</h3>
+      <h3 v-if="yearsStart === Number(year)">After</h3>
       <label
         v-else
         class="horizontal"
@@ -222,17 +222,11 @@ export default {
       console.log("onYearComparisonChange", event.target.value);
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
-    /*
-    onTypesChange(event) {
-      console.log("event.target.value", event.target.value);
-      this.$store.dispatch("articlsParams/types", event.target.value);
-    },
-    */
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 select {
   overflow: scroll;
 }
@@ -240,18 +234,38 @@ select {
   display: inline-block;
   margin-right: 0.5rem;
 }
-ol {
-  padding: 1rem !important;
-  list-style-type: decimal !important;
-  height: 20rem;
-  overflow: scroll;
+
+/*
+* Nav tabs
+*/
+
+.grid > li {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 0;
+  column-gap: 0 !important;
 }
-ol.scroll {
-  height: 10rem;
-  overflow: scroll;
+
+.tab-content {
+  width: 100%;
+  padding: 1.2rem;
 }
-ol li {
-  margin-bottom: 1rem;
-  padding: 0.4rem;
+
+html[data-theme="light"] {
+  .nav-tabs li.active,
+  .active {
+    background-color: #d4d4d4;
+  }
 }
+
+html[data-theme="dark"] {
+  .nav-tabs li.active,
+  .active {
+    background-color: #17262b;
+  }
+}
+
+/*
+* End nav btabs
+*/
 </style>

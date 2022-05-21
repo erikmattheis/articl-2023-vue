@@ -3,7 +3,7 @@
     <label>
       <vue-feather
         class="icon"
-        size="1.4rem"
+        size="1.5rem"
         type="search"
         aria-label="Search"
       ></vue-feather>
@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     hasItems() {
-      return this.items?.length > 0;
+      return this.items.length > 0;
     },
 
     isEmpty() {
@@ -148,14 +148,14 @@ export default {
       if (this.current > 0) {
         this.current--;
       } else if (this.current === -1) {
-        this.current = this.items?.length - 1;
+        this.current = this.items.length - 1;
       } else {
         this.current = -1;
       }
     },
 
     down() {
-      if (this.current < this.items?.length - 1) {
+      if (this.current < this.items.length - 1) {
         this.current++;
       } else {
         this.current = -1;
@@ -177,21 +177,29 @@ ul {
   background-color: #11191f;
   width: 100%;
 }
+
 li {
   padding: 0.2rem 0.5rem;
 }
+
 label {
+  margin-top: 0;
+  display: block;
   position: relative;
 }
 
 label .icon {
-  opacity: 50%;
   position: absolute;
-  top: 0.7rem;
+  top: 0.5rem;
   right: 0.4rem;
+  opacity: 50%;
 }
 .active {
   background-color: #1095c1;
   cursor: pointer;
+}
+
+label > :where(input, select, textarea) {
+  margin-top: 0;
 }
 </style>
