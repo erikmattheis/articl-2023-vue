@@ -1,5 +1,5 @@
 <template>
-  <draggable-items tag="ol" v-model="articls" item-key="authors">
+  <draggable-items tag="ol" v-model="articls" item-key="id">
     <template #item="{ element }"
       ><li>
         <articls-list-item :articl="element"></articls-list-item>

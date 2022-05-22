@@ -126,7 +126,6 @@ export default {
       return state.yearComparisons;
     },
     years(state) {
-      console.log("getting years", state.yearsStart);
       return [
         ...Array(new Date().getUTCFullYear() - (state.yearsStart - 1)).keys(),
       ]

@@ -6,7 +6,7 @@
       ></a>
     </div>
     <ul>
-      <li v-if="articl.score">score:{{ score }}</li>
+      <li v-if="articl.score">sx</li>
       <li v-if="articl.title">
         {{ highlightedSubstring(articl.title, params.title, "prefix")
         }}<strong

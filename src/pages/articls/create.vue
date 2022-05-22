@@ -2,9 +2,6 @@
   <article>
     <h1 v-if="!success">Create articl</h1>
     <h1 v-else>Articl created</h1>
-    $store.getters['tokens/isLoggedIn']:{{
-      $store.getters["tokens/isLoggedIn"]
-    }}
     <template v-if="$store.getters['tokens/isLoggedIn']">
       <form v-if="!success">
         <label for="articlUrl">URL</label>
