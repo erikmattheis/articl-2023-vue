@@ -243,7 +243,10 @@ select {
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
-  column-gap: 0 !important;
+}
+
+.nav-tabs {
+  column-gap: 0;
 }
 
 .tab-content {
