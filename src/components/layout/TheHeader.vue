@@ -4,7 +4,6 @@
       <nav>
         <ul>
           <li class="brand">
-            $store.getters['tokens/isLoggedIn']:{{ isLoggedIn }}
             <router-link to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

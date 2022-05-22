@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div v-if="$store.getters['tokens/isLoggedIn']">
+    <div v-if="isLoggedIn">
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
       ></a>
@@ -48,7 +48,7 @@
         <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
       </li>
     </ul>
-    <div v-if="$store.getters['tokens/isLoggedIn']">
+    <div v-if="isLoggedIn">
       <articl-actions :id="articl.id"></articl-actions>
     </div>
   </li>
@@ -67,7 +67,9 @@ export default {
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
   },
-
+  created() {
+    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
+  },
   computed: {
     ...mapGetters({
       params: "articlsParams/params",

@@ -2,7 +2,7 @@
   <article>
     <h1 v-if="!success">Create articl</h1>
     <h1 v-else>Articl created</h1>
-    <template v-if="$store.getters['tokens/isLoggedIn']">
+    <template v-if="isLoggedIn">
       <form v-if="!success">
         <label for="articlUrl">URL</label>
         <input
@@ -113,13 +113,16 @@
     </p>
   </article>
 </template>
+
 <script>
+import { groupBy } from "lodash";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
 
 export default {
   name: "createArticlPage",
+  params: ["id"],
   components: {
     cardNotification,
     inputTypeahead,
@@ -134,6 +137,7 @@ export default {
       buttonFetchDisabled: false,
       categorySlug: this.$route.query.slug,
       journal: "",
+      id: undefined,
       month: "",
       status: "Published",
       success: false,
@@ -144,7 +148,10 @@ export default {
   },
   mounted() {
     this.categorySlug = this.$route.query.slug;
+    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
+    this.id = this.$route.params.id;
     this.onTypeaheadHit({ value: this.categorySlug });
+    console.log("id", this.id);
   },
   methods: {
     async getData() {
@@ -235,6 +242,31 @@ export default {
     },
     onTypeaheadHit(e) {
       this.categorySlug = e.value;
+    },
+    async fetchArticl(id) {
+      try {
+        this.isLoading = true;
+        const result = await this.getArticlById(id);
+        console.log("id is", id);
+        this.articls = groupBy(result.articls, (articl) => articl.type);
+      } catch (error) {
+        this.$store.dispatch("errors/setError", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    getCategoryPageBySlug(slug) {
+      return this.$http({
+        method: "GET",
+        url: `/d/${slug || ""}`,
+      })
+        .then((result) => {
+          if (result.data) {
+            return result.data;
+          }
+          return this.$store.dispatch("errors/setError", result);
+        })
+        .catch((error) => this.$store.dispatch("errors/setError", error));
     },
   },
 };

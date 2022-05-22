@@ -10,7 +10,7 @@
         </router-link>
       </li>
 
-      <li v-if="$store.getters['tokens/isLoggedIn']">
+      <li v-if="isLoggedIn">
         <router-link
           :to="{
             name: 'createCategoryPage',
@@ -20,7 +20,7 @@
           New Category Here
         </router-link>
       </li>
-      <li v-if="$store.getters['tokens/isLoggedIn']">
+      <li v-if="isLoggedIn">
         <router-link
           :to="{
             name: 'createArticlPage',
@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      isLoggedIn: undefined,
       slug: null,
       title: "",
       categories: [],
@@ -64,6 +65,7 @@ export default {
   },
   created() {
     this.categories = this.fetchData(this.$route.params.slug);
+    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
   },
   watch: {
     "$route.params.slug": {

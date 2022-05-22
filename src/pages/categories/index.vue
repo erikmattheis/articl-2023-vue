@@ -3,7 +3,7 @@
     <h1 v-if="!success">Create category</h1>
     <h1 v-else>Category created</h1>
 
-    <template v-if="$store.getters['tokens/isLoggedIn']">
+    <template v-if="isLoggedIn">
       <form v-if="!success">
         <label for="title">Title</label>
         <input v-model="title" type="text" name="title" id="title" />
@@ -79,6 +79,9 @@ export default {
   },
   mounted() {
     this.parentSlug = this.$route.query.parentSlug;
+  },
+  created() {
+    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
   },
   params: {
     slug: String,
