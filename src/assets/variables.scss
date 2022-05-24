@@ -17,14 +17,14 @@ $enable-responsive-spacings: true !default;
 
 // Enable responsive typography
 // Fixed root element size if disabled
-$enable-responsive-typography: false !default;
+$enable-responsive-typography: true !default;
 
 // Enable .classes
 // .classless version if disabled
 $enable-classes: true !default;
 
 // Enable .grid class
-$enable-grid: true !default;
+$enable-grid: false !default;
 
 // Enable transitions
 $enable-transitions: true !default;

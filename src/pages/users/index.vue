@@ -25,50 +25,53 @@
           />
         </div>
       </fieldset>
-      <fieldset>
-        <label for="theme">Theme</label>
+      <div class="grid">
+        <fieldset>
+          <label for="theme">Theme</label>
 
-        <input
-          @click="toggleTheme()"
-          type="checkbox"
-          id="theme"
-          name="theme"
-          role="switch"
-          :checked="theme === 'dark'"
-        />
-        {{ theme }}
-      </fieldset>
-      <fieldset>
-        <ul>
-          <li>
-            <a href @click.prevent="setTextSize(0.5)"
-              ><vue-feather
-                size="0.5rem"
-                type="type"
-                aria-label="Search"
-              ></vue-feather
-            ></a>
-          </li>
-          <li>
-            <a href @click.prevent="setTextSize(1)"
-              ><vue-feather
-                size="1rem"
-                type="type"
-                aria-label="Search"
-              ></vue-feather
-            ></a>
-          </li>
-          <li>
-            <a href @click.prevent="setTextSize(2)"
-              ><vue-feather
-                size="2rem"
-                type="type"
-                aria-label="Search"
-              ></vue-feather
-            ></a>
-          </li>
-        </ul>
-      </fieldset>
+          <input
+            @click="toggleTheme()"
+            type="checkbox"
+            id="theme"
+            name="theme"
+            role="switch"
+            :checked="theme === 'dark'"
+          />
+          {{ theme }}
+        </fieldset>
+        <nav>
+          Text size
+          <ul>
+            <li>
+              <a href @click.prevent="setTextSize(0.75)"
+                ><vue-feather
+                  size="0.74rem"
+                  type="type"
+                  aria-label="Small text"
+                ></vue-feather
+              ></a>
+            </li>
+            <li>
+              <a href @click.prevent="setTextSize(1)"
+                ><vue-feather
+                  size="1rem"
+                  type="type"
+                  aria-label="Normal text"
+                ></vue-feather
+              ></a>
+            </li>
+            <li>
+              <a href @click.prevent="setTextSize(1.5)"
+                ><vue-feather
+                  size="1.5rem"
+                  type="type"
+                  aria-label="Large text"
+                ></vue-feather
+              ></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -113,10 +116,12 @@
 </template>
 
 <script>
+import VueFeather from "vue-feather";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "usersPage",
+  components: { VueFeather },
   data() {
     return {
       theme: null,
@@ -153,7 +158,8 @@ export default {
       });
     },
     setTextSize(size) {
-      document.body.style.fontSize = 12 * size;
+      console.log("document.body.style.fontSize = 12 * size", 12 * size);
+      document.body.style.fontSize = 12 * size + "em";
     },
     toggleTheme() {
       this.theme = this.theme === "light" ? "dark" : "light";
@@ -249,23 +255,8 @@ export default {
 </script>
 
 <style scoped>
-.toggle-password {
-  position: relative;
-}
-
-.togglePasswordMask {
-  position: absolute;
-  right: 1rem;
-  top: 40%;
-  transform: translateY(-40%);
-  cursor: pointer;
-  height: 2.2rem;
-  width: 2.2rem;
-}
-
-.success {
-  border: 8px solid green;
-  background-color: honeydew;
+nav ul {
+  display: block;
 }
 </style>
 

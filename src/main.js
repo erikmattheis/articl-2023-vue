@@ -4,6 +4,7 @@ import VueCookies from "vue-cookies";
 import axios from "axios";
 import router from "./router";
 import store from "./store/index";
+import { getAccessTokenValue } from "@/services/tokensService";
 
 import App from "./App.vue";
 
@@ -31,7 +32,7 @@ app.config.globalProperties.$http = axios.create({
 app.config.globalProperties.$http.interceptors.request.use(
   function (request) {
     const req = request;
-    const accessTokenValue = store.getters["tokens/accessTokenValue"];
+    const accessTokenValue = getAccessTokenValue();
 
     if (accessTokenValue && req.url !== "/auth/refresh-tokens") {
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
