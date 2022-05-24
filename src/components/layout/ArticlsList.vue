@@ -1,11 +1,22 @@
 <template>
-  <draggable-items tag="ol" v-model="articls" item-key="id" handle=".my-handle">
-    <template #item="{ element }"
-      ><li>
-        <articls-list-item :articl="element"></articls-list-item>
-      </li>
-    </template>
-  </draggable-items>
+  <div>
+    article[0].title:{{ articls[0]?.title }}
+    <draggable-items
+      tag="ol"
+      v-model="articls"
+      item-key="id"
+      handle=".my-handle"
+      ghost-class="ghost"
+      @onEnd="onUpdateList"
+      @change="log"
+    >
+      <template #item="{ element }"
+        ><li>
+          <articls-list-item :articl="element" order="0"></articls-list-item>
+        </li>
+      </template>
+    </draggable-items>
+  </div>
 </template>
 
 <script>
@@ -35,6 +46,15 @@ export default {
     }),
   },
   methods: {
+    log() {
+      console.log("e", this.articls[0].title);
+      this.articls.forEach(function (obj, index) {
+        obj.order = index;
+      });
+    },
+    onUpdateList() {
+      console.log("articls[0 ", this.articls[0].title);
+    },
     async updateValues(params) {
       if (isEqual(params, {})) {
         this.articls = [];
@@ -83,5 +103,8 @@ export default {
 <style scoped>
 .light-bg {
   background-color: #20303d;
+}
+.ghost {
+  border: 2px dashed red;
 }
 </style>

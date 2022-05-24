@@ -4,6 +4,9 @@
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
       ></a>
+      <br />
+      list number: {{ order }}<br />
+      order:{{ articl.order }}
     </div>
     <ul>
       <li v-if="articl.score">sx</li>
@@ -63,7 +66,7 @@ import ArticlActions from "@/components/layout/ArticlActions.vue";
 
 export default {
   name: "ArticlsListItem",
-  props: ["articl"],
+  props: ["articl", "order"],
   components: { VueFeather, ArticlActions },
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
