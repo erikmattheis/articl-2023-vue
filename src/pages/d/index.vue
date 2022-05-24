@@ -48,7 +48,7 @@
 
 <script>
 import { groupBy } from "lodash";
-// import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
+import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "categoryPage",
@@ -56,7 +56,6 @@ export default {
   data() {
     return {
       isLoading: true,
-      isLoggedIn: undefined,
       slug: null,
       title: "",
       categories: [],
@@ -66,6 +65,9 @@ export default {
   created() {
     this.categories = this.fetchData(this.$route.params.slug);
     this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
+  },
+  computed: {
+    isLoggedIn,
   },
   watch: {
     "$route.params.slug": {

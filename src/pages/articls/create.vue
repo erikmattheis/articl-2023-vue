@@ -119,6 +119,7 @@ import { groupBy } from "lodash";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
+import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "createArticlPage",
@@ -137,7 +138,6 @@ export default {
       buttonFetchDisabled: false,
       categorySlug: this.$route.query.slug,
       journal: "",
-      id: undefined,
       month: "",
       status: "Published",
       success: false,
@@ -148,11 +148,11 @@ export default {
   },
   mounted() {
     this.categorySlug = this.$route.query.slug;
-    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
     this.id = this.$route.params.id;
     this.onTypeaheadHit({ value: this.categorySlug });
     console.log("id", this.id);
   },
+  computed: { isLoggedIn },
   methods: {
     async getData() {
       if (this.articlUrl) {

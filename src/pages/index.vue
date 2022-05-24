@@ -27,7 +27,7 @@
 </template>
 
 <script>
-// import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
+import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "homePage",
@@ -41,11 +41,13 @@ export default {
     };
   },
   created() {
-    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
     this.categories = this.fetchData("0");
   },
   mounted() {
     this.setTitleAndDescription();
+  },
+  computed: {
+    isLoggedIn,
   },
   methods: {
     setTitleAndDescription() {

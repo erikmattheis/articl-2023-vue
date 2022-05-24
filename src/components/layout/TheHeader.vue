@@ -21,9 +21,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/"
-              >Articl.net isLoggedIn:{{ isLoggedIn }}</router-link
-            >
+            <router-link to="/">Articl.net</router-link>
           </li>
         </ul>
         <ul class="right">

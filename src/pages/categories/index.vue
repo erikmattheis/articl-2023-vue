@@ -48,6 +48,7 @@
 
 <script>
 import CardNotification from "@/components/ui/CardNotification.vue";
+import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "createCategoryPage",
@@ -76,13 +77,12 @@ export default {
       str = str.toLowerCase();
       return encodeURIComponent(str);
     },
+    isLoggedIn,
   },
   mounted() {
     this.parentSlug = this.$route.query.parentSlug;
   },
-  created() {
-    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
-  },
+
   params: {
     slug: String,
   },

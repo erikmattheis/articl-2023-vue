@@ -57,6 +57,7 @@
 <script>
 import { mapGetters } from "vuex";
 import VueFeather from "vue-feather";
+import { isLoggedIn } from "@/services/tokensService";
 import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
 import ArticlActions from "@/components/layout/ArticlActions.vue";
 
@@ -67,10 +68,9 @@ export default {
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
   },
-  created() {
-    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
-  },
+
   computed: {
+    isLoggedIn,
     ...mapGetters({
       params: "articlsParams/params",
       allTypes: "articlsParams/allTypes",

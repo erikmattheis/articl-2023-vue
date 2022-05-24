@@ -41,7 +41,7 @@
 
 <script>
 import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
+import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "ArticlActions",
@@ -50,15 +50,10 @@ export default {
     VueFeather,
   },
   data() {
-    return {
-      theme: "light",
-      li: this.$store.getters.isLoggedIn,
-    };
+    return {};
   },
   computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
+    isLoggedIn,
   },
   methods: {},
 };
