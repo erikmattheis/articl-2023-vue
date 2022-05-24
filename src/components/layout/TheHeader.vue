@@ -62,7 +62,7 @@
 <script>
 import VueFeather from "vue-feather";
 import { mapGetters } from "vuex";
-import { getRefreshTokenValue } from "@/services/tokensService";
+import { getRefreshTokenValue, isLoggedIn } from "@/services/tokensService";
 
 export default {
   components: {
@@ -74,8 +74,8 @@ export default {
     };
   },
   computed: {
+    isLoggedIn,
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
       accessTokenExpires: "tokens/accessTokenExpires",
       refreshTokenExpires: "tokens/refreshTokenExpires",
     }),

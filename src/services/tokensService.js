@@ -5,6 +5,17 @@ const getVueInstanceContext = function () {
   return app.config.globalProperties;
 };
 
+const isLoggedIn = function () {
+  const now = Date.now();
+  console.log(
+    "state.accessTokenExpires > now",
+    getAccessTokenExpires(),
+    " > ",
+    now
+  );
+  return getAccessTokenExpires() > now;
+};
+
 const getAccessTokenExpires = function () {
   const accessTokenExpires =
     getVueInstanceContext().$cookies.get("accessTokenExpires");
@@ -34,7 +45,6 @@ const getRefreshTokenExpires = function () {
 };
 
 const getRefreshTokenValue = function () {
-  console.log("typeof Vue", typeof Vue);
   const refreshTokenValue =
     getVueInstanceContext().$cookies.get("refreshTokenValue");
   if (refreshTokenValue) {
@@ -84,6 +94,7 @@ const setTokens = function setTokens(response) {
 };
 
 export {
+  isLoggedIn,
   getAccessTokenExpires,
   getAccessTokenValue,
   getRefreshTokenExpires,
