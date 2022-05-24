@@ -1,9 +1,7 @@
 <template>
   <article>
     <h1>{{ resultTitle }}</h1>
-    <p v-if="resultTitle">
-      Please <a href="/login?redirect=/articls/create">log in</a> to continue.
-    </p>
+    <p v-if="resultTitle">Please <a href="/login">log in</a> to continue.</p>
   </article>
 </template>
 

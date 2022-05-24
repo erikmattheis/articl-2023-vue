@@ -42,8 +42,6 @@
 <script>
 import VueFeather from "vue-feather";
 import { mapGetters } from "vuex";
-import localStorageService from "@/services/localStorageService";
-import { getRefreshTokenValue } from "@/services/tokenService";
 
 export default {
   name: "ArticlActions",
@@ -60,34 +58,9 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
-      accessTokenExpires: "tokens/accessTokenExpires",
-      refreshTokenExpires: "tokens/refreshTokenExpires",
     }),
   },
-  mounted() {
-    const theme = localStorageService.get("data-theme");
-    this.theme = theme !== "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", this.theme);
-  },
-  methods: {
-    async logout() {
-      const refreshToken = getRefreshTokenValue();
-      if (refreshToken) {
-        await this.$http({
-          method: "POST",
-          url: "/auth/logout",
-          data: {
-            refreshToken,
-          },
-        });
-        localStorage.clear();
-        this.$store.dispatch("tokens/logout");
-      } else {
-        localStorage.clear();
-        this.$store.dispatch("tokens/logout");
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 

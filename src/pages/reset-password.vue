@@ -10,13 +10,6 @@
         autocomplete="username"
       />
 
-      <input
-        type="hidden"
-        name="username"
-        id="username"
-        value=""
-        autocomplete="username"
-      />
       <label for="password"
         >New password
         <small class="lighter left-space" v-if="passwordComplexity < 3">
@@ -71,9 +64,7 @@
           @show="showPassword2 = !showPassword2"
         ></the-button-toggle-hidden>
       </div>
-      <div v-if="passwordInvalid"></div>
 
-      <div v-if="dataInvalid"></div>
       <button
         type="submit"
         id="reset"
@@ -89,7 +80,7 @@
 
 <script>
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import userService from "@/services/userService";
+import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
   name: "PasswordReset",
@@ -100,10 +91,10 @@ export default {
     return {
       email: null,
       password: null,
+      password2: null,
       showPassword: false,
       showPassword2: false,
       buttonDisabled: false,
-      passwordMismatch: false,
       passwordComplexity: 0,
       errorMessage: "",
       success: false,
@@ -114,7 +105,26 @@ export default {
   mounted() {
     this.setTitleAndDescription();
   },
+  watch: {
+    password: {
+      handler(val) {
+        this.passwordComplexity = this.scoreChars(val);
+      },
+    },
+  },
   methods: {
+    checkForm() {
+      let passed = true;
+      if (this.validateEmail(this.email)) {
+        this.errorMessage = "Please enter a valid email.";
+        passed = false;
+      } else if (this.password && this.password.length < 8) {
+        this.errorMessage = "Passwords are at least eight characters.";
+        passed = false;
+      }
+      return passed;
+    },
+
     setTitleAndDescription() {
       const documentTitle = "Articl.net Reset Password";
       const metaDescription = "";
@@ -123,43 +133,26 @@ export default {
         metaDescription,
       });
     },
-    resetForm() {
-      this.passwordInvalid = null;
-      this.passwordInvalid2 = null;
-      this.dataInvalid = false;
+
+    resetFormErrors() {
       this.success = null;
       this.result = null;
     },
-    checkForm() {
-      this.resetFormErrors();
-      let passed = true;
-      if (!userService.validateEmail(this.email)) {
-        this.errorMessage = "Please enter a valid email.";
-        passed = false;
-      } else if (userService.scoreChars(this.password) < 3) {
-        this.errorMessage = "Please choose a more complex password.";
-        passed = false;
-      } else if (this.password && this.password.length < 8) {
-        this.errorMessage = "Please choose a longer password.";
-        passed = false;
-      } else if (this.password !== this.password2) {
-        this.errorMessage = "The password fields must match.";
-        passed = false;
-      }
-      return passed;
-    },
+
     async submitForm() {
       const { token } = this.$route.query;
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
+
         this.$http({
           method: "POST",
           url: "/auth/reset-password",
+          params: { token },
           data: {
-            token,
             password: this.password,
           },
         })
+
           .then(() => {
             this.$store.dispatch("modals/setSuccessTitle", "Password updated");
             this.$store.dispatch(
@@ -172,11 +165,16 @@ export default {
             this.dataInvalid = true;
             this.$store.dispatch("errors/setError", error);
           })
+
           .finally(() => {
             this.buttonDisabled = false;
           });
+      } else {
+        this.$store.dispatch("errors/setError", this.errorMessage);
       }
     },
+    scoreChars,
+    validateEmail,
   },
 };
 </script>

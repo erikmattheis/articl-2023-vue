@@ -23,6 +23,9 @@ export default {
     },
   },
   actions: {
+    setSuccessTitle(context, payload) {
+      context.commit("SET_SUCCESS_TITLE", payload);
+    },
     setSuccessMessage(context, payload) {
       context.commit("SET_SUCCESS_MESSAGE", payload);
     },

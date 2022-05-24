@@ -1,20 +1,23 @@
 import "core-js/actual/array/group-by";
 import { createApp } from "vue";
+import VueCookies from "vue-cookies";
 import axios from "axios";
 import router from "./router";
 import store from "./store/index";
 
 import App from "./App.vue";
 
-const app = createApp(App);
+export const app = createApp(App);
 
-let baseURL;
+let baseURL,
+  secureValue = true;
 
 if (
   window.location.hostname === "192.168.1.130" ||
   window.location.hostname === "localhost"
 ) {
   baseURL = "http://localhost:5000/v1";
+  secureValue = false;
 } else if (process.env.NODE_ENV === "development") {
   baseURL = "https://articl-api-dev.herokuapp.com/v1";
 } else {
@@ -39,6 +42,8 @@ app.config.globalProperties.$http.interceptors.request.use(
 );
 
 app.use(router);
+
+app.use(VueCookies, { secure: secureValue });
 
 app.use(store);
 

@@ -20,7 +20,11 @@
               </svg>
             </router-link>
           </li>
-          <li><router-link to="/">Articl.net </router-link></li>
+          <li>
+            <router-link to="/"
+              >Articl.net isLoggedIn:{{ isLoggedIn }}</router-link
+            >
+          </li>
         </ul>
         <ul class="right">
           <router-link :to="{ name: 'searchArticls' }" class="search-articls">
@@ -58,8 +62,7 @@
 <script>
 import VueFeather from "vue-feather";
 import { mapGetters } from "vuex";
-import localStorageService from "@/services/localStorageService";
-import { getRefreshTokenValue } from "@/services/tokenService";
+import { getRefreshTokenValue } from "@/services/tokensService";
 
 export default {
   components: {
@@ -78,7 +81,7 @@ export default {
     }),
   },
   mounted() {
-    const theme = localStorageService.get("data-theme");
+    const theme = this.$cookies.get("data-theme");
     this.theme = theme !== "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", this.theme);
   },

@@ -38,6 +38,37 @@
         />
         {{ theme }}
       </fieldset>
+      <fieldset>
+        <ul>
+          <li>
+            <a href @click.prevent="setTextSize(0.5)"
+              ><vue-feather
+                size="0.5rem"
+                type="type"
+                aria-label="Search"
+              ></vue-feather
+            ></a>
+          </li>
+          <li>
+            <a href @click.prevent="setTextSize(1)"
+              ><vue-feather
+                size="1rem"
+                type="type"
+                aria-label="Search"
+              ></vue-feather
+            ></a>
+          </li>
+          <li>
+            <a href @click.prevent="setTextSize(2)"
+              ><vue-feather
+                size="2rem"
+                type="type"
+                aria-label="Search"
+              ></vue-feather
+            ></a>
+          </li>
+        </ul>
+      </fieldset>
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -82,8 +113,7 @@
 </template>
 
 <script>
-import userService from "@/services/userService";
-import localStorageService from "@/services/localStorageService";
+import { validateEmail } from "@/services/userService";
 
 export default {
   name: "usersPage",
@@ -93,6 +123,7 @@ export default {
       nameFirst: "",
       nameLast: "",
       email: null,
+      password2: undefined,
       institution: null,
       education: null,
       buttonDisabled: false,
@@ -108,7 +139,7 @@ export default {
   },
   mounted() {
     this.fetchData();
-    this.theme = localStorageService.get("data-theme");
+    this.theme = this.$cookies.get("data-theme");
     this.theme = this.theme === "light" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", this.theme);
   },
@@ -121,10 +152,13 @@ export default {
         metaDescription,
       });
     },
+    setTextSize(size) {
+      document.body.style.fontSize = 12 * size;
+    },
     toggleTheme() {
       this.theme = this.theme === "light" ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", this.theme);
-      localStorageService.set("data-theme", this.theme);
+      this.$cookies.set("data-theme", this.theme);
     },
     async fetchData() {
       try {
@@ -164,7 +198,7 @@ export default {
     checkForm() {
       this.resetFormErrors();
       let passed = true;
-      if (!userService.validateEmail(this.email)) {
+      if (!this.validateEmail(this.email)) {
         this.errorMessage = "Please enter a valid email.";
         passed = false;
       }
@@ -209,6 +243,7 @@ export default {
         });
       }
     },
+    validateEmail,
   },
 };
 </script>

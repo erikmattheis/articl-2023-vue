@@ -92,7 +92,7 @@
 <script>
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import CardNotification from "@/components/ui/CardNotification.vue";
-import userService from "@/services/userService";
+import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
   name: "registerPage",
@@ -118,7 +118,7 @@ export default {
   watch: {
     password: {
       handler(val) {
-        this.passwordComplexity = userService.scoreChars(val);
+        this.passwordComplexity = this.scoreChars(val);
       },
     },
   },
@@ -142,10 +142,10 @@ export default {
     checkForm() {
       this.resetFormErrors();
       let passed = true;
-      if (!userService.validateEmail(this.email)) {
+      if (!this.validateEmail(this.email)) {
         this.errorMessage = "Please enter a valid email.";
         passed = false;
-      } else if (userService.scoreChars(this.password) < 3) {
+      } else if (this.scoreChars(this.password) < 3) {
         this.errorMessage = "Please choose a more complex password.";
         passed = false;
       } else if (this.password && this.password.length < 8) {
@@ -188,6 +188,8 @@ export default {
         });
       }
     },
+    scoreChars,
+    validateEmail,
   },
 };
 </script>

@@ -20,8 +20,10 @@
             <ul>
               <li v-if="errorFileName">Error in file: {{ errorFileName }}</li>
               <li v-if="errorLineNumber">On line: {{ errorLineNumber }}</li>
-              <li v-if="errorMessage">Message:{{ errorMessage }}</li>
-              <li v-if="errorStack">Stack: {{ errorStack }}</li>
+              <li v-if="errorMessage">Message: {{ errorMessage }}</li>
+              <li v-if="errorStack">
+                <small>Stack: {{ errorStack }}</small>
+              </li>
             </ul>
           </div>
         </section>
@@ -156,5 +158,11 @@ html[data-theme="dark"]
   ul
   li {
   color: black !important;
+}
+
+small {
+  display: inline-block;
+  font-size: 0.7rem;
+  line-height: 1;
 }
 </style>
