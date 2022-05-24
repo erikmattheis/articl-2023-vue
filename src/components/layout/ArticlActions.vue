@@ -50,7 +50,7 @@ export default {
     VueFeather,
   },
   data() {
-    return {};
+    return { expanded: false };
   },
   computed: {
     isLoggedIn,

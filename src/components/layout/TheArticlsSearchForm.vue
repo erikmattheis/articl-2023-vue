@@ -1,12 +1,5 @@
 <template>
   <form>
-    <!---
-    <details open>
-      <summary role="button">Weighted search</summary>
-      <label for="text">Text</label>
-      <input type="text" id="text" v-model="text" />
-    </details>
--->
     <ul class="grid nav-tabs">
       <li :class="{ active: activeTab === 0 }">
         <a href @click.prevent="activeTab = 0">Search</a>
@@ -36,9 +29,16 @@
         query="authors"
       />
 
-      <summary role="button">Advanced</summary>
-      <label><h3>Year published</h3></label>
-      <h3 v-if="yearsStart === Number(year)">After</h3>
+      <label>Year published</label>
+      <label v-if="yearsStart === Number(year)" class="horizontal"
+        ><input
+          type="radio"
+          v-model="yearComparison"
+          value="after"
+          name="yearComparison"
+        />
+        After
+      </label>
       <label
         v-else
         class="horizontal"
@@ -52,7 +52,6 @@
         />
         {{ comparison }}
       </label>
-      <label for="year">Year</label>
       <select v-model="year" autocomplete="off" @change="onYearChange">
         <option v-for="i in years" :key="i">
           {{ i }}

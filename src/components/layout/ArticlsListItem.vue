@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="grid">
     <div v-if="isLoggedIn" class="my-handle">
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
