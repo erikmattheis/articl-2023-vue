@@ -2,6 +2,12 @@
   <article>
     <h1>Log in</h1>
     <form>
+      <input
+        type="hidden"
+        name="username"
+        id="username"
+        autocomplete="username"
+      />
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -10,13 +16,7 @@
         id="email"
         autocomplete="email"
       />
-      <input
-        type="hidden"
-        name="username"
-        id="username"
-        value=""
-        autocomplete="username"
-      />
+
       <label for="password">Password</label>
       <div class="toggle-password">
         <input
@@ -57,9 +57,8 @@
 
 <script>
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import { setTokens } from "@/services/tokenService";
+import { setTokens } from "@/services/tokensService";
 import validateEmail from "@/services/emailValidationService";
-import localStorageService from "@/services/localStorageService";
 
 export default {
   name: "loginPage",
@@ -102,6 +101,7 @@ export default {
       }
       return passed;
     },
+
     async submitForm() {
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
@@ -123,7 +123,7 @@ export default {
 
             const theme =
               result?.data?.user?.theme !== "dark" ? "light" : "dark";
-            localStorageService.set("data-theme", theme);
+            this.$cookies.set("data-theme", theme);
             document.documentElement.setAttribute("data-theme", theme);
             if (
               this.$route.query.redirect &&
