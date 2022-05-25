@@ -1,6 +1,9 @@
 <template>
   <li class="grid">
-    <div v-if="isLoggedIn" class="my-handle">
+    <div
+      v-if="isLoggedIn && this.$route.name !== 'searchArticls'"
+      class="my-handle"
+    >
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
       ></a>
