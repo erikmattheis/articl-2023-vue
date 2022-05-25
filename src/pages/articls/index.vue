@@ -5,9 +5,9 @@
       <the-articls-form-search />
       <div>
         <the-articls-search-params />
-        <articls-list />
       </div>
     </div>
+    <articls-list />
   </article>
 </template>
 

@@ -1,14 +1,12 @@
 <template>
   <div>
-    article[0].title:{{ articls[0]?.title }}
     <draggable-items
       tag="ol"
       v-model="articls"
       item-key="id"
       handle=".my-handle"
       ghost-class="ghost"
-      @onEnd="onUpdateList"
-      @change="log"
+      @change="onUpdateOrderValues"
     >
       <template #item="{ element }"
         ><li>
@@ -34,7 +32,6 @@ export default {
   watch: {
     params: {
       handler(newValue) {
-        console.log("watch params handler", newValue);
         this.updateValues(newValue);
       },
       deep: true,
@@ -46,14 +43,20 @@ export default {
     }),
   },
   methods: {
-    log() {
-      console.log("e", this.articls[0].title);
+    updateOrderValues() {
       this.articls.forEach(function (obj, index) {
         obj.order = index;
       });
     },
-    onUpdateList() {
-      console.log("articls[0 ", this.articls[0].title);
+    async saveOrderValues() {
+      const order = this.articls.map((obj) => {
+        return { id: obj.id, order: obj.order };
+      });
+      await this.saveOrder(order);
+    },
+    onUpdateOrderValues() {
+      this.updateOrderValues();
+      this.saveOrderValues();
     },
     async updateValues(params) {
       if (isEqual(params, {})) {
@@ -76,6 +79,22 @@ export default {
       } else {
         return;
       }
+    },
+    async saveOrder(order) {
+      this.isLoading = true;
+      const result = await this.$http({
+        method: "POST",
+        url: "/articls/order",
+        data: {
+          order,
+        },
+      });
+
+      if (result?.data) {
+        return result.data;
+      }
+
+      this.isLoading = false;
     },
     async getArticls(params) {
       this.isLoading = true;

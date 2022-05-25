@@ -193,19 +193,16 @@ export default {
   watch: {
     yearComparison: {
       handler(newValue) {
-        console.log("watch yearComparison handler foum", newValue);
         this.$store.dispatch("articlsParams/yearComparison", newValue);
       },
       deep: true,
     },
   },
   methods: {
-    onTypesChange(event) {
-      this.$store.dispatch("articlsParams/types", this.types);
-      console.log("onTypesChange", event);
+    onTypesChange() {
+      this.$store.dispatch("articlsParams/types", event.target.value);
     },
     onYearChange(event) {
-      console.log("onYearChange", event.target.value);
       this.$store.dispatch("articlsParams/year", event.target.value);
     },
     onJournalChange(event) {
@@ -218,7 +215,6 @@ export default {
       this.$store.dispatch("articlsParams/title", event.target.value);
     },
     onYearComparisonChange(event) {
-      console.log("onYearComparisonChange", event.target.value);
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
   },

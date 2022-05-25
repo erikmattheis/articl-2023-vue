@@ -7,12 +7,6 @@ const getVueInstanceContext = function () {
 
 const isLoggedIn = function () {
   const now = Date.now();
-  console.log(
-    "state.accessTokenExpires > now",
-    getAccessTokenExpires(),
-    " > ",
-    now
-  );
   return getAccessTokenExpires() > now;
 };
 

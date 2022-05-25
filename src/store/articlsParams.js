@@ -80,7 +80,6 @@ export default {
       commit("SET_YEAR", payload);
     },
     yearComparison(context, payload) {
-      console.log("setYearComparison vuex", payload);
       context.commit("SET_YEAR_COMPARISON", payload);
     },
   },

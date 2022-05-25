@@ -4,9 +4,6 @@
       <a href=""
         ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
       ></a>
-      <br />
-      list number: {{ order }}<br />
-      order:{{ articl.order }}
     </div>
     <ul>
       <li v-if="articl.score">sx</li>
@@ -100,5 +97,9 @@ strong:not([class="not-strong"]) {
   background-color: #749157;
   color: black;
   padding: 0.2rem 0.1rem;
+}
+
+li {
+  font-size: 0.65rem;
 }
 </style>

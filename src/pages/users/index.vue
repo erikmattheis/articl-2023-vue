@@ -158,8 +158,7 @@ export default {
       });
     },
     setTextSize(size) {
-      console.log("document.body.style.fontSize = 12 * size", 12 * size);
-      document.body.style.fontSize = 12 * size + "em";
+      document.body.style.fontSize = 12 * size + "px";
     },
     toggleTheme() {
       this.theme = this.theme === "light" ? "dark" : "light";

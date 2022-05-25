@@ -18,20 +18,20 @@
     </ul>
     <ul class="above right" v-if="expanded">
       <li>
-        <router-link :to="{ name: 'articlEdit' }">
+        <router-link :to="{ name: 'createArticlPage', params: { id } }">
           edit
           <vue-feather
-            size="2rem"
+            size="0.5rem"
             type="search"
-            aria-label="Search"
+            aria-label="Edit"
           ></vue-feather>
         </router-link>
         <router-link :to="{ name: 'articlDelete', id: id }">
           delete
           <vue-feather
-            size="2rem"
+            size="0.5rem"
             type="search"
-            aria-label="Search"
+            aria-label="Delete"
           ></vue-feather>
         </router-link>
       </li>

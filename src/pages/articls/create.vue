@@ -150,7 +150,6 @@ export default {
     this.categorySlug = this.$route.query.slug;
     this.id = this.$route.params.id;
     this.onTypeaheadHit({ value: this.categorySlug });
-    console.log("id", this.id);
   },
   computed: { isLoggedIn },
   methods: {
@@ -247,7 +246,6 @@ export default {
       try {
         this.isLoading = true;
         const result = await this.getArticlById(id);
-        console.log("id is", id);
         this.articls = groupBy(result.articls, (articl) => articl.type);
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
