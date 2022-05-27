@@ -24,6 +24,52 @@
             <router-link to="/">Articl.net</router-link>
           </li>
         </ul>
+
+        <div class="grid">
+          <fieldset>
+            <input
+              @click="toggleTheme()"
+              type="checkbox"
+              id="theme"
+              name="theme"
+              role="switch"
+              :checked="theme === 'dark'"
+            />
+            {{ theme }}
+          </fieldset>
+          <nav>
+            <ul>
+              <li>
+                <a href @click.prevent="setTextSize(0.8)"
+                  ><vue-feather
+                    size="0.85rem"
+                    type="type"
+                    aria-label="Small text"
+                  ></vue-feather
+                ></a>
+              </li>
+              <li>
+                <a href @click.prevent="setTextSize(1)"
+                  ><vue-feather
+                    size="1rem"
+                    type="type"
+                    aria-label="Normal text"
+                  ></vue-feather
+                ></a>
+              </li>
+              <li>
+                <a href @click.prevent="setTextSize(1.2)"
+                  ><vue-feather
+                    size="1.5rem"
+                    type="type"
+                    aria-label="Large text"
+                  ></vue-feather
+                ></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
         <ul class="right">
           <router-link :to="{ name: 'searchArticls' }" class="search-articls">
             <vue-feather
@@ -78,12 +124,34 @@ export default {
       refreshTokenExpires: "tokens/refreshTokenExpires",
     }),
   },
-  mounted() {
+  beforeMount() {
     const theme = this.$cookies.get("data-theme");
+
     this.theme = theme !== "dark" ? "light" : "dark";
+
     document.documentElement.setAttribute("data-theme", this.theme);
+
+    if (this.$cookies.isKey("--font-size")) {
+      this.setTextSize(this.$cookies.get("--font-size"));
+    }
+
+    this.originalFontSize = parseInt(
+      getComputedStyle(document.body).getPropertyValue("--font-size")
+    );
   },
   methods: {
+    setTextSize(size) {
+      document.documentElement.style.setProperty(
+        "--font-size",
+        18 * size + "px"
+      );
+      this.$cookies.set("--font-size", size);
+    },
+    toggleTheme() {
+      this.theme = this.theme === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", this.theme);
+      this.$cookies.set("data-theme", this.theme);
+    },
     async logout() {
       const refreshToken = getRefreshTokenValue();
       if (refreshToken) {
@@ -109,6 +177,10 @@ export default {
 svg {
   width: 2rem;
   height: 2rem;
+}
+li {
+  display: inline-block !important;
+  vertical-align: top !important;
 }
 .a {
   fill: #039be5;

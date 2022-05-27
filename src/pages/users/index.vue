@@ -124,7 +124,6 @@ export default {
   components: { VueFeather },
   data() {
     return {
-      theme: null,
       nameFirst: "",
       nameLast: "",
       email: null,
@@ -156,14 +155,6 @@ export default {
         documentTitle,
         metaDescription,
       });
-    },
-    setTextSize(size) {
-      document.body.style.fontSize = 12 * size + "px";
-    },
-    toggleTheme() {
-      this.theme = this.theme === "light" ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", this.theme);
-      this.$cookies.set("data-theme", this.theme);
     },
     async fetchData() {
       try {

@@ -63,8 +63,8 @@ body {
 body * {
   border-radius: 0 !important;
 }
-body div form input[role="switch"],
-body div form input[type="radio"] {
+input[role="switch"],
+input[type="radio"] {
   border-radius: 1rem !important;
 }
 
