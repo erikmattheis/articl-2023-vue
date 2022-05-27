@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1>Log in</h1>
-    <form>
+    <form v-if="!isLoggedIn">
       <input
         type="hidden"
         name="username"
@@ -50,6 +50,7 @@
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
+    <p v-else>You are already logged in.</p>
     <router-link to="/forgot-pass">Forgot pass</router-link>
     <router-link to="/register" class="right">Create account</router-link>
   </article>
@@ -57,7 +58,7 @@
 
 <script>
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import { setTokens } from "@/services/tokensService";
+import { setTokens, isLoggedIn } from "@/services/tokensService";
 import validateEmail from "@/services/emailValidationService";
 
 export default {
@@ -77,6 +78,9 @@ export default {
   },
   mounted() {
     this.setTitleAndDescription();
+  },
+  computed: {
+    isLoggedIn,
   },
   methods: {
     setTitleAndDescription() {

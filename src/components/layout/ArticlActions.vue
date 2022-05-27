@@ -1,24 +1,9 @@
 <template>
-  <nav>
-    <ul class="right">
-      <li v-if="!expanded">
-        <a href @click.prevent="expanded = true"
-          ><vue-feather
-            size="2rem"
-            type="menu"
-            aria-label="Actions"
-          ></vue-feather
-        ></a>
-      </li>
-      <li v-if="expanded">
-        <a href @click.prevent="expanded = false"
-          ><vue-feather size="2rem" type="x" aria-label="Actions"></vue-feather
-        ></a>
-      </li>
-    </ul>
-    <ul class="above right" v-if="expanded">
+  <details role="list">
+    <summary aria-haspopup="listbox" role="button">Tools</summary>
+    <ul role="listbox">
       <li>
-        <router-link :to="{ name: 'createArticlPage', params: { id } }">
+        <router-link :to="{ name: 'editArticl', params: { id } }">
           edit
           <vue-feather
             size="0.5rem"
@@ -26,6 +11,9 @@
             aria-label="Edit"
           ></vue-feather>
         </router-link>
+      </li>
+      <li><a>Change status</a></li>
+      <li>
         <router-link :to="{ name: 'articlDelete', id: id }">
           delete
           <vue-feather
@@ -36,7 +24,7 @@
         </router-link>
       </li>
     </ul>
-  </nav>
+  </details>
 </template>
 
 <script>

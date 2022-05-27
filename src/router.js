@@ -80,10 +80,9 @@ const router = createRouter({
       component: createCategoryPage,
     },
     {
-      name: "editArticlPage",
-      path: "/articls/create/:id",
+      name: "editArticl",
+      path: "/articls/create",
       component: createArticlPage,
-      props: true,
     },
     {
       name: "createArticlPage",

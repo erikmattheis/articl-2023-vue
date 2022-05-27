@@ -4,7 +4,7 @@
       tag="ol"
       v-model="articls"
       item-key="id"
-      handle=".my-handle"
+      handle=".handle"
       ghost-class="ghost"
       @change="onUpdateOrderValues"
     >

@@ -1,58 +1,64 @@
 <template>
   <article>
     <h2>{{ title }} <span :aria-busy="isLoading"></span></h2>
-    <ul>
-      <li v-for="category in categories || []" :key="category.slug">
-        <router-link
-          :to="{ name: 'categoryPage', params: { slug: category.slug } }"
-        >
-          {{ category.title }}
-        </router-link>
-      </li>
+    <draggable-items
+      tag="ul"
+      v-model="categories"
+      item-key="slug"
+      handle=".handle"
+      ghost-class="ghost"
+      @change="onUpdateOrderValues"
+    >
+      <template #item="{ element }">
+        <li :key="element.slug">
+          <router-link
+            :to="{ name: 'categoryPage', params: { slug: element.slug } }"
+          >
+            {{ element.title }}
+          </router-link>
+        </li>
+      </template>
+    </draggable-items>
 
-      <li v-if="isLoggedIn">
-        <router-link
-          :to="{
-            name: 'createCategoryPage',
-            query: { parentSlug: $route.params.slug },
-          }"
-        >
-          New Category Here
-        </router-link>
-      </li>
-      <li v-if="isLoggedIn">
-        <router-link
-          :to="{
-            name: 'createArticlPage',
-            query: { slug: $route.params.slug },
-          }"
-        >
-          New Articl Here
-        </router-link>
-      </li>
-    </ul>
+    <li v-if="isLoggedIn">
+      <router-link
+        :to="{
+          name: 'createCategoryPage',
+          query: { parentSlug: $route.params.slug },
+        }"
+      >
+        New Category Here
+      </router-link>
+    </li>
+    <li v-if="isLoggedIn">
+      <router-link
+        :to="{
+          name: 'createArticlPage',
+          query: { slug: $route.params.slug },
+        }"
+      >
+        New Articl Here
+      </router-link>
+    </li>
+
     <ul>
-      <li v-for="type in articls || []" :key="type">
-        <h2>{{ type[0].type }}</h2>
-        <ul>
-          <li v-for="articl in type || []" :key="articl.id">
-            <h3>{{ articl.title }}</h3>
-            <small>{{ articl.authors }}</small>
-            <small>{{ articl.journal }}</small>
-          </li>
-        </ul>
+      <li v-for="articl in articls || []" :key="articl.id">
+        {{ articl.title }}
+        <articls-list-item :articl="articl" />
       </li>
     </ul>
   </article>
 </template>
 
 <script>
-import { groupBy } from "lodash";
+//import { groupBy } from "lodash";
+import DraggableItems from "vuedraggable";
+import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
 import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "categoryPage",
-  // components: { TheBreadcrumbs },
+  components: { DraggableItems, ArticlsListItem },
   data() {
     return {
       isLoading: true,
@@ -61,10 +67,6 @@ export default {
       categories: [],
       articls: [],
     };
-  },
-  created() {
-    this.categories = this.fetchData(this.$route.params.slug);
-    this.isLoggedIn = this.$store.getters["tokens/isLoggedIn"];
   },
   computed: {
     isLoggedIn,
@@ -78,7 +80,13 @@ export default {
     },
   },
   methods: {
+    async onCreated() {
+      this.categories = await this.fetchData(this.$route.params.slug);
+    },
+
+    async onUpdateOrderValues() {},
     async fetchData(slug) {
+      console.log("fetchData", slug);
       try {
         this.isLoading = true;
         const result = await this.getCategoryPageBySlug(slug);
@@ -90,25 +98,23 @@ export default {
           metaDescription,
         });
         this.categories = result.categories;
-        this.articls = groupBy(result.articls, (articl) => articl.type);
+        this.types = [...new Set(this.categories.map((item) => item.type))];
+        // this.articls = groupBy(result.articls, (articl) => articl.type);
+        console.log(this.types);
+        return this.artoi;
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       } finally {
         this.isLoading = false;
       }
     },
-    getCategoryPageBySlug(slug) {
-      return this.$http({
+    async getCategoryPageBySlug(slug) {
+      const result = await this.$http({
         method: "GET",
         url: `/d/${slug || ""}`,
-      })
-        .then((result) => {
-          if (result.data) {
-            return result.data;
-          }
-          return this.$store.dispatch("errors/setError", result);
-        })
-        .catch((error) => this.$store.dispatch("errors/setError", error));
+      });
+
+      return result.data;
     },
   },
 };

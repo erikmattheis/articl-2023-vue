@@ -1,15 +1,14 @@
 <template>
   <li class="grid">
     <div
-      v-if="isLoggedIn && this.$route.name !== 'searchArticls'"
-      class="my-handle"
+      v-if="isLoggedIn && this.$route.name !== 'searchArticls' && articl"
+      class="handle"
     >
       <a href=""
-        ><vue-feather size="2rem" type="move" aria-label="move"></vue-feather
+        ><vue-feather size="1.2rem" type="move" aria-label="move"></vue-feather
       ></a>
     </div>
     <ul>
-      <li v-if="articl.score">sx</li>
       <li v-if="articl.title">
         {{ highlightedSubstring(articl.title, params.title, "prefix")
         }}<strong
@@ -66,7 +65,7 @@ import ArticlActions from "@/components/layout/ArticlActions.vue";
 
 export default {
   name: "ArticlsListItem",
-  props: ["articl", "order"],
+  props: ["articl"],
   components: { VueFeather, ArticlActions },
   data() {
     return { articls: [], totalResults: "--", isLoading: false };
