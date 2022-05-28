@@ -25,51 +25,6 @@
           </li>
         </ul>
 
-        <div class="grid">
-          <fieldset>
-            <input
-              @click="toggleTheme()"
-              type="checkbox"
-              id="theme"
-              name="theme"
-              role="switch"
-              :checked="theme === 'dark'"
-            />
-            {{ theme }}
-          </fieldset>
-          <nav>
-            <ul>
-              <li>
-                <a href @click.prevent="setTextSize(0.8)"
-                  ><vue-feather
-                    size="0.85rem"
-                    type="type"
-                    aria-label="Small text"
-                  ></vue-feather
-                ></a>
-              </li>
-              <li>
-                <a href @click.prevent="setTextSize(1)"
-                  ><vue-feather
-                    size="1rem"
-                    type="type"
-                    aria-label="Normal text"
-                  ></vue-feather
-                ></a>
-              </li>
-              <li>
-                <a href @click.prevent="setTextSize(1.2)"
-                  ><vue-feather
-                    size="1.5rem"
-                    type="type"
-                    aria-label="Large text"
-                  ></vue-feather
-                ></a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
         <ul class="right">
           <router-link :to="{ name: 'searchArticls' }" class="search-articls">
             <vue-feather
@@ -78,7 +33,7 @@
               aria-label="Search"
             ></vue-feather>
           </router-link>
-          <li v-if="isLoggedIn">
+          <li v-if="!isLoggedIn">
             <router-link to="/users/me"
               ><vue-feather
                 size="2rem"
@@ -86,16 +41,66 @@
                 aria-label="User"
               ></vue-feather
             ></router-link>
-            <a href="#" @click.prevent="logout" class="nav-user"> logout </a>
-          </li>
-          <li v-else>
-            <router-link to="/login"
+            <a href="#" @click.prevent="logout" class="nav-user"
               ><vue-feather
                 size="2rem"
                 type="user"
                 aria-label="User"
               ></vue-feather
-            ></router-link>
+            ></a>
+          </li>
+          <li v-else>
+            <details role="list">
+              <summary aria-haspopup="listbox">
+                <vue-feather
+                  size="2rem"
+                  type="user"
+                  aria-label="User"
+                ></vue-feather>
+              </summary>
+              <ul role="listbox">
+                <li><a>Action</a></li>
+                <li>
+                  <input
+                    @click="toggleTheme()"
+                    type="checkbox"
+                    id="theme"
+                    name="theme"
+                    role="switch"
+                    :checked="theme === 'dark'"
+                  />
+                  {{ theme }}
+                </li>
+
+                <li>
+                  <a href @click.prevent="setTextSize(0.8)"
+                    ><vue-feather
+                      size="0.85rem"
+                      type="type"
+                      aria-label="Small text"
+                    ></vue-feather
+                  ></a>
+                </li>
+                <li>
+                  <a href @click.prevent="setTextSize(1)"
+                    ><vue-feather
+                      size="1rem"
+                      type="type"
+                      aria-label="Normal text"
+                    ></vue-feather
+                  ></a>
+                </li>
+                <li>
+                  <a href @click.prevent="setTextSize(1.2)"
+                    ><vue-feather
+                      size="1.5rem"
+                      type="type"
+                      aria-label="Large text"
+                    ></vue-feather
+                  ></a>
+                </li>
+              </ul>
+            </details>
           </li>
         </ul>
       </nav>
@@ -103,9 +108,10 @@
   </header>
 </template>
 
+
+
 <script>
 import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
 import { getRefreshTokenValue, isLoggedIn } from "@/services/tokensService";
 
 export default {
@@ -119,10 +125,6 @@ export default {
   },
   computed: {
     isLoggedIn,
-    ...mapGetters({
-      accessTokenExpires: "tokens/accessTokenExpires",
-      refreshTokenExpires: "tokens/refreshTokenExpires",
-    }),
   },
   beforeMount() {
     const theme = this.$cookies.get("data-theme");

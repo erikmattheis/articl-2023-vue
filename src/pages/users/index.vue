@@ -25,53 +25,6 @@
           />
         </div>
       </fieldset>
-      <div class="grid">
-        <fieldset>
-          <label for="theme">Theme</label>
-
-          <input
-            @click="toggleTheme()"
-            type="checkbox"
-            id="theme"
-            name="theme"
-            role="switch"
-            :checked="theme === 'dark'"
-          />
-          {{ theme }}
-        </fieldset>
-        <nav>
-          Text size
-          <ul>
-            <li>
-              <a href @click.prevent="setTextSize(0.75)"
-                ><vue-feather
-                  size="0.74rem"
-                  type="type"
-                  aria-label="Small text"
-                ></vue-feather
-              ></a>
-            </li>
-            <li>
-              <a href @click.prevent="setTextSize(1)"
-                ><vue-feather
-                  size="1rem"
-                  type="type"
-                  aria-label="Normal text"
-                ></vue-feather
-              ></a>
-            </li>
-            <li>
-              <a href @click.prevent="setTextSize(1.5)"
-                ><vue-feather
-                  size="1.5rem"
-                  type="type"
-                  aria-label="Large text"
-                ></vue-feather
-              ></a>
-            </li>
-          </ul>
-        </nav>
-      </div>
       <label for="email">Email</label>
       <input
         v-model="email"
@@ -116,12 +69,10 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "usersPage",
-  components: { VueFeather },
   data() {
     return {
       nameFirst: "",
@@ -143,9 +94,6 @@ export default {
   },
   mounted() {
     this.fetchData();
-    this.theme = this.$cookies.get("data-theme");
-    this.theme = this.theme === "light" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", this.theme);
   },
   methods: {
     setTitleAndDescription() {

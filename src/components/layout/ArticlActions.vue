@@ -1,7 +1,6 @@
 <template>
-  <details role="list">
-    <summary aria-haspopup="listbox" role="button">Tools</summary>
-    <ul role="listbox">
+  <nav>
+    <ul>
       <li>
         <router-link :to="{ name: 'editArticl', params: { id } }">
           edit
@@ -9,12 +8,21 @@
             size="0.5rem"
             type="search"
             aria-label="Edit"
-          ></vue-feather>
-        </router-link>
+          ></vue-feather
+        ></router-link>
       </li>
-      <li><a>Change status</a></li>
       <li>
-        <router-link :to="{ name: 'articlDelete', id: id }">
+        <a
+          >Change status
+          <vue-feather
+            size="0.5rem"
+            type="list"
+            aria-label="Change status"
+          ></vue-feather>
+        </a>
+      </li>
+      <li>
+        <router-link :to="{ name: 'deleteArticl', params: { id, title } }">
           delete
           <vue-feather
             size="0.5rem"
@@ -24,7 +32,8 @@
         </router-link>
       </li>
     </ul>
-  </details>
+  </nav>
+  <ul role="listbox"></ul>
 </template>
 
 <script>
@@ -33,7 +42,7 @@ import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "ArticlActions",
-  props: ["id"],
+  props: ["id", "title"],
   components: {
     VueFeather,
   },

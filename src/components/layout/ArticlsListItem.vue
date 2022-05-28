@@ -51,7 +51,7 @@
       </li>
     </ul>
     <div v-if="isLoggedIn">
-      <articl-actions :id="articl.id"></articl-actions>
+      <articl-actions :id="articl.id" :title="articl.title"></articl-actions>
     </div>
   </li>
 </template>   

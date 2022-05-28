@@ -4,6 +4,7 @@ import homePage from "@/pages/index.vue";
 import searchArticls from "@/pages/articls/index.vue";
 import createArticlPage from "@/pages/articls/create.vue";
 import listArticlsPage from "@/pages/articls/index.vue";
+import deleteArticlPage from "@/pages/articls/delete.vue";
 import categoryPage from "@/pages/d/index.vue";
 import registerPage from "@/pages/register.vue";
 import verifyEmailPage from "@/pages/verify-email.vue";
@@ -94,6 +95,16 @@ const router = createRouter({
       name: "listArticlsPage",
       path: "/articls",
       component: listArticlsPage,
+    },
+    {
+      name: "deleteArticl",
+      path: "/articls/delete",
+      component: deleteArticlPage,
+      meta: {
+        id: true,
+        title: true,
+      },
+      props: true,
     },
     { name: "NotFound", path: "/:notFound(.*)", component: NotFound },
   ],
