@@ -26,13 +26,16 @@
         </ul>
 
         <ul class="right">
-          <router-link :to="{ name: 'searchArticls' }" class="search-articls">
-            <vue-feather
-              size="2rem"
-              type="search"
-              aria-label="Search"
-            ></vue-feather>
-          </router-link>
+          <li>
+            <router-link :to="{ name: 'searchArticls' }" class="search-articls">
+              <vue-feather
+                size="2rem"
+                type="search"
+                aria-label="Search"
+              ></vue-feather>
+            </router-link>
+          </li>
+
           <li v-if="!isLoggedIn">
             <router-link to="/users/me"
               ><vue-feather
@@ -41,14 +44,8 @@
                 aria-label="User"
               ></vue-feather
             ></router-link>
-            <a href="#" @click.prevent="logout" class="nav-user"
-              ><vue-feather
-                size="2rem"
-                type="user"
-                aria-label="User"
-              ></vue-feather
-            ></a>
           </li>
+
           <li v-else>
             <details role="list">
               <summary aria-haspopup="listbox">
@@ -58,8 +55,8 @@
                   aria-label="User"
                 ></vue-feather>
               </summary>
+
               <ul role="listbox">
-                <li><a>Action</a></li>
                 <li>
                   <input
                     @click="toggleTheme()"
@@ -73,31 +70,56 @@
                 </li>
 
                 <li>
-                  <a href @click.prevent="setTextSize(0.8)"
-                    ><vue-feather
-                      size="0.85rem"
-                      type="type"
-                      aria-label="Small text"
-                    ></vue-feather
-                  ></a>
+                  <div class="grid">
+                    <div>
+                      <a
+                        class="less-margin"
+                        href
+                        @click.prevent="setTextSize(0.8)"
+                        ><vue-feather
+                          size="0.6rem"
+                          type="type"
+                          aria-label="Small text"
+                        ></vue-feather
+                      ></a>
+                    </div>
+
+                    <div>
+                      <a
+                        class="less-margin"
+                        href
+                        @click.prevent="setTextSize(1)"
+                        ><vue-feather
+                          size="0.8rem"
+                          type="type"
+                          aria-label="Normal text"
+                        ></vue-feather
+                      ></a>
+                    </div>
+
+                    <div>
+                      <a
+                        class="less-margin"
+                        href
+                        @click.prevent="setTextSize(1.2)"
+                        ><vue-feather
+                          size="1rem"
+                          type="type"
+                          aria-label="Large text"
+                        ></vue-feather
+                      ></a>
+                    </div>
+                  </div>
                 </li>
                 <li>
-                  <a href @click.prevent="setTextSize(1)"
-                    ><vue-feather
-                      size="1rem"
-                      type="type"
-                      aria-label="Normal text"
-                    ></vue-feather
-                  ></a>
+                  <router-link class="less-margin" to="/users/me"
+                    >Edit profile</router-link
+                  >
                 </li>
                 <li>
-                  <a href @click.prevent="setTextSize(1.2)"
-                    ><vue-feather
-                      size="1.5rem"
-                      type="type"
-                      aria-label="Large text"
-                    ></vue-feather
-                  ></a>
+                  <a href="#" @click.prevent="logout" class="less-margin"
+                    >Log out</a
+                  >
                 </li>
               </ul>
             </details>
@@ -113,6 +135,7 @@
 <script>
 import VueFeather from "vue-feather";
 import { getRefreshTokenValue, isLoggedIn } from "@/services/tokensService";
+import { clear as clearLocalStorage } from "@/services/localStorageService";
 
 export default {
   components: {
@@ -135,11 +158,11 @@ export default {
 
     if (this.$cookies.isKey("--font-size")) {
       this.setTextSize(this.$cookies.get("--font-size"));
-    }
 
-    this.originalFontSize = parseInt(
-      getComputedStyle(document.body).getPropertyValue("--font-size")
-    );
+      this.originalFontSize = parseInt(
+        getComputedStyle(document.body).getPropertyValue("--font-size")
+      );
+    }
   },
   methods: {
     setTextSize(size) {
@@ -153,6 +176,10 @@ export default {
       this.theme = this.theme === "light" ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", this.theme);
       this.$cookies.set("data-theme", this.theme);
+    },
+    clearLocalData() {
+      this.$cookies.keys().forEach((cookie) => this.$cookies.remove(cookie));
+      clearLocalStorage();
     },
     async logout() {
       const refreshToken = getRefreshTokenValue();
@@ -175,14 +202,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 svg {
   width: 2rem;
   height: 2rem;
 }
-li {
-  display: inline-block !important;
-  vertical-align: top !important;
+li .grid {
+  text-align: left;
+}
+
+.less-margin {
+  margin: 0;
+  padding: 0;
 }
 .a {
   fill: #039be5;

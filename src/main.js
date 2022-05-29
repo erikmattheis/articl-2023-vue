@@ -63,7 +63,6 @@ function createAxiosResponseInterceptor() {
             redirect: window.location.pathname + window.location.search,
           },
         });
-        return Promise.reject(error);
       }
 
       return Promise.reject(error);

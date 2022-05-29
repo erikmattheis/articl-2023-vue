@@ -218,6 +218,9 @@ export default {
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
   },
+  unmounted() {
+    this.$store.dispatch("articlsParams/reset");
+  },
 };
 </script>
 

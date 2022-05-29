@@ -40,18 +40,20 @@
         New Articl Here
       </router-link>
     </li>
-
-    <ul>
-      <li v-for="articl in articls || []" :key="articl.id">
-        {{ articl.title }}
-        <articls-list-item :articl="articl" />
-      </li>
-    </ul>
+    <template v-for="type in articls" v-bind:key="type">
+      {{ link }}
+      <ul>
+        <li v-for="articl in this.articls[type] || []" :key="articl.id">
+          {{ articl.title }}
+          <articls-list-item :articl="articl" />
+        </li>
+      </ul>
+    </template>
   </article>
 </template>
 
 <script>
-//import { groupBy } from "lodash";
+import { groupBy } from "lodash";
 import DraggableItems from "vuedraggable";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
 import { isLoggedIn } from "@/services/tokensService";
@@ -86,10 +88,10 @@ export default {
 
     async onUpdateOrderValues() {},
     async fetchData(slug) {
-      console.log("fetchData", slug);
       try {
         this.isLoading = true;
         const result = await this.getCategoryPageBySlug(slug);
+
         const documentTitle = result?.category[0]?.title;
         this.title = documentTitle;
         const metaDescription = result?.category[0]?.description;
@@ -97,11 +99,18 @@ export default {
           documentTitle,
           metaDescription,
         });
+
         this.categories = result.categories;
         this.types = [...new Set(this.categories.map((item) => item.type))];
-        // this.articls = groupBy(result.articls, (articl) => articl.type);
-        console.log(this.types);
-        return this.artoi;
+        const grouped = groupBy(result.articls, (articl) => articl.type);
+        const articls = [];
+        for (const type in this.types) {
+          articls[type] = grouped.filter(function (e) {
+            return e.type === type;
+          });
+        }
+        console.log("result", articls);
+        return articls;
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       } finally {
