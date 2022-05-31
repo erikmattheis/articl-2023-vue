@@ -121,6 +121,14 @@
                     >Log out</a
                   >
                 </li>
+                <li>
+                  <a
+                    href="#"
+                    @click.prevent="clearLocalData"
+                    class="less-margin"
+                    >For development: clear data</a
+                  >
+                </li>
               </ul>
             </details>
           </li>
@@ -129,8 +137,6 @@
     </article>
   </header>
 </template>
-
-
 
 <script>
 import VueFeather from "vue-feather";
@@ -193,6 +199,7 @@ export default {
         });
         localStorage.clear();
         this.$store.dispatch("tokens/logout");
+        this.$router.push("/");
       } else {
         localStorage.clear();
         this.$store.dispatch("tokens/logout");

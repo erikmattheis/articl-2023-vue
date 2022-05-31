@@ -1,49 +1,55 @@
 <template>
   <article>
-    <h2>{{ title }} <span :aria-busy="isLoading"></span></h2>
+    <!--<pre>{{ JSON.stringify(articls, null, 2) }}</pre>-->
+
+    <h2>{{ title }}</h2>
     <draggable-items
       tag="ul"
       v-model="categories"
       item-key="slug"
-      handle=".handle"
-      ghost-class="ghost"
+      handle=".handleu"
+      glost-class="ghost"
       @change="onUpdateOrderValues"
     >
       <template #item="{ element }">
         <li :key="element.slug">
           <router-link
-            :to="{ name: 'categoryPage', params: { slug: element.slug } }"
+            :to="{
+              name: 'categoryPage',
+              params: { $slug: element.slug },
+            }"
           >
             {{ element.title }}
           </router-link>
+          >
         </li>
       </template>
     </draggable-items>
 
-    <li v-if="isLoggedIn">
-      <router-link
-        :to="{
-          name: 'createCategoryPage',
-          query: { parentSlug: $route.params.slug },
-        }"
-      >
-        New Category Here
-      </router-link>
-    </li>
-    <li v-if="isLoggedIn">
-      <router-link
-        :to="{
-          name: 'createArticlPage',
-          query: { slug: $route.params.slug },
-        }"
-      >
-        New Articl Here
-      </router-link>
-    </li>
-    <template v-for="type in articls" v-bind:key="type">
-      {{ link }}
+    <ul v-if="isLoggedIn">
+      <li>
+        <router-link
+          :to="{
+            name: 'createCategoryPage',
+            query: { $slug: $route.params.slug },
+          }"
+        >
+          New category here
+        </router-link>
+        <router-link
+          :to="{
+            name: 'createArticlPage',
+            query: { $slug: $route.params.slug },
+          }"
+        >
+          New articl here
+        </router-link>
+      </li>
+    </ul>
+
+    <template v-for="articlType in articlTypes" :key="articlType">
       <ul>
-        <li v-for="articl in this.articls[type] || []" :key="articl.id">
+        <li v-for="articl in articls[articlType] || []" :key="articl.id">
           {{ articl.title }}
           <articls-list-item :articl="articl" />
         </li>
@@ -68,6 +74,7 @@ export default {
       title: "",
       categories: [],
       articls: [],
+      articlTypes: [],
     };
   },
   computed: {
@@ -83,39 +90,48 @@ export default {
   },
   methods: {
     async onCreated() {
-      this.categories = await this.fetchData(this.$route.params.slug);
+      const results = await this.fetchData(this.$route.params.slug);
+
+      this.categories = results.categories;
+      this.articlTypes = results.types;
+      this.articls = results;
     },
 
     async onUpdateOrderValues() {},
     async fetchData(slug) {
-      try {
-        this.isLoading = true;
-        const result = await this.getCategoryPageBySlug(slug);
+      const a = {
+        id: 0,
+        value: 1,
+      };
+      const b = {
+        ...a,
+        id: 1,
+      };
+      console.log(a === b);
+      console.log(b);
+      this.isLoading = true;
 
-        const documentTitle = result?.category[0]?.title;
-        this.title = documentTitle;
-        const metaDescription = result?.category[0]?.description;
-        this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-          documentTitle,
-          metaDescription,
-        });
+      const result = await this.getCategoryPageBySlug(slug);
 
-        this.categories = result.categories;
-        this.types = [...new Set(this.categories.map((item) => item.type))];
-        const grouped = groupBy(result.articls, (articl) => articl.type);
-        const articls = [];
-        for (const type in this.types) {
-          articls[type] = grouped.filter(function (e) {
-            return e.type === type;
-          });
-        }
-        console.log("result", articls);
-        return articls;
-      } catch (error) {
-        this.$store.dispatch("errors/setError", error);
-      } finally {
-        this.isLoading = false;
-      }
+      this.articls = result.articls;
+      this.articlTypes = result.types;
+      this.categories = result.categories;
+
+      const documentTitle = result?.category[0]?.title;
+      this.title = documentTitle;
+      const metaDescription = result?.category[0]?.description;
+      this.isLoading = false;
+
+      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
+        documentTitle,
+        metaDescription,
+      });
+
+      return {
+        categories: result.categories,
+        articlTypes: [...new Set(result.categories.map((item) => item.type))],
+        articls: groupBy(result.articls, (articl) => articl.type),
+      };
     },
     async getCategoryPageBySlug(slug) {
       const result = await this.$http({
@@ -128,3 +144,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+pre {
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+</style>

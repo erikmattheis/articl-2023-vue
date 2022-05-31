@@ -52,7 +52,6 @@ function createAxiosResponseInterceptor() {
   app.config.globalProperties.$http.interceptors.response.use(
     (response) => response,
     (error) => {
-      store.dispatch("errors/setError", error);
       if (
         error?.response?.status === 401 &&
         router.currentRoute.path !== "/login"
