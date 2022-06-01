@@ -5,10 +5,29 @@ const getVueInstanceContext = function () {
   return app.config.globalProperties;
 };
 
+const updateSeconds = function () {
+  console.log("updateSeconds");
+  this.now = Math.round(Date.now() / 1000);
+};
+let interval;
+
 const isLoggedIn = function () {
-  const now = new Date();
-  const ms = now.getMilliseconds();
-  return getAccessTokenExpires() > ms;
+  const currentYear = new Date().getUTCFullYear();
+  let currentTime = new Date().setUTCFullYear(currentYear);
+  if (!interval) {
+    interval = setInterval(updateSeconds, 1000);
+  }
+  //currentTime = currentTime.getTime();
+
+  const expires = Number(getAccessTokenExpires());
+
+  console.log(expires, "expires");
+  console.log(currentTime, "currentTime");
+  console.log(`${expires > currentTime}`, "expires > currentTime");
+
+  clearInterval(interval);
+
+  return expires > currentTime;
 };
 
 const getAccessTokenExpires = function () {

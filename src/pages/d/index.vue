@@ -3,25 +3,25 @@
     <!--<pre>{{ JSON.stringify(articls, null, 2) }}</pre>-->
 
     <h2>{{ title }}</h2>
+    {{ articlTypes }}
     <draggable-items
       tag="ul"
       v-model="categories"
       item-key="slug"
       handle=".handleu"
       glost-class="ghost"
-      @change="onUpdateOrderValues"
+      @change="updateData"
     >
       <template #item="{ element }">
         <li :key="element.slug">
           <router-link
             :to="{
               name: 'categoryPage',
-              params: { $slug: element.slug },
+              params: { slug: element.slug },
             }"
           >
             {{ element.title }}
           </router-link>
-          >
         </li>
       </template>
     </draggable-items>
@@ -31,18 +31,20 @@
         <router-link
           :to="{
             name: 'createCategoryPage',
-            query: { $slug: $route.params.slug },
+            query: { parentSlug: $route.params.slug },
           }"
         >
-          New category here
+          New Category Here
         </router-link>
+      </li>
+      <li>
         <router-link
           :to="{
             name: 'createArticlPage',
-            query: { $slug: $route.params.slug },
+            query: { slug: $route.params.slug },
           }"
         >
-          New articl here
+          New Articl Here
         </router-link>
       </li>
     </ul>
@@ -77,6 +79,9 @@ export default {
       articlTypes: [],
     };
   },
+  async created() {
+    this.updateData();
+  },
   computed: {
     isLoggedIn,
   },
@@ -89,33 +94,17 @@ export default {
     },
   },
   methods: {
-    async onCreated() {
+    async updateData() {
       const results = await this.fetchData(this.$route.params.slug);
-
       this.categories = results.categories;
-      this.articlTypes = results.types;
-      this.articls = results;
+      this.articlTypes = results.articlTypes;
+      this.articls = results.articls;
+      console.log("categories", this.categories?.length);
+      console.log("articlTypes", this.articlTypes?.length);
+      console.log("articls", this.articls?.length);
     },
-
-    async onUpdateOrderValues() {},
     async fetchData(slug) {
-      const a = {
-        id: 0,
-        value: 1,
-      };
-      const b = {
-        ...a,
-        id: 1,
-      };
-      console.log(a === b);
-      console.log(b);
-      this.isLoading = true;
-
       const result = await this.getCategoryPageBySlug(slug);
-
-      this.articls = result.articls;
-      this.articlTypes = result.types;
-      this.categories = result.categories;
 
       const documentTitle = result?.category[0]?.title;
       this.title = documentTitle;
@@ -129,10 +118,11 @@ export default {
 
       return {
         categories: result.categories,
-        articlTypes: [...new Set(result.categories.map((item) => item.type))],
+        articlTypes: [...new Set(result.articls.map((item) => item.type))],
         articls: groupBy(result.articls, (articl) => articl.type),
       };
     },
+
     async getCategoryPageBySlug(slug) {
       const result = await this.$http({
         method: "GET",

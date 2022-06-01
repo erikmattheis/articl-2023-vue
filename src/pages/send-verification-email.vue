@@ -36,6 +36,7 @@ export default {
         metaDescription,
       });
     },
+  },
 };
 </script>
 

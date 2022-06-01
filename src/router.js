@@ -74,7 +74,6 @@ const router = createRouter({
       path: "/users",
       component: usersPage,
     },
-
     {
       name: "createCategoryPage",
       path: "/categories/:slug?",

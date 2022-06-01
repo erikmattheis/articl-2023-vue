@@ -6,7 +6,7 @@
       item-key="id"
       handle=".handle"
       ghost-class="ghost"
-      @change="onUpdateOrderValues"
+      @change="updateData"
     >
       <template #item="{ element }"
         ><li>
