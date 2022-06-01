@@ -83,6 +83,7 @@ const router = createRouter({
       name: "editArticl",
       path: "/articls/create",
       component: createArticlPage,
+      props: true,
     },
     {
       name: "createArticlPage",

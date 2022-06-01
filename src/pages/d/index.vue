@@ -87,8 +87,8 @@ export default {
   },
   watch: {
     "$route.params.slug": {
-      handler(slug) {
-        this.fetchData(slug);
+      handler() {
+        this.updateData();
       },
       immediate: true,
     },

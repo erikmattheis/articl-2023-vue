@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1 v-if="!success">Create articl</h1>
+    <h1 v-if="!success">Create articl {{ id }}</h1>
     <h1 v-else>Articl created</h1>
     <template v-if="isLoggedIn">
       <form v-if="!success">
@@ -122,8 +122,8 @@ import { fetchData } from "@/services/fetchingService";
 import { isLoggedIn } from "@/services/tokensService";
 
 export default {
-  name: "createArticlPage",
-  params: ["id"],
+  name: "editArticlPage",
+  props: ["id"],
   components: {
     cardNotification,
     inputTypeahead,
@@ -148,7 +148,6 @@ export default {
   },
   mounted() {
     this.categorySlug = this.$route.query.slug;
-    this.id = this.$route.params.id;
     this.onTypeaheadHit({ value: this.categorySlug });
   },
   computed: { isLoggedIn },
