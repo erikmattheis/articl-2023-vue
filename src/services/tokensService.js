@@ -15,9 +15,8 @@ const isLoggedIn = function () {
   const currentYear = new Date().getUTCFullYear();
   let currentTime = new Date().setUTCFullYear(currentYear);
   if (!interval) {
-    interval = setInterval(updateSeconds, 1000);
+    interval = setInterval(updateSeconds, 2000);
   }
-  //currentTime = currentTime.getTime();
 
   const expires = Number(getAccessTokenExpires());
 

@@ -1,25 +1,26 @@
 <template>
   <article>
-    <h1 v-if="!success">Create articl {{ id }}</h1>
+    <h1 v-if="!success">{{ id ? "Edit" : "Create" }} articl {{ id }}</h1>
     <h1 v-else>Articl created</h1>
     <template v-if="isLoggedIn">
       <form v-if="!success">
-        <label for="articlUrl">URL</label>
-        <input
-          v-model="articlUrl"
-          type="text"
-          name="articlUrl"
-          id="articlUrl"
-        />
+        <template v-if="!id">
+          <label for="articlUrl">URL</label>
+          <input
+            v-model="articlUrl"
+            type="text"
+            name="articlUrl"
+            id="articlUrl"
+          />
 
-        <button
-          type="button"
-          :aria-busy="buttonFetchDisabled"
-          @click.prevent="getData()"
-        >
-          FETCH DATA
-        </button>
-
+          <button
+            type="button"
+            :aria-busy="buttonFetchDisabled"
+            @click.prevent="getData()"
+          >
+            FETCH DATA
+          </button>
+        </template>
         <label for="">Title</label>
         <input v-model="title" name="" id="" autocomplete="off" />
 
@@ -115,7 +116,6 @@
 </template>
 
 <script>
-import { groupBy } from "lodash";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
@@ -123,7 +123,12 @@ import { isLoggedIn } from "@/services/tokensService";
 
 export default {
   name: "editArticlPage",
-  props: ["id"],
+  props: {
+    id: {
+      default: "",
+      type: String,
+    },
+  },
   components: {
     cardNotification,
     inputTypeahead,
@@ -147,11 +152,20 @@ export default {
     };
   },
   mounted() {
-    this.categorySlug = this.$route.query.slug;
-    this.onTypeaheadHit({ value: this.categorySlug });
+    if (!this.id) {
+      this.categorySlug = this.$route.query.slug;
+      this.onTypeaheadHit({ value: this.categorySlug });
+    } else {
+      this.getCurrentArticl();
+    }
   },
   computed: { isLoggedIn },
   methods: {
+    async getCurrentArticl() {
+      const result = await this.getArticl(this.id);
+      console.log("result", result);
+      Object.assign(this, result);
+    },
     async getData() {
       if (this.articlUrl) {
         try {
@@ -238,32 +252,25 @@ export default {
         });
       }
     },
-    onTypeaheadHit(e) {
-      this.categorySlug = e.value;
-    },
-    async fetchArticl(id) {
-      try {
-        this.isLoading = true;
-        const result = await this.getArticlById(id);
-        this.articls = groupBy(result.articls, (articl) => articl.type);
-      } catch (error) {
-        this.$store.dispatch("errors/setError", error);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-    getCategoryPageBySlug(slug) {
+
+    async getArticl(id) {
+      this.buttonDisabled = true;
       return this.$http({
         method: "GET",
-        url: `/d/${slug || ""}`,
+        url: "/articls/" + `${id}`,
       })
         .then((result) => {
-          if (result.data) {
-            return result.data;
-          }
-          return this.$store.dispatch("errors/setError", result);
+          return result.data;
         })
-        .catch((error) => this.$store.dispatch("errors/setError", error));
+        .catch((error) => {
+          this.$store.dispatch("errors/setError", error);
+        })
+        .finally(() => {
+          this.buttonDisabled = false;
+        });
+    },
+    onTypeaheadHit(e) {
+      this.categorySlug = e.value;
     },
   },
 };

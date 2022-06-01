@@ -15,7 +15,7 @@
     <div v-show="activeTab === 1" class="active tab-content">
       <label for="journal">Journal</label>
       <input-typeahead
-        src="/articls/journal"
+        src="/articls/values/journal"
         @typeahead-updated="onJournalChange"
         :input-value="journal"
         query="journal"
@@ -23,7 +23,7 @@
 
       <label for="author">Author</label>
       <input-typeahead
-        src="/articls/authors"
+        src="/articls/values/authors"
         @typeahead-updated="onAuthorsChange"
         :input-value="authors"
         query="authors"
