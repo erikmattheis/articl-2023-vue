@@ -11,7 +11,7 @@
     </div>
     <ul>
       <li>
-        <a :href="articl.link">
+        <a :href="articl.url">
           {{ highlightedSubstring(articl.title, params.title, "prefix")
           }}<strong
             :class="{
@@ -24,7 +24,7 @@
         >
       </li>
       <li v-if="articl.titleExcerpt">
-        <a :href="articl.link">
+        <a :href="articl.url">
           {{ highlightedSubstring(articl.titleExcerpt, params.title, "prefix")
           }}<strong
             :class="{

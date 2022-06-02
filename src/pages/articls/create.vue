@@ -162,16 +162,20 @@ export default {
   computed: { isLoggedIn },
   methods: {
     async getCurrentArticl() {
-      const result = await this.getArticl(this.id);
-      console.log("result", result);
-      Object.assign(this, result);
+      if (this.id) {
+        const result = await this.getArticl(this.id);
+        console.log("result", result);
+        Object.assign(this, result);
+      }
     },
     async getData() {
       if (this.articlUrl) {
         try {
           this.buttonFetchDisabled = true;
           const result = await fetchData(this.articlUrl);
-          Object.assign(this, result);
+          if (result) {
+            Object.assign(this, result);
+          }
         } catch (error) {
           this.$store.dispatch("errors/setError", error);
         } finally {
