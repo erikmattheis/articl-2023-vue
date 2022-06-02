@@ -1,36 +1,43 @@
-<template>
+
+  <template>
   <li class="grid">
     <div
       v-if="isLoggedIn && this.$route.name !== 'searchArticls' && articl"
-      class="handle"
+      class="handle handle-container"
     >
       <a href=""
-        ><vue-feather size="1.2rem" type="move" aria-label="move"></vue-feather
+        ><vue-feather size="1rem" type="move" aria-label="move"></vue-feather
       ></a>
     </div>
     <ul>
-      <li v-if="articl.title">
-        {{ highlightedSubstring(articl.title, params.title, "prefix")
-        }}<strong
-          :class="{
-            'not-strong': noCaseIndexOf(articl.title, params.title) === -1,
-          }"
-          >{{
-            highlightedSubstring(articl.title, params.title, "term")
-          }}</strong
-        >{{ highlightedSubstring(articl.title, params.title, "suffix") }}
+      <li>
+        <a :href="articl.link">
+          {{ highlightedSubstring(articl.title, params.title, "prefix")
+          }}<strong
+            :class="{
+              'not-strong': noCaseIndexOf(articl.title, params.title) === -1,
+            }"
+            >{{
+              highlightedSubstring(articl.title, params.title, "term")
+            }}</strong
+          >{{ highlightedSubstring(articl.title, params.title, "suffix") }}</a
+        >
       </li>
       <li v-if="articl.titleExcerpt">
-        {{ highlightedSubstring(articl.titleExcerpt, params.title, "prefix")
-        }}<strong
-          :class="{
-            'not-strong':
-              noCaseIndexOf(articl.titleExcerpt, params.title) === -1,
-          }"
+        <a :href="articl.link">
+          {{ highlightedSubstring(articl.titleExcerpt, params.title, "prefix")
+          }}<strong
+            :class="{
+              'not-strong':
+                noCaseIndexOf(articl.titleExcerpt, params.title) === -1,
+            }"
+            >{{
+              highlightedSubstring(articl.titleExcerpt, params.title, "term")
+            }}</strong
           >{{
-            highlightedSubstring(articl.titleExcerpt, params.title, "term")
-          }}</strong
-        >{{ highlightedSubstring(articl.titleExcerpt, params.title, "suffix") }}
+            highlightedSubstring(articl.titleExcerpt, params.title, "suffix")
+          }}</a
+        >
       </li>
       <li v-if="params.authors">
         {{ highlightedSubstring(articl.authors, params.authors, "prefix")
@@ -91,8 +98,8 @@ export default {
   cursor: pointer;
   color: red !important;
 }
-.light-bg {
-  background-color: #20303d;
+.handle-container {
+  width: 1rem !important;
 }
 
 strong:not([class="not-strong"]) {
@@ -105,3 +112,4 @@ li {
   font-size: 0.65rem;
 }
 </style>
+

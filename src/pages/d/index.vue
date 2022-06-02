@@ -1,28 +1,18 @@
 <template>
   <article>
-    <!--<pre>{{ JSON.stringify(articls, null, 2) }}</pre>-->
-
     <h2>{{ title }}</h2>
-    {{ articlTypes }}
+
     <draggable-items
       tag="ul"
       v-model="categories"
-      item-key="slug"
-      handle=".handleu"
-      glost-class="ghost"
-      @change="updateData"
+      item-key="id"
+      handle=".handle"
+      ghost-class="ghost"
+      @change="onUpdateOrderValues"
     >
+      >
       <template #item="{ element }">
-        <li :key="element.slug">
-          <router-link
-            :to="{
-              name: 'categoryPage',
-              params: { slug: element.slug },
-            }"
-          >
-            {{ element.title }}
-          </router-link>
-        </li>
+        <articls-list-item :articl="element" order="0"></articls-list-item>
       </template>
     </draggable-items>
 
@@ -53,7 +43,7 @@
       <ul>
         <li v-for="articl in articls[articlType] || []" :key="articl.id">
           {{ articl.title }}
-          <articls-list-item :articl="articl" />
+          <articls-list-item :articl="articl" :order="articl.order" />
         </li>
       </ul>
     </template>
@@ -133,6 +123,38 @@ export default {
 
       return result.data;
     },
+    updateOrderValues() {
+      this.categories.forEach(function (obj, index) {
+        obj.order = index;
+      });
+    },
+    async saveOrderValues() {
+      const order = this.categories.map((obj) => {
+        return { id: obj.id, order: obj.order };
+      });
+      await this.saveOrder(order);
+    },
+
+    async saveOrder(order) {
+      this.isLoading = true;
+      const result = await this.$http({
+        method: "POST",
+        url: "/categories/order",
+        data: {
+          order,
+        },
+      });
+
+      if (result?.data) {
+        return result.data;
+      }
+
+      this.isLoading = false;
+    },
+    onUpdateOrderValues() {
+      this.updateOrderValues();
+      this.saveOrderValues();
+    },
   },
 };
 </script>
@@ -142,5 +164,8 @@ pre {
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
+}
+.ghost {
+  border: 2px dashed red;
 }
 </style>
