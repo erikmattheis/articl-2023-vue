@@ -99,14 +99,14 @@
         <button
           type="button"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm()"
+          @click.prevent="submitForm(id)"
         >
-          Create Articl
+          {{ !id ? "Create" : "Edit" }} Articl
         </button>
       </form>
       <template v-else>
-        <card-notification success-message="Articl Created"></card-notification>
-        <a href @click="$router.go()">Create another articl</a>
+        <card-notification success-message="Success"></card-notification>
+        <a href @click="$router.go()">Create another article</a>
       </template>
     </template>
     <p v-else>
@@ -213,13 +213,14 @@ export default {
       }
       return passed;
     },
-    async submitForm() {
+    async submitForm(id) {
       this.resetFormErrors();
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
+        const verb = id ? "PUT" : "POST";
         this.$http({
-          method: "POST",
-          url: "/articls",
+          method: verb,
+          url: "/articls/" + id,
           data: {
             abstract: this.abstract,
             affiliation: this.affiliation,
@@ -257,7 +258,7 @@ export default {
       this.buttonDisabled = true;
       return this.$http({
         method: "GET",
-        url: "/articls/" + `${id}`,
+        url: "/articls/" + id,
       })
         .then((result) => {
           return result.data;

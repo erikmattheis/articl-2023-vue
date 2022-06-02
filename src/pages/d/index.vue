@@ -118,7 +118,9 @@ export default {
 
       return {
         categories: result.categories,
-        articlTypes: [...new Set(result.articls.map((item) => item.type))],
+        articlTypes: result.articls?.length
+          ? [...new Set(result.articls.map((item) => item.type))]
+          : [],
         articls: groupBy(result.articls, (articl) => articl.type),
       };
     },

@@ -10,14 +10,16 @@
 
 <script>
 /* VUE
- * 1939,1200 .js
- *  538, 3250 .vue
+ * 1939,1200, 1,244 .js 
+ *  538, 3250, 3,623 .vue
+ * 
+
  *
  * NODE
- * 2706,2,487 .js
+ * 2706,2,487, 2,553 .js
  *
- * 4/15.5/20
- * 5183,6937
+ * 4/15.5/20, 6/1
+ * 5183,6937,7420
  ****/
 import ModalError from "@/components/ui/ModalError.vue";
 import ModalSuccess from "@/components/ui/ModalSuccess.vue";
