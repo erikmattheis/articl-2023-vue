@@ -37,9 +37,10 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "@vue/eslint-config-airbnb": "^6.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-padding": "0.0.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-vue": "^8.0.3",
     "eslint-plugin-vuejs-accessibility": "^1.1.1",
     "sass": "^1.32.7",
@@ -51,12 +52,20 @@
       "node": true
     },
     "extends": [
+      "eslint:recommended",
       "plugin:vue/vue3-essential",
-      "eslint:recommended"
+      "plugin:promise/recommended",
+      "plugin:vuejs-accessibility/recommended"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
+    "plugins": [
+      "simple-import-sort",
+      "vuejs-accessibility",
+      "vue",
+      "promise"
+    ],
     "overrides": [
       {
         "files": [
@@ -66,7 +75,57 @@
       }
     ],
     "rules": {
-      "max-len": "off"
+      "max-len": "off",
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "array-bracket-newline": [
+        "error",
+        "never"
+      ],
+      "function-call-argument-newline": [
+        "error",
+        "consistent"
+      ],
+      "complexity": [
+        "warn",
+        {
+          "max": 2
+        }
+      ],
+      "no-await-in-loop": "error",
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "padded-blocks": [
+        "error",
+        "always"
+      ],
+      "prefer-promise-reject-errors": "error",
+      "sort-imports": "error",
+      "padding-line-between-statements": [
+        "error",
+        {
+          "blankLine": "always",
+          "prev": "*",
+          "next": "*"
+        },
+        {
+          "blankLine": "never",
+          "prev": "import",
+          "next": "import"
+        },
+        {
+          "blankLine": "never",
+          "prev": "const",
+          "next": "const"
+        },
+        {
+          "blankLine": "never",
+          "prev": "let",
+          "next": "let"
+        }
+      ]
     }
   },
   "browserslist": [

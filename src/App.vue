@@ -23,8 +23,8 @@
  ****/
 import ModalError from "@/components/ui/ModalError.vue";
 import ModalSuccess from "@/components/ui/ModalSuccess.vue";
-import TheHeader from "@/components/layout/TheHeader.vue";
 import TheFooter from "@/components/layout/TheFooter.vue";
+import TheHeader from "@/components/layout/TheHeader.vue";
 
 export default {
   components: {

@@ -1,26 +1,20 @@
 <template>
   <article>
     <article>
-      <h1>Page not found</h1>
-      <p>This page could not be found.</p>
+      <h1>Not found</h1>
+      <p>The page or the content requested by the page could not be found.</p>
     </article>
   </article>
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 export default {
   mounted() {
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({ title: "Not Found" });
   },
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Forgot Password";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
+    setTitleAndDescription,
   },
 };
 </script>

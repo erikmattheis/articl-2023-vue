@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 export default {
   name: "verifyEmailPage",
   data() {
@@ -16,17 +17,12 @@ export default {
   },
   mounted() {
     this.submitForm();
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({
+      title: "Forgot Password",
+    });
   },
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Forgot Password";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
+    setTitleAndDescription,
     async submitForm() {
       this.buttonDisabled = true;
       this.$http({

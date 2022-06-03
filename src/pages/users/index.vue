@@ -69,11 +69,13 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "usersPage",
   data() {
+
     return {
       nameFirst: "",
       nameLast: "",
@@ -86,72 +88,109 @@ export default {
       success: false,
       result: null,
     };
-  },
+  
+},
   computed: {
     fullName() {
+
       return this.nameFirst + " " + this.nameLast;
-    },
+    
+},
   },
   mounted() {
+
     this.fetchData();
-  },
+  
+},
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Registration";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
     async fetchData() {
+
       try {
+
         this.buttonDisabled = true;
+
         const result = await this.getUser("me");
+
         if (result) {
+
           this.nameFirst = result.nameFirst ? result.nameFirst : "";
+
           this.nameLast = result.nameLast ? result.nameLast : "";
+
           this.email = result.email ? result.email : "";
+
           this.institution = result.institution ? result.institution : "";
+
           this.education = result.education ? result.education : "";
-        }
-      } catch (error) {
+        
+}
+      
+} catch (error) {
+
         this.$store.dispatch("errors/setError", error);
-      } finally {
+      
+} finally {
+
         this.buttonDisabled = false;
-      }
-    },
+      
+}
+    
+},
+
     getUser() {
+
       return this.$http({
         method: "GET",
         url: "/users/me",
       })
         .then((result) => {
+
           if (result?.data) {
+
             return result.data;
-          }
+          
+}
+
           return this.$store.dispatch("errors/setError", result);
-        })
+        
+})
         .catch((error) => this.$store.dispatch("errors/setError", error));
-    },
+    
+},
     resetFormErrors() {
+
       this.success = null;
+
       this.result = null;
+
       this.errorMessage = "";
-    },
+    
+},
     checkForm() {
+
       this.resetFormErrors();
+
       let passed = true;
+
       if (!this.validateEmail(this.email)) {
+
         this.errorMessage = "Please enter a valid email.";
+
         passed = false;
-      }
+      
+}
+
       return passed;
-    },
+    
+},
     async submitForm() {
+
       this.resetFormErrors();
+
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
+
         this.$http({
           method: "PATCH",
           url: "/users/me",
@@ -165,29 +204,45 @@ export default {
           },
         })
           .then((result) => {
+
             if (result?.data) {
+
               this.success = true;
+
               this.result = result.data;
+
               this.$store.dispatch("modals/setSuccessTitle", "User Updated");
+
               this.$store.dispatch(
                 "modals/setSuccessMessage",
                 "Your account information was successfully updated."
               );
-            }
-          })
+            
+}
+          
+})
           .catch((error) => {
+
             this.$store.dispatch("errors/setError", error);
-          })
+          
+})
           .finally(() => {
+
             this.buttonDisabled = false;
-          });
-      } else {
+          
+});
+      
+} else {
+
         this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
-      }
-    },
+      
+}
+    
+},
     validateEmail,
+    setTitleAndDescription,
   },
 };
 </script>

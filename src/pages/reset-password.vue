@@ -18,52 +18,55 @@
         <small class="lighter left-space" v-else-if="password.length < 8">
           Please use 8 or more characters.
         </small>
+
+        <div class="toggle-password">
+          <input
+            v-if="showPassword"
+            v-model="password"
+            type="text"
+            name="password"
+            id="password"
+            autocomplete="new-password"
+          />
+          <input
+            v-if="!showPassword"
+            v-model="password"
+            type="password"
+            name="password2"
+            id="password2"
+            autocomplete="new-password"
+          />
+          <the-button-toggle-hidden
+            class="togglePasswordMask"
+            @show="showPassword = !showPassword"
+          ></the-button-toggle-hidden>
+        </div>
       </label>
-      <div class="toggle-password">
-        <input
-          v-if="showPassword"
-          v-model="password"
-          type="text"
-          name="password"
-          id="password"
-          autocomplete="new-password"
-        />
-        <input
-          v-if="!showPassword"
-          v-model="password"
-          type="password"
-          name="password"
-          id="password"
-          autocomplete="new-password"
-        />
-        <the-button-toggle-hidden
-          class="togglePasswordMask"
-          @show="showPassword = !showPassword"
-        ></the-button-toggle-hidden>
-      </div>
-      <label for="password2">Confirm new password</label>
-      <div class="toggle-password">
-        <input
-          v-if="showPassword2"
-          v-model="password2"
-          type="text"
-          name="password2"
-          id="password2"
-          autocomplete="new-password"
-        />
-        <input
-          v-if="!showPassword2"
-          v-model="password2"
-          type="password"
-          name="password2"
-          id="password2"
-          autocomplete="new-password"
-        />
-        <the-button-toggle-hidden
-          class="togglePasswordMask"
-          @show="showPassword2 = !showPassword2"
-        ></the-button-toggle-hidden>
-      </div>
+      <label for="password3"
+        >Confirm new password
+        <div class="toggle-password">
+          <input
+            v-if="showPassword2"
+            v-model="password2"
+            type="text"
+            name="passwor32"
+            id="password3"
+            autocomplete="new-password"
+          />
+          <input
+            v-if="!showPassword2"
+            v-model="password2"
+            type="password"
+            name="password4"
+            id="password4"
+            autocomplete="new-password"
+          />
+          <the-button-toggle-hidden
+            class="togglePasswordMask"
+            @show="showPassword2 = !showPassword2"
+          ></the-button-toggle-hidden>
+        </div>
+      </label>
 
       <button
         type="submit"
@@ -79,8 +82,9 @@
 </template>
 
 <script>
-import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { scoreChars, validateEmail } from "@/services/userService";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 
 export default {
   name: "PasswordReset",
@@ -103,7 +107,7 @@ export default {
     };
   },
   mounted() {
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({ title: "Reset Password" });
   },
   watch: {
     password: {
@@ -125,15 +129,6 @@ export default {
       return passed;
     },
 
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Reset Password";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
-
     resetFormErrors() {
       this.success = null;
       this.result = null;
@@ -144,37 +139,30 @@ export default {
       if (this.checkForm() === true) {
         this.buttonDisabled = true;
 
-        this.$http({
+        await this.$http({
           method: "POST",
           url: "/auth/reset-password",
           params: { token },
           data: {
             password: this.password,
           },
-        })
+        });
 
-          .then(() => {
-            this.$store.dispatch("modals/setSuccessTitle", "Password updated");
-            this.$store.dispatch(
-              "modals/setSuccessMessage",
-              "You have successfully changed your password."
-            );
-          })
+        this.$store.dispatch("modals/setSuccessTitle", "Password updated");
 
-          .catch((error) => {
-            this.dataInvalid = true;
-            this.$store.dispatch("errors/setError", error);
-          })
+        this.$store.dispatch(
+          "modals/setSuccessMessage",
+          "You have successfully changed your password."
+        );
 
-          .finally(() => {
-            this.buttonDisabled = false;
-          });
+        this.buttonDisabled = false;
       } else {
         this.$store.dispatch("errors/setError", this.errorMessage);
       }
     },
     scoreChars,
     validateEmail,
+    setTitleAndDescription,
   },
 };
 </script>

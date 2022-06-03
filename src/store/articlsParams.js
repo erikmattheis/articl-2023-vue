@@ -3,8 +3,7 @@ export default {
   state() {
     return {
       allStatuses: ["Published", "Draft", "Pending", "Trash"],
-      allTypes: [
-        "Review (OA)",
+      allTypes: ["Review (OA)",
         "Review (PA)",
         "Research (OA)",
         "Research (PA)",
@@ -12,8 +11,7 @@ export default {
         "Non-medical journal articles",
         "Presentations",
         "Videos",
-        "Web",
-      ],
+        "Web",],
       text: "",
       authors: "",
       yearComparisons: ["after", "before", "exactly"],
@@ -135,9 +133,7 @@ export default {
       return state.yearComparisons;
     },
     years(state) {
-      return [
-        ...Array(new Date().getUTCFullYear() - (state.yearsStart - 1)).keys(),
-      ]
+      return [...Array(new Date().getUTCFullYear() - (state.yearsStart - 1)).keys(),]
         .map((x) => state.yearsStart + x++)
         .reverse();
     },

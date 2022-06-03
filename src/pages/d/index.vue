@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { groupBy } from "lodash";
 import DraggableItems from "vuedraggable";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
@@ -89,21 +90,21 @@ export default {
       this.categories = results.categories;
       this.articlTypes = results.articlTypes;
       this.articls = results.articls;
+
+      this.title = results?.category[0]?.title;
+      const description = results?.category[0]?.description;
+      this.setTitleAndDescription({ title: this.title, description });
+      this.isLoading = false;
+
       console.log("categories", this.categories?.length);
       console.log("articlTypes", this.articlTypes?.length);
       console.log("articls", this.articls?.length);
     },
+
     async fetchData(slug) {
-      const result = await this.getCategoryPageBySlug(slug);
-
-      const documentTitle = result?.category[0]?.title;
-      this.title = documentTitle;
-      const metaDescription = result?.category[0]?.description;
-      this.isLoading = false;
-
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
+      const result = await this.$http({
+        method: "GET",
+        url: `/d/${slug || ""}`,
       });
 
       return {
@@ -115,19 +116,12 @@ export default {
       };
     },
 
-    async getCategoryPageBySlug(slug) {
-      const result = await this.$http({
-        method: "GET",
-        url: `/d/${slug || ""}`,
-      });
-
-      return result.data;
-    },
     updateOrderValues() {
       this.categories.forEach(function (obj, index) {
         obj.order = index;
       });
     },
+
     async saveOrderValues() {
       const order = this.categories.map((obj) => {
         return { id: obj.id, order: obj.order };
@@ -151,10 +145,12 @@ export default {
 
       this.isLoading = false;
     },
+
     onUpdateOrderValues() {
       this.updateOrderValues();
       this.saveOrderValues();
     },
+    setTitleAndDescription,
   },
 };
 </script>

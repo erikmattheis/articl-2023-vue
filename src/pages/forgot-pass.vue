@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 export default {
   name: "ForgotPass",
   data() {
@@ -47,14 +48,6 @@ export default {
     this.setTitleAndDescription();
   },
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Forgot Password";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
     resetForm() {
       this.emailInvalid = null;
       this.result = null;
@@ -93,6 +86,7 @@ export default {
           });
       }
     },
+    setTitleAndDescription,
   },
 };
 </script>

@@ -25,18 +25,11 @@ export default {
         this.$store.dispatch("errors/setError", error);
       });
 
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({
+      title: "Verification sent",
+    });
   },
-  methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Send";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 

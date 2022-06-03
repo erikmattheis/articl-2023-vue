@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { setTokens, isLoggedIn } from "@/services/tokensService";
 import validateEmail from "@/services/emailValidationService";
@@ -77,20 +78,12 @@ export default {
     };
   },
   mounted() {
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({ title: "Login" });
   },
   computed: {
     isLoggedIn,
   },
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Login";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
     resetFormErrors() {
       this.errorMessage = "";
     },
@@ -155,6 +148,7 @@ export default {
         });
       }
     },
+    setTitleAndDescription,
   },
 };
 </script>

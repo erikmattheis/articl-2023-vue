@@ -17,8 +17,7 @@ import createCategoryPage from "@/pages/categories/index.vue";
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    {
+  routes: [{
       name: "homePage",
       path: "/",
       component: homePage,
@@ -106,8 +105,7 @@ const router = createRouter({
       },
       props: true,
     },
-    { name: "NotFound", path: "/:notFound(.*)", component: NotFound },
-  ],
+    { name: "NotFound", path: "/:notFound(.*)", component: NotFound },],
 });
 
 /*

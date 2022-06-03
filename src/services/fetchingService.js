@@ -206,7 +206,7 @@ async function api(surl) {
           }
           break;
       }
-      return Promise.resolve(result);
+      return result;
     });
   });
 }
@@ -295,6 +295,7 @@ async function scrape(surl) {
           }
           break;
       }
+      return;
     })
     .catch(function (error) {
       this.$store.dispatch("errors/setError", error);
@@ -349,7 +350,7 @@ const scraper = async (url) => {
     case "www.ncbi.nlm.nih.gov":
       return api(url);
     case "pubs.rsna.org":
-      return Promise.reject("pubs.rsna.org not implemented");
+      return Promise.reject(new Error("pubs.rsna.org not implemented"));
     /*
     loadDOIMetadata(
       a.pathname.split("/")[a.pathname.split("/").length - 2] +
@@ -359,7 +360,7 @@ const scraper = async (url) => {
     );
     */
     case "www.ajronline.org":
-      return Promise.reject("www.ajronline.org not implemented");
+      return Promise.reject(new Error("www.ajronline.org not implemented"));
     /*
     loadDOIMetadata(
       a.pathname.split("/")[a.pathname.split("/").length - 2] +
@@ -368,24 +369,26 @@ const scraper = async (url) => {
     );
     */
     case "www.jultrasoundmed.org":
-      return Promise.reject("wwww.jultrasoundmed.org not implemented");
+      return Promise.reject(
+        new Error("wwww.jultrasoundmed.org not implemented")
+      );
     //loadMetadataFromDocumentWithDOIInMetaTag(
     case "jnm.snmjournals.org":
-      return Promise.reject("jnm.snmjournals.org not implemented");
+      return Promise.reject(new Error("jnm.snmjournals.org not implemented"));
     //loadMetadataFromDocumentWithDOIInMetaTag();
     case "www.ajnr.org":
-      return Promise.reject("wwww.ajnr.org not implemented");
+      return Promise.reject(new Error("wwww.ajnr.org not implemented"));
     //loadMetadataFromDocumentWithDOIInMetaTag();
     case "www.jvir.org":
-      return Promise.reject("www.jvir.org not implemented");
+      return Promise.reject(new Error("www.jvir.org not implemented"));
     case "www.youtube.com":
-      return Promise.reject("wwww.youtube.com not implemented");
+      return Promise.reject(new Error("wwww.youtube.com not implemented"));
     case "journals.aps.org":
       return api(url);
     case "journals.xxxxx.org":
       return scrape(url);
     default:
-      return Promise.reject("Unknown domain not implemented");
+      return Promise.reject(new Error("Unknown domain: not implemented"));
   }
 };
 async function fetchData(url) {

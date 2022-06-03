@@ -1,5 +1,5 @@
-import store from "@/store";
 import { app } from "@/main.js";
+import store from "@/store";
 
 const getVueInstanceContext = function () {
   return app.config.globalProperties;

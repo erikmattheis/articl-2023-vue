@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { isLoggedIn } from "@/services/tokensService";
 
 export default {
@@ -50,14 +51,6 @@ export default {
     isLoggedIn,
   },
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
     async fetchData(slug) {
       try {
         this.isLoading = true;
@@ -82,6 +75,7 @@ export default {
         url: `/d/${slug || ""}`,
       });
     },
+    setTitleAndDescription,
   },
 };
 </script>

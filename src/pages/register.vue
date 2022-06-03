@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import CardNotification from "@/components/ui/CardNotification.vue";
 import { scoreChars, validateEmail } from "@/services/userService";
@@ -123,17 +124,9 @@ export default {
     },
   },
   mounted() {
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({ title: "Registration" });
   },
   methods: {
-    setTitleAndDescription() {
-      const documentTitle = "Articl.net Registration";
-      const metaDescription = "";
-      this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-        documentTitle,
-        metaDescription,
-      });
-    },
     resetFormErrors() {
       this.success = null;
       this.result = null;
@@ -190,6 +183,7 @@ export default {
     },
     scoreChars,
     validateEmail,
+    setTitleAndDescription,
   },
 };
 </script>

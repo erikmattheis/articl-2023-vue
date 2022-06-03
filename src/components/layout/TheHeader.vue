@@ -172,6 +172,7 @@ export default {
       );
     }
   },
+
   methods: {
     setTextSize(size) {
       document.documentElement.style.setProperty(

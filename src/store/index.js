@@ -1,8 +1,8 @@
-import { createStore } from "vuex";
 import articlsParams from "./articlsParams";
+import { createStore } from "vuex";
 import errors from "./errors";
-import modals from "./modals";
 import metas from "./metas";
+import modals from "./modals";
 import tokens from "./tokens";
 import users from "./users";
 
