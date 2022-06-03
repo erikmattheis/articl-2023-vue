@@ -33,9 +33,11 @@
 
 <script>
 import { setTitleAndDescription } from "@/services/htmlMetaService";
+
 export default {
   name: "ForgotPass",
   data() {
+
     return {
       email: null,
       emailInvalid: null,
@@ -43,22 +45,34 @@ export default {
       buttonDisabled: false,
       result: null,
     };
-  },
+  
+},
   mounted() {
+
     this.setTitleAndDescription();
-  },
+  
+},
   methods: {
     resetForm() {
+
       this.emailInvalid = null;
+
       this.result = null;
-    },
+    
+},
     checkForm() {
+
       return this.email !== "";
-    },
+    
+},
     async submitForm() {
+
       this.resetForm();
+
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
+
         this.$http({
           method: "POST",
           url: "/auth/forgot-password",
@@ -67,25 +81,39 @@ export default {
           },
         })
           .then((result) => {
+
             this.$store.dispatch("modals/setSuccessTitle", "Email sent");
+
             this.$store.dispatch(
               "modals/setSuccessMessage",
               "Check your email for instructions how to reset your password."
             );
+
             if (result?.data?.message) {
+
               this.result = result?.data?.message;
-            } else {
+            
+} else {
+
               this.result = result.response;
-            }
-          })
+            
+}
+          
+})
           .catch((error) => {
+
             this.$store.dispatch("errors/setError", error);
-          })
+          
+})
           .finally(() => {
+
             this.buttonDisabled = false;
-          });
-      }
-    },
+          
+});
+      
+}
+    
+},
     setTitleAndDescription,
   },
 };

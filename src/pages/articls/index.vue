@@ -24,8 +24,10 @@ export default {
     ArticlsList,
   },
   data() {
+
     return {};
-  },
+  
+},
 };
 </script>
 

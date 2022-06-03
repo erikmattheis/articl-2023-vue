@@ -92,6 +92,7 @@ export default {
     TheButtonToggleHidden,
   },
   data() {
+
     return {
       email: null,
       password: null,
@@ -105,38 +106,59 @@ export default {
       result: null,
       chrs: 0,
     };
-  },
+  
+},
   mounted() {
+
     this.setTitleAndDescription({ title: "Reset Password" });
-  },
+  
+},
   watch: {
     password: {
       handler(val) {
+
         this.passwordComplexity = this.scoreChars(val);
-      },
+      
+},
     },
   },
   methods: {
     checkForm() {
+
       let passed = true;
+
       if (this.validateEmail(this.email)) {
+
         this.errorMessage = "Please enter a valid email.";
+
         passed = false;
-      } else if (this.password && this.password.length < 8) {
+      
+} else if (this.password && this.password.length < 8) {
+
         this.errorMessage = "Passwords are at least eight characters.";
+
         passed = false;
-      }
+      
+}
+
       return passed;
-    },
+    
+},
 
     resetFormErrors() {
+
       this.success = null;
+
       this.result = null;
-    },
+    
+},
 
     async submitForm() {
+
       const { token } = this.$route.query;
+
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
 
         await this.$http({
@@ -156,10 +178,14 @@ export default {
         );
 
         this.buttonDisabled = false;
-      } else {
+      
+} else {
+
         this.$store.dispatch("errors/setError", this.errorMessage);
-      }
-    },
+      
+}
+    
+},
     scoreChars,
     validateEmail,
     setTitleAndDescription,

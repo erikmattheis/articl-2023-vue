@@ -134,6 +134,7 @@ export default {
     inputTypeahead,
   },
   data() {
+
     return {
       abstract: "",
       affiliation: "",
@@ -150,47 +151,73 @@ export default {
       type: "Review (OA)",
       year: "",
     };
-  },
+  
+},
   mounted() {
+
     if (!this.id) {
+
       this.categorySlug = this.$route.query.slug;
 
       this.onTypeaheadHit({ value: this.categorySlug });
-    } else {
+    
+} else {
+
       this.getCurrentArticl();
-    }
-  },
+    
+}
+  
+},
   computed: { isLoggedIn },
   methods: {
     async getCurrentArticl() {
+
       if (this.id) {
+
         const result = await this.getArticl(this.id);
 
         console.log("result", result);
 
         Object.assign(this, result);
-      }
-    },
+      
+}
+    
+},
     async getData() {
+
       if (this.articlUrl) {
+
         try {
+
           this.buttonFetchDisabled = true;
 
           const result = await fetchData(this.articlUrl);
 
           if (result) {
+
             Object.assign(this, result);
-          }
-        } catch (error) {
+          
+}
+        
+} catch (error) {
+
           this.$store.dispatch("errors/setError", error);
-        } finally {
+        
+} finally {
+
           this.buttonFetchDisabled = false;
-        }
-      } else {
+        
+}
+      
+} else {
+
         this.$store.dispatch("errors/setError", "Please enter a URL");
-      }
-    },
+      
+}
+    
+},
     setTitleAndDescription() {
+
       const documentTitle = "Articl.net Registration";
       const metaDescription = "";
 
@@ -198,43 +225,58 @@ export default {
         documentTitle,
         metaDescription,
       });
-    },
+    
+},
     resetFormErrors() {
+
       this.success = null;
 
       this.result = null;
 
       this.errorMessage = "";
-    },
+    
+},
     checkForm() {
+
       this.resetFormErrors();
 
       let passed = true;
 
       if (!this.title === "") {
+
         this.errorMessage = "Please enter a title.";
 
         passed = false;
-      } else if (this.authors === "") {
+      
+} else if (this.authors === "") {
+
         this.errorMessage = "Please enter author names.";
 
         passed = false;
-      } else if (this.type === "") {
+      
+} else if (this.type === "") {
+
         this.errorMessage = "Please enter a type.";
 
         passed = false;
-      } else if (this.status === "") {
+      
+} else if (this.status === "") {
+
         this.errorMessage = "Please choose a status.";
 
         passed = false;
-      }
+      
+}
 
       return passed;
-    },
+    
+},
     async submitForm(id) {
+
       this.resetFormErrors();
 
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
 
         const verb = id ? "PUT" : "POST";
@@ -257,26 +299,39 @@ export default {
           },
         })
           .then((result) => {
+
             if (result.data) {
+
               this.success = true;
 
               this.result = result.data;
-            }
-          })
+            
+}
+          
+})
           .catch((error) => {
+
             this.$store.dispatch("errors/setError", error);
-          })
+          
+})
           .finally(() => {
+
             this.buttonDisabled = false;
-          });
-      } else {
+          
+});
+      
+} else {
+
         this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
-      }
-    },
+      
+}
+    
+},
 
     async getArticl(id) {
+
       this.buttonDisabled = true;
 
       return this.$http({
@@ -284,18 +339,27 @@ export default {
         url: "/articls/" + id,
       })
         .then((result) => {
+
           return result.data;
-        })
+        
+})
         .catch((error) => {
+
           this.$store.dispatch("errors/setError", error);
-        })
+        
+})
         .finally(() => {
+
           this.buttonDisabled = false;
-        });
-    },
+        
+});
+    
+},
     onTypeaheadHit(e) {
+
       this.categorySlug = e.value;
-    },
+    
+},
   },
 };
 </script>

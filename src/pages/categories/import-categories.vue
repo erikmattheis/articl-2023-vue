@@ -20,33 +20,47 @@
 export default {
   name: "importCategoriesPage",
   data() {
+
     return {
       buttonDisabled: false,
       success: false,
       result: null,
       chrs: 0,
     };
-  },
+  
+},
   methods: {
     async submitForm() {
+
       this.buttonDisabled = true;
+
       this.$http({
         method: "POST",
         url: "/categories/import-categories",
       })
         .then((result) => {
+
           if (result.data) {
+
             this.success = true;
+
             this.result = result.data;
-          }
-        })
+          
+}
+        
+})
         .catch((error) => {
+
           this.$store.dispatch("errors/setError", error);
-        })
+        
+})
         .finally(() => {
+
           this.buttonDisabled = false;
-        });
-    },
+        
+});
+    
+},
   },
 };
 </script>

@@ -75,8 +75,10 @@ export default {
   props: ["articl"],
   components: { VueFeather, ArticlActions },
   data() {
+
     return { articls: [], totalResults: "--", isLoading: false };
-  },
+  
+},
 
   computed: {
     isLoggedIn,

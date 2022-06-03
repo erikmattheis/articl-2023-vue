@@ -102,6 +102,7 @@ export default {
     CardNotification,
   },
   data() {
+
     return {
       email: null,
       password: null,
@@ -115,46 +116,76 @@ export default {
       result: null,
       chrs: 0,
     };
-  },
+  
+},
   watch: {
     password: {
       handler(val) {
+
         this.passwordComplexity = this.scoreChars(val);
-      },
+      
+},
     },
   },
   mounted() {
+
     this.setTitleAndDescription({ title: "Registration" });
-  },
+  
+},
   methods: {
     resetFormErrors() {
+
       this.success = null;
+
       this.result = null;
+
       this.errorMessage = "";
-    },
+    
+},
     checkForm() {
+
       this.resetFormErrors();
+
       let passed = true;
+
       if (!this.validateEmail(this.email)) {
+
         this.errorMessage = "Please enter a valid email.";
+
         passed = false;
-      } else if (this.scoreChars(this.password) < 3) {
+      
+} else if (this.scoreChars(this.password) < 3) {
+
         this.errorMessage = "Please choose a more complex password.";
+
         passed = false;
-      } else if (this.password && this.password.length < 8) {
+      
+} else if (this.password && this.password.length < 8) {
+
         this.errorMessage = "Please choose a longer password.";
+
         passed = false;
-      } else if (this.password !== this.password2) {
+      
+} else if (this.password !== this.password2) {
+
         this.errorMessage = "The password fields must match.";
+
         passed = false;
-      }
+      
+}
+
       return passed;
-    },
+    
+},
 
     async submitForm() {
+
       this.resetFormErrors();
+
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
+
         this.$http({
           method: "POST",
           url: "/auth/register",
@@ -164,23 +195,36 @@ export default {
           },
         })
           .then((result) => {
+
             if (result.data) {
+
               this.success = true;
+
               this.result = result.data;
-            }
-          })
+            
+}
+          
+})
           .catch((error) => {
+
             this.$store.dispatch("errors/setError", error);
-          })
+          
+})
           .finally(() => {
+
             this.buttonDisabled = false;
-          });
-      } else {
+          
+});
+      
+} else {
+
         this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
-      }
-    },
+      
+}
+    
+},
     scoreChars,
     validateEmail,
     setTitleAndDescription,

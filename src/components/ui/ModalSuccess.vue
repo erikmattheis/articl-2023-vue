@@ -43,8 +43,10 @@ export default {
   },
   methods: {
     close() {
+
       this.$store.dispatch("modals/clearSuccess");
-    },
+    
+},
   },
 };
 </script>

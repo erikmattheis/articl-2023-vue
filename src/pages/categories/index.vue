@@ -56,6 +56,7 @@ export default {
     CardNotification,
   },
   data() {
+
     return {
       title: null,
       description: null,
@@ -67,53 +68,88 @@ export default {
       result: null,
       chrs: 0,
     };
-  },
+  
+},
   computed: {
     slug() {
+
       if (!this.title) {
+
         return "";
-      }
+      
+}
+
       let str = this.title.replace(/\s/g, "-");
+
       str = str.toLowerCase();
+
       return encodeURIComponent(str);
-    },
+    
+},
     isLoggedIn,
   },
   mounted() {
+
     this.parentSlug = this.$route.query.parentSlug;
-  },
+  
+},
 
   params: {
     slug: String,
   },
   methods: {
     resetFormErrors() {
+
       this.success = null;
+
       this.result = null;
+
       this.errorMessage = "";
-    },
+    
+},
     checkForm() {
+
       this.resetFormErrors();
+
       let passed = true;
+
       if (!this.title) {
+
         this.titleInvalid = true;
+
         this.errorMessage = "Please enter a title.";
+
         passed = false;
-      } else if (!this.slug) {
+      
+} else if (!this.slug) {
+
         this.slugInvalid = true;
+
         this.errorMessage = "Please enter a slug.";
+
         passed = false;
-      } else if (!this.parentSlug) {
+      
+} else if (!this.parentSlug) {
+
         this.parentIdInvalid = true;
+
         this.errorMessage = "Please eselect a parent category.";
+
         passed = false;
-      }
+      
+}
+
       return passed;
-    },
+    
+},
     async submitForm() {
+
       this.resetFormErrors();
+
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
+
         this.$http({
           method: "POST",
           url: "/categories",
@@ -125,23 +161,36 @@ export default {
           },
         })
           .then((result) => {
+
             if (result.data) {
+
               this.success = true;
+
               this.result = result.data;
-            }
-          })
+            
+}
+          
+})
           .catch((error) => {
+
             this.$store.dispatch("errors/setError", error);
-          })
+          
+})
           .finally(() => {
+
             this.buttonDisabled = false;
-          });
-      } else {
+          
+});
+      
+} else {
+
         this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
-      }
-    },
+      
+}
+    
+},
   },
 };
 </script>

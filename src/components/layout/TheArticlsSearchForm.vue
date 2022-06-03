@@ -99,6 +99,7 @@ export default {
   name: "theArticlsFormSearch",
   components: { InputTypeahead },
   data() {
+
     return {
       activeTab: 0,
       allStatuses: this.$store.state.articlsParams.allStatuses,
@@ -106,117 +107,171 @@ export default {
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
     };
-  },
+  
+},
   computed: {
     ...mapGetters({
       years: "articlsParams/years",
     }),
     text: {
       get() {
+
         return this.$store.state.articlsParams.text;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/text", value);
-      },
+      
+},
     },
     title: {
       get() {
+
         return this.$store.state.articlsParams.title;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/title", value);
-      },
+      
+},
     },
     journal: {
       get() {
+
         return this.$store.state.articlsParams.journal;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/journal", value);
-      },
+      
+},
     },
     authors: {
       get() {
+
         return this.$store.state.articlsParams.authors;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/authors", value);
-      },
+      
+},
     },
     yearComparison: {
       get() {
+
         return this.$store.state.articlsParams.yearComparison;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/yearComparison", value);
-      },
+      
+},
     },
     year: {
       get() {
+
         return this.$store.state.articlsParams.year;
-      },
+      
+},
       set(value) {
+
         if (Number(value) === Number(this.yearsStart)) {
+
           this.$store.dispatch("articlsParams/yearComparison", "after");
-        }
+        
+}
+
         this.$store.dispatch("articlsParams/year", value);
-      },
+      
+},
     },
     types: {
       get() {
+
         return this.$store.state.articlsParams.types;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/types", value);
-      },
+      
+},
     },
     statuses: {
       get() {
+
         return this.$store.state.articlsParams.statuses;
-      },
+      
+},
       set(value) {
+
         this.$store.dispatch("articlsParams/statuses", value);
-      },
+      
+},
     },
   },
   created() {
+
     this.$store.dispatch(
       "articlsParams/statuses",
       this.$store.state.articlsParams.allStatuses
     );
+
     this.$store.dispatch(
       "articlsParams/types",
       this.$store.state.articlsParams.allTypes
     );
+
     this.onTitleChange = debounce(this.onTitleChange, 200);
-  },
+  
+},
   watch: {
     yearComparison: {
       handler(newValue) {
+
         this.$store.dispatch("articlsParams/yearComparison", newValue);
-      },
+      
+},
       deep: true,
     },
   },
   methods: {
     onTypesChange() {
+
       this.$store.dispatch("articlsParams/types", event.target.value);
-    },
+    
+},
     onYearChange(event) {
+
       this.$store.dispatch("articlsParams/year", event.target.value);
-    },
+    
+},
     onJournalChange(event) {
+
       this.$store.dispatch("articlsParams/journal", event.value);
-    },
+    
+},
     onAuthorsChange(event) {
+
       this.$store.dispatch("articlsParams/authors", event.value);
-    },
+    
+},
     onTitleChange(event) {
+
       this.$store.dispatch("articlsParams/title", event.target.value);
-    },
+    
+},
     onYearComparisonChange(event) {
+
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
-    },
+    
+},
   },
 };
 </script>

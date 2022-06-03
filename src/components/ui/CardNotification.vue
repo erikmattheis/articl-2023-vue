@@ -14,10 +14,12 @@ import VueFeather from "vue-feather";
 
 export default {
   data() {
+
     return {
       title: "",
     };
-  },
+  
+},
   components: {
     VueFeather,
   },

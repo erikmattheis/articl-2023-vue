@@ -26,8 +26,10 @@ export default {
   name: "ArticlActions",
   props: ["id", "title"],
   data() {
+
     return { expanded: false };
-  },
+  
+},
   computed: {
     isLoggedIn,
   },

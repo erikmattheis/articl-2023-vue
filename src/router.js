@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-
 import homePage from "@/pages/index.vue";
 import searchArticls from "@/pages/articls/index.vue";
 import createArticlPage from "@/pages/articls/create.vue";

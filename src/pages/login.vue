@@ -59,7 +59,7 @@
 <script>
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import { setTokens, isLoggedIn } from "@/services/tokensService";
+import { isLoggedIn, setTokens } from "@/services/tokensService";
 import validateEmail from "@/services/emailValidationService";
 
 export default {
@@ -68,6 +68,7 @@ export default {
     TheButtonToggleHidden,
   },
   data() {
+
     return {
       email: null,
       emailInvalid: null,
@@ -76,32 +77,50 @@ export default {
       showPassword: false,
       buttonDisabled: false,
     };
-  },
+  
+},
   mounted() {
+
     this.setTitleAndDescription({ title: "Login" });
-  },
+  
+},
   computed: {
     isLoggedIn,
   },
   methods: {
     resetFormErrors() {
+
       this.errorMessage = "";
-    },
+    
+},
     checkForm() {
+
       let passed = true;
+
       if (!validateEmail.validateEmail(this.email)) {
+
         this.errorMessage = "Please enter a valid email.";
+
         passed = false;
-      } else if (this.password && this.password.length < 8) {
+      
+} else if (this.password && this.password.length < 8) {
+
         this.errorMessage = "Passwords are at least eight characters.";
+
         passed = false;
-      }
+      
+}
+
       return passed;
-    },
+    
+},
 
     async submitForm() {
+
       if (this.checkForm() === true) {
+
         this.buttonDisabled = true;
+
         this.$http({
           method: "POST",
           url: "/auth/login",
@@ -111,43 +130,65 @@ export default {
           },
         })
           .then((result) => {
+
             if (result?.status > 309) {
+
               this.$store.dispatch("errors/setError", result);
+
               return;
-            }
+            
+}
+
             this.resetFormErrors();
+
             setTokens(result);
 
             const theme =
               result?.data?.user?.theme !== "dark" ? "light" : "dark";
+
             this.$cookies.set("data-theme", theme);
+
             document.documentElement.setAttribute("data-theme", theme);
+
             if (
               this.$route.query.redirect &&
               this.$route.query.redirect !== "/login"
             ) {
+
               this.$router.push({
                 path: this.$route.query.redirect,
               });
-            } else {
+            
+} else {
+
               this.$router.push({
                 name: "homePage",
               });
-            }
-          })
+            
+}
+          
+})
 
           .catch((error) => {
+
             this.$store.dispatch("errors/setError", error);
-          })
+          
+})
           .finally(() => {
+
             this.buttonDisabled = false;
-          });
-      } else {
+          
+});
+      
+} else {
+
         this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
-      }
-    },
+      
+}
+    
+},
     setTitleAndDescription,
   },
 };

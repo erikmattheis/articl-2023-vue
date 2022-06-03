@@ -39,11 +39,13 @@ import VueFeather from "vue-feather";
 
 export default {
   data() {
+
     return {
       title: "",
       showErrorStack: "",
     };
-  },
+  
+},
   components: {
     VueFeather,
   },
@@ -59,8 +61,10 @@ export default {
   },
   methods: {
     close() {
+
       this.$store.dispatch("errors/clearError");
-    },
+    
+},
   },
 };
 </script>

@@ -34,47 +34,68 @@ export default {
   name: "homePage",
   // components: { TheBreadcrumbs },
   data() {
+
     return {
       isLoading: true,
       slug: null,
       title: "",
       categories: [],
     };
-  },
+  
+},
   created() {
+
     this.categories = this.fetchData("0");
-  },
+  
+},
   mounted() {
+
     this.setTitleAndDescription();
-  },
+  
+},
   computed: {
     isLoggedIn,
   },
   methods: {
     async fetchData(slug) {
+
       try {
+
         this.isLoading = true;
+
         const result = await this.getCategoryPageBySlug(slug);
         const documentTitle = result?.data?.category[0]?.title;
+
         this.title = documentTitle;
+
         const metaDescription = result?.data?.category[0]?.description;
+
         this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
           documentTitle,
           metaDescription,
         });
+
         this.categories = result.data.categories;
-      } catch (error) {
+      
+} catch (error) {
+
         this.$store.dispatch("errors/setError", error);
-      } finally {
+      
+} finally {
+
         this.isLoading = false;
-      }
-    },
+      
+}
+    
+},
     getCategoryPageBySlug(slug) {
+
       return this.$http({
         method: "GET",
         url: `/d/${slug || ""}`,
       });
-    },
+    
+},
     setTitleAndDescription,
   },
 };

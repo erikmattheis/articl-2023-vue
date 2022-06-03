@@ -61,6 +61,7 @@ export default {
   name: "categoryPage",
   components: { DraggableItems, ArticlsListItem },
   data() {
+
     return {
       isLoading: true,
       slug: null,
@@ -69,39 +70,55 @@ export default {
       articls: [],
       articlTypes: [],
     };
-  },
+  
+},
   async created() {
+
     this.updateData();
-  },
+  
+},
   computed: {
     isLoggedIn,
   },
   watch: {
     "$route.params.slug": {
       handler() {
+
         this.updateData();
-      },
+      
+},
       immediate: true,
     },
   },
   methods: {
     async updateData() {
+
       const results = await this.fetchData(this.$route.params.slug);
+
       this.categories = results.categories;
+
       this.articlTypes = results.articlTypes;
+
       this.articls = results.articls;
 
       this.title = results?.category[0]?.title;
+
       const description = results?.category[0]?.description;
+
       this.setTitleAndDescription({ title: this.title, description });
+
       this.isLoading = false;
 
       console.log("categories", this.categories?.length);
+
       console.log("articlTypes", this.articlTypes?.length);
+
       console.log("articls", this.articls?.length);
-    },
+    
+},
 
     async fetchData(slug) {
+
       const result = await this.$http({
         method: "GET",
         url: `/d/${slug || ""}`,
@@ -114,23 +131,35 @@ export default {
           : [],
         articls: groupBy(result.articls, (articl) => articl.type),
       };
-    },
+    
+},
 
     updateOrderValues() {
+
       this.categories.forEach(function (obj, index) {
+
         obj.order = index;
-      });
-    },
+      
+});
+    
+},
 
     async saveOrderValues() {
+
       const order = this.categories.map((obj) => {
+
         return { id: obj.id, order: obj.order };
-      });
+      
+});
+
       await this.saveOrder(order);
-    },
+    
+},
 
     async saveOrder(order) {
+
       this.isLoading = true;
+
       const result = await this.$http({
         method: "POST",
         url: "/categories/order",
@@ -140,16 +169,22 @@ export default {
       });
 
       if (result?.data) {
+
         return result.data;
-      }
+      
+}
 
       this.isLoading = false;
-    },
+    
+},
 
     onUpdateOrderValues() {
+
       this.updateOrderValues();
+
       this.saveOrderValues();
-    },
+    
+},
     setTitleAndDescription,
   },
 };

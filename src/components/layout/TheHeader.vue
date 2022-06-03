@@ -150,14 +150,17 @@ export default {
     VueFeather,
   },
   data() {
+
     return {
       theme: "light",
     };
-  },
+  
+},
   computed: {
     isLoggedIn,
   },
   beforeMount() {
+
     const theme = this.$cookies.get("data-theme");
 
     this.theme = theme !== "dark" ? "light" : "dark";
@@ -165,34 +168,50 @@ export default {
     document.documentElement.setAttribute("data-theme", this.theme);
 
     if (this.$cookies.isKey("--font-size")) {
+
       this.setTextSize(this.$cookies.get("--font-size"));
 
       this.originalFontSize = parseInt(
         getComputedStyle(document.body).getPropertyValue("--font-size")
       );
-    }
-  },
+    
+}
+  
+},
 
   methods: {
     setTextSize(size) {
+
       document.documentElement.style.setProperty(
         "--font-size",
         18 * size + "px"
       );
+
       this.$cookies.set("--font-size", size);
-    },
+    
+},
     toggleTheme() {
+
       this.theme = this.theme === "light" ? "dark" : "light";
+
       document.documentElement.setAttribute("data-theme", this.theme);
+
       this.$cookies.set("data-theme", this.theme);
-    },
+    
+},
     clearLocalData() {
+
       this.$cookies.keys().forEach((cookie) => this.$cookies.remove(cookie));
+
       clearLocalStorage();
-    },
+    
+},
     async logout() {
+
       const refreshToken = getRefreshTokenValue();
+
       if (refreshToken) {
+
         await this.$http({
           method: "POST",
           url: "/auth/logout",
@@ -200,14 +219,22 @@ export default {
             refreshToken,
           },
         });
+
         localStorage.clear();
+
         this.$store.dispatch("tokens/logout");
+
         this.$router.push("/");
-      } else {
+      
+} else {
+
         localStorage.clear();
+
         this.$store.dispatch("tokens/logout");
-      }
-    },
+      
+}
+    
+},
   },
 };
 </script>

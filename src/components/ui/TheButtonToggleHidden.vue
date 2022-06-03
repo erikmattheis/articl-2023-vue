@@ -87,10 +87,12 @@
 <script>
 export default {
   data() {
+
     return {
       show: false,
     };
-  },
+  
+},
   emits: ["show"],
 };
 </script>
