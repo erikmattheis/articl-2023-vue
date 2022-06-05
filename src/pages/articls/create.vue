@@ -158,7 +158,6 @@ export default {
     if (!this.id) {
 
       this.categorySlug = this.$route.query.slug;
-
       this.onTypeaheadHit({ value: this.categorySlug });
     
 } else {
@@ -177,7 +176,6 @@ export default {
         const result = await this.getArticl(this.id);
 
         console.log("result", result);
-
         Object.assign(this, result);
       
 }
@@ -230,9 +228,7 @@ export default {
     resetFormErrors() {
 
       this.success = null;
-
       this.result = null;
-
       this.errorMessage = "";
     
 },
@@ -245,25 +241,21 @@ export default {
       if (!this.title === "") {
 
         this.errorMessage = "Please enter a title.";
-
         passed = false;
       
 } else if (this.authors === "") {
 
         this.errorMessage = "Please enter author names.";
-
         passed = false;
       
 } else if (this.type === "") {
 
         this.errorMessage = "Please enter a type.";
-
         passed = false;
       
 } else if (this.status === "") {
 
         this.errorMessage = "Please choose a status.";
-
         passed = false;
       
 }
@@ -303,7 +295,6 @@ export default {
             if (result.data) {
 
               this.success = true;
-
               this.result = result.data;
             
 }

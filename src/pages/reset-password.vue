@@ -84,12 +84,12 @@
 <script>
 import { scoreChars, validateEmail } from "@/services/userService";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
-import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 
 export default {
   name: "PasswordReset",
   components: {
-    TheButtonToggleHidden,
+    theButtonToggleHidden,
   },
   data() {
 
@@ -130,13 +130,11 @@ export default {
       if (this.validateEmail(this.email)) {
 
         this.errorMessage = "Please enter a valid email.";
-
         passed = false;
       
 } else if (this.password && this.password.length < 8) {
 
         this.errorMessage = "Passwords are at least eight characters.";
-
         passed = false;
       
 }
@@ -148,7 +146,6 @@ export default {
     resetFormErrors() {
 
       this.success = null;
-
       this.result = null;
     
 },
@@ -160,7 +157,6 @@ export default {
       if (this.checkForm() === true) {
 
         this.buttonDisabled = true;
-
         await this.$http({
           method: "POST",
           url: "/auth/reset-password",
@@ -169,14 +165,11 @@ export default {
             password: this.password,
           },
         });
-
         this.$store.dispatch("modals/setSuccessTitle", "Password updated");
-
         this.$store.dispatch(
           "modals/setSuccessMessage",
           "You have successfully changed your password."
         );
-
         this.buttonDisabled = false;
       
 } else {

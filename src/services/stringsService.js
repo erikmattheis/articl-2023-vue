@@ -1,94 +1,63 @@
-function highlightedSubstring(str, subStr, part) {
-
-  if (!subStr && part === "prefix") {
-
-    return str;
-  
-} else if (!subStr) {
-
+function highlightedSubstring(string_, subString, part) {
+  if (!subString && part === "prefix") {
+    return string_;
+  }
+  if (!subString) {
     return "";
-  
-}
+  }
 
-  const position = noCaseIndexOf(str, subStr);
+  const position = noCaseIndexOf(string_, subString);
 
-  if (!str) {
-
+  if (!string_) {
     return false;
-  
-}
+  }
 
   if (part === "prefix") {
+    return string_.slice(0, Math.max(0, position));
+  }
 
-    return str.substring(0, position);
-  
-}
-
-  if (part === "term")
-    return str.substring(position, position + subStr?.length);
+  if (part === "term") {
+    return string_.substring(position, position + subString?.length);
+  }
 
   if (part === "suffix") {
-
-    return str.substring(position + subStr?.length);
-  
+    return string_.slice(Math.max(0, position + subString?.length));
+  }
 }
 
-}
-
-function noCaseIndexOf(str, subStr) {
-
-  if (!str || !subStr) {
-
+function noCaseIndexOf(string_, subString) {
+  if (!string_ || !subString) {
     return false;
-  
+  }
+
+  return string_.toLowerCase().indexOf(subString.toLowerCase());
 }
 
-  return str.toLowerCase().indexOf(subStr.toLowerCase());
-
-}
-
-function emphasizeSubstring(str, subStr, len) {
-
-  if (!str || !subStr || !len) {
-
+function emphasizeSubstring(string_, subString, length_) {
+  if (!string_ || !subString || !length_) {
     return false;
-  
-}
+  }
 
-  let position = str.toLowerCase().indexOf(subStr.toLowerCase());
+  let position = string_.toLowerCase().indexOf(subString.toLowerCase());
   let result =
-    position > len / 2
-      ? "..." + str.substring(Math.floor(len / 2), len - 3) + Math.ceil(len / 2)
-      : str;
+    position > length_ / 2
+    ? `...${string_.substring(Math.floor(length_ / 2), length_ - 3)}${Math.ceil(length_ / 2)}`
+    : string_;
 
-  position = result.toLowerCase().indexOf(subStr.toLowerCase());
-
-  result =
-    position < len
-      ? result.substring(result.length - Math.ceil(len / 2), len - 3) + "..."
-      : result;
-
+  position = result.toLowerCase().indexOf(subString.toLowerCase());
+  if (position < length_) result = `${result.substring(result.length - Math.ceil(length_ / 2), length_ - 3)}...`;
 }
 
-function toListWithOptionalConjuction(arr, conj = "") {
-
-  if (!arr || arr.length === 0 || !Array.isArray(arr)) {
-
+function toListWithOptionalConjuction(array, conj = "") {
+  if (!array || array.length === 0 || !Array.isArray(array)) {
     return "";
-  
-}
+  }
 
   return (
-    arr.slice(0, arr.length - 1).join(", ") +
-    (arr.length > 1 ? " " + conj + " " : "") +
-    arr[arr.length - 1]
+    array.slice(0, -1).join(", ") + (array.length > 1 ? ` ${conj} ` : "") + array[array.length - 1]
   );
-
 }
 
 export {
-  highlightedSubstring,
-  noCaseIndexOf,
-  emphasizeSubstring,
-  toListWithOptionalConjuction,
+ highlightedSubstring, noCaseIndexOf, emphasizeSubstring, toListWithOptionalConjuction 
 };

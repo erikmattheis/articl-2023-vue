@@ -10,33 +10,16 @@
         <label for="slug">Slug</label>
         <input readonly v-model="slug" type="text" name="slug" id="slug" />
         <label for="title">Parent slug</label>
-        <input
-          type="text"
-          v-model="parentSlug"
-          name="parentSlug"
-          id="parentSlug"
-        />
+        <input type="text" v-model="parentSlug" name="parentSlug" id="parentSlug" />
 
         <label for="description">Description</label>
-        <textarea
-          name="description"
-          id="description"
-          rows="10"
-          cols="70"
-        ></textarea>
-        <button
-          type="submit"
-          id="Login"
-          :aria-busy="buttonDisabled"
-          @click.prevent="submitForm()"
-        >
+        <textarea name="description" id="description" rows="10" cols="70"></textarea>
+        <button type="submit" id="Login" :aria-busy="buttonDisabled" @click.prevent="submitForm()">
           <span v-if="!buttonDisabled">Create Category</span>
         </button>
       </form>
       <template v-else>
-        <card-notification
-          success-message="Category created."
-        ></card-notification>
+        <card-notification success-message="Category created."></card-notification>
         <a href @click="$router.go()">Create another category</a>
       </template>
     </template>
@@ -48,7 +31,7 @@
 
 <script>
 import CardNotification from "@/components/ui/CardNotification.vue";
-import { isLoggedIn } from "@/services/tokensService";
+import {isLoggedIn} from "@/services/tokensService";
 
 export default {
   name: "createCategoryPage",
@@ -68,31 +51,32 @@ export default {
       result: null,
       chrs: 0,
     };
-  
-},
+
+  },
   computed: {
     slug() {
 
-      if (!this.title) {
+      if(!this.title) {
 
         return "";
-      
-}
 
-      let str = this.title.replace(/\s/g, "-");
+      }
 
-      str = str.toLowerCase();
+      let str=this.title.replace(/\s/g,
+        "-");
+
+      str=str.toLowerCase();
 
       return encodeURIComponent(str);
-    
-},
+
+    },
     isLoggedIn,
   },
   mounted() {
 
-    this.parentSlug = this.$route.query.parentSlug;
-  
-},
+    this.parentSlug=this.$route.query.parentSlug;
+
+  },
 
   params: {
     slug: String,
@@ -100,56 +84,47 @@ export default {
   methods: {
     resetFormErrors() {
 
-      this.success = null;
+      this.success=null;
+      this.result=null;
+      this.errorMessage="";
 
-      this.result = null;
-
-      this.errorMessage = "";
-    
-},
+    },
     checkForm() {
 
       this.resetFormErrors();
 
-      let passed = true;
+      let passed=true;
 
-      if (!this.title) {
+      if(!this.title) {
 
-        this.titleInvalid = true;
+        this.titleInvalid=true;
+        this.errorMessage="Please enter a title.";
+        passed=false;
 
-        this.errorMessage = "Please enter a title.";
+      } else if(!this.slug) {
 
-        passed = false;
-      
-} else if (!this.slug) {
+        this.slugInvalid=true;
+        this.errorMessage="Please enter a slug.";
+        passed=false;
 
-        this.slugInvalid = true;
+      } else if(!this.parentSlug) {
 
-        this.errorMessage = "Please enter a slug.";
+        this.parentIdInvalid=true;
+        this.errorMessage="Please eselect a parent category.";
+        passed=false;
 
-        passed = false;
-      
-} else if (!this.parentSlug) {
-
-        this.parentIdInvalid = true;
-
-        this.errorMessage = "Please eselect a parent category.";
-
-        passed = false;
-      
-}
+      }
 
       return passed;
-    
-},
+
+    },
     async submitForm() {
 
       this.resetFormErrors();
 
-      if (this.checkForm() === true) {
+      if(this.checkForm()===true) {
 
-        this.buttonDisabled = true;
-
+        this.buttonDisabled=true;
         this.$http({
           method: "POST",
           url: "/categories",
@@ -162,35 +137,36 @@ export default {
         })
           .then((result) => {
 
-            if (result.data) {
+            if(result.data) {
 
-              this.success = true;
+              this.success=true;
+              this.result=result.data;
 
-              this.result = result.data;
-            
-}
-          
-})
+            }
+
+          })
           .catch((error) => {
 
-            this.$store.dispatch("errors/setError", error);
-          
-})
+            this.$store.dispatch("errors/setError",
+              error);
+
+          })
           .finally(() => {
 
-            this.buttonDisabled = false;
-          
-});
-      
-} else {
+            this.buttonDisabled=false;
 
-        this.$store.dispatch("errors/setError", {
-          message: this.errorMessage,
-        });
-      
-}
-    
-},
+          });
+
+      } else {
+
+        this.$store.dispatch("errors/setError",
+          {
+            message: this.errorMessage,
+          });
+
+      }
+
+    },
   },
 };
 </script>

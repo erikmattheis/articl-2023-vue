@@ -1,14 +1,10 @@
 import store from "@/store";
 
-const setTitleAndDescription = function (obj) {
-
-  Object.assign({ title: "", description: "" }, obj);
-
+const setTitleAndDescription = function (object) {
   store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-    documentTitle: obj.title,
-    metaDescription: obj.description,
+    documentTitle: object.title,
+    metaDescription: object.description,
   });
-
 };
 
 export { setTitleAndDescription };

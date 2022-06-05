@@ -1,19 +1,16 @@
+
 <template>
   <article>
     <h2>{{ title }} <span :aria-busy="isLoading"></span></h2>
     <ul>
       <li v-for="category in categories || []" :key="category.slug">
-        <router-link
-          :to="{ name: 'categoryPage', params: { slug: category.slug } }"
-        >
+        <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
           {{ category.title }}
         </router-link>
       </li>
 
       <li v-if="isLoggedIn">
-        <router-link
-          :to="{ name: 'createCategoryPage', query: { parentSlug: '0' } }"
-        >
+        <router-link :to="{ name: 'createCategoryPage', query: { parentSlug: '0' } }">
           New Category Here
         </router-link>
       </li>
@@ -27,8 +24,9 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { isLoggedIn } from "@/services/tokensService";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+
 
 export default {
   name: "homePage",
@@ -41,18 +39,18 @@ export default {
       title: "",
       categories: [],
     };
-  
-},
+
+  },
   created() {
 
     this.categories = this.fetchData("0");
-  
-},
+
+  },
   mounted() {
 
     this.setTitleAndDescription();
-  
-},
+
+  },
   computed: {
     isLoggedIn,
   },
@@ -65,10 +63,9 @@ export default {
 
         const result = await this.getCategoryPageBySlug(slug);
         const documentTitle = result?.data?.category[0]?.title;
+        const metaDescription = result?.data?.category[0]?.description;
 
         this.title = documentTitle;
-
-        const metaDescription = result?.data?.category[0]?.description;
 
         this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
           documentTitle,
@@ -76,26 +73,28 @@ export default {
         });
 
         this.categories = result.data.categories;
-      
-} catch (error) {
+
+      } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
-      
-} finally {
+
+      } finally {
 
         this.isLoading = false;
-      
-}
-    
-},
+
+      }
+
+    },
     getCategoryPageBySlug(slug) {
 
       return this.$http({
+
         method: "GET",
         url: `/d/${slug || ""}`,
+
       });
-    
-},
+
+    },
     setTitleAndDescription,
   },
 };

@@ -1,49 +1,28 @@
 <template>
   <div>
-    <label>
-      <vue-feather
-        class="icon"
-        size="1.5rem"
-        type="search"
-        aria-label="Search"
-      ></vue-feather>
-      <input
-        type="text"
-        autocomplete="off"
-        v-model="stringValue"
-        @keydown.down="down"
-        @keydown.up="up"
-        @keydown.enter="hit"
-        @keydown.esc="removeItems"
-        @blur="removeItems"
-        @keyup="update"
-        ref="input"
-      />
+    <label for=">
+      <vue-feather class=" icon" size="1.5rem" type="search" aria-label="Search"></vue-feather>
+      <input ref="input" v-model="stringValue" type="text" autocomplete="off" @keydown.down="down" @keydown.up="up"
+        @keydown.enter="hit" @keydown.esc="removeItems" @blur="removeItems" @keyup="update">
     </label>
 
     <ul v-show="hasItems">
       <!-- for vue@1.0 use: ($item, item) -->
-      <li
-        v-for="(item, $index) in items"
-        :class="activeClass($index)"
-        @mousedown="hit"
-        @mousemove="setActive($index)"
-        v-bind:key="$index"
-      >
-        <span v-text="item"></span>
+      <li v-for="(  item,$index  ) in items" :key="$index" :class="activeClass($index)" @mousedown="hit"
+        @mousemove="setActive($index)">
+        <span v-text="item" />
       </li>
     </ul>
   </div>
 </template>
 <script>
 import VueFeather from "vue-feather";
-import { debounce } from "lodash";
+import {debounce} from "lodash";
 
 export default {
-  props: ["src", "query", "inputValue"],
-  components: { VueFeather },
+  components: {VueFeather},
+  props: [ "src","query","inputValue" ],
   data() {
-
     return {
       items: [],
       current: -1,
@@ -51,184 +30,166 @@ export default {
       selectFirst: true,
       stringValue: "",
     };
-  
-},
-  mounted() {
+  },
+  computed: {
+    hasItems() {
+      return this.items.length>0;
+    },
 
+    isEmpty() {
+      return !this.stringValue;
+    },
+
+    isDirty() {
+      return !!this.stringValue;
+    },
+  },
+  watch: {
+    inputValue: {
+      handler(val) {
+        this.stringValue=val;
+      },
+    },
+  },
+  mounted() {
     this.$refs.input.addEventListener(
       "blur",
       () => {
         // it will work now
       },
-      true
+      true,
     );
 
-    this.setActive = debounce(this.setActive, 10);
+    this.setActive=debounce(
+      this.setActive,
+      10,
+    );
 
-    this.up = debounce(this.up, 200);
+    this.up=debounce(
+      this.up,
+      200,
+    );
 
-    this.update = debounce(this.update, 200);
+    this.update=debounce(
+      this.update,
+      200,
+    );
 
-    this.down = debounce(this.down, 200);
+    this.down=debounce(
+      this.down,
+      200,
+    );
 
-    this.stringValue = this.inputValue;
-  
-},
-  computed: {
-    hasItems() {
-
-      return this.items.length > 0;
-    
-},
-
-    isEmpty() {
-
-      return !this.stringValue;
-    
-},
-
-    isDirty() {
-
-      return !!this.stringValue;
-    
-},
-  },
-  watch: {
-    inputValue: {
-      handler(val) {
-
-        this.stringValue = val;
-      
-},
-    },
+    this.stringValue=this.inputValue;
   },
   methods: {
     async update() {
-
       this.cancel();
 
-      if (!this.stringValue) {
-
-        this.$emit("typeaheadUpdated", {
-          field: this.query,
-          value: "",
-        });
+      if(!this.stringValue) {
+        this.$emit(
+          "typeaheadUpdated",
+          {
+            field: this.query,
+            value: "",
+          },
+        );
 
         return this.removeItems();
-      
-}
+      }
 
-      this.loading = true;
+      this.loading=true;
 
       this.hit();
 
-      this.$emit("typeaheadUpdated", {
-        field: this.query,
-        value: this.stringValue,
-      });
+      this.$emit(
+        "typeaheadUpdated",
+        {
+          field: this.query,
+          value: this.stringValue,
+        },
+      );
 
       this.fetchData().then((response) => {
+        const {data}=response;
 
-        let data = response.data;
+        this.items=data.slice(
+          0,
+          7,
+        );
 
-        this.items = data.slice(0, 7);
+        this.current=-1;
 
-        this.current = -1;
-
-        this.loading = false;
+        this.loading=false;
 
         this.hit();
-      
-});
-    
-},
+      });
+    },
 
     async fetchData() {
+      const params={q: this.stringValue};
 
-      const params = { q: this.stringValue };
+      const cancel=new Promise((resolve) => (this.cancel=resolve));
+      const request=this.$http.get(
+        this.src,
+        {params},
+      );
 
-      let cancel = new Promise((resolve) => (this.cancel = resolve));
-      let request = this.$http.get(this.src, { params });
-
-      return Promise.race([cancel, request]);
-    
-},
+      return Promise.race([ cancel,request ]);
+    },
 
     cancel() {
       // used to cancel after request made
     },
 
     removeItems() {
+      this.items=[];
 
-      this.items = [];
-
-      this.loading = false;
-    
-},
+      this.loading=false;
+    },
 
     setActive(index) {
-
-      this.current = index;
-    
-},
+      this.current=index;
+    },
 
     activeClass(index) {
-
       return {
-        active: this.current === index,
+        active: this.current===index,
       };
-    
-},
+    },
 
     hit() {
-
-      if (this.current !== -1 && this.items && this.items[this.current]) {
-
-        this.onHit(this.items[this.current]);
-      
-}
-    
-},
+      if(this.current!==-1&&this.items&&this.items[ this.current ]) {
+        this.onHit(this.items[ this.current ]);
+      }
+    },
 
     up() {
-
-      if (this.current > 0) {
-
+      if(this.current>0) {
         this.current--;
-      
-} else if (this.current === -1) {
-
-        this.current = this.items.length - 1;
-      
-} else {
-
-        this.current = -1;
-      
-}
-    
-},
+      } else if(this.current===-1) {
+        this.current=this.items.length-1;
+      } else {
+        this.current=-1;
+      }
+    },
 
     down() {
-
-      if (this.current < this.items.length - 1) {
-
+      if(this.current<this.items.length-1) {
         this.current++;
-      
-} else {
-
-        this.current = -1;
-      
-}
-    
-},
+      } else {
+        this.current=-1;
+      }
+    },
 
     onHit(val) {
+      this.stringValue=val;
 
-      this.stringValue = val;
-
-      this.$emit("typeaheadUpdated", { field: this.query, value: val });
-    
-},
+      this.$emit(
+        "typeaheadUpdated",
+        {field: this.query,value: val},
+      );
+    },
   },
 };
 </script>
@@ -257,12 +218,13 @@ label .icon {
   right: 0.4rem;
   opacity: 50%;
 }
+
 .active {
   background-color: #1095c1;
   cursor: pointer;
 }
 
-label > :where(input, select, textarea) {
+label> :where(input, select, textarea) {
   margin-top: 0;
 }
 </style>

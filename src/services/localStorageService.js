@@ -1,6 +1,7 @@
 const set = function (name, val) {
 
-  localStorage.setItem(name, val);
+  localStorage.setItem(name,
+val);
 
   if (
     window.location.hostname === "localhost" ||

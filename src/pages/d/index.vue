@@ -1,48 +1,38 @@
 <template>
   <article>
-    <h2>{{ title }}</h2>
+    <h2>{{ title}}</h2>
 
-    <draggable-items
-      tag="ul"
-      v-model="categories"
-      item-key="id"
-      handle=".handle"
-      ghost-class="ghost"
-      @change="onUpdateOrderValues"
-    >
+    <draggable-items tag="ul" v-model="categories" item-key="id" handle=".handle" ghost-class="ghost"
+      @change="onUpdateOrderValues">
       >
-      <template #item="{ element }">
+      <template #item="{element}">
         <articls-list-item :articl="element" order="0"></articls-list-item>
       </template>
     </draggable-items>
 
     <ul v-if="isLoggedIn">
       <li>
-        <router-link
-          :to="{
-            name: 'createCategoryPage',
-            query: { parentSlug: $route.params.slug },
-          }"
-        >
+        <router-link :to="{
+          name: 'createCategoryPage',
+          query: {parentSlug: $route.params.slug},
+        }">
           New Category Here
         </router-link>
       </li>
       <li>
-        <router-link
-          :to="{
-            name: 'createArticlPage',
-            query: { slug: $route.params.slug },
-          }"
-        >
+        <router-link :to="{
+          name: 'createArticlPage',
+          query: {slug: $route.params.slug},
+        }">
           New Articl Here
         </router-link>
       </li>
     </ul>
 
-    <template v-for="articlType in articlTypes" :key="articlType">
+    <template v-for="         articlType          in articlTypes" :key="articlType">
       <ul>
-        <li v-for="articl in articls[articlType] || []" :key="articl.id">
-          {{ articl.title }}
+        <li v-for="         articl          in articls[ articlType ]||[]" :key="articl.id">
+          {{ articl.title}}
           <articls-list-item :articl="articl" :order="articl.order" />
         </li>
       </ul>
@@ -51,15 +41,15 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { groupBy } from "lodash";
+import {setTitleAndDescription} from "@/services/htmlMetaService";
+import {groupBy} from "lodash";
 import DraggableItems from "vuedraggable";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
-import { isLoggedIn } from "@/services/tokensService";
+import {isLoggedIn} from "@/services/tokensService";
 
 export default {
   name: "categoryPage",
-  components: { DraggableItems, ArticlsListItem },
+  components: {DraggableItems,ArticlsListItem},
   data() {
 
     return {
@@ -70,13 +60,13 @@ export default {
       articls: [],
       articlTypes: [],
     };
-  
-},
-  async created() {
+
+  },
+  created() {
 
     this.updateData();
-  
-},
+
+  },
   computed: {
     isLoggedIn,
   },
@@ -85,82 +75,78 @@ export default {
       handler() {
 
         this.updateData();
-      
-},
+
+      },
       immediate: true,
     },
   },
   methods: {
     async updateData() {
 
-      const results = await this.fetchData(this.$route.params.slug);
+      const results=await this.fetchData(this.$route.params.slug);
 
-      this.categories = results.categories;
+      this.categories=results.categories;
+      this.articlTypes=results.articlTypes;
+      this.articls=results.articls;
+      this.title=results?.category[ 0 ]?.title;
 
-      this.articlTypes = results.articlTypes;
+      const description=results?.category[ 0 ]?.description;
 
-      this.articls = results.articls;
+      this.setTitleAndDescription({title: this.title,description});
+      this.isLoading=false;
+      console.log("categories",
+        this.categories?.length);
+      console.log("articlTypes",
+        this.articlTypes?.length);
+      console.log("articls",
+        this.articls?.length);
 
-      this.title = results?.category[0]?.title;
-
-      const description = results?.category[0]?.description;
-
-      this.setTitleAndDescription({ title: this.title, description });
-
-      this.isLoading = false;
-
-      console.log("categories", this.categories?.length);
-
-      console.log("articlTypes", this.articlTypes?.length);
-
-      console.log("articls", this.articls?.length);
-    
-},
+    },
 
     async fetchData(slug) {
 
-      const result = await this.$http({
+      const result=await this.$http({
         method: "GET",
-        url: `/d/${slug || ""}`,
+        url: `/d/${slug||""}`,
       });
 
       return {
         categories: result.categories,
         articlTypes: result.articls?.length
-          ? [...new Set(result.articls.map((item) => item.type))]
-          : [],
-        articls: groupBy(result.articls, (articl) => articl.type),
+          ? [ ...new Set(result.articls.map((item) => item.type)) ]
+          :[],
+        articls: groupBy(result.articls,(articl) => articl.type),
       };
-    
-},
+
+    },
 
     updateOrderValues() {
 
-      this.categories.forEach(function (obj, index) {
+      this.categories.forEach(function(obj,index) {
 
-        obj.order = index;
-      
-});
-    
-},
+        obj.order=index;
+
+      });
+
+    },
 
     async saveOrderValues() {
 
-      const order = this.categories.map((obj) => {
+      const order=this.categories.map((obj) => {
 
-        return { id: obj.id, order: obj.order };
-      
-});
+        return {id: obj.id,order: obj.order};
+
+      });
 
       await this.saveOrder(order);
-    
-},
+
+    },
 
     async saveOrder(order) {
 
-      this.isLoading = true;
+      this.isLoading=true;
 
-      const result = await this.$http({
+      const result=await this.$http({
         method: "POST",
         url: "/categories/order",
         data: {
@@ -168,34 +154,38 @@ export default {
         },
       });
 
-      if (result?.data) {
+      if(result?.data) {
 
         return result.data;
-      
-}
 
-      this.isLoading = false;
-    
-},
+      }
+
+      this.isLoading=false;
+
+    },
 
     onUpdateOrderValues() {
 
       this.updateOrderValues();
-
       this.saveOrderValues();
-    
-},
+
+    },
     setTitleAndDescription,
   },
-};
+}
 </script>
-
-<style scoped>
+<style lang="css" scoped>
 pre {
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+.ghost {
+  border: 2px dashed red;
+}
+
+
 .ghost {
   border: 2px dashed red;
 }

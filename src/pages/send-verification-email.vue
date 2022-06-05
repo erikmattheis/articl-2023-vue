@@ -11,8 +11,8 @@ export default {
     return {
       result: null,
     };
-  
-},
+
+  },
   mounted() {
 
     this.$http({
@@ -23,20 +23,21 @@ export default {
 
         this.result =
           "Click the link in the email we sent to verify your address.";
-      
-})
+
+      })
 
       .catch((error) => {
 
-        this.$store.dispatch("errors/setError", error);
-      
-});
+        this.$store.dispatch("errors/setError",
+          error);
+
+      });
 
     this.setTitleAndDescription({
       title: "Verification sent",
     });
-  
-},
+
+  },
   methods: {},
 };
 </script>

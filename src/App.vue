@@ -1,18 +1,18 @@
 <template>
-  <the-header></the-header>
+  <the-header />
   <main>
     <router-view />
   </main>
-  <the-footer></the-footer>
-  <modal-error></modal-error>
-  <modal-success></modal-success>
+  <the-footer />
+  <modal-error />
+  <modal-success />
 </template>
 
 <script>
 /* VUE
- * 1939,1200, 1,244 .js 
+ * 1939,1200, 1,244 .js
  *  538, 3250, 3,623 .vue
- * 
+ *
 
  *
  * NODE
@@ -20,7 +20,7 @@
  *
  * 4/15.5/20, 6/1
  * 5183,6937,7420
- ****/
+ *** */
 import ModalError from "@/components/ui/ModalError.vue";
 import ModalSuccess from "@/components/ui/ModalSuccess.vue";
 import TheFooter from "@/components/layout/TheFooter.vue";
@@ -124,6 +124,14 @@ textarea {
 form ul li,
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   height: initial;
+}
+
+a span.sr {
+ height: 1px;
+ width: 1px;
+ position: absolute;
+ overflow: hidden;
+ top: -10px;
 }
 
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";

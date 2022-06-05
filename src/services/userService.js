@@ -1,10 +1,10 @@
 function charCounts(val) {
 
   return {
-    numUpper: val.length - val.replace(/[A-Z]/g, "").length,
-    numLower: val.length - val.replace(/[a-z]/g, "").length,
-    numDigit: val.length - val.replace(/[0-9]/g, "").length,
-    numSpecial: val.length - val.replace(/\W|_/g, "").length,
+    numUpper: val.length - val.replace(/[A-Z]/g, '').length,
+    numLower: val.length - val.replace(/[a-z]/g, '').length,
+    numDigit: val.length - val.replace(/[0-9]/g, '').length,
+    numSpecial: val.length - val.replace(/\W|_/g, '').length,
   };
 
 }
@@ -14,8 +14,8 @@ const scoreChars = function (val) {
   if (!val) {
 
     return 0;
-  
-}
+
+  }
 
   const chars = charCounts(val);
   const a = chars.numUpper > 0 ? 1 : 0;
@@ -31,8 +31,8 @@ const validateEmail = function (email) {
   if (!email) {
 
     return false;
-  
-}
+
+  }
 
   return email.match(
     // eslint-disable-next-line

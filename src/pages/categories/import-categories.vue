@@ -33,7 +33,6 @@ export default {
     async submitForm() {
 
       this.buttonDisabled = true;
-
       this.$http({
         method: "POST",
         url: "/categories/import-categories",
@@ -43,7 +42,6 @@ export default {
           if (result.data) {
 
             this.success = true;
-
             this.result = result.data;
           
 }

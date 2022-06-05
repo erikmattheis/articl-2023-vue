@@ -1,15 +1,9 @@
 <template>
   <div>
-    <draggable-items
-      tag="ol"
-      v-model="articls"
-      item-key="id"
-      handle=".my-handle"
-      ghost-class="ghost"
-      @change="onUpdateOrderValues"
-    >
-      <template #item="{ element }"
-        ><li>
+    <draggable-items tag="ol" v-model="articls" item-key="id" handle=".my-handle" ghost-class="ghost"
+      @change="onUpdateOrderValues">
+      <template #item="{element}">
+        <li>
           <articls-list-item :articl="element" order="0"></articls-list-item>
         </li>
       </template>
@@ -18,21 +12,31 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import DraggableItems from "vuedraggable";
-import { isEqual } from "lodash";
+import {isEqual} from "lodash";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
 
 export default {
   name: "ArticlsList",
-  components: { DraggableItems, ArticlsListItem },
+  components: {
+    DraggableItems,
+    ArticlsListItem
+  },
   data() {
-    return { articls: [], isLoading: false };
+
+    return {
+      articls: [],
+      isLoading: false
+    };
+
   },
   watch: {
     params: {
       handler(newValue) {
+
         this.updateValues(newValue);
+
       },
       deep: true,
     },
@@ -44,45 +48,73 @@ export default {
   },
   methods: {
     updateOrderValues() {
-      this.articls.forEach(function (obj, index) {
-        obj.order = index;
+
+      this.articls.forEach(function(obj,index) {
+
+        obj.order=index;
+
       });
+
     },
     async saveOrderValues() {
-      const order = this.articls.map((obj) => {
-        return { id: obj.id, order: obj.order };
+
+      const order=this.articls.map((obj) => {
+
+        return {
+          id: obj.id,
+          order: obj.order
+        };
+
       });
+
       await this.saveOrder(order);
+
     },
     onUpdateOrderValues() {
+
       this.updateOrderValues();
       this.saveOrderValues();
+
     },
     async updateValues(params) {
-      if (isEqual(params, {})) {
-        this.articls = [];
-        this.totalResults = "--";
+
+      if(isEqual(params,{})) {
+
+        this.articls=[];
+        this.totalResults="--";
+
         return;
+
       }
 
-      if (params) {
-        const result = await this.getArticls(params);
-        if (Number(result.page) === 1 || result?.results?.length === 0) {
-          this.articls = [];
-          this.totalResults = "--";
+      if(params) {
+
+        const result=await this.getArticls(params);
+
+        if(Number(result.page)===1||result?.results?.length===0) {
+
+          this.articls=[];
+          this.totalResults="--";
+
         }
 
-        this.articls = this.articls.concat(result.results);
-        this.totalPages = result.totalPages;
-        this.limit = result.limit;
-        this.totalResults = result.totalResults;
+        this.articls=this.articls.concat(result.results);
+        this.totalPages=result.totalPages;
+        this.limit=result.limit;
+        this.totalResults=result.totalResults;
+
       } else {
+
         return;
+
       }
+
     },
     async saveOrder(order) {
-      this.isLoading = true;
-      const result = await this.$http({
+
+      this.isLoading=true;
+
+      const result=await this.$http({
         method: "POST",
         url: "/articls/order",
         data: {
@@ -90,30 +122,40 @@ export default {
         },
       });
 
-      if (result?.data) {
+      if(result?.data) {
+
         return result.data;
+
       }
 
-      this.isLoading = false;
+      this.isLoading=false;
+
     },
     async getArticls(params) {
-      this.isLoading = true;
-      const result = await this.$http({
+
+      this.isLoading=true;
+
+      const result=await this.$http({
         method: "GET",
         url: "/articls",
         params,
       });
 
-      if (result?.data) {
+      if(result?.data) {
+
         return result.data;
+
       }
 
-      this.isLoading = false;
+      this.isLoading=false;
+
     },
     getComponentData() {
+
       return {
         articls: this.articls,
       };
+
     },
   },
 };
@@ -123,6 +165,7 @@ export default {
 .light-bg {
   background-color: #20303d;
 }
+
 .ghost {
   border: 2px dashed red;
 }

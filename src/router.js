@@ -1,22 +1,36 @@
 import { createRouter, createWebHistory } from "vue-router";
-import homePage from "@/pages/index.vue";
-import searchArticls from "@/pages/articls/index.vue";
-import createArticlPage from "@/pages/articls/create.vue";
-import listArticlsPage from "@/pages/articls/index.vue";
-import deleteArticlPage from "@/pages/articls/delete.vue";
+
 import categoryPage from "@/pages/d/index.vue";
-import registerPage from "@/pages/register.vue";
-import verifyEmailPage from "@/pages/verify-email.vue";
-import loginPage from "@/pages/login.vue";
-import forgotPassPage from "@/pages/forgot-pass.vue";
-import resetPasswordPage from "@/pages/reset-password.vue";
-import NotFound from "@/pages/NotFound.vue";
-import usersPage from "@/pages/users/index.vue";
+
+import createArticlPage from "@/pages/articls/create.vue";
+
 import createCategoryPage from "@/pages/categories/index.vue";
+
+import deleteArticlPage from "@/pages/articls/delete.vue";
+
+import forgotPassPage from "@/pages/forgot-pass.vue";
+
+import homePage from "@/pages/index.vue";
+
+import loginPage from "@/pages/login.vue";
+
+import notFound from "@/pages/NotFound.vue";
+
+import registerPage from "@/pages/register.vue";
+
+import resetPasswordPage from "@/pages/reset-password.vue";
+
+import searchArticls from "@/pages/articls/index.vue";
+
+import usersPage from "@/pages/users/index.vue";
+
+import verifyEmailPage from "@/pages/verify-email.vue";
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [{
+
+  routes: [
+    {
       name: "homePage",
       path: "/",
       component: homePage,
@@ -90,21 +104,19 @@ const router = createRouter({
       props: true,
     },
     {
-      name: "listArticlsPage",
-      path: "/articls",
-      component: listArticlsPage,
-    },
-    {
       name: "deleteArticl",
       path: "/articls/delete",
       component: deleteArticlPage,
+
       meta: {
         id: true,
         title: true,
       },
+
       props: true,
     },
-    { name: "NotFound", path: "/:notFound(.*)", component: NotFound },],
+    { name: "NotFound", path: "/:notFound(.*)", component: notFound },
+  ],
 });
 
 /*

@@ -1,5 +1,6 @@
 export default {
   namespaced: true,
+
   state() {
 
     return {
@@ -11,45 +12,56 @@ export default {
     };
   
 },
+
   mutations: {
     SET_SUCCESS_MESSAGE(state, payload) {
 
       state.successMessage = payload;
     
 },
+
     SET_ERROR_TITLE(state, payload) {
 
       state.errorTitle = payload;
     
 },
+
     SET_ERROR_MESSAGE(state, payload) {
 
       state.errorMessage = payload;
     
 },
+
     SET_ERROR_FILE_NAME(state, payload) {
 
       state.errorFileName = payload;
     
 },
+
     SET_ERROR_LINE_NUMBER(state, payload) {
 
       state.errorLineNumber = payload;
     
 },
+
     SET_ERROR_STACK(state, payload) {
 
       state.errorStack = payload;
     
 },
   },
+
   actions: {
     setError(context, payload) {
 
       let errorTitle = "Error";
+
       let errorMessage = "Unknown error";
+
       let errorFileName = "";
+
       let errorLineNumber = "";
+
       let errorStack = "";
 
       if (payload?.response?.data?.message) {
@@ -60,8 +72,7 @@ export default {
 
         errorMessage = payload?.message;
       
-} else if (typeof payload === "string" && payload.length) {
-
+} else if (typeof payload === "string" && payload.length > 0) {
         errorMessage = payload;
       
 }
@@ -81,8 +92,8 @@ export default {
         errorStack = payload.response.data.stack;
 
         errorStack = `${errorStack.slice(0, 100)} ${errorStack.slice(100)}`;
-      
-} else if (payload?.stack) {
+
+      } else if (payload?.stack) {
 
         errorStack = payload.stack;
 
@@ -93,25 +104,21 @@ export default {
       if (payload?.response?.data?.lineNumber) {
 
         errorLineNumber = payload.response.data.lineNumber;
-      
-} else if (payload?.lineNumber) {
 
+      } else if (payload?.lineNumber) {
         errorLineNumber = payload.message;
       
 }
 
-      if (
-        payload?.response?.data?.error &&
-        typeof payload?.response?.data?.error === "string"
-      ) {
+      if (payload?.response?.data?.error && typeof payload?.response?.data?.error === "string") {
 
         errorTitle = payload.response.data.error;
-      
-} else if (payload?.response?.data?.name) {
+
+      } else if (payload?.response?.data?.name) {
 
         errorTitle = payload.response.data.name;
-      
-} else if (payload?.name) {
+
+      } else if (payload?.name) {
 
         errorTitle = payload.name;
       
@@ -128,6 +135,7 @@ export default {
       context.commit("SET_ERROR_STACK", errorStack);
     
 },
+
     clearError(context) {
 
       context.commit("SET_ERROR_TITLE", "");
@@ -141,10 +149,8 @@ export default {
       context.commit("SET_ERROR_STACK", "");
     
 },
-    setMetaDescriptionAndDocumentTitle(
-      context,
-      { documentTitle, metaDescription }
-    ) {
+
+    setMetaDescriptionAndDocumentTitle(context, { documentTitle, metaDescription }) {
 
       context.commit("SET_DOCUMENT_TITLE", documentTitle);
 
@@ -161,7 +167,7 @@ export default {
         meta.name = "description";
 
         document
-          .getElementsByTagName("head")[0]
+          .querySelectorAll("head")[0]
           .appendChild(meta)
           .setAttribute("content", metaDescription);
       
@@ -173,40 +179,47 @@ export default {
     
 },
   },
+
   getters: {
     errorMessage(state) {
 
       return state.errorMessage;
     
 },
+
     errorTitle(state) {
 
       // console.error(state.error.title);
       return state.errorTitle;
     
 },
+
     errorFileName(state) {
 
       // console.error(state.error.fileName);
       return state.errorFileName;
     
 },
+
     errorLineNumber(state) {
 
       // console.error(state.error.lineNumber);
       return state.errorLineNumber;
     
 },
+
     errorStack(state) {
 
       return state.errorStack;
     
 },
+
     documentTitle(state) {
 
       return state.documentTitle;
     
 },
+
     metaDescription(state) {
 
       return state.metaDescription;

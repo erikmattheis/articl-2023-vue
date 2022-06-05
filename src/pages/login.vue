@@ -2,51 +2,19 @@
   <article>
     <h1>Log in</h1>
     <form v-if="!isLoggedIn">
-      <input
-        type="hidden"
-        name="username"
-        id="username"
-        autocomplete="username"
-      />
-      <label for="email">Email</label>
-      <input
-        v-model="email"
-        type="text"
-        name="email"
-        id="email"
-        autocomplete="email"
-      />
+      <input type="hidden" name="username" id="username" autocomplete="username" />
+      <label for="email">Email
+        <input v-model="email" type="text" name="email" id="email" autocomplete="email" /></label>
 
-      <label for="password">Password</label>
-      <div class="toggle-password">
-        <input
-          v-if="showPassword"
-          v-model="password"
-          type="text"
-          name="password"
-          id="password"
-          autocomplete="current-password"
-        />
-        <input
-          v-if="!showPassword"
-          v-model="password"
-          type="password"
-          name="password"
-          id="password"
-          autocomplete="current-password"
-        />
-        <the-button-toggle-hidden
-          class="togglePasswordMask"
-          @show="showPassword = !showPassword"
-        >
-        </the-button-toggle-hidden>
-      </div>
-      <button
-        type="submit"
-        id="Login"
-        :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
+      <label for="password">Password<div class="toggle-password">
+          <input v-if="showPassword" v-model="password" type="text" name="password" id="password"
+            autocomplete="current-password" />
+          <input v-if="!showPassword" v-model="password" type="password" name="password" id="password"
+            autocomplete="current-password" />
+          <the-button-toggle-hidden class="togglePasswordMask" @show="showPassword = !showPassword">
+          </the-button-toggle-hidden>
+        </div></label>
+      <button type="submit" id="Login" :aria-busy="buttonDisabled" @click.prevent="submitForm()">
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
@@ -57,15 +25,15 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-import TheButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { isLoggedIn, setTokens } from "@/services/tokensService";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import validateEmail from "@/services/emailValidationService";
 
 export default {
   name: "loginPage",
   components: {
-    TheButtonToggleHidden,
+    theButtonToggleHidden,
   },
   data() {
 
@@ -77,13 +45,13 @@ export default {
       showPassword: false,
       buttonDisabled: false,
     };
-  
-},
+
+  },
   mounted() {
 
     this.setTitleAndDescription({ title: "Login" });
-  
-},
+
+  },
   computed: {
     isLoggedIn,
   },
@@ -91,8 +59,8 @@ export default {
     resetFormErrors() {
 
       this.errorMessage = "";
-    
-},
+
+    },
     checkForm() {
 
       let passed = true;
@@ -102,18 +70,18 @@ export default {
         this.errorMessage = "Please enter a valid email.";
 
         passed = false;
-      
-} else if (this.password && this.password.length < 8) {
+
+      } else if (this.password && this.password.length < 8) {
 
         this.errorMessage = "Passwords are at least eight characters.";
 
         passed = false;
-      
-}
+
+      }
 
       return passed;
-    
-},
+
+    },
 
     async submitForm() {
 
@@ -121,7 +89,7 @@ export default {
 
         this.buttonDisabled = true;
 
-        this.$http({
+        const result = this.$http({
           method: "POST",
           url: "/auth/login",
           data: {
@@ -129,66 +97,54 @@ export default {
             email: this.email,
           },
         })
-          .then((result) => {
 
-            if (result?.status > 309) {
 
-              this.$store.dispatch("errors/setError", result);
+        if (result?.status > 309) {
 
-              return;
-            
-}
+          this.$store.dispatch("errors/setError",
+            result);
 
-            this.resetFormErrors();
+          return;
 
-            setTokens(result);
+        }
 
-            const theme =
-              result?.data?.user?.theme !== "dark" ? "light" : "dark";
+        this.resetFormErrors();
 
-            this.$cookies.set("data-theme", theme);
+        setTokens(result);
 
-            document.documentElement.setAttribute("data-theme", theme);
+        const theme =
+          result?.data?.user?.theme !== "dark" ? "light" : "dark";
 
-            if (
-              this.$route.query.redirect &&
-              this.$route.query.redirect !== "/login"
-            ) {
+        this.$cookies.set("data-theme",
+          theme);
 
-              this.$router.push({
-                path: this.$route.query.redirect,
-              });
-            
-} else {
+        document.documentElement.setAttribute("data-theme",
+          theme);
 
-              this.$router.push({
-                name: "homePage",
-              });
-            
-}
-          
-})
+        if (
+          this.$route.query.redirect &&
+          this.$route.query.redirect !== "/login"
+        ) {
 
-          .catch((error) => {
+          this.$router.push({
+            path: this.$route.query.redirect,
+          });
 
-            this.$store.dispatch("errors/setError", error);
-          
-})
-          .finally(() => {
+        } else {
 
-            this.buttonDisabled = false;
-          
-});
-      
-} else {
+          this.$router.push({
+            name: "homePage",
+          });
 
-        this.$store.dispatch("errors/setError", {
-          message: this.errorMessage,
-        });
-      
-}
-    
-},
+        }
+
+      }
+
+
+      this.buttonDisabled = false;
+
+
+    },
     setTitleAndDescription,
   },
 };
