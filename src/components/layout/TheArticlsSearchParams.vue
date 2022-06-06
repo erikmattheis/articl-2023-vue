@@ -62,9 +62,9 @@
 
       <li
         v-if="
-          params?.types?.length && params?.types?.length !== allTypes?.length
+          params.types?.length && params.types?.length !== allTypes?.length
         ">
-        Type is <span v-if="params?.types?.length > 1">one of </span>
+        Type is <span v-if="params.types?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.types, "or") }}</strong>
         <a href @click.prevent="resetValue('types')" @keyup.enter="resetValue('types')">
           <vue-feather
