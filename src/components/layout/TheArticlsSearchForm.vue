@@ -72,6 +72,7 @@
          >
           {{ comparison }}
         </label>
+
         <select
           v-model="year"
           autocomplete="off"

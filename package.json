@@ -58,7 +58,8 @@
       "plugin:vue/vue3-recommended",
       "eslint:recommended",
       "@vue/airbnb",
-      "plugin:promise/recommended"
+      "plugin:promise/recommended",
+      "plugin:vuejs-accessibility/recommended"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"
@@ -82,11 +83,12 @@
       "no-multiple-empty-lines": [
         "error",
         {
-            "max": 1,
-            "maxBOF": 0,
-            "maxEOF": 1
+          "max": 1,
+          "maxBOF": 0,
+          "maxEOF": 1
         }
-    ],
+      ],
+      "vuejs-accessibility/no-onchange": "off",
       "object-curly-newline": [
         "error",
         {
@@ -107,36 +109,36 @@
           "allowSingleLineBlocks": true
         }
       ],
-        "padding-line-between-statements": [
-            "error",
-            {
-                "blankLine": "always",
-                "prev": "*",
-                "next": "*"
-            },
-            {
-                "blankLine": "never",
-                "prev": "const",
-                "next": "const"
-            },
-            {
-                "blankLine": "never",
-                "prev": "let",
-                "next": "let"
-            },
-            {
-                "blankLine": "always",
-                "prev": "expression",
-                "next": "expression"
-            },
-            {
-              "blankLine": "never",
-              "prev": "import",
-              "next": "import"
-          }
-        ],
-        "prefer-arrow-callback":"error",
-        "func-names":"off"
+      "padding-line-between-statements": [
+        "error",
+        {
+          "blankLine": "always",
+          "prev": "*",
+          "next": "*"
+        },
+        {
+          "blankLine": "never",
+          "prev": "const",
+          "next": "const"
+        },
+        {
+          "blankLine": "never",
+          "prev": "let",
+          "next": "let"
+        },
+        {
+          "blankLine": "always",
+          "prev": "expression",
+          "next": "expression"
+        },
+        {
+          "blankLine": "never",
+          "prev": "import",
+          "next": "import"
+        }
+      ],
+      "prefer-arrow-callback": "error",
+      "func-names": "off"
     }
   },
   "browserslist": [
