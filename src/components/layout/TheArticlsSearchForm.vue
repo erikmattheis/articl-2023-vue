@@ -91,17 +91,17 @@
             <fieldset>
               Type
               <label
-                :for="type"
-                v-for="type in allTypes"
-                :key="type"
+                :for="articlType"
+                v-for="articlType in allTypes"
+                :key="articlType"
               >
                 <input
                   v-model="types"
                   type="checkbox"
-                  :value="type"
+                  :value="articlType"
                   checked="checked"
-                  :id="type"
-                >{{ type }}</label>
+                  :id="articlType"
+                >{{ articlType }}</label>
             </fieldset>
           </div>
           <div>
