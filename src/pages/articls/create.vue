@@ -1,10 +1,10 @@
 <template>
   <article>
     <h1 v-if="!success">
-      {{ id ? "Edit" : "Create" }} articl {{ id }}
+      {{ formAction }} articl
     </h1>
     <h1 v-else>
-      Articl created
+      Success
     </h1>
     <template v-if="isLoggedIn">
       <form v-if="!success">
@@ -201,6 +201,7 @@ export default {
       buttonDisabled: false,
       buttonFetchDisabled: false,
       categorySlug: this.$route.query.slug,
+      formAction: '',
       journal: '',
       month: '',
       status: 'Published',
@@ -215,6 +216,8 @@ export default {
     isLoggedIn,
   },
   mounted() {
+
+    this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
 
@@ -231,7 +234,7 @@ export default {
     }
 
     setTitleAndDescription({
-      title: 'Forgot Password',
+      title: this.formAction,
     });
 
   },

@@ -76,7 +76,17 @@ function getId(url) {
 
   }
 
-  return id.slice(Math.max(0, url.lastIndexOf('/') + 1));
+  console.log('url', url);
+
+  console.log('id', id);
+
+  console.log('last', url.lastIndexOf('/'));
+
+  const sliced = id.slice(Math.max(0, url.lastIndexOf('/') + 1));
+
+  console.log('sliced', sliced);
+
+  return id.slice(Math.max(0, id.lastIndexOf('/') + 1));
 
 }
 
@@ -133,6 +143,9 @@ function api(surl) {
     (results) => results.text().then((string_) => {
 
       const responseDocument = new DOMParser().parseFromString(string_, 'application/xml');
+
+      console.log('f', responseDocument);
+
       const result = {
         authors: '',
       };
@@ -146,7 +159,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -170,7 +183,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -186,7 +199,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -196,7 +209,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -206,7 +219,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -216,7 +229,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -226,7 +239,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -239,7 +252,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -257,7 +270,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -267,7 +280,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -277,7 +290,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -287,7 +300,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -297,7 +310,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -307,7 +320,7 @@ function api(surl) {
 
           } catch (error) {
 
-            console.error(error);
+            throw new Error(error);
 
           }
 
@@ -362,7 +375,7 @@ function scrape(surl) {
 
         } catch (error) {
 
-          console.error(error);
+          throw new Error(error);
 
         }
 
