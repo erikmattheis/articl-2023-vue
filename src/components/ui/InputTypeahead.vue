@@ -151,8 +151,6 @@ export default {
 
       this.fetchData().then((response) => {
 
-        console.log('response', response);
-
         const {
           data,
         } = response;

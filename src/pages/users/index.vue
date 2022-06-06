@@ -185,56 +185,55 @@ export default {
 
     },
 
-  },
-  async submitForm() {
+    async submitForm() {
 
-    this.resetFormErrors();
+      this.resetFormErrors();
 
-    if (this.checkForm() === true) {
+      if (this.checkForm() === true) {
 
-      this.buttonDisabled = true;
+        this.buttonDisabled = true;
 
-      const result = await this.$http({
-        method: 'PATCH',
-        url: '/users/me',
-        data: {
-          nameFirst: this.nameFirst,
-          nameLast: this.nameLast,
-          email: this.email,
-          institution: this.institution,
-          education: this.education,
-          theme: this.theme,
-        },
-      });
+        const result = await this.$http({
+          method: 'PATCH',
+          url: '/users/me',
+          data: {
+            nameFirst: this.nameFirst,
+            nameLast: this.nameLast,
+            email: this.email,
+            institution: this.institution,
+            education: this.education,
+            theme: this.theme,
+          },
+        });
 
-      if (result.data) {
+        if (result.data) {
 
-        this.success = true;
+          this.success = true;
 
-        this.result = result.data;
+          this.result = result.data;
 
-        this.$store.dispatch('modals/setSuccessTitle', 'User Updated');
+          this.$store.dispatch('modals/setSuccessTitle', 'User Updated');
 
-        this.$store.dispatch(
-          'modals/setSuccessMessage',
-          'Your account information was successfully updated.',
-        );
+          this.$store.dispatch(
+            'modals/setSuccessMessage',
+            'Your account information was successfully updated.',
+          );
 
-        this.buttonDisabled = false;
+          this.buttonDisabled = false;
+
+        }
+
+      } else {
+
+        this.$store.dispatch('errors/setError', {
+          message: this.errorMessage,
+        });
 
       }
 
-    } else {
-
-      this.$store.dispatch('errors/setError', {
-        message: this.errorMessage,
-      });
-
-    }
-
+    },
+    validateEmail,
   },
-  validateEmail,
-
 };
 </script>
 
