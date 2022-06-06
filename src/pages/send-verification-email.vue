@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+
 export default {
   data() {
 
@@ -34,7 +36,7 @@ export default {
 
       });
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Verification sent',
     });
 

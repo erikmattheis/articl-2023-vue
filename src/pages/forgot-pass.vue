@@ -56,7 +56,7 @@ export default {
   },
   mounted() {
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Forgot pass',
     });
 
@@ -120,7 +120,6 @@ export default {
       }
 
     },
-    setTitleAndDescription,
   },
 };
 </script>

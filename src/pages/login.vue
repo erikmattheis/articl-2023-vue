@@ -91,7 +91,7 @@ export default {
   },
   mounted() {
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Login',
     });
 
@@ -188,7 +188,6 @@ export default {
       this.buttonDisabled = false;
 
     },
-    setTitleAndDescription,
   },
 };
 </script>

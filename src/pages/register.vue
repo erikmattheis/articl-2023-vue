@@ -140,7 +140,7 @@ export default {
   },
   mounted() {
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Registration',
     });
 
@@ -229,7 +229,6 @@ export default {
     },
     scoreChars,
     validateEmail,
-    setTitleAndDescription,
   },
 };
 </script>

@@ -13,13 +13,10 @@ import { setTitleAndDescription } from '@/services/htmlMetaService';
 export default {
   mounted() {
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Not Found',
     });
 
-  },
-  methods: {
-    setTitleAndDescription,
   },
 };
 </script>

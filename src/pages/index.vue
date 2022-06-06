@@ -63,7 +63,7 @@ export default {
 
         this.title = documentTitle;
 
-        this.setTitleAndDescription({
+        setTitleAndDescription({
           documentTitle, metaDescription,
         });
 
@@ -90,7 +90,6 @@ export default {
       });
 
     },
-    setTitleAndDescription,
   },
 };
 </script>

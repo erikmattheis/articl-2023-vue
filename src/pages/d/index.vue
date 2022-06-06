@@ -119,7 +119,7 @@ export default {
 
       const description = results.category[0]?.description;
 
-      this.setTitleAndDescription({
+      setTitleAndDescription({
         title: this.title, description,
       });
 
@@ -148,8 +148,6 @@ export default {
         method: 'GET',
         url: `/d/${slug || ''}`,
       });
-
-      console.log('rrrr', result);
 
       return {
         categories: result.data.categories,
@@ -209,7 +207,6 @@ export default {
       this.saveOrderValues();
 
     },
-    setTitleAndDescription,
   },
 };
 </script>

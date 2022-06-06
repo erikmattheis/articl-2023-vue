@@ -177,6 +177,7 @@ import cardNotification from '@/components/ui/CardNotification.vue';
 import inputTypeahead from '@/components/ui/InputTypeahead.vue';
 import { fetchData } from '@/services/fetchingService';
 import { isLoggedIn } from '@/services/tokensService';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'EditArticlPage',
@@ -229,7 +230,7 @@ export default {
 
     }
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Forgot Password',
     });
 

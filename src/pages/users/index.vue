@@ -234,7 +234,6 @@ export default {
 
   },
   validateEmail,
-  setTitleAndDescription,
 
 };
 </script>

@@ -128,7 +128,7 @@ export default {
   },
   mounted() {
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Reset Password',
     });
 
@@ -203,7 +203,6 @@ export default {
     },
     scoreChars,
     validateEmail,
-    setTitleAndDescription,
   },
 };
 </script>

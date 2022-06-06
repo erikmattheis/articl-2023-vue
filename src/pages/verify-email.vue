@@ -24,13 +24,12 @@ export default {
 
     this.submitForm();
 
-    this.setTitleAndDescription({
+    setTitleAndDescription({
       title: 'Forgot Password',
     });
 
   },
   methods: {
-    setTitleAndDescription,
     async submitForm() {
 
       this.buttonDisabled = true;
