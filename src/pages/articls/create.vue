@@ -336,8 +336,7 @@ export default {
         this.buttonDisabled = true;
 
         const verb = id ? 'PUT' : 'POST';
-
-        this.$http({
+        const result = await this.$http({
           method: verb,
           url: `/articls/${id}`,
           data: {
@@ -353,36 +352,19 @@ export default {
             title: this.title,
             year: this.year,
           },
-        })
-          .then((result) => {
-
-            if (result.data) {
-
-              this.success = true;
-
-              this.result = result.data;
-
-            }
-
-          })
-          .catch((error) => {
-
-            this.$store.dispatch('errors/setError', error);
-
-          })
-          .finally(() => {
-
-            this.buttonDisabled = false;
-
-          });
-
-      } else {
-
-        this.$store.dispatch('errors/setError', {
-          message: this.errorMessage,
         });
 
+        this.buttonDisabled = false;
+
+        this.success = true;
+
+        Object.assign(this, result.dataz);
+
       }
+
+      this.$store.dispatch('errors/setError', {
+        message: this.errorMessage,
+      });
 
     },
 

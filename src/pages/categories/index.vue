@@ -170,7 +170,7 @@ export default {
 
         this.buttonDisabled = true;
 
-        this.$http({
+        const result = await this.$http({
           method: 'POST',
           url: '/categories',
           data: {
@@ -179,31 +179,13 @@ export default {
             description: this.description,
             parentSlug: this.parentSlug,
           },
-        })
-          .then((result) => {
+        });
 
-            if (result.data) {
+        this.buttonDisabled = false;
 
-              this.success = true;
+        this.success = true;
 
-              this.result = result.data;
-
-            }
-
-          })
-          .catch((error) => {
-
-            this.$store.dispatch(
-              'errors/setError',
-              error,
-            );
-
-          })
-          .finally(() => {
-
-            this.buttonDisabled = false;
-
-          });
+        this.result = result.data;
 
       } else {
 

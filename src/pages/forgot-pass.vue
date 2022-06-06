@@ -82,40 +82,29 @@ export default {
 
         this.buttonDisabled = true;
 
-        this.$http({
+        const result = await this.$http({
           method: 'POST',
           url: '/auth/forgot-password',
           data: {
             email: this.email,
           },
-        })
-          .then((result) => {
+        });
 
-            this.$store.dispatch('modals/setSuccessTitle', 'Email sent');
+        this.$store.dispatch('modals/setSuccessTitle', 'Email sent');
 
-            this.$store.dispatch('modals/setSuccessMessage', 'Check your email for instructions how to reset your password.');
+        this.$store.dispatch('modals/setSuccessMessage', 'Check your email for instructions how to reset your password.');
 
-            if (result?.data?.message) {
+        if (result?.data?.message) {
 
-              this.result = result?.data?.message;
+          this.result = result.data.message;
 
-            } else {
+        } else {
 
-              this.result = result.response;
+          this.result = result.response;
 
-            }
+        }
 
-          })
-          .catch((error) => {
-
-            this.$store.dispatch('errors/setError', error);
-
-          })
-          .finally(() => {
-
-            this.buttonDisabled = false;
-
-          });
+        this.buttonDisabled = false;
 
       }
 

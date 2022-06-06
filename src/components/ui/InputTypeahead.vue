@@ -149,21 +149,15 @@ export default {
 
       }
 
-      this.fetchData().then((response) => {
+      const response = await this.fetchData();
 
-        const {
-          data,
-        } = response;
+      this.items = response.data.slice(0, 7);
 
-        this.items = data.slice(0, 7);
+      this.current = -1;
 
-        this.current = -1;
+      this.loading = false;
 
-        this.loading = false;
-
-        this.hit();
-
-      });
+      this.hit();
 
     },
 

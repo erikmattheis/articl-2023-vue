@@ -119,7 +119,7 @@ function getDB(url) {
 // }
 //
 // Handle the Async fetch of Pubmed Data
-function api(surl) {
+async function api(surl) {
 
   const baseUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
   const mode = 'efetch';
@@ -127,289 +127,276 @@ function api(surl) {
   const id = getId(surl);
   const type = 'xml';
   const request = new Request(`${baseUrl}${mode}.fcgi?db=${database}&id=${id}&rettype=abstract&retmode=${type}`);
+  const results = await fetch(request);
+  const str = await results.text();
+  const responseDocument = new DOMParser().parseFromString(str, 'application/xml');
 
-  return fetch(request).then(// results returns XML. lets cast this to a string, then create
-    // a new DOM object out of it!
-    (results) => results.text().then((string_) => {
+  console.log('f', responseDocument);
 
-      const responseDocument = new DOMParser().parseFromString(string_, 'application/xml');
+  const result = {
+    authors: '',
+  };
 
-      console.log('f', responseDocument);
+  switch (database) {
 
-      const result = {
-        authors: '',
-      };
+    case 'pmc':
+      try {
 
-      switch (database) {
+        result.title = responseDocument.querySelectorAll('article-title')[0].textContent;
 
-        case 'pmc':
-          try {
+      } catch (error) {
 
-            result.title = responseDocument.querySelectorAll('article-title')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            const authors = responseDocument.querySelectorAll('contrib');
-
-            authors.forEach((element) => {
-
-              if (element.querySelector('surname').textContent !== 'undefined') {
-
-                result.authors += element.querySelector('surname') ? `${element.querySelector('surname').textContent} ` : '';
-
-                result.authors += element.querySelector('given-names') ? `${element.querySelector('given-names').textContent} ` : '';
-
-                result.authors += element.querySelector('degrees') ? `${element.querySelector('degrees').textContent}<br><br>` : '';
-
-              }
-
-            });
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            const temporary = responseDocument.querySelectorAll('aff');
-
-            temporary.forEach((element) => {
-
-              result.affiliation += `${element.textContent}<br><br>`;
-
-            });
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.journal = responseDocument.querySelectorAll('journal-title')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.abstract = responseDocument.querySelectorAll('abstract')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          break;
-
-        case 'pubmed':
-          try {
-
-            result.title = responseDocument.querySelectorAll('ArticleTitle')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            const authors = responseDocument.querySelectorAll('Author');
-
-            authors.forEach((element) => {
-
-              result.authors += element.querySelector('LastName') ? `${element.querySelector('LastName').textContent} ` : '';
-
-              result.authors += element.querySelector('ForeName') ? `${element.querySelector('ForeName').textContent},` : '<br><br>';
-
-            });
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.affiliation = responseDocument.querySelectorAll('Affiliation')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.journal = responseDocument.querySelectorAll('Title')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          try {
-
-            result.abstract = responseDocument.querySelectorAll('Abstract')[0].textContent;
-
-          } catch (error) {
-
-            throw new Error(error);
-
-          }
-
-          break;
-
-        default:
-          throw new Error('Unknown function called in scraper');
+        throw new Error(error);
 
       }
 
-      return result;
+      try {
 
-    }),
-  );
+        const authors = responseDocument.querySelectorAll('contrib');
+
+        authors.forEach((element) => {
+
+          if (element.querySelector('surname').textContent !== 'undefined') {
+
+            result.authors += element.querySelector('surname') ? `${element.querySelector('surname').textContent} ` : '';
+
+            result.authors += element.querySelector('given-names') ? `${element.querySelector('given-names').textContent} ` : '';
+
+            result.authors += element.querySelector('degrees') ? `${element.querySelector('degrees').textContent}<br><br>` : '';
+
+          }
+
+        });
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        const temporary = responseDocument.querySelectorAll('aff');
+
+        temporary.forEach((element) => {
+
+          result.affiliation += `${element.textContent}<br><br>`;
+
+        });
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.journal = responseDocument.querySelectorAll('journal-title')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.abstract = responseDocument.querySelectorAll('abstract')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      break;
+
+    case 'pubmed':
+      try {
+
+        result.title = responseDocument.querySelectorAll('ArticleTitle')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        const authors = responseDocument.querySelectorAll('Author');
+
+        authors.forEach((element) => {
+
+          result.authors += element.querySelector('LastName') ? `${element.querySelector('LastName').textContent} ` : '';
+
+          result.authors += element.querySelector('ForeName') ? `${element.querySelector('ForeName').textContent},` : '<br><br>';
+
+        });
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.affiliation = responseDocument.querySelectorAll('Affiliation')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.journal = responseDocument.querySelectorAll('Title')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      try {
+
+        result.abstract = responseDocument.querySelectorAll('Abstract')[0].textContent;
+
+      } catch (error) {
+
+        throw new Error(error);
+
+      }
+
+      break;
+
+    default:
+      throw new Error('Unknown function called in scraper');
+
+  }
+
+  return result;
 
 }
 
-function scrape(surl) {
+async function scrape(surl) {
 
   const url = `https://cors-anywhere.herokuapp.com/${surl}`;
   const database = getDB(surl);
+  const response = await fetch(url);
+  const html = await response.text();
+  const parser = new DOMParser();
+  const responseDocument = parser.parseFromString(html, 'text/html');
+  const result = {
+  };
 
-  return fetch(url).then((response) => response.text()).then(function (html) {
+  switch (database) {
 
-    const parser = new DOMParser();
-    const responseDocument = parser.parseFromString(html, 'text/html');
-    const result = {
-    };
+    case 'pmc':
+      try {
 
-    switch (database) {
+        result.title = responseDocument.querySelectorAll('h1[class="content-title"]')[0].textContent;
 
-      case 'pmc':
-        try {
+        result.authors = responseDocument.querySelectorAll('[class="contrib-group fm-author"]') ? responseDocument.querySelectorAll('[class="contrib-group fm-author"]')[0].textContent : '';
 
-          result.title = responseDocument.querySelectorAll('h1[class="content-title"]')[0].textContent;
+        const temporary = responseDocument.querySelectorAll('[class="fm-affl"]');
 
-          result.authors = responseDocument.querySelectorAll('[class="contrib-group fm-author"]') ? responseDocument.querySelectorAll('[class="contrib-group fm-author"]')[0].textContent : '';
+        temporary.forEach((element) => {
 
-          const temporary = responseDocument.querySelectorAll('[class="fm-affl"]');
+          result.affiliation += `${element.textContent}<br><br>`;
 
-          temporary.forEach((element) => {
+        });
 
-            result.affiliation += `${element.textContent}<br><br>`;
+        result.journal = responseDocument.querySelectorAll('li[class="archive"]')[0].textContent;
 
-          });
+        result.year = responseDocument.querySelectorAll('li[class="issue-page"]')[0].textContent;
 
-          result.journal = responseDocument.querySelectorAll('li[class="archive"]')[0].textContent;
+        result.abstract = responseDocument.querySelectorAll('[class="tsec sec"]')[0].textContent;
 
-          result.year = responseDocument.querySelectorAll('li[class="issue-page"]')[0].textContent;
+      } catch (error) {
 
-          result.abstract = responseDocument.querySelectorAll('[class="tsec sec"]')[0].textContent;
+        throw new Error(error);
 
-        } catch (error) {
+      }
 
-          throw new Error(error);
+      break;
 
-        }
+    case 'pubmed':
+      try {
 
-        break;
+        result.title = responseDocument.querySelectorAll('[class="heading-title"]')[0].textContent;
 
-      case 'pubmed':
-        try {
+        result.authors = responseDocument.querySelectorAll('[class="authors-list"]') ? responseDocument.querySelectorAll('[class="authors-list"]')[0].textContent : '';
 
-          result.title = responseDocument.querySelectorAll('[class="heading-title"]')[0].textContent;
+        result.affiliation = responseDocument.querySelectorAll('[class="affiliations"] ul')[0].textContent;
 
-          result.authors = responseDocument.querySelectorAll('[class="authors-list"]') ? responseDocument.querySelectorAll('[class="authors-list"]')[0].textContent : '';
+        result.journal = responseDocument.querySelectorAll('#full-view-journal-trigger')[0].textContent;
 
-          result.affiliation = responseDocument.querySelectorAll('[class="affiliations"] ul')[0].textContent;
+        const yearTry = responseDocument.querySelectorAll('span[class="cit"]')[0].textContent;
 
-          result.journal = responseDocument.querySelectorAll('#full-view-journal-trigger')[0].textContent;
+        [result.year] = yearTry.split(' ');
 
-          const yearTry = responseDocument.querySelectorAll('span[class="cit"]')[0].textContent;
+        const monthTry = responseDocument.querySelectorAll('span[class="cit"]')[0].textContent;
 
-          [result.year] = yearTry.split(' ');
+        [, result.month] = monthTry.split(' ');
 
-          const monthTry = responseDocument.querySelectorAll('span[class="cit"]')[0].textContent;
+        result.abstract = responseDocument.querySelectorAll('#enc-abstract')[0].textContent;
 
-          [, result.month] = monthTry.split(' ');
+      } catch (error) {
 
-          result.abstract = responseDocument.querySelectorAll('#enc-abstract')[0].textContent;
+        this.$store.dispatch('errors/setError', error);
 
-        } catch (error) {
+      }
 
-          this.$store.dispatch('errors/setError', error);
+      break;
 
-        }
+    default:
+      throw new Error('Unknown condition passed to scraper.');
 
-        break;
-
-      default:
-        throw new Error('Unknown condition passed to scraper.');
-
-    }
-
-  }).catch(function (error) {
-
-    this.$store.dispatch('errors/setError', error);
-
-  });
+  }
 
 }
 
