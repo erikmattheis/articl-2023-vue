@@ -76,16 +76,6 @@ function getId(url) {
 
   }
 
-  console.log('url', url);
-
-  console.log('id', id);
-
-  console.log('last', url.lastIndexOf('/'));
-
-  const sliced = id.slice(Math.max(0, url.lastIndexOf('/') + 1));
-
-  console.log('sliced', sliced);
-
   return id.slice(Math.max(0, id.lastIndexOf('/') + 1));
 
 }

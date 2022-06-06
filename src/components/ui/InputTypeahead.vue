@@ -143,7 +143,15 @@ export default {
         value: this.stringValue,
       });
 
+      if (this.stringValue.length < 2) {
+
+        return;
+
+      }
+
       this.fetchData().then((response) => {
+
+        console.log('response', response);
 
         const {
           data,
