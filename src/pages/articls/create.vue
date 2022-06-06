@@ -229,6 +229,10 @@ export default {
 
     }
 
+    this.setTitleAndDescription({
+      title: 'Forgot Password',
+    });
+
   },
   methods: {
     async getCurrentArticl() {
@@ -236,8 +240,6 @@ export default {
       if (this.id) {
 
         const result = await this.getArticl(this.id);
-
-        console.log('result', result);
 
         Object.assign(this, result);
 
@@ -275,17 +277,6 @@ export default {
         this.$store.dispatch('errors/setError', 'Please enter a URL');
 
       }
-
-    },
-    setTitleAndDescription() {
-
-      const documentTitle = 'Articl.net Registration';
-      const metaDescription = '';
-
-      this.$store.dispatch('metas/setMetaDescriptionAndDocumentTitle', {
-        documentTitle,
-        metaDescription,
-      });
 
     },
     resetFormErrors() {

@@ -26,7 +26,12 @@ export default {
   name: 'ArticlActions',
   components: {
   },
-  props: ['id', 'title'],
+  props: {
+    id: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
 
     return {
@@ -36,8 +41,6 @@ export default {
   },
   computed: {
     isLoggedIn,
-  },
-  methods: {
   },
 };
 </script>

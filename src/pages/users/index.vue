@@ -83,6 +83,7 @@ export default {
     return {
       nameFirst: '',
       nameLast: '',
+      formAction: 'Create',
       email: null,
       password2: undefined,
       institution: null,
@@ -104,6 +105,12 @@ export default {
   mounted() {
 
     this.fetchData();
+
+    this.formAction = this.id ? 'Edit' : 'Create';
+
+    setTitleAndDescription({
+      title: this.formAction,
+    });
 
   },
   methods: {

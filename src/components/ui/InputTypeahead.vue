@@ -45,7 +45,15 @@ export default {
     VueFeather,
   },
   props: {
-    src: String, query: String, inputValue: String,
+    src: {
+      type: String, default: '',
+    },
+    query: {
+      type: String, default: '',
+    },
+    inputValue: {
+      type: String, default: '',
+    },
   },
   emits: {
     typeaheadUpdated: null,

@@ -149,12 +149,15 @@ export default {
         url: `/d/${slug || ''}`,
       });
 
+      console.log('rrrr', result);
+
       return {
-        categories: result.categories,
-        articlTypes: result.articls?.length
-          ? [...new Set(result.articls.map((item) => item.type))]
+        categories: result.data.categories,
+        category: result.data.category,
+        articlTypes: result.data.articls?.length
+          ? [...new Set(result.data.articls.map((item) => item.type))]
           : [],
-        articls: groupBy(result.articls, (articl) => articl.type),
+        articls: groupBy(result.data.articls, (articl) => articl.type),
       };
 
     },

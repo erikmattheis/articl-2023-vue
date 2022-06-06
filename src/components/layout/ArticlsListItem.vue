@@ -76,7 +76,10 @@ export default {
     ArticlActions,
   },
   props: {
-    articl: Object,
+    articl: {
+      type: Object,
+      default: undefined,
+    },
   },
   data() {
 

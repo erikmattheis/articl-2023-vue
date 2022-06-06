@@ -17,7 +17,9 @@ export default {
     VueFeather,
   },
   props: {
-    successMessage: String,
+    successMessage: {
+      type: String, default: '',
+    },
   },
   data() {
 

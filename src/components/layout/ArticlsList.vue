@@ -40,6 +40,11 @@ export default {
     };
 
   },
+  computed: {
+    ...mapGetters({
+      params: 'articlsParams/params',
+    }),
+  },
   watch: {
     params: {
       handler(newValue) {
@@ -49,11 +54,6 @@ export default {
       },
       deep: true,
     },
-  },
-  computed: {
-    ...mapGetters({
-      params: 'articlsParams/params',
-    }),
   },
   methods: {
     updateOrderValues() {

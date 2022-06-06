@@ -55,11 +55,10 @@ export default {
       type: Number,
       required: true,
     },
-    currentPage: {
-      type: Number,
-      required: true,
-    },
   },
+  emits: [
+    'page-changed',
+  ],
   computed: {
     isInFirstPage() {
 
@@ -146,7 +145,7 @@ export default {
 
       }
 
-      this.$emit('pagechanged', 1);
+      this.$emit('page-changed', 1);
 
     },
     onClickPreviousPage() {
@@ -157,12 +156,14 @@ export default {
 
       }
 
-      this.$emit('pagechanged', this.currentPage - 1);
+      this.currentPage -= 1;
+
+      this.$emit('page-changed', this.currentPage);
 
     },
     onClickPage(page) {
 
-      this.$emit('pagechanged', page);
+      this.$emit('page-changed', page);
 
     },
     onClickNextPage() {
@@ -173,7 +174,9 @@ export default {
 
       }
 
-      this.$emit('pagechanged', this.currentPage + 1);
+      this.currentPage += 1;
+
+      this.$emit('page-changed', this.currentPage);
 
     },
     onClickLastPage() {
@@ -184,7 +187,7 @@ export default {
 
       }
 
-      this.$emit('pagechanged', this.totalPages);
+      this.$emit('page-changed', this.totalPages);
 
     },
     isPageActive(page) {

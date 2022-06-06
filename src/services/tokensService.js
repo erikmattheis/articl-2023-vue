@@ -1,14 +1,9 @@
-import { getCurrentInstance } from 'vue';
+import VueCookies from 'vue-cookies';
 import store from '@/store';
 
-const getVueInstanceContext = function () {
-
-  return getCurrentInstance().config.globalProperties;
-
-};
 const getAccessTokenExpires = function () {
 
-  const accessTokenExpires = getVueInstanceContext().$cookies.get('accessTokenExpires');
+  const accessTokenExpires = VueCookies.get('accessTokenExpires');
 
   if (accessTokenExpires) {
 
@@ -42,12 +37,6 @@ const isLoggedIn = function () {
 
   const expires = Number(getAccessTokenExpires());
 
-  console.log(expires, 'expires');
-
-  console.log(currentTime, 'currentTime');
-
-  console.log(`${expires > currentTime}`, 'expires > currentTime');
-
   clearInterval(interval);
 
   return expires > currentTime;
@@ -55,7 +44,7 @@ const isLoggedIn = function () {
 };
 const getAccessTokenValue = function () {
 
-  const accessTokenValue = getVueInstanceContext().$cookies.get('accessTokenValue');
+  const accessTokenValue = VueCookies.get('accessTokenValue');
 
   if (accessTokenValue) {
 
@@ -68,7 +57,7 @@ const getAccessTokenValue = function () {
 };
 const getRefreshTokenExpires = function () {
 
-  const refreshTokenExpires = getVueInstanceContext().$cookies.get(
+  const refreshTokenExpires = VueCookies.get(
     'refreshTokenExpires',
   );
 
@@ -83,7 +72,7 @@ const getRefreshTokenExpires = function () {
 };
 const getRefreshTokenValue = function () {
 
-  const refreshTokenValue = getVueInstanceContext().$cookies.get('refreshTokenValue');
+  const refreshTokenValue = VueCookies.get('refreshTokenValue');
 
   if (refreshTokenValue) {
 
@@ -113,15 +102,13 @@ const setTokensInLocalStorage = function (val) {
 
   if (val?.access?.token) {
 
-    const vue = getVueInstanceContext();
+    VueCookies.set('accessTokenValue', val.access.token);
 
-    vue.$cookies.set('accessTokenValue', val.access.token);
+    VueCookies.set('accessTokenExpires', val.access.expires);
 
-    vue.$cookies.set('accessTokenExpires', val.access.expires);
+    VueCookies.set('refreshTokenValue', val.refresh.token);
 
-    vue.$cookies.set('refreshTokenValue', val.refresh.token);
-
-    vue.$cookies.set('refreshTokenExpires', val.refresh.expires);
+    VueCookies.set('refreshTokenExpires', val.refresh.expires);
 
   }
 
@@ -148,9 +135,11 @@ const convertStringDatesToMS = function (serverResult) {
   };
 
 };
-const setTokens = function setTokens(response) {
+const setTokens = function (response) {
 
   const result = convertStringDatesToMS(response);
+
+  console.log('result', result);
 
   setTokensInLocalStorage(result.data.tokens);
 

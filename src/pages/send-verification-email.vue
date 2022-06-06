@@ -33,12 +33,14 @@ export default {
         );
 
       });
+
     this.setTitleAndDescription({
       title: 'Verification sent',
     });
 
   },
-  methods: {},
+  methods: {
+  },
 };
 </script>
 

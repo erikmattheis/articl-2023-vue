@@ -130,7 +130,7 @@ export default {
 
         this.buttonDisabled = true;
 
-        const result = this.$http({
+        const result = await this.$http({
           method: 'POST',
           url: '/auth/login',
           data: {

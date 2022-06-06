@@ -56,7 +56,9 @@ export default {
   },
   mounted() {
 
-    this.setTitleAndDescription();
+    this.setTitleAndDescription({
+      title: 'Forgot pass',
+    });
 
   },
   methods: {

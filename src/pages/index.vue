@@ -50,11 +50,6 @@ export default {
     this.categories = this.fetchData('0');
 
   },
-  mounted() {
-
-    this.setTitleAndDescription();
-
-  },
   methods: {
     async fetchData(slug) {
 
@@ -68,9 +63,8 @@ export default {
 
         this.title = documentTitle;
 
-        this.$store.dispatch('metas/setMetaDescriptionAndDocumentTitle', {
-          documentTitle,
-          metaDescription,
+        this.setTitleAndDescription({
+          documentTitle, metaDescription,
         });
 
         this.categories = result.data.categories;
