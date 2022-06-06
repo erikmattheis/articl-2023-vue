@@ -64,10 +64,10 @@
 </template>
 
 <script>
-import { isLoggedIn, setTokens } from '@/services/tokensService';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import validateEmail from '@/services/emailValidationService';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { isLoggedIn, setTokens } from '@/services/tokensService';
 
 export default {
   name: 'LoginPage',

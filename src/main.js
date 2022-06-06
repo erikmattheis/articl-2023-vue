@@ -1,11 +1,14 @@
 import 'core-js/actual/array/group-by';
+
+import axios from 'axios';
 import { createApp } from 'vue';
 import VueCookies from 'vue-cookies';
-import axios from 'axios';
+
 import { getAccessTokenValue } from '@/services/tokensService';
+
+import App from './App.vue';
 import router from './router';
 import store from './store/index';
-import App from './App.vue';
 
 const app = createApp(App);
 

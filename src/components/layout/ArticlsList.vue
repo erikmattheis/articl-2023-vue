@@ -21,9 +21,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import DraggableItems from 'vuedraggable';
 import { isEqual } from 'lodash';
+import DraggableItems from 'vuedraggable';
+import { mapGetters } from 'vuex';
+
 import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
 
 export default {

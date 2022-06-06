@@ -38,7 +38,7 @@
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
@@ -64,6 +64,10 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
+    "plugins": [
+      "simple-import-sort",
+      "import"
+    ],
     "overrides": [
       {
         "files": [
@@ -77,6 +81,7 @@
       "vue/max-attributes-per-line": "off",
       "vue/attributes-order": "off",
       "vue/singleline-html-element-content-newline": "off",
+      "import/newline-after-import": "error",
       "max-len": "off",
       "no-console": "off",
       "no-debugger": "off",
@@ -132,12 +137,14 @@
           "next": "expression"
         },
         {
-          "blankLine": "never",
+          "blankLine": "any",
           "prev": "import",
           "next": "import"
         }
       ],
       "prefer-arrow-callback": "error",
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
       "func-names": "off"
     }
   },

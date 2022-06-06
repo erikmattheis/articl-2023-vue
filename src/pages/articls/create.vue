@@ -176,8 +176,8 @@
 import cardNotification from '@/components/ui/CardNotification.vue';
 import inputTypeahead from '@/components/ui/InputTypeahead.vue';
 import { fetchData } from '@/services/fetchingService';
-import { isLoggedIn } from '@/services/tokensService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'EditArticlPage',

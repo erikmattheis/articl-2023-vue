@@ -37,30 +37,17 @@ export default {
     async submitForm() {
 
       this.buttonDisabled = true;
-      this.$http({
+
+      const result = await this.$http({
         method: 'POST',
         url: '/categories/import-categories',
-      })
-        .then((result) => {
+      });
 
-          if (result.data) {
+      this.success = true;
 
-            this.success = true;
-            this.result = result.data;
+      this.result = result.data;
 
-          }
-
-        })
-        .catch((error) => {
-
-          this.$store.dispatch('errors/setError', error);
-
-        })
-        .finally(() => {
-
-          this.buttonDisabled = false;
-
-        });
+      this.buttonDisabled = false;
 
     },
   },

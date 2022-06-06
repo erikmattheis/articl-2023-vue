@@ -29,4 +29,4 @@ const clear = function () {
 
 };
 
-export { set, get, clear };
+export { clear, get, set };

@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import { isLoggedIn } from '@/services/tokensService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'HomePage',

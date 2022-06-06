@@ -511,5 +511,5 @@ async function fetchData(url) {
 
 }
 
-export { copyToClipboard, generateJSON, fetchData };
+export { copyToClipboard, fetchData, generateJSON };
 

@@ -15,7 +15,12 @@
 
 <script>
 export default {
-  props: ['breadcrumbs'],
+  props: {
+    breadcrumbs: {
+      type: Array,
+      default: () => [],
+    },
+  },
 };
 </script>
 

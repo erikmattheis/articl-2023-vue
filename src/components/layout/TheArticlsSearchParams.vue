@@ -97,8 +97,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import VueFeather from 'vue-feather';
+import { mapGetters } from 'vuex';
+
 import { toListWithOptionalConjuction } from '@/services/stringsService';
 
 export default {

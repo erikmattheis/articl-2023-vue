@@ -63,11 +63,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import VueFeather from 'vue-feather';
-import { isLoggedIn } from '@/services/tokensService';
-import { highlightedSubstring, noCaseIndexOf } from '@/services/stringsService';
+import { mapGetters } from 'vuex';
+
 import ArticlActions from '@/components/layout/ArticlActions.vue';
+import { highlightedSubstring, noCaseIndexOf } from '@/services/stringsService';
+import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'ArticlsListItem',

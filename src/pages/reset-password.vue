@@ -91,9 +91,9 @@
 </template>
 
 <script>
-import { scoreChars, validateEmail } from '@/services/userService';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { scoreChars, validateEmail } from '@/services/userService';
 
 export default {
   name: 'PasswordReset',

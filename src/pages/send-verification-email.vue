@@ -17,24 +17,7 @@ export default {
   },
   mounted() {
 
-    this.$http({
-      method: 'GET',
-      url: `/auth/send-verification-email?token=${this.$route.query.token}`,
-    })
-      .then(() => {
-
-        this.result = 'Click the link in the email we sent to verify your address.';
-
-      })
-
-      .catch((error) => {
-
-        this.$store.dispatch(
-          'errors/setError',
-          error,
-        );
-
-      });
+    this.sendEmail();
 
     setTitleAndDescription({
       title: 'Verification sent',
@@ -42,6 +25,16 @@ export default {
 
   },
   methods: {
+    async sendEmail() {
+
+      this.result = await this.$http({
+        method: 'GET',
+        url: `/auth/send-verification-email?token=${this.$route.query.token}`,
+      });
+
+      this.result = 'Click the link in the email we sent to verify your address.';
+
+    },
   },
 };
 </script>

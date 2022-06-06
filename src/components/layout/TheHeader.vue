@@ -137,8 +137,9 @@
 
 <script>
 import VueFeather from 'vue-feather';
-import { getRefreshTokenValue, isLoggedIn } from '@/services/tokensService';
+
 import { clear as clearLocalStorage } from '@/services/localStorageService';
+import { getRefreshTokenValue, isLoggedIn } from '@/services/tokensService';
 
 export default {
   components: {

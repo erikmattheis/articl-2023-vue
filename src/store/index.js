@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+
 import articlsParams from './articlsParams';
 import errors from './errors';
 import metas from './metas';

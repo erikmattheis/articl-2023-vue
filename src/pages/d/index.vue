@@ -63,10 +63,11 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { groupBy } from 'lodash';
 import DraggableItems from 'vuedraggable';
+
 import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { isLoggedIn } from '@/services/tokensService';
 
 export default {

@@ -40,4 +40,4 @@ const setTitleAndDescription = function (object) {
 
 };
 
-export { setTitleAndDescription, setTitle, setMetaDescription };
+export { setMetaDescription, setTitle, setTitleAndDescription };

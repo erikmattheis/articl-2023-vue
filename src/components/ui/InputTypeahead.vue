@@ -37,8 +37,8 @@
   </div>
 </template>
 <script>
-import VueFeather from 'vue-feather';
 import { debounce } from 'lodash';
+import VueFeather from 'vue-feather';
 
 export default {
   components: {

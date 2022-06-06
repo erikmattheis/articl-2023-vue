@@ -1,4 +1,5 @@
 import VueCookies from 'vue-cookies';
+
 import store from '@/store';
 
 const getAccessTokenExpires = function () {
@@ -147,12 +148,11 @@ const setTokens = function (response) {
 
 };
 
-export { isLoggedIn,
+export { convertStringDatesToMS,
   getAccessTokenExpires,
   getAccessTokenValue,
   getRefreshTokenExpires,
   getRefreshTokenValue,
-  setTokensInVuex,
-  setTokensInLocalStorage,
-  convertStringDatesToMS,
-  setTokens };
+  isLoggedIn,
+  setTokens, setTokensInLocalStorage,
+  setTokensInVuex };
