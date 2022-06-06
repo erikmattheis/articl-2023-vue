@@ -1,69 +1,141 @@
 <template>
   <form>
     <ul class="grid nav-tabs">
-      <li :class="{active: activeTab===0}">
-        <a href @click.prevent="activeTab=0" @keyup.enter.prevent="activeTab=0">Search</a>
+      <li :class="{ active: activeTab === 0 }">
+        <a
+          href
+          @click.prevent="activeTab = 0"
+          @keyup.enter.prevent="activeTab = 0"
+        >Search</a>
       </li>
-      <li :class="{active: activeTab===1}">
-        <a href @click.prevent="activeTab=1" @keyup.enter.prevent="activeTab=1">More options</a>
+      <li :class="{ active: activeTab === 1 }">
+        <a
+          href
+          @click.prevent="activeTab = 1"
+          @keyup.enter.prevent="activeTab = 1"
+        >More options</a>
       </li>
     </ul>
-    <div v-show="activeTab===0" class="active tab-content">
-      <label for="title">Title</label>
-      <input type="text" id="title" v-model="title" />
+    <div
+      v-show="activeTab === 0"
+      class="active tab-content"
+    >
+      <label for="title">Title
+        <input
+          id="title"
+          v-model="title"
+          type="text"
+        ></label>
     </div>
-    <div v-show="activeTab===1" class="active tab-content">
-      <label for="journal">Journal</label>
-      <input-typeahead src="/articls/journal" @typeahead-updated="onJournalChange" :input-value="journal"
-        query="journal" />
+    <div
+      v-show="activeTab === 1"
+      class="active tab-content"
+    >
+      <input-typeahead
+        src="/articls/journal"
+        :input-value="journal"
+        query="journal"
+        @typeahead-updated="onJournalChange"
+      />
 
-      <label for="author">Author</label>
-      <input-typeahead src="/articls/authors" @typeahead-updated="onAuthorsChange" :input-value="authors"
-        query="authors" />
+      <input-typeahead
+        src="/articls/authors"
+        :input-value="authors"
+        query="authors"
+        @typeahead-updated="onAuthorsChange"
+      />
 
-      <label>Year published</label>
-      <label v-if="yearsStart===Number(year)" class="horizontal"><input type="radio" v-model="yearComparison"
-          value="after" name="yearComparison" />
-        After
-      </label>
-      <label v-else class="horizontal" v-for="       comparison        in yearComparisons" :key="comparison"><input
-          type="radio" v-model="yearComparison" :value="comparison" name="yearComparison" />
-        {{ comparison}}
-      </label>
-      <select v-model="year" autocomplete="off" @change="onYearChange">
-        <option v-for="       i        in years" :key="i">
-          {{ i}}
-        </option>
-      </select>
+      <label for="yearComparison">Year published
+        <label
+          for="year"
+          v-if="yearsStart === Number(year)"
+          class="horizontal"
+        ><input
+          v-model="yearComparison"
+          type="radio"
+          value="after"
+          name="yearComparison"
+        >
+          After
+        </label>
+        <label
+          for="yearComparison"
+          v-for="comparison in yearComparisons"
+          v-else
+          :key="comparison"
+          class="horizontal"
+        ><input
+           v-model="yearComparison"
+           type="radio"
+           :value="comparison"
+           name="yearComparison"
+         >
+          {{ comparison }}
+        </label>
+        <select
+          v-model="year"
+          autocomplete="off"
+          @change="onYearChange"
+        >
+          <option
+            v-for="i in years"
+            :key="i"
+          >
+            {{ i }}
+          </option>
+        </select>
 
-      <div class="grid">
-        <div>
-          <fieldset>
-            Type
-            <label v-for="       type        in allTypes" :key="type">
-              <input type="checkbox" :value="type" v-model="types" checked="checked" />{{ type}}</label>
-          </fieldset>
+        <div class="grid">
+          <div>
+            <fieldset>
+              Type
+              <label
+                :for="type"
+                v-for="type in allTypes"
+                :key="type"
+              >
+                <input
+                  v-model="types"
+                  type="checkbox"
+                  :value="type"
+                  checked="checked"
+                  :id="type"
+                >{{ type }}</label>
+            </fieldset>
+          </div>
+          <div>
+            <fieldset>
+              Status
+              <label
+                :for="status"
+                v-for="status in allStatuses"
+                :key="status"
+              >
+                <input
+                  v-model="statuses"
+                  type="checkbox"
+                  :value="status"
+                  checked="checked"
+                  :id="status"
+                >{{ status }}</label>
+            </fieldset>
+          </div>
         </div>
-        <div>
-          <fieldset>
-            Status
-            <label v-for="       status        in allStatuses" :key="status">
-              <input type="checkbox" :value="status" v-model="statuses" checked="checked" />{{ status}}</label>
-          </fieldset>
-        </div>
-      </div>
+      </label>
     </div>
   </form>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import {debounce} from "lodash";
-import InputTypeahead from "@/components/ui/InputTypeahead.vue";
+import { mapGetters } from 'vuex';
+import { debounce } from 'lodash';
+import InputTypeahead from '@/components/ui/InputTypeahead.vue';
 
 export default {
-  name: "theArticlsFormSearch",
-  components: {InputTypeahead},
+  name: 'TheArticlsFormSearch',
+  components: {
+    InputTypeahead,
+  },
   data() {
 
     return {
@@ -76,8 +148,13 @@ export default {
 
   },
   computed: {
+    queryUC(val) {
+
+      return val[0].toUpperCase() + val.substring(1);
+
+    },
     ...mapGetters({
-      years: "articlsParams/years",
+      years: 'articlsParams/years',
     }),
     text: {
       get() {
@@ -87,7 +164,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/text",value);
+        this.$store.dispatch('articlsParams/text', value);
 
       },
     },
@@ -99,7 +176,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/title",value);
+        this.$store.dispatch('articlsParams/title', value);
 
       },
     },
@@ -111,7 +188,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/journal",value);
+        this.$store.dispatch('articlsParams/journal', value);
 
       },
     },
@@ -123,7 +200,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/authors",value);
+        this.$store.dispatch('articlsParams/authors', value);
 
       },
     },
@@ -135,7 +212,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/yearComparison",value);
+        this.$store.dispatch('articlsParams/yearComparison', value);
 
       },
     },
@@ -147,13 +224,13 @@ export default {
       },
       set(value) {
 
-        if(Number(value)===Number(this.yearsStart)) {
+        if (Number(value) === Number(this.yearsStart)) {
 
-          this.$store.dispatch("articlsParams/yearComparison","after");
+          this.$store.dispatch('articlsParams/yearComparison', 'after');
 
         }
 
-        this.$store.dispatch("articlsParams/year",value);
+        this.$store.dispatch('articlsParams/year', value);
 
       },
     },
@@ -165,7 +242,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/types",value);
+        this.$store.dispatch('articlsParams/types', value);
 
       },
     },
@@ -177,63 +254,65 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch("articlsParams/statuses",value);
+        this.$store.dispatch('articlsParams/statuses', value);
 
       },
     },
-  },
-  created() {
-
-    this.$store.dispatch(
-      "articlsParams/statuses",
-      this.$store.state.articlsParams.allStatuses
-    );
-    this.$store.dispatch(
-      "articlsParams/types",
-      this.$store.state.articlsParams.allTypes
-    );
-    this.onTitleChange=debounce(this.onTitleChange,200);
-
   },
   watch: {
     yearComparison: {
       handler(newValue) {
 
-        this.$store.dispatch("articlsParams/yearComparison",newValue);
+        this.$store.dispatch('articlsParams/yearComparison', newValue);
 
       },
       deep: true,
     },
   },
-  methods: {
-    onTypesChange() {
+  created() {
 
-      this.$store.dispatch("articlsParams/types",event.target.value);
+    this.$store.dispatch(
+      'articlsParams/statuses',
+      this.$store.state.articlsParams.allStatuses,
+    );
+
+    this.$store.dispatch(
+      'articlsParams/types',
+      this.$store.state.articlsParams.allTypes,
+    );
+
+    this.onTitleChange = debounce(this.onTitleChange, 200);
+
+  },
+  methods: {
+    onTypesChange(event) {
+
+      this.$store.dispatch('articlsParams/types', event.target.value);
 
     },
     onYearChange(event) {
 
-      this.$store.dispatch("articlsParams/year",event.target.value);
+      this.$store.dispatch('articlsParams/year', event.target.value);
 
     },
     onJournalChange(event) {
 
-      this.$store.dispatch("articlsParams/journal",event.value);
+      this.$store.dispatch('articlsParams/journal', event.value);
 
     },
     onAuthorsChange(event) {
 
-      this.$store.dispatch("articlsParams/authors",event.value);
+      this.$store.dispatch('articlsParams/authors', event.value);
 
     },
     onTitleChange(event) {
 
-      this.$store.dispatch("articlsParams/title",event.target.value);
+      this.$store.dispatch('articlsParams/title', event.target.value);
 
     },
     onYearComparisonChange(event) {
 
-      this.$store.dispatch("articlsParams/yearComparison",event.target.value);
+      this.$store.dispatch('articlsParams/yearComparison', event.target.value);
 
     },
   },
@@ -254,7 +333,7 @@ select {
 * Nav tabs
 */
 
-.grid>li {
+.grid > li {
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
@@ -270,7 +349,6 @@ select {
 }
 
 html[data-theme="light"] {
-
   .nav-tabs li.active,
   .active {
     background-color: #d4d4d4;
@@ -278,7 +356,6 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-
   .nav-tabs li.active,
   .active {
     background-color: #17262b;

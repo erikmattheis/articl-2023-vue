@@ -9,7 +9,7 @@ function charCounts(val) {
 
 }
 
-const scoreChars = function (val) {
+function scoreChars(val) {
 
   if (!val) {
 
@@ -25,7 +25,8 @@ const scoreChars = function (val) {
 
   return a + b + c + d;
 
-};
+}
+
 const validateEmail = function (email) {
 
   if (!email) {
@@ -35,8 +36,10 @@ const validateEmail = function (email) {
   }
 
   return email.match(
+
     // eslint-disable-next-line
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
   );
 
 };

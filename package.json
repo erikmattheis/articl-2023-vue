@@ -15,14 +15,14 @@
     "@picocss/pico": "^1.5.2",
     "@rushstack/eslint-patch": "^1.1.3",
     "axios": "^0.27.2",
-    "core-js": "^3.22.8",
+    "core-js": "^3.8.3",
     "express": "^4.18.1",
     "feather-icons": "^4.29.0",
     "lodash": "^4.17.21",
     "sass-rem": "^3.0.0",
     "serve-static": "^1.15.0",
     "v3-infinite-loading": "^1.0.6",
-    "vue": "^3.2.36",
+    "vue": "^3.2.13",
     "vue-cookies": "^1.8.1",
     "vue-feather": "^2.0.0",
     "vue-router": "^4.0.15",
@@ -30,26 +30,21 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.2",
-    "@babel/eslint-parser": "^7.18.2",
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.6",
     "@vue/cli-plugin-babel": "^5.0.4",
     "@vue/cli-plugin-eslint": "^5.0.4",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
-    "@vue/eslint-config-typescript": "^10.0.0",
-    "eslint": "^8.17.0",
-    "eslint-config-hardcore": "^24.7.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-padding": "0.0.4",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.30.0",
-    "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
-    "eslint-plugin-vue": "^9.1.0",
+    "eslint-plugin-vue": "^8.0.3",
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
     "sass": "^1.52.2",
     "sass-loader": "^13.0.0",
@@ -61,7 +56,9 @@
       "node": true
     },
     "extends": [
-      "hardcore/base"
+      "plugin:vue/vue3-recommended",
+      "eslint:recommended",
+      "@vue/airbnb"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"
@@ -75,46 +72,70 @@
       }
     ],
     "rules": {
-      "linebreak-style": [
+      "vue/html-closing-bracket-newline": "off",
+      "vue/max-attributes-per-line": "off",
+      "vue/attributes-order": "off",
+      "vue/singleline-html-element-content-newline": "off",
+      "max-len": "off",
+      "no-debugger": "off",
+      "no-multiple-empty-lines": [
         "error",
-        "unix"
-      ],
-      "quotes": [
-        "error",
-        "double",
         {
-          "avoidEscape": true
+            "max": 1,
+            "maxBOF": 0,
+            "maxEOF": 1
+        }
+    ],
+      "object-curly-newline": [
+        "error",
+        {
+          "ObjectExpression": "always",
+          "ObjectPattern": "always",
+          "ImportDeclaration": "never",
+          "ExportDeclaration": "never"
         }
       ],
-      "space-infix-ops": "error",
-      "no-underscore-dangle": "error",
       "padded-blocks": [
         "error",
-        "alneverways"
-      ],
-      "padding-line-between-statements": [
-        "warn",
         {
-          "blankLine": "always",
-          "prev": "*",
-          "next": "block"
+          "blocks": "always",
+          "classes": "always",
+          "switches": "always"
         },
         {
-          "blankLine": "always",
-          "prev": "block",
-          "next": "*"
-        },
-        {
-          "blankLine": "always",
-          "prev": "*",
-          "next": "block-like"
-        },
-        {
-          "blankLine": "always",
-          "prev": "block-like",
-          "next": "*"
+          "allowSingleLineBlocks": true
         }
-      ]
+      ],
+        "padding-line-between-statements": [
+            "error",
+            {
+                "blankLine": "always",
+                "prev": "*",
+                "next": "*"
+            },
+            {
+                "blankLine": "never",
+                "prev": "const",
+                "next": "const"
+            },
+            {
+                "blankLine": "never",
+                "prev": "let",
+                "next": "let"
+            },
+            {
+                "blankLine": "always",
+                "prev": "expression",
+                "next": "expression"
+            },
+            {
+              "blankLine": "never",
+              "prev": "import",
+              "next": "import"
+          }
+        ],
+        "prefer-arrow-callback":"error",
+        "func-names":"error"
     }
   },
   "browserslist": [

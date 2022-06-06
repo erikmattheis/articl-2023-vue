@@ -1,15 +1,17 @@
 <template>
   <article>
-    <h1>{{ resultTitle}}</h1>
-    <p v-if="resultTitle">Please <a href="/login">log in</a> to continue.</p>
+    <h1>{{ resultTitle }}</h1>
+    <p v-if="resultTitle">
+      Please <a href="/login">log in</a> to continue.
+    </p>
   </article>
 </template>
 
 <script>
-import {setTitleAndDescription} from "@/services/htmlMetaService";
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  name: "verifyEmailPage",
+  name: 'VerifyEmailPage',
   data() {
 
     return {
@@ -21,8 +23,9 @@ export default {
   mounted() {
 
     this.submitForm();
+
     this.setTitleAndDescription({
-      title: "Forgot Password",
+      title: 'Forgot Password',
     });
 
   },
@@ -30,31 +33,30 @@ export default {
     setTitleAndDescription,
     async submitForm() {
 
-      this.buttonDisabled=true;
+      this.buttonDisabled = true;
 
-      const response=await this.$http({
-        method: "GET",
+      const response = await this.$http({
+        method: 'GET',
         url: `/auth/verify-email?token=${this.$route.query.token}`,
-      })
+      });
 
+      if (response?.status === 204) {
 
-      if(response?.status===204) {
-
-        this.resultTitle="Email verified";
+        this.resultTitle = 'Email verified';
 
       } else {
 
-        this.$store.dispatch("errors/setError",
-          response);
+        this.$store.dispatch(
+          'errors/setError',
+          response,
+        );
 
       }
 
-
-      this.buttonDisabled=false;
-
+      this.buttonDisabled = false;
 
     },
   },
-}
+};
 
 </script>

@@ -2,20 +2,44 @@
   <article>
     <h1>Forgot password</h1>
     <form v-if="!result">
-      <label for="email">Email</label>
-      <input v-model="email" type="text" name="email" id="email" autocomplete="email" />
-      <input type="hidden" name="username" id="username" value="" autocomplete="username" />
-      <button type="submit" id="reset" :aria-busy="buttonDisabled" @click.prevent="submitForm()">
+      <label for="email">Email
+        <input
+          id="email"
+          v-model="email"
+          type="text"
+          name="email"
+          autocomplete="email"
+        ></label>
+      <input
+        id="username"
+        type="hidden"
+        name="username"
+        value=""
+        autocomplete="username"
+      >
+      <button
+        id="reset"
+        type="submit"
+        :aria-busy="buttonDisabled"
+        @click.prevent="submitForm()"
+      >
         <span v-if="!buttonDisabled">Reset</span>
       </button>
     </form>
-    <p v-if="result">{{ result}}</p>
-    <p v-if="errorMessage" class="error">{{ errorMessage}}</p>
+    <p v-if="result">
+      {{ result }}
+    </p>
+    <p
+      v-if="errorMessage"
+      class="error"
+    >
+      {{ errorMessage }}
+    </p>
   </article>
 </template>
 
 <script>
-import {setTitleAndDescription} from '@/services/htmlMetaService';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'ForgotPass',
@@ -38,22 +62,24 @@ export default {
   methods: {
     resetForm() {
 
-      this.emailInvalid=null;
-      this.result=null;
+      this.emailInvalid = null;
+
+      this.result = null;
 
     },
     checkForm() {
 
-      return this.email!=='';
+      return this.email !== '';
 
     },
     async submitForm() {
 
       this.resetForm();
 
-      if(this.checkForm()===true) {
+      if (this.checkForm() === true) {
 
-        this.buttonDisabled=true;
+        this.buttonDisabled = true;
+
         this.$http({
           method: 'POST',
           url: '/auth/forgot-password',
@@ -63,28 +89,29 @@ export default {
         })
           .then((result) => {
 
-            this.$store.dispatch('modals/setSuccessTitle','Email sent');
-            this.$store.dispatch('modals/setSuccessMessage','Check your email for instructions how to reset your password.');
+            this.$store.dispatch('modals/setSuccessTitle', 'Email sent');
 
-            if(result?.data?.message) {
+            this.$store.dispatch('modals/setSuccessMessage', 'Check your email for instructions how to reset your password.');
 
-              this.result=result?.data?.message;
+            if (result?.data?.message) {
+
+              this.result = result?.data?.message;
 
             } else {
 
-              this.result=result.response;
+              this.result = result.response;
 
             }
 
           })
           .catch((error) => {
 
-            this.$store.dispatch('errors/setError',error);
+            this.$store.dispatch('errors/setError', error);
 
           })
           .finally(() => {
 
-            this.buttonDisabled=false;
+            this.buttonDisabled = false;
 
           });
 

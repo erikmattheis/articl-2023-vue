@@ -1,6 +1,15 @@
 <template>
-  <div class="modal-container" v-if="successTitle" @click.prevent="close()">
-    <dialog open class="modal" @click.stop>
+  <div
+    v-if="successTitle"
+    class="modal-container"
+    @click.prevent="close()"
+    @keyup.enter="close()"
+  >
+    <dialog
+      open
+      class="modal"
+      @click.stop
+    >
       <article class="max-container-width">
         <header>
           <a
@@ -8,28 +17,38 @@
             aria-label="Close"
             class="close"
             @click.prevent="close()"
-          ></a>
+          />
           <h2>{{ successTitle }}</h2>
         </header>
         <section>
-          <div class="tab" title="success">
-            <vue-feather size="3rem" type="check"></vue-feather>
+          <div
+            class="tab"
+            title="success"
+          >
+            <vue-feather
+              size="3rem"
+              type="check"
+            />
           </div>
           <div class="info">
             <ul>
-              <li v-if="successMessage">{{ successMessage }}</li>
+              <li v-if="successMessage">
+                {{ successMessage }}
+              </li>
             </ul>
           </div>
         </section>
-        <button @click.prevent="close()">OK</button>
+        <button @click.prevent="close()">
+          OK
+        </button>
       </article>
     </dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import VueFeather from "vue-feather";
+import { mapGetters } from 'vuex';
+import VueFeather from 'vue-feather';
 
 export default {
   components: {
@@ -37,16 +56,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      successTitle: "modals/successTitle",
-      successMessage: "modals/successMessage",
+      successTitle: 'modals/successTitle',
+      successMessage: 'modals/successMessage',
     }),
   },
   methods: {
     close() {
 
-      this.$store.dispatch("modals/clearSuccess");
-    
-},
+      this.$store.dispatch('modals/clearSuccess');
+
+    },
   },
 };
 </script>

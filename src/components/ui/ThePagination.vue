@@ -1,20 +1,44 @@
 <template>
   <ul class="pagination">
     <li class="pagination-item">
-      <a href="#" @click.prevent="onClickFirstPage" :class="isInFirstPage? 'disabled':''">First</a>
+      <a
+        href="#"
+        :class="isInFirstPage ? 'disabled' : ''"
+        @click.prevent="onClickFirstPage"
+      >First</a
+      >
     </li>
     <li class="pagination-item">
-      <a href="#" @click.prevent="onClickPreviousPage" :class="isInFirstPage? 'disabled':''">«</a>
+      <a
+        href="#"
+        :class="isInFirstPage ? 'disabled' : ''"
+        @click.prevent="onClickPreviousPage"
+      >«</a
+      >
     </li>
-    <li :key="page.id" v-for=" page  in pages" class="pagination-item">
-      <a href="#" @click.prevent="onClickPage(page.name)" :class="{active: isPageActive(page.name)}">{{ page.name
-      }}</a>
+    <li v-for="page in pages" :key="page.id" class="pagination-item">
+      <a
+        href="#"
+        :class="{ active: isPageActive(page.name) }"
+        @click.prevent="onClickPage(page.name)"
+      >{{ page.name }}</a
+      >
     </li>
     <li class="pagination-item">
-      <a href="#" @click.prevent="onClickNextPage" :class="isInLastPage? 'disabled':''">»</a>
+      <a
+        href="#"
+        :class="isInLastPage ? 'disabled' : ''"
+        @click.prevent="onClickNextPage"
+      >»</a
+      >
     </li>
     <li class="pagination-item">
-      <a href="#" @click.prevent="onClickLastPage" :class="isInLastPage? 'disabled':''">Last</a>
+      <a
+        href="#"
+        :class="isInLastPage ? 'disabled' : ''"
+        @click.prevent="onClickLastPage"
+      >Last</a
+      >
     </li>
   </ul>
 </template>
@@ -39,69 +63,72 @@ export default {
   computed: {
     isInFirstPage() {
 
-      return this.currentPage===1;
+      return this.currentPage === 1;
 
     },
     isInLastPage() {
 
-      if(this.totalPages===0) {
+      if (this.totalPages === 0) {
 
         return true;
 
       }
 
-      return this.currentPage===this.totalPages;
+      return this.currentPage === this.totalPages;
 
     },
     startPage() {
 
-      if(this.currentPage===1) {
+      if (this.currentPage === 1) {
 
         return 1;
 
       }
 
-      if(this.totalPages<this.numberOfButtons) {
+      if (this.totalPages < this.numberOfButtons) {
 
         return 1;
 
       }
 
-      if(this.currentPage===this.totalPages) {
+      if (this.currentPage === this.totalPages) {
 
-        return this.totalPages-this.numberOfButtons+1;
+        return this.totalPages - this.numberOfButtons + 1;
 
       }
 
-      return this.currentPage-1;
+      return this.currentPage - 1;
 
     },
     endPage() {
 
-      if(this.totalPages===0) {
+      if (this.totalPages === 0) {
 
         return 1;
 
       }
 
-      if(this.totalPages<this.numberOfButtons) {
+      if (this.totalPages < this.numberOfButtons) {
 
         return this.totalPages;
 
       }
 
-      return Math.min(this.startPage+this.numberOfButtons-1,this.totalPages);
+      return Math.min(
+        this.startPage + this.numberOfButtons - 1,
+        this.totalPages,
+      );
 
     },
     pages() {
 
-      const range=[];
+      const range = [];
 
-      for(let i=this.startPage;i<=this.endPage;i+=1) {
+      for (let i = this.startPage; i <= this.endPage; i += 1) {
 
         range.push({
           name: i,
-          isDisabled: i===this.currentPage,
+          isDisabled: i === this.currentPage,
         });
 
       }
@@ -113,56 +140,56 @@ export default {
   methods: {
     onClickFirstPage() {
 
-      if(this.isInFirstPage) {
+      if (this.isInFirstPage) {
 
         return false;
 
       }
 
-      this.$emit('pagechanged',1);
+      this.$emit('pagechanged', 1);
 
     },
     onClickPreviousPage() {
 
-      if(this.isInFirstPage) {
+      if (this.isInFirstPage) {
 
         return false;
 
       }
 
-      this.$emit('pagechanged',this.currentPage-1);
+      this.$emit('pagechanged', this.currentPage - 1);
 
     },
     onClickPage(page) {
 
-      this.$emit('pagechanged',page);
+      this.$emit('pagechanged', page);
 
     },
     onClickNextPage() {
 
-      if(this.isInLastPage) {
+      if (this.isInLastPage) {
 
         return false;
 
       }
 
-      this.$emit('pagechanged',this.currentPage+1);
+      this.$emit('pagechanged', this.currentPage + 1);
 
     },
     onClickLastPage() {
 
-      if(this.isInLastPage) {
+      if (this.isInLastPage) {
 
         return false;
 
       }
 
-      this.$emit('pagechanged',this.totalPages);
+      this.$emit('pagechanged', this.totalPages);
 
     },
     isPageActive(page) {
 
-      return this.currentPage===page;
+      return this.currentPage === page;
 
     },
   },

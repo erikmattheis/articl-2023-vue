@@ -2,36 +2,75 @@
   <article>
     <h1>Log in</h1>
     <form v-if="!isLoggedIn">
-      <input type="hidden" name="username" id="username" autocomplete="username" />
+      <input
+        id="username"
+        type="hidden"
+        name="username"
+        autocomplete="username"
+      >
       <label for="email">Email
-        <input v-model="email" type="text" name="email" id="email" autocomplete="email" /></label>
+        <input
+          id="email"
+          v-model="email"
+          type="text"
+          name="email"
+          autocomplete="email"
+        ></label>
 
       <label for="password">Password<div class="toggle-password">
-          <input v-if="showPassword" v-model="password" type="text" name="password" id="password"
-            autocomplete="current-password" />
-          <input v-if="!showPassword" v-model="password" type="password" name="password" id="password"
-            autocomplete="current-password" />
-          <the-button-toggle-hidden class="togglePasswordMask" @show="showPassword = !showPassword">
-          </the-button-toggle-hidden>
-        </div></label>
-      <button type="submit" id="Login" :aria-busy="buttonDisabled" @click.prevent="submitForm()">
+        <input
+          v-if="showPassword"
+          id="password"
+          v-model="password"
+          type="text"
+          name="password"
+          autocomplete="current-password"
+        >
+        <input
+          v-if="!showPassword"
+          id="password"
+          v-model="password"
+          type="password"
+          name="password"
+          autocomplete="current-password"
+        >
+        <the-button-toggle-hidden
+          class="togglePasswordMask"
+          @show="showPassword = !showPassword"
+        />
+      </div></label>
+      <button
+        id="Login"
+        type="submit"
+        :aria-busy="buttonDisabled"
+        @click.prevent="submitForm()"
+      >
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
-    <p v-else>You are already logged in.</p>
-    <router-link to="/forgot-pass">Forgot pass</router-link>
-    <router-link to="/register" class="right">Create account</router-link>
+    <p v-else>
+      You are already logged in.
+    </p>
+    <router-link to="/forgot-pass">
+      Forgot pass
+    </router-link>
+    <router-link
+      to="/register"
+      class="right"
+    >
+      Create account
+    </router-link>
   </article>
 </template>
 
 <script>
-import { isLoggedIn, setTokens } from "@/services/tokensService";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import validateEmail from "@/services/emailValidationService";
+import { isLoggedIn, setTokens } from '@/services/tokensService';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import validateEmail from '@/services/emailValidationService';
 
 export default {
-  name: "loginPage",
+  name: 'LoginPage',
   components: {
     theButtonToggleHidden,
   },
@@ -47,18 +86,20 @@ export default {
     };
 
   },
-  mounted() {
-
-    this.setTitleAndDescription({ title: "Login" });
-
-  },
   computed: {
     isLoggedIn,
+  },
+  mounted() {
+
+    this.setTitleAndDescription({
+      title: 'Login',
+    });
+
   },
   methods: {
     resetFormErrors() {
 
-      this.errorMessage = "";
+      this.errorMessage = '';
 
     },
     checkForm() {
@@ -67,13 +108,13 @@ export default {
 
       if (!validateEmail.validateEmail(this.email)) {
 
-        this.errorMessage = "Please enter a valid email.";
+        this.errorMessage = 'Please enter a valid email.';
 
         passed = false;
 
       } else if (this.password && this.password.length < 8) {
 
-        this.errorMessage = "Passwords are at least eight characters.";
+        this.errorMessage = 'Passwords are at least eight characters.';
 
         passed = false;
 
@@ -90,19 +131,20 @@ export default {
         this.buttonDisabled = true;
 
         const result = this.$http({
-          method: "POST",
-          url: "/auth/login",
+          method: 'POST',
+          url: '/auth/login',
           data: {
             password: this.password,
             email: this.email,
           },
-        })
-
+        });
 
         if (result?.status > 309) {
 
-          this.$store.dispatch("errors/setError",
-            result);
+          this.$store.dispatch(
+            'errors/setError',
+            result,
+          );
 
           return;
 
@@ -112,18 +154,21 @@ export default {
 
         setTokens(result);
 
-        const theme =
-          result?.data?.user?.theme !== "dark" ? "light" : "dark";
+        const theme = result?.data?.user?.theme !== 'dark' ? 'light' : 'dark';
 
-        this.$cookies.set("data-theme",
-          theme);
+        this.$cookies.set(
+          'data-theme',
+          theme,
+        );
 
-        document.documentElement.setAttribute("data-theme",
-          theme);
+        document.documentElement.setAttribute(
+          'data-theme',
+          theme,
+        );
 
         if (
-          this.$route.query.redirect &&
-          this.$route.query.redirect !== "/login"
+          this.$route.query.redirect
+          && this.$route.query.redirect !== '/login'
         ) {
 
           this.$router.push({
@@ -133,16 +178,14 @@ export default {
         } else {
 
           this.$router.push({
-            name: "homePage",
+            name: 'homePage',
           });
 
         }
 
       }
 
-
       this.buttonDisabled = false;
-
 
     },
     setTitleAndDescription,

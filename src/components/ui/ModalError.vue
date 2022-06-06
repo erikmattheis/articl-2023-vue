@@ -1,70 +1,93 @@
 <template>
-  <div class="modal-container" v-if="errorTitle" @click.prevent="close()">
-    <dialog open class="modal" @click.stop>
+  <div
+    v-if="errorTitle"
+    class="modal-container"
+    @click.prevent="close()"
+    @keyup.enter="close()"
+  >
+    <dialog
+      open
+      class="modal"
+      @click.stop
+    >
       <article class="max-container-width">
         <header>
           <vue-feather
             size="20"
             type="x-square"
-            @click.prevent="close()"
             aria-label="Close"
             class="close"
-          ></vue-feather>
+            @click.prevent="close()"
+          />
           <h2>{{ errorTitle }}</h2>
         </header>
         <section>
-          <div class="tab" title="error">
-            <vue-feather size="3rem" type="alert-triangle"></vue-feather>
+          <div
+            class="tab"
+            title="error"
+          >
+            <vue-feather
+              size="3rem"
+              type="alert-triangle"
+            />
           </div>
           <div class="info">
             <ul>
-              <li v-if="errorFileName">Error in file: {{ errorFileName }}</li>
-              <li v-if="errorLineNumber">On line: {{ errorLineNumber }}</li>
-              <li v-if="errorMessage">Message: {{ errorMessage }}</li>
+              <li v-if="errorFileName">
+                Error in file: {{ errorFileName }}
+              </li>
+              <li v-if="errorLineNumber">
+                On line: {{ errorLineNumber }}
+              </li>
+              <li v-if="errorMessage">
+                Message: {{ errorMessage }}
+              </li>
               <li v-if="errorStack">
                 <small>Stack: {{ errorStack }}</small>
               </li>
             </ul>
           </div>
         </section>
-        <button @click.prevent="close()">OK</button>
+        <button @click.prevent="close()">
+          OK
+        </button>
       </article>
     </dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import VueFeather from "vue-feather";
+import { mapGetters } from 'vuex';
+import VueFeather from 'vue-feather';
 
 export default {
-  data() {
-
-    return {
-      title: "",
-      showErrorStack: "",
-    };
-  
-},
   components: {
     VueFeather,
   },
+  data() {
+
+    return {
+      title: '',
+      showErrorStack: '',
+    };
+
+  },
   computed: {
     ...mapGetters({
-      errorTitle: "errors/errorTitle",
-      errorMessage: "errors/errorMessage",
-      errorDetail: "errors/errorDetail",
-      errorLineNumber: "errors/errorLineNumber",
-      errorFileName: "errors/errorFileName",
-      errorStack: "errors/errorStack",
+      errorTitle: 'errors/errorTitle',
+      errorMessage: 'errors/errorMessage',
+      errorDetail: 'errors/errorDetail',
+      errorLineNumber: 'errors/errorLineNumber',
+      errorFileName: 'errors/errorFileName',
+      errorStack: 'errors/errorStack',
     }),
   },
   methods: {
     close() {
 
-      this.$store.dispatch("errors/clearError");
-    
-},
+      this.$store.dispatch('errors/clearError');
+
+    },
   },
 };
 </script>

@@ -1,9 +1,11 @@
-
 <template>
   <article>
-    <h2>{{ title }} <span :aria-busy="isLoading"></span></h2>
+    <h2>{{ title }} <span :aria-busy="isLoading" /></h2>
     <ul>
-      <li v-for="category in categories || []" :key="category.slug">
+      <li
+        v-for="category in categories || []"
+        :key="category.slug"
+      >
         <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
           {{ category.title }}
         </router-link>
@@ -24,35 +26,34 @@
 </template>
 
 <script>
-import { isLoggedIn } from "@/services/tokensService";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-
+import { isLoggedIn } from '@/services/tokensService';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  name: "homePage",
+  name: 'HomePage',
   // components: { TheBreadcrumbs },
   data() {
 
     return {
       isLoading: true,
       slug: null,
-      title: "",
+      title: '',
       categories: [],
     };
 
   },
+  computed: {
+    isLoggedIn,
+  },
   created() {
 
-    this.categories = this.fetchData("0");
+    this.categories = this.fetchData('0');
 
   },
   mounted() {
 
     this.setTitleAndDescription();
 
-  },
-  computed: {
-    isLoggedIn,
   },
   methods: {
     async fetchData(slug) {
@@ -67,7 +68,7 @@ export default {
 
         this.title = documentTitle;
 
-        this.$store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
+        this.$store.dispatch('metas/setMetaDescriptionAndDocumentTitle', {
           documentTitle,
           metaDescription,
         });
@@ -76,7 +77,7 @@ export default {
 
       } catch (error) {
 
-        this.$store.dispatch("errors/setError", error);
+        this.$store.dispatch('errors/setError', error);
 
       } finally {
 
@@ -89,8 +90,8 @@ export default {
 
       return this.$http({
 
-        method: "GET",
-        url: `/d/${slug || ""}`,
+        method: 'GET',
+        url: `/d/${slug || ''}`,
 
       });
 

@@ -1,27 +1,71 @@
 <template>
   <article>
-    <h1 v-if="!success">Articl.net User: {{ fullName }}</h1>
-    <h1 v-else>Account Updated</h1>
+    <h1 v-if="!success">
+      Articl.net User: {{ fullName }}
+    </h1>
+    <h1 v-else>
+      Account Updated
+    </h1>
     <form>
       <fieldset class="grid">
         <div>
           <label for="nameFirst">First Name
-            <input v-model="nameFirst" type="text" name="nameFirst" id="nameFirst" autocomplete="given-name" /></label>
+            <input
+              id="nameFirst"
+              v-model="nameFirst"
+              type="text"
+              name="nameFirst"
+              autocomplete="given-name"
+            ></label>
         </div>
         <div>
           <label for="nameLast">Last Name
-            <input v-model="nameLast" type="text" name="nameLast" id="nameLast" autocomplete="family-name" /></label>
+            <input
+              id="nameLast"
+              v-model="nameLast"
+              type="text"
+              name="nameLast"
+              autocomplete="family-name"
+            ></label>
         </div>
       </fieldset>
       <label for="email">Email
-        <input v-model="email" type="text" name="email" id="email" autocomplete="email" /></label>
-      <input type="hidden" name="username" id="username" value="" autocomplete="username" />
+        <input
+          id="email"
+          v-model="email"
+          type="text"
+          name="email"
+          autocomplete="email"
+        ></label>
+      <input
+        id="username"
+        type="hidden"
+        name="username"
+        value=""
+        autocomplete="username"
+      >
       <label for="institution">Institution
-        <input v-model="institution" type="text" name="institution" id="institution"
-          autocomplete="organization" /></label>
+        <input
+          id="institution"
+          v-model="institution"
+          type="text"
+          name="institution"
+          autocomplete="organization"
+        ></label>
       <label for="education">Education
-        <input v-model="education" type="text" name="education" id="education" autocomplete="education" /></label>
-      <button type="submit" id="Login" :aria-busy="buttonDisabled" @click.prevent="submitForm()">
+        <input
+          id="education"
+          v-model="education"
+          type="text"
+          name="education"
+          autocomplete="education"
+        ></label>
+      <button
+        id="Login"
+        type="submit"
+        :aria-busy="buttonDisabled"
+        @click.prevent="submitForm()"
+      >
         <span v-if="!buttonDisabled">Update Account</span>
       </button>
     </form>
@@ -29,22 +73,22 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { validateEmail } from "@/services/userService";
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { validateEmail } from '@/services/userService';
 
 export default {
-  name: "usersPage",
+  name: 'UsersPage',
   data() {
 
     return {
-      nameFirst: "",
-      nameLast: "",
+      nameFirst: '',
+      nameLast: '',
       email: null,
       password2: undefined,
       institution: null,
       education: null,
       buttonDisabled: false,
-      errorMessage: "",
+      errorMessage: '',
       success: false,
       result: null,
     };
@@ -53,7 +97,7 @@ export default {
   computed: {
     fullName() {
 
-      return this.nameFirst + " " + this.nameLast;
+      return `${this.nameFirst} ${this.nameLast}`;
 
     },
   },
@@ -69,21 +113,25 @@ export default {
 
         this.buttonDisabled = true;
 
-        const result = await this.getUser("me");
+        const result = await this.getUser('me');
 
         if (result) {
 
-          this.nameFirst = result.nameFirst ? result.nameFirst : "";
-          this.nameLast = result.nameLast ? result.nameLast : "";
-          this.email = result.email ? result.email : "";
-          this.institution = result.institution ? result.institution : "";
-          this.education = result.education ? result.education : "";
+          this.nameFirst = result.nameFirst ? result.nameFirst : '';
+
+          this.nameLast = result.nameLast ? result.nameLast : '';
+
+          this.email = result.email ? result.email : '';
+
+          this.institution = result.institution ? result.institution : '';
+
+          this.education = result.education ? result.education : '';
 
         }
 
       } catch (error) {
 
-        this.$store.dispatch("errors/setError", error);
+        this.$store.dispatch('errors/setError', error);
 
       } finally {
 
@@ -96,20 +144,20 @@ export default {
     async getUser() {
 
       const result = await this.$http({
-        method: "GET",
-        url: "/users/me",
-      })
-
+        method: 'GET',
+        url: '/users/me',
+      });
 
       return result.data;
-
 
     },
     resetFormErrors() {
 
       this.success = null;
+
       this.result = null;
-      this.errorMessage = "";
+
+      this.errorMessage = '';
 
     },
     checkForm() {
@@ -120,15 +168,15 @@ export default {
 
       if (!this.validateEmail(this.email)) {
 
-        this.errorMessage = "Please enter a valid email.";
+        this.errorMessage = 'Please enter a valid email.';
+
         passed = false;
 
       }
 
       return passed;
 
-    }
-
+    },
 
   },
   async submitForm() {
@@ -140,8 +188,8 @@ export default {
       this.buttonDisabled = true;
 
       const result = await this.$http({
-        method: "PATCH",
-        url: "/users/me",
+        method: 'PATCH',
+        url: '/users/me',
         data: {
           nameFirst: this.nameFirst,
           nameLast: this.nameLast,
@@ -150,29 +198,30 @@ export default {
           education: this.education,
           theme: this.theme,
         },
-      })
-
+      });
 
       if (result.data) {
 
         this.success = true;
-        this.result = result.data;
-        this.$store.dispatch("modals/setSuccessTitle", "User Updated");
-        this.$store.dispatch(
-          "modals/setSuccessMessage",
-          "Your account information was successfully updated."
-        );
-        this.buttonDisabled = false;
 
+        this.result = result.data;
+
+        this.$store.dispatch('modals/setSuccessTitle', 'User Updated');
+
+        this.$store.dispatch(
+          'modals/setSuccessMessage',
+          'Your account information was successfully updated.',
+        );
+
+        this.buttonDisabled = false;
 
       }
 
     } else {
 
-      this.$store.dispatch("errors/setError", {
+      this.$store.dispatch('errors/setError', {
         message: this.errorMessage,
       });
-
 
     }
 

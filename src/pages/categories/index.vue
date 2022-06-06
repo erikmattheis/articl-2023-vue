@@ -1,26 +1,60 @@
 <template>
   <article>
-    <h1 v-if="!success">Create category</h1>
-    <h1 v-else>Category created</h1>
+    <h1 v-if="!success">
+      Create category
+    </h1>
+    <h1 v-else>
+      Category created
+    </h1>
 
     <template v-if="isLoggedIn">
       <form v-if="!success">
-        <label for="title">Title</label>
-        <input v-model="title" type="text" name="title" id="title" />
-        <label for="slug">Slug</label>
-        <input readonly v-model="slug" type="text" name="slug" id="slug" />
-        <label for="title">Parent slug</label>
-        <input type="text" v-model="parentSlug" name="parentSlug" id="parentSlug" />
+        <label for="title">Title
+          <input
+            id="title"
+            v-model="title"
+            type="text"
+            name="title"
+          ></label>
+        <label for="slug">Slug
+          <input
+            id="slug"
+            v-model="slug"
+            readonly
+            type="text"
+            name="slug"
+          ></label>
+        <label for="parentSlug">Parent slug
+          <input
+            id="parentSlug"
+            v-model="parentSlug"
+            type="text"
+            name="parentSlug"
+          ></label>
 
-        <label for="description">Description</label>
-        <textarea name="description" id="description" rows="10" cols="70"></textarea>
-        <button type="submit" id="Login" :aria-busy="buttonDisabled" @click.prevent="submitForm()">
+        <label for="description">Description
+          <textarea
+            id="description"
+            name="description"
+            rows="10"
+            cols="70"
+          /></label>
+        <button
+          id="Login"
+          type="submit"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()"
+        >
           <span v-if="!buttonDisabled">Create Category</span>
         </button>
       </form>
       <template v-else>
-        <card-notification success-message="Category created."></card-notification>
-        <a href @click="$router.go()">Create another category</a>
+        <card-notification success-message="Category created." />
+        <a
+          href
+          @click="$router.go()"
+          @keyup.enter="$router.go()"
+        >Create another category</a>
       </template>
     </template>
     <p v-else>
@@ -30,11 +64,11 @@
 </template>
 
 <script>
-import CardNotification from "@/components/ui/CardNotification.vue";
-import {isLoggedIn} from "@/services/tokensService";
+import CardNotification from '@/components/ui/CardNotification.vue';
+import { isLoggedIn } from '@/services/tokensService';
 
 export default {
-  name: "createCategoryPage",
+  name: 'CreateCategoryPage',
   components: {
     CardNotification,
   },
@@ -46,7 +80,7 @@ export default {
       parentSlug: null,
       categories: [],
       buttonDisabled: false,
-      errorMessage: "",
+      errorMessage: '',
       success: false,
       result: null,
       chrs: 0,
@@ -56,16 +90,18 @@ export default {
   computed: {
     slug() {
 
-      if(!this.title) {
+      if (!this.title) {
 
-        return "";
+        return '';
 
       }
 
-      let str=this.title.replace(/\s/g,
-        "-");
+      let str = this.title.replace(
+        /\s/g,
+        '-',
+      );
 
-      str=str.toLowerCase();
+      str = str.toLowerCase();
 
       return encodeURIComponent(str);
 
@@ -74,7 +110,7 @@ export default {
   },
   mounted() {
 
-    this.parentSlug=this.$route.query.parentSlug;
+    this.parentSlug = this.$route.query.parentSlug;
 
   },
 
@@ -84,34 +120,42 @@ export default {
   methods: {
     resetFormErrors() {
 
-      this.success=null;
-      this.result=null;
-      this.errorMessage="";
+      this.success = null;
+
+      this.result = null;
+
+      this.errorMessage = '';
 
     },
     checkForm() {
 
       this.resetFormErrors();
 
-      let passed=true;
+      let passed = true;
 
-      if(!this.title) {
+      if (!this.title) {
 
-        this.titleInvalid=true;
-        this.errorMessage="Please enter a title.";
-        passed=false;
+        this.titleInvalid = true;
 
-      } else if(!this.slug) {
+        this.errorMessage = 'Please enter a title.';
 
-        this.slugInvalid=true;
-        this.errorMessage="Please enter a slug.";
-        passed=false;
+        passed = false;
 
-      } else if(!this.parentSlug) {
+      } else if (!this.slug) {
 
-        this.parentIdInvalid=true;
-        this.errorMessage="Please eselect a parent category.";
-        passed=false;
+        this.slugInvalid = true;
+
+        this.errorMessage = 'Please enter a slug.';
+
+        passed = false;
+
+      } else if (!this.parentSlug) {
+
+        this.parentIdInvalid = true;
+
+        this.errorMessage = 'Please eselect a parent category.';
+
+        passed = false;
 
       }
 
@@ -122,12 +166,13 @@ export default {
 
       this.resetFormErrors();
 
-      if(this.checkForm()===true) {
+      if (this.checkForm() === true) {
 
-        this.buttonDisabled=true;
+        this.buttonDisabled = true;
+
         this.$http({
-          method: "POST",
-          url: "/categories",
+          method: 'POST',
+          url: '/categories',
           data: {
             title: this.title,
             slug: this.slug,
@@ -137,32 +182,37 @@ export default {
         })
           .then((result) => {
 
-            if(result.data) {
+            if (result.data) {
 
-              this.success=true;
-              this.result=result.data;
+              this.success = true;
+
+              this.result = result.data;
 
             }
 
           })
           .catch((error) => {
 
-            this.$store.dispatch("errors/setError",
-              error);
+            this.$store.dispatch(
+              'errors/setError',
+              error,
+            );
 
           })
           .finally(() => {
 
-            this.buttonDisabled=false;
+            this.buttonDisabled = false;
 
           });
 
       } else {
 
-        this.$store.dispatch("errors/setError",
+        this.$store.dispatch(
+          'errors/setError',
           {
             message: this.errorMessage,
-          });
+          },
+        );
 
       }
 

@@ -6,7 +6,7 @@
           $emit('show');
           show = !show;
         "
-        @keypress.esc="this.focus()"
+        @keypress.esc="focus()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@
           $emit('show');
           show = !show;
         "
-        @keypress.esc="this.focus()"
+        @keypress.esc="focus()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,12 @@
           alt="Mask"
         >
           <title>Mask password</title>
-          <circle class="a" cx="280.8" cy="165.5" r="68" />
+          <circle
+            class="a"
+            cx="280.8"
+            cy="165.5"
+            r="68"
+          />
           <path
             class="a"
             d="M354.5,145.6A286.2,286.2,0,0,0,113.3,277.5a286.49,286.49,0,0,0,482.4,0A286.2,286.2,
@@ -86,14 +91,14 @@
 
 <script>
 export default {
+  emits: ['show'],
   data() {
 
     return {
       show: false,
     };
-  
-},
-  emits: ["show"],
+
+  },
 };
 </script>
 

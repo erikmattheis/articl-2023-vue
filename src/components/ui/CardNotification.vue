@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="tab" title="success">
-      <vue-feather size="60" type="check"></vue-feather>
+      <vue-feather size="60" type="check" />
     </div>
     <div class="info">
       <aside>{{ successMessage }}</aside>
@@ -10,21 +10,21 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
+import VueFeather from 'vue-feather';
 
 export default {
-  data() {
-
-    return {
-      title: "",
-    };
-  
-},
   components: {
     VueFeather,
   },
   props: {
     successMessage: String,
+  },
+  data() {
+
+    return {
+      title: '',
+    };
+
   },
 };
 </script>

@@ -1,11 +1,15 @@
 <template>
   <article>
-    <h1 v-if="!success">Import categories</h1>
-    <h1 v-else>Categories imported</h1>
+    <h1 v-if="!success">
+      Import categories
+    </h1>
+    <h1 v-else>
+      Categories imported
+    </h1>
     <form v-if="!success">
       <button
-        type="submit"
         id="Login"
+        type="submit"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()"
       >
@@ -15,10 +19,10 @@
     </form>
   </article>
 </template>
- 
+
 <script>
 export default {
-  name: "importCategoriesPage",
+  name: 'ImportCategoriesPage',
   data() {
 
     return {
@@ -27,15 +31,15 @@ export default {
       result: null,
       chrs: 0,
     };
-  
-},
+
+  },
   methods: {
     async submitForm() {
 
       this.buttonDisabled = true;
       this.$http({
-        method: "POST",
-        url: "/categories/import-categories",
+        method: 'POST',
+        url: '/categories/import-categories',
       })
         .then((result) => {
 
@@ -43,22 +47,22 @@ export default {
 
             this.success = true;
             this.result = result.data;
-          
-}
-        
-})
+
+          }
+
+        })
         .catch((error) => {
 
-          this.$store.dispatch("errors/setError", error);
-        
-})
+          this.$store.dispatch('errors/setError', error);
+
+        })
         .finally(() => {
 
           this.buttonDisabled = false;
-        
-});
-    
-},
+
+        });
+
+    },
   },
 };
 </script>

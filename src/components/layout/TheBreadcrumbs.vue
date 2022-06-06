@@ -2,10 +2,12 @@
   <nav>
     <ul>
       <li>
-        <router-link to="/">Home</router-link>
+        <router-link to="/"> Home </router-link>
       </li>
       <li v-for="crumb in breadcrumbs" :key="crumb.slug">
-        <router-link :to="`/d/${crumb.slug}`">{{ crumb.name }}</router-link>
+        <router-link :to="`/d/${crumb.slug}`">
+          {{ crumb.name }}
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -13,7 +15,7 @@
 
 <script>
 export default {
-  props: ["breadcrumbs"],
+  props: ['breadcrumbs'],
 };
 </script>
 

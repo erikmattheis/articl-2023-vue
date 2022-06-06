@@ -1,6 +1,6 @@
 <template>
   <article>
-    <p v-text="result"></p>
+    <p v-text="result" />
   </article>
 </template>
 
@@ -16,25 +16,25 @@ export default {
   mounted() {
 
     this.$http({
-      method: "GET",
+      method: 'GET',
       url: `/auth/send-verification-email?token=${this.$route.query.token}`,
     })
       .then(() => {
 
-        this.result =
-          "Click the link in the email we sent to verify your address.";
+        this.result = 'Click the link in the email we sent to verify your address.';
 
       })
 
       .catch((error) => {
 
-        this.$store.dispatch("errors/setError",
-          error);
+        this.$store.dispatch(
+          'errors/setError',
+          error,
+        );
 
       });
-
     this.setTitleAndDescription({
-      title: "Verification sent",
+      title: 'Verification sent',
     });
 
   },

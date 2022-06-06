@@ -11,14 +11,14 @@ export default {
   data() {
 
     return {
-      year: "",
+      year: '',
     };
-  
-},
+
+  },
   beforeMount() {
 
     this.year = new Date().getFullYear();
-  
-},
+
+  },
 };
 </script>

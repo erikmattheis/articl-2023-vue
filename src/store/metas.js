@@ -23,29 +23,14 @@ export default {
   actions: {
     setMetaDescriptionAndDocumentTitle(
       context,
-      { documentTitle, metaDescription },
+      {
+        documentTitle, metaDescription,
+      },
     ) {
 
       context.commit('SET_DOCUMENT_TITLE', documentTitle);
+
       context.commit('SET_META_DESCRIPTION', metaDescription);
-      document.title = documentTitle;
-
-      let meta = document.querySelector('meta[name="description"]');
-
-      if (!meta) {
-
-        meta = document.createElement('meta');
-        meta.name = 'description';
-        document
-          .getElementsByTagName('head')[0]
-          .appendChild(meta)
-          .setAttribute('content', metaDescription);
-
-      } else {
-
-        meta.content = metaDescription;
-
-      }
 
     },
   },
