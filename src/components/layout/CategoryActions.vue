@@ -2,28 +2,23 @@
   <nav>
     <ul>
       <li>
-        <router-link :to="{ name: 'editArticl', params: { id } }">
+        <router-link :to="{ name: 'editCategory', params: { id } }">
           edit
         </router-link>
       </li>
       <li>
-        <a>Change status</a>
-      </li>
-      <li>
-        <router-link :to="{ name: 'deleteArticl', params: { id, title } }">
+        <router-link :to="{ name: 'deleteCategory', params: { id, title } }">
           delete
         </router-link>
       </li>
     </ul>
   </nav>
-  <ul role="listbox" />
 </template>
 
 <script>
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
-  name: 'ArticlActions',
+  name: 'CategoryActions',
   components: {
   },
   props: {
@@ -44,7 +39,7 @@ export default {
 
   },
   computed: {
-    isLoggedIn,
+
   },
 };
 </script>

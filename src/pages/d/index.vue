@@ -45,7 +45,7 @@
     </ul>
 
     <template
-      v-for=" articlType in articlTypes"
+      v-for="articlType in articlTypes"
       :key="articlType"
     >
       <ul>

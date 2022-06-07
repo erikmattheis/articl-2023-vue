@@ -21,9 +21,9 @@
       </li>
     </ul>
     <div v-if="isLoggedIn">
-      <articl-actions
-        :id="articl.id"
-        :title="articl.title"
+      <category-actions
+        :id="category.id"
+        :title="category.title"
       />
     </div>
   </li>
@@ -32,14 +32,14 @@
 <script>
 import VueFeather from 'vue-feather';
 
-import ArticlActions from '@/components/layout/ArticlActions.vue';
+import CategoryActions from '@/components/layout/CategoryActions.vue';
 import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'CategoriesListItem',
   components: {
     VueFeather,
-    ArticlActions,
+    CategoryActions,
   },
   props: {
     category: {
