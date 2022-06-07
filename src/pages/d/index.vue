@@ -53,7 +53,6 @@
           v-for="articl in articls[ articlType ] || []"
           :key="articl.id"
         >
-          {{ articl.title }}
           <articls-list-item
             :articl="articl"
             :order="articl.order"

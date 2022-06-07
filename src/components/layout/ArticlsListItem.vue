@@ -15,7 +15,10 @@
     </div>
     <ul>
       <li>
-        <a :href="articl.url">
+        <a
+          :href="articl.articlUrl"
+          target="_blank"
+        >
           {{ highlightedSubstring(articl.title,params.title,"prefix")
           }}<strong
             :class="{
@@ -126,10 +129,6 @@ strong:not([class="not-strong"]) {
   background-color: #749157;
   color: black;
   padding: 0.2rem 0.1rem;
-}
-
-li {
-  font-size: 0.65rem;
 }
 
 a {
