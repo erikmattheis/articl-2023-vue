@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import CardNotification from '@/components/ui/CardNotification';
+import CardNotification from '@/components/ui/CardNotification.vue';
 import { isLoggedIn } from '@/services/tokensService';
 
 export default {

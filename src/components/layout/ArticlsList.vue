@@ -25,7 +25,7 @@ import { isEqual } from 'lodash';
 import DraggableItems from 'vuedraggable';
 import { mapGetters } from 'vuex';
 
-import ArticlsListItem from '@/components/layout/ArticlsListItem';
+import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
 
 export default {
   name: 'ArticlsList',

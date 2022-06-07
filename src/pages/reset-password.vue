@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden';
+import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { scoreChars, validateEmail } from '@/services/userService';
 

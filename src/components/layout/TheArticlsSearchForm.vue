@@ -117,7 +117,7 @@
 import { debounce } from 'lodash';
 import { mapGetters } from 'vuex';
 
-import InputTypeahead from '@/components/ui/InputTypeahead';
+import InputTypeahead from '@/components/ui/InputTypeahead.vue';
 
 export default {
   name: 'TheArticlsFormSearch',
