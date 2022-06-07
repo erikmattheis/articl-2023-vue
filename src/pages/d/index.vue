@@ -48,7 +48,7 @@
     >
       <ul>
         <li
-          v-for=" articl in articls[ articlType ]||[]"
+          v-for="articl in articls[ articlType ] || []"
           :key="articl.id"
         >
           {{ articl.title }}
@@ -125,21 +125,6 @@ export default {
       });
 
       this.isLoading = false;
-
-      console.log(
-        'categories',
-        this.categories?.length,
-      );
-
-      console.log(
-        'articlTypes',
-        this.articlTypes?.length,
-      );
-
-      console.log(
-        'articls',
-        this.articls?.length,
-      );
 
     },
 

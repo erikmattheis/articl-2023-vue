@@ -54,7 +54,7 @@
     "extends": [
       "plugin:promise/recommended",
       "plugin:vuejs-accessibility/recommended",
-      "plugin:vue/vue3-essential",
+      "plugin:vue/vue3-recommended",
       "eslint:recommended",
       "@vue/airbnb"
     ],
@@ -77,7 +77,6 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-
     "root": true,
 
     "rules": {

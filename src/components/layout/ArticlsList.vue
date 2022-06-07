@@ -1,7 +1,8 @@
 <template>
   <div>
-    <draggable-items v-model="articls"
-tag="ol"
+    <draggable-items
+      v-model="articls"
+      tag="ol"
       item-key="id"
       handle=".my-handle"
       ghost-class="ghost"

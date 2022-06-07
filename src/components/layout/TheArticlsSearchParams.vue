@@ -103,7 +103,6 @@
 </template>
 
 <script>
-
 import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
