@@ -6,9 +6,7 @@
       <button
         v-if="!!id"
         @click="deleteArticl()"
-      >
-        Delete
-      </button>
+      > Delete </button>
     </form>
   </article>
 </template>
@@ -56,15 +54,13 @@ export default {
 
       this.buttonDisabled = true;
 
-      const result = await this.$http({
+      return this.$http({
         method: 'DELETE',
         url: '/articls',
         data: {
           id,
         },
       });
-
-      return result;
 
     },
   },

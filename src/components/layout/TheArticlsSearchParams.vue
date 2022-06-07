@@ -1,8 +1,7 @@
 <template>
   <small>
     <ul>
-      <li v-if="params.text">
-        Search for <strong>{{ params.text }}</strong>
+      <li v-if="params.text"> Search for <strong>{{ params.text }}</strong>
         <a
           href
           @click.prevent="resetValue('text')"
@@ -14,8 +13,7 @@
           /><span class="sr">Reset search value to empty</span>
         </a>
       </li>
-      <li v-if="params.title">
-        Title contains <strong>{{ params.title }}</strong>
+      <li v-if="params.title"> Title contains <strong>{{ params.title }}</strong>
         <a
           href
           @click.prevent="resetValue('title')"
@@ -27,70 +25,76 @@
           /><span class="sr">Reset title value to empty</span>
         </a>
       </li>
-
-      <li v-if="params.journal">
-        Journal is <strong>{{ params.journal }}</strong>
-        <a href @click.prevent="resetValue('journal')" @keyup.enter="resetValue('journal')">
+      <li v-if="params.journal"> Journal is <strong>{{ params.journal }}</strong>
+        <a
+          href
+          @click.prevent="resetValue('journal')"
+          @keyup.enter="resetValue('journal')"
+        >
           <vue-feather
             size="1.2rem"
             type="x-square"
           /><span class="sr">Reset journal value to empty</span>
         </a>
       </li>
-
-      <li v-if="params.authors">
-        Authors contains <strong>{{ params.authors }}</strong>
-        <a href @click.prevent="resetValue('authors')" @keyup.enter="resetValue('authors')">
+      <li v-if="params.authors"> Authors contains <strong>{{ params.authors }}</strong>
+        <a
+          href
+          @click.prevent="resetValue('authors')"
+          @keyup.enter="resetValue('authors')"
+        >
           <vue-feather
             size="1.2rem"
             type="x-square"
           /><span class="sr">Reset authors value to empty</span>
         </a>
       </li>
-
-      <li v-if="params.year && Number(params.year) !== yearsStart">
-        Year is
-        <strong>{{ params.yearComparison }} {{ params.year }}</strong>
+      <li v-if="params.year && Number(params.year) !== yearsStart"> Year is <strong>{{ params.yearComparison }} {{
+          params.year
+      }}</strong>
         <a
-          href @click.prevent="resetValue('year')" @keyup.enter="resetValue('year')">
+          href
+          @click.prevent="resetValue('year')"
+          @keyup.enter="resetValue('year')"
+        >
           <vue-feather
             size="1.2rem"
             type="x-square"
           ><span class="sr">Reset year value to {{ yearsStart }}</span>
-          </vue-feather></a>
+          </vue-feather>
+        </a>
       </li>
-
-      <li
-        v-if="
-          params.types?.length && params.types?.length !== allTypes?.length
-        ">
-        Type is <span v-if="params.types?.length > 1">one of </span>
+      <li v-if="
+        params.types?.length && params.types?.length !== allTypes?.length
+      "> Type is <span v-if="params.types?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.types, "or") }}</strong>
-        <a href @click.prevent="resetValue('types')" @keyup.enter="resetValue('types')">
+        <a
+          href
+          @click.prevent="resetValue('types')"
+          @keyup.enter="resetValue('types')"
+        >
           <vue-feather
             size="1.2rem"
             type="x-square"
           /><span class="sr">Reset type value to all types</span>
         </a>
       </li>
-
-      <li
-        v-if="
-          params?.statuses?.length &&
-            params?.statuses?.length !== allStatuses?.length
-        ">
-        Status is <span v-if="params?.statuses?.length > 1">one of </span>
-        <strong>{{
-          toListWithOptionalConjuction(params.statuses, "or")
-        }}</strong>
+      <li v-if="
+        params?.statuses?.length &&
+        params?.statuses?.length !== allStatuses?.length
+      "> Status is <span v-if="params?.statuses?.length > 1">one of </span>
+        <strong>{{ toListWithOptionalConjuction(params.statuses, "or") }}</strong>
         <a
           href
-          @click.prevent="resetValue('statuses')" @keyup.enter="resetValue('statuses')">
+          @click.prevent="resetValue('statuses')"
+          @keyup.enter="resetValue('statuses')"
+        >
           <vue-feather
             size="1.2rem"
             type="x-square"
           ><span class="sr">Reset statuses value to all statuses</span>
-          </vue-feather></a>
+          </vue-feather>
+        </a>
       </li>
     </ul>
   </small>
@@ -198,12 +202,13 @@ export default {
 </script>
 
 <style scoped>
-#app > main > article > div > div > small > ul > li > a {
+#app>main>article>div>div>small>ul>li>a {
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   cursor: pointer;
   color: red !important;
 }
+
 strong:not([class="not-strong"]) {
   background-color: #749157;
   color: black;

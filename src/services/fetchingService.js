@@ -1,5 +1,7 @@
 import store from '@/store';
 
+const errorAction = 'errors/setError';
+
 function copyToClipboard(index) {
 
   let finalSelector = '';
@@ -86,19 +88,11 @@ function getDB(url) {
 
     if (url.includes('pmc')) return 'pmc';
 
-  } catch (error) {
-
-    store.dispatch('errors/setError', error);
-
-  }
-
-  try {
-
     if (url.includes('pubmed.')) return 'pubmed';
 
   } catch (error) {
 
-    store.dispatch('errors/setError', error);
+    store.dispatch(errorAction, error);
 
   }
 
@@ -106,18 +100,43 @@ function getDB(url) {
 
 }
 
-//
-// function clearTable(result) {
-// result.title = "";
-// result.authors = "";
-// result.affiliation = "";
-// result.journal = "";
-// result.year = "";
-// result.month = "";
-// result.abstract = "";
-// result.authors = "";
-// }
-//
+//  Authors as found in Pubmed Data
+function extractAuthorsPMC(element) {
+
+  if (!element.querySelector('surname').textContent) {
+
+    return '';
+
+  }
+
+  let authors = element.querySelector('surname') ? `${element.querySelector('surname').textContent} ` : '';
+
+  authors += element.querySelector('given-names') ? `${element.querySelector('given-names').textContent} ` : '';
+
+  authors += element.querySelector('degrees') ? `${element.querySelector('degrees').textContent}<br><br>` : '';
+
+  return authors;
+
+}
+
+function extractAuthorsPubMed(element) {
+
+  if (!element.querySelector('LastName').textContent) {
+
+    return '';
+
+  }
+
+  let authors = '';
+
+  authors += element.querySelector('LastName') ? `${element.querySelector('LastName').textContent} ` : '';
+
+  authors += element.querySelector('ForeName') ? `${element.querySelector('ForeName').textContent},` : '<br><br>';
+
+  return authors;
+
+}
+
 // Handle the Async fetch of Pubmed Data
 async function api(surl) {
 
@@ -130,109 +149,46 @@ async function api(surl) {
   const results = await fetch(request);
   const str = await results.text();
   const responseDocument = new DOMParser().parseFromString(str, 'application/xml');
-
-  console.log('f', responseDocument);
-
   const result = {
     authors: '',
   };
 
   switch (database) {
 
-    case 'pmc':
-      try {
+    case 'pmc': {
 
-        result.title = responseDocument.querySelectorAll('article-title')[0].textContent;
+      result.title = responseDocument.querySelectorAll('article-title')[0].textContent;
 
-      } catch (error) {
+      const authorsPMC = responseDocument.querySelectorAll('contrib');
 
-        throw new Error(error);
+      authorsPMC.forEach((element) => {
 
-      }
+        result.authors += extractAuthorsPMC(element);
 
-      try {
+      });
 
-        const authors = responseDocument.querySelectorAll('contrib');
+      const temporary = responseDocument.querySelectorAll('aff');
 
-        authors.forEach((element) => {
+      temporary.forEach((element) => {
 
-          if (element.querySelector('surname').textContent !== 'undefined') {
+        result.affiliation += `${element.textContent}<br><br>`;
 
-            result.authors += element.querySelector('surname') ? `${element.querySelector('surname').textContent} ` : '';
+      });
 
-            result.authors += element.querySelector('given-names') ? `${element.querySelector('given-names').textContent} ` : '';
+      result.journal = responseDocument.querySelectorAll('journal-title')[0].textContent;
 
-            result.authors += element.querySelector('degrees') ? `${element.querySelector('degrees').textContent}<br><br>` : '';
+      result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0].textContent;
 
-          }
+      result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0].textContent;
 
-        });
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        const temporary = responseDocument.querySelectorAll('aff');
-
-        temporary.forEach((element) => {
-
-          result.affiliation += `${element.textContent}<br><br>`;
-
-        });
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.journal = responseDocument.querySelectorAll('journal-title')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.abstract = responseDocument.querySelectorAll('abstract')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
+      result.abstract = responseDocument.querySelectorAll('abstract')[0].textContent;
 
       break;
 
-    case 'pubmed':
+    }
+
+    case 'pubmed': {
+
       try {
 
         result.title = responseDocument.querySelectorAll('ArticleTitle')[0].textContent;
@@ -243,78 +199,33 @@ async function api(surl) {
 
       }
 
-      try {
+      const authorsPubMed = responseDocument.querySelectorAll('Author');
 
-        const authors = responseDocument.querySelectorAll('Author');
+      authorsPubMed.forEach((element) => {
 
-        authors.forEach((element) => {
+        result.authors += extractAuthorsPubMed(element);
 
-          result.authors += element.querySelector('LastName') ? `${element.querySelector('LastName').textContent} ` : '';
+      });
 
-          result.authors += element.querySelector('ForeName') ? `${element.querySelector('ForeName').textContent},` : '<br><br>';
+      result.affiliation = responseDocument.querySelectorAll('Affiliation')[0].textContent;
 
-        });
+      result.journal = responseDocument.querySelectorAll('Title')[0].textContent;
 
-      } catch (error) {
+      result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0].textContent;
 
-        throw new Error(error);
+      result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0].textContent;
 
-      }
-
-      try {
-
-        result.affiliation = responseDocument.querySelectorAll('Affiliation')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.journal = responseDocument.querySelectorAll('Title')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
-
-      try {
-
-        result.abstract = responseDocument.querySelectorAll('Abstract')[0].textContent;
-
-      } catch (error) {
-
-        throw new Error(error);
-
-      }
+      result.abstract = responseDocument.querySelectorAll('Abstract')[0].textContent;
 
       break;
 
-    default:
+    }
+
+    default: {
+
       throw new Error('Unknown function called in scraper');
+
+    }
 
   }
 

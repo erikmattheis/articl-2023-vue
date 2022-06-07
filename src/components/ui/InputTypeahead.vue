@@ -21,7 +21,6 @@
         :id="query"
       >
     </label>
-
     <ul v-show="hasItems">
       <!-- for vue@1.0 use: ($item, item) -->
       <li
@@ -166,11 +165,10 @@ export default {
       const params = {
         q: this.stringValue,
       };
-      const result = await this.$http.get(this.src, {
+
+      return this.$http.get(this.src, {
         params,
       });
-
-      return result;
 
     },
 
@@ -285,7 +283,7 @@ label .icon {
   cursor: pointer;
 }
 
-label > :where(input, select, textarea) {
+label> :where(input, select, textarea) {
   margin-top: 0;
 }
 </style>

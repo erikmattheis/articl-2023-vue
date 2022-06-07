@@ -3,23 +3,17 @@
     <h2>{{ title }} <span :aria-busy="isLoading" /></h2>
     <ul>
       <li
-        v-for="category in categories || []"
+        v-for=" category in categories || [] "
         :key="category.slug"
       >
-        <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
-          {{ category.title }}
-        </router-link>
-      </li>
-
-      <li v-if="isLoggedIn">
-        <router-link :to="{ name: 'createCategoryPage', query: { parentSlug: '0' } }">
-          New Category Here
+        <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }"> {{ category.title }}
         </router-link>
       </li>
       <li v-if="isLoggedIn">
-        <router-link :to="{ name: 'createArticlPage', query: { slug: '0' } }">
-          New Articl Here
-        </router-link>
+        <router-link :to="{ name: 'createCategoryPage', query: { parentSlug: '0' } }"> New Category Here </router-link>
+      </li>
+      <li v-if="isLoggedIn">
+        <router-link :to="{ name: 'createArticlPage', query: { slug: '0' } }"> New Articl Here </router-link>
       </li>
     </ul>
   </article>
@@ -58,8 +52,8 @@ export default {
         this.isLoading = true;
 
         const result = await this.getCategoryPageBySlug(slug);
-        const documentTitle = result.data.category[0].title;
-        const metaDescription = result.data.category[0].description;
+        const documentTitle = result.category[0].title;
+        const metaDescription = result.category[0].description;
 
         this.title = documentTitle;
 

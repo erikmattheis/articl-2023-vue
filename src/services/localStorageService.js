@@ -18,9 +18,7 @@ const set = function (name, val) {
 };
 const get = function (item) {
 
-  const val = localStorage.getItem(item);
-
-  return val;
+  return localStorage.getItem(item);
 
 };
 const clear = function () {
