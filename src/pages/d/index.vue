@@ -66,7 +66,7 @@
 import { groupBy } from 'lodash';
 import DraggableItems from 'vuedraggable';
 
-import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
+import ArticlsListItem from '@/components/layout/ArticlsListItem';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { isLoggedIn } from '@/services/tokensService';
 

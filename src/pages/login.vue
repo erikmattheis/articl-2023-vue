@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden';
 import validateEmail from '@/services/emailValidationService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { isLoggedIn, setTokens } from '@/services/tokensService';

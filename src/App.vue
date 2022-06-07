@@ -21,10 +21,10 @@
  * 4/15, 5/20, 6/1, 6/6
  * 5183,6937,7420
  *** */
-import TheFooter from '@/components/layout/TheFooter.vue';
-import TheHeader from '@/components/layout/TheHeader.vue';
-import ModalError from '@/components/ui/ModalError.vue';
-import ModalSuccess from '@/components/ui/ModalSuccess.vue';
+import TheFooter from '@/components/layout/TheFooter';
+import TheHeader from '@/components/layout/TheHeader';
+import ModalError from '@/components/ui/ModalError';
+import ModalSuccess from '@/components/ui/ModalSuccess';
 
 export default {
   components: {

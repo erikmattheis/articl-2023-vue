@@ -66,7 +66,7 @@
 import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
-import ArticlActions from '@/components/layout/ArticlActions.vue';
+import ArticlActions from '@/components/layout/ArticlActions';
 import { highlightedSubstring, noCaseIndexOf } from '@/services/stringsService';
 import { isLoggedIn } from '@/services/tokensService';
 

@@ -6,7 +6,7 @@ import VueCookies from 'vue-cookies';
 
 import { getAccessTokenValue } from '@/services/tokensService';
 
-import App from './App.vue';
+import App from './App';
 import router from './router';
 import store from './store/index';
 

@@ -2,17 +2,17 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import createArticlPage from '@/pages/articls/create';
 import deleteArticlPage from '@/pages/articls/delete';
-import searchArticls from '@/pages/articls/index.vue';
-import createCategoryPage from '@/pages/categories/index.vue';
-import categoryPage from '@/pages/d/index.vue';
-import forgotPassPage from '@/pages/forgot-pass.vue';
-import homePage from '@/pages/index.vue';
-import loginPage from '@/pages/login.vue';
-import notFound from '@/pages/NotFound.vue';
-import registerPage from '@/pages/register.vue';
-import resetPasswordPage from '@/pages/reset-password.vue';
-import usersPage from '@/pages/users/index.vue';
-import verifyEmailPage from '@/pages/verify-email.vue';
+import searchArticls from '@/pages/articls/index';
+import createCategoryPage from '@/pages/categories/index';
+import categoryPage from '@/pages/d/index';
+import forgotPassPage from '@/pages/forgot-pass';
+import homePage from '@/pages/index';
+import loginPage from '@/pages/login';
+import notFound from '@/pages/NotFound';
+import registerPage from '@/pages/register';
+import resetPasswordPage from '@/pages/reset-password';
+import usersPage from '@/pages/users/index';
+import verifyEmailPage from '@/pages/verify-email';
 
 const router = createRouter({
   history: createWebHistory(),

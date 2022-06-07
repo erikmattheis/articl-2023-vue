@@ -173,8 +173,8 @@
 </template>
 
 <script>
-import cardNotification from '@/components/ui/CardNotification.vue';
-import inputTypeahead from '@/components/ui/InputTypeahead.vue';
+import cardNotification from '@/components/ui/CardNotification';
+import inputTypeahead from '@/components/ui/InputTypeahead';
 import { fetchData } from '@/services/fetchingService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { isLoggedIn } from '@/services/tokensService';

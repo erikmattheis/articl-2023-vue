@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import ArticlsList from '@/components/layout/ArticlsList.vue';
-import TheArticlsFormSearch from '@/components/layout/TheArticlsSearchForm.vue';
-import TheArticlsSearchParams from '@/components/layout/TheArticlsSearchParams.vue';
+import ArticlsList from '@/components/layout/ArticlsList';
+import TheArticlsFormSearch from '@/components/layout/TheArticlsSearchForm';
+import TheArticlsSearchParams from '@/components/layout/TheArticlsSearchParams';
 
 export default {
   name: 'ArticlsSearch',

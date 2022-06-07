@@ -101,8 +101,8 @@
 </template>
 
 <script>
-import cardNotification from '@/components/ui/CardNotification.vue';
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import cardNotification from '@/components/ui/CardNotification';
+import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { scoreChars, validateEmail } from '@/services/userService';
 
