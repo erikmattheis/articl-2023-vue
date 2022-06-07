@@ -243,9 +243,13 @@ export default {
 
       if (this.id) {
 
+        this.buttonDisabled = true;
+
         const result = await this.getArticl(this.id);
 
         Object.assign(this, result);
+
+        this.buttonDisabled = false;
 
       }
 
@@ -370,23 +374,10 @@ export default {
 
     async getArticl(id) {
 
-      this.buttonDisabled = true;
-
       return this.$http({
         method: 'GET',
         url: `/articls/${id}`,
-      })
-        .then((result) => { return result.data; })
-        .catch((error) => {
-
-          this.$store.dispatch('errors/setError', error);
-
-        })
-        .finally(() => {
-
-          this.buttonDisabled = false;
-
-        });
+      });
 
     },
     onTypeaheadHit(e) {

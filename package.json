@@ -52,11 +52,19 @@
       "node": true
     },
     "extends": [
-
-        "plugin:vue/vue3-essential",
-        "eslint:recommended",
-        "@vue/airbnb"
-      
+      "plugin:promise/recommended",
+      "plugin:vuejs-accessibility/recommended",
+      "plugin:vue/vue3-essential",
+      "eslint:recommended",
+      "@vue/airbnb"
+    ],
+    "plugins": [
+      "import",
+      "promise",
+      "vuejs-accessibility",
+      "simple-import-sort",
+      "prefer-arrow",
+      "vue"
     ],
     "overrides": [
       {
@@ -69,11 +77,7 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "plugins": [
-      "simple-import-sort",
-      "prefer-arrow",
-      "vue"
-    ],
+
     "root": true,
 
     "rules": {
@@ -155,6 +159,14 @@
       "simple-import-sort/imports": "error",
       "vue/attributes-order": "off",
       "vue/html-closing-bracket-newline": "off",
+      "vue/max-attributes-per-line": ["error", {
+        "singleline": {
+          "max": 1
+        },      
+        "multiline": {
+          "max": 1
+        }
+      }],
       "vue/singleline-html-element-content-newline": "off",
       "vuejs-accessibility/no-onchange": "off"
     }
