@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import createArticlPage from '@/pages/articls/create.vue';
-import deleteArticlPage from '@/pages/articls/delete.vue';
+import createArticlPage from '@/pages/articls/create';
+import deleteArticlPage from '@/pages/articls/delete';
 import searchArticls from '@/pages/articls/index.vue';
 import createCategoryPage from '@/pages/categories/index.vue';
 import categoryPage from '@/pages/d/index.vue';

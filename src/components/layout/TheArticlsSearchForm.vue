@@ -20,12 +20,11 @@
       v-show="activeTab === 0"
       class="active tab-content"
     >
-      <label for="title">Title
-        <input
-          id="title"
-          v-model="title"
-          type="text"
-        ></label>
+      <label for="title">Title <input
+        id="title"
+        v-model="title"
+        type="text"
+      ></label>
     </div>
     <div
       v-show="activeTab === 1"
@@ -37,27 +36,22 @@
         query="journal"
         @typeahead-updated="onJournalChange"
       />
-
       <input-typeahead
         src="/articls/authors"
         :input-value="authors"
         query="authors"
         @typeahead-updated="onAuthorsChange"
       />
-
-      <label for="yearComparison">Year published
-        <label
-          for="year"
-          v-if="yearsStart === Number(year)"
-          class="horizontal"
-        ><input
-          v-model="yearComparison"
-          type="radio"
-          value="after"
-          name="yearComparison"
-        >
-          After
-        </label>
+      <label for="yearComparison">Year published <label
+        for="year"
+        v-if="yearsStart === Number(year)"
+        class="horizontal"
+      ><input
+        v-model="yearComparison"
+        type="radio"
+        value="after"
+        name="yearComparison"
+      > After </label>
         <label
           for="yearComparison"
           v-for="comparison in yearComparisons"
@@ -65,14 +59,11 @@
           :key="comparison"
           class="horizontal"
         ><input
-           v-model="yearComparison"
-           type="radio"
-           :value="comparison"
-           name="yearComparison"
-         >
-          {{ comparison }}
-        </label>
-
+          v-model="yearComparison"
+          type="radio"
+          :value="comparison"
+          name="yearComparison"
+        > {{ comparison }} </label>
         <select
           v-model="year"
           autocomplete="off"
@@ -81,16 +72,12 @@
           <option
             v-for="i in years"
             :key="i"
-          >
-            {{ i }}
-          </option>
+          > {{ i }} </option>
         </select>
-
         <div class="grid">
           <div>
             <fieldset>
-              Type
-              <label
+              <legend>Type</legend> <label
                 :for="articlType"
                 v-for="articlType in allTypes"
                 :key="articlType"
@@ -106,8 +93,7 @@
           </div>
           <div>
             <fieldset>
-              Status
-              <label
+              <legend>Status</legend> <label
                 :for="status"
                 v-for="status in allStatuses"
                 :key="status"
@@ -150,7 +136,7 @@ export default {
 
   },
   computed: {
-    queryUC(val) {
+    queryUC: (val) => {
 
       return val[0].toUpperCase() + val.substring(1);
 
@@ -335,7 +321,7 @@ select {
 * Nav tabs
 */
 
-.grid > li {
+.grid>li {
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
@@ -351,6 +337,7 @@ select {
 }
 
 html[data-theme="light"] {
+
   .nav-tabs li.active,
   .active {
     background-color: #d4d4d4;
@@ -358,6 +345,7 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
+
   .nav-tabs li.active,
   .active {
     background-color: #17262b;
@@ -465,7 +453,7 @@ html[data-theme="dark"] {
 <script>
 import { mapGetters } from "vuex";
 import { debounce } from "lodash";
-import InputTypeahead from "@/components/ui/InputTypeahead.vue";
+import InputTypeahead from "@/components/ui/InputTypeahead";
 
 export default {
   name: "theArticlsFormSearch",

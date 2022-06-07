@@ -112,7 +112,7 @@ export default {
     theButtonToggleHidden,
     cardNotification,
   },
-  data() {
+  data: () => {
 
     return {
       email: null,
@@ -138,7 +138,7 @@ export default {
       },
     },
   },
-  mounted() {
+  mounted: () => {
 
     setTitleAndDescription({
       title: 'Registration',

@@ -72,7 +72,7 @@ export default {
   components: {
     CardNotification,
   },
-  data() {
+  data: () => {
 
     return {
       title: null,

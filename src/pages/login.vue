@@ -74,7 +74,7 @@ export default {
   components: {
     theButtonToggleHidden,
   },
-  data() {
+  data: () => {
 
     return {
       email: null,
@@ -89,7 +89,7 @@ export default {
   computed: {
     isLoggedIn,
   },
-  mounted() {
+  mounted: () => {
 
     setTitleAndDescription({
       title: 'Login',

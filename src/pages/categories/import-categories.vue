@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'ImportCategoriesPage',
-  data() {
+  data: () => {
 
     return {
       buttonDisabled: false,

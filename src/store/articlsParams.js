@@ -1,6 +1,6 @@
 export default {
   namespaced: true,
-  state() {
+  state: () => {
 
     return {
       allStatuses: ['Published', 'Draft', 'Pending', 'Trash'],
@@ -32,81 +32,81 @@ export default {
 
   },
   mutations: {
-    SET_TEXT(state, payload) {
+    SET_TEXT: (state, payload) => {
 
       state.text = payload;
 
     },
-    SET_AUTHORS(state, payload) {
+    SET_AUTHORS: (state, payload) => {
 
       state.authors = payload;
 
     },
-    SET_JOURNAL(state, payload) {
+    SET_JOURNAL: (state, payload) => {
 
       state.journal = payload;
 
     },
-    SET_STATUSES(state, payload) {
+    SET_STATUSES: (state, payload) => {
 
       state.statuses = payload;
 
     },
-    SET_TYPES(state, payload) {
+    SET_TYPES: (state, payload) => {
 
       state.types = payload;
 
     },
-    SET_TITLE(state, payload) {
+    SET_TITLE: (state, payload) => {
 
       state.title = payload;
 
     },
-    SET_YEAR(state, payload) {
+    SET_YEAR: (state, payload) => {
 
       state.year = payload;
 
     },
-    SET_YEAR_COMPARISON(state, payload) {
+    SET_YEAR_COMPARISON: (state, payload) => {
 
       state.yearComparison = payload;
 
     },
   },
   actions: {
-    text(context, payload) {
+    text: (context, payload) => {
 
       context.commit('SET_TEXT', payload);
 
     },
-    authors(context, payload) {
+    authors: (context, payload) => {
 
       context.commit('SET_AUTHORS', payload);
 
     },
-    journal(context, payload) {
+    journal: (context, payload) => {
 
       context.commit('SET_JOURNAL', payload);
 
     },
-    statuses(context, payload) {
+    statuses: (context, payload) => {
 
       context.commit('SET_STATUSES', payload.slice());
 
     },
-    title(context, payload) {
+    title: (context, payload) => {
 
       context.commit('SET_TITLE', payload);
 
     },
-    types(context, payload) {
+    types: (context, payload) => {
 
       context.commit('SET_TYPES', payload.slice());
 
     },
-    year({
+    year: ({
       commit, state,
-    }, payload) {
+    }, payload) => {
 
       if (payload === state.yearsStart) {
 
@@ -117,14 +117,14 @@ export default {
       commit('SET_YEAR', payload);
 
     },
-    yearComparison(context, payload) {
+    yearComparison: (context, payload) => {
 
       context.commit('SET_YEAR_COMPARISON', payload);
 
     },
-    reset({
+    reset: ({
       commit,
-    }, _ = undefined) {
+    }, _ = undefined) => {
 
       commit('SET_TEXT', _);
 
@@ -145,85 +145,85 @@ export default {
     },
   },
   getters: {
-    text(state) {
+    text: (state) => {
 
       return state.text;
 
     },
-    documentTitle(state) {
+    documentTitle: (state) => {
 
       return state.documentTitle;
 
     },
-    allStatuses(state) {
+    allStatuses: (state) => {
 
       return state.allStatuses;
 
     },
-    allTypes(state) {
+    allTypes: (state) => {
 
       return state.allTypes;
 
     },
-    authors(state) {
+    authors: (state) => {
 
       return state.authors;
 
     },
 
-    journal(state) {
+    journal: (state) => {
 
       return state.journal;
 
     },
-    paramsCurrent(state) {
+    paramsCurrent: (state) => {
 
       return state.paramsCurrent;
 
     },
-    statuses(state) {
+    statuses: (state) => {
 
       return state.statuses;
 
     },
-    title(state) {
+    title: (state) => {
 
       return state.title;
 
     },
-    types(state) {
+    types: (state) => {
 
       return state.types;
 
     },
-    year(state) {
+    year: (state) => {
 
       return state.year;
 
     },
-    yearComparison(state) {
+    yearComparison: (state) => {
 
       return state.yearComparison;
 
     },
-    yearComparisons(state) {
+    yearComparisons: (state) => {
 
       return state.yearComparisons;
 
     },
-    years(state) {
+    years: (state) => {
 
       return [...Array(new Date().getUTCFullYear() - (state.yearsStart - 1)).keys()]
-        .map((x) => state.yearsStart + x + 1)
+        .map((x) => { return state.yearsStart + x + 1; })
         .reverse();
 
     },
-    yearsStart(state) {
+    yearsStart: (state) => {
 
       return state.yearsStart;
 
     },
-    params(state) {
+    params: (state) => {
 
       return {
         ...(state.text && {
@@ -238,7 +238,7 @@ export default {
         ...(state.authors && {
           authors: state.authors,
         }),
-        ...(!(Number(state.year) === Number(state.yearsStart)) && {
+        ...(Number(state.year) !== Number(state.yearsStart) && {
           yearComparison: state.yearComparison,
           year: state.year,
         }),

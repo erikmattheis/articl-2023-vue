@@ -1,8 +1,7 @@
 import store from '@/store';
 
 const errorAction = 'errors/setError';
-
-function copyToClipboard(index) {
+const copyToClipboard = (index) => {
 
   let finalSelector = '';
 
@@ -65,10 +64,9 @@ function copyToClipboard(index) {
   // removing textarea after copy
   input.remove();
 
-}
-
+};
 // Parse the ID from the URL
-function getId(url) {
+const getId = (url) => {
 
   let id = url;
 
@@ -80,9 +78,8 @@ function getId(url) {
 
   return id.slice(Math.max(0, id.lastIndexOf('/') + 1));
 
-}
-
-function getDB(url) {
+};
+const getDB = (url) => {
 
   try {
 
@@ -98,10 +95,9 @@ function getDB(url) {
 
   return '';
 
-}
-
+};
 //  Authors as found in Pubmed Data
-function extractAuthorsPMC(element) {
+const extractAuthorsPMC = (element) => {
 
   if (!element.querySelector('surname').textContent) {
 
@@ -117,9 +113,8 @@ function extractAuthorsPMC(element) {
 
   return authors;
 
-}
-
-function extractAuthorsPubMed(element) {
+};
+const extractAuthorsPubMed = (element) => {
 
   if (!element.querySelector('LastName').textContent) {
 
@@ -135,10 +130,9 @@ function extractAuthorsPubMed(element) {
 
   return authors;
 
-}
-
+};
 // Handle the Async fetch of Pubmed Data
-async function api(surl) {
+const api = async (surl) => {
 
   const baseUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
   const mode = 'efetch';
@@ -231,7 +225,7 @@ async function api(surl) {
 
   return result;
 
-}
+};
 
 async function scrape(surl) {
 
@@ -311,7 +305,7 @@ async function scrape(surl) {
 
 }
 
-function download(filename, text) {
+const download = (filename, text) => {
 
   const element = document.createElement('a');
 
@@ -327,9 +321,8 @@ function download(filename, text) {
 
   element.remove();
 
-}
-
-function generateJSON(result) {
+};
+const generateJSON = (result) => {
 
   const jsonTitle = result.title;
   const jsonAffiliation = result.affiliation;
@@ -352,8 +345,7 @@ function generateJSON(result) {
   // Start file download.
   download(`article_${Date.now()}.json`, jsonOutput);
 
-}
-
+};
 const scraper = (url) => {
 
   switch (new URL(url).hostname) {
@@ -367,36 +359,18 @@ const scraper = (url) => {
     case 'pubs.rsna.org':
       return Promise.reject(new Error('pubs.rsna.org not implemented'));
 
-    //
-    // loadDOIMetadata(
-    // a.pathname.split("/")[a.pathname.split("/").length - 2] +
-    // "/" +
-    // a.pathname.split("/")[a.pathname.split("/").length - 1],
-    // callback
-    // );
-    //
     case 'www.ajronline.org':
       return Promise.reject(new Error('www.ajronline.org not implemented'));
 
-    //
-    // loadDOIMetadata(
-    // a.pathname.split("/")[a.pathname.split("/").length - 2] +
-    // "/" +
-    // a.pathname.split("/")[a.pathname.split("/").length - 1]
-    // );
-    //
     case 'www.jultrasoundmed.org':
       return Promise.reject(new Error('wwww.jultrasoundmed.org not implemented'));
 
-    // loadMetadataFromDocumentWithDOIInMetaTag(
     case 'jnm.snmjournals.org':
       return Promise.reject(new Error('jnm.snmjournals.org not implemented'));
 
-    // loadMetadataFromDocumentWithDOIInMetaTag();
     case 'www.ajnr.org':
       return Promise.reject(new Error('wwww.ajnr.org not implemented'));
 
-    // loadMetadataFromDocumentWithDOIInMetaTag();
     case 'www.jvir.org':
       return Promise.reject(new Error('www.jvir.org not implemented'));
 
@@ -415,12 +389,13 @@ const scraper = (url) => {
   }
 
 };
-
-async function fetchData(url) {
+const fetchData = async (url) => {
 
   return scraper(url);
 
-}
+};
 
-export { copyToClipboard, fetchData, generateJSON };
+export {
+  copyToClipboard, fetchData, generateJSON,
+};
 

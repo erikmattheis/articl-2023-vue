@@ -33,7 +33,7 @@ export default {
     DraggableItems,
     ArticlsListItem,
   },
-  data() {
+  data: () => {
 
     return {
       articls: [],
@@ -70,10 +70,14 @@ export default {
     },
     async saveOrderValues() {
 
-      const order = this.articls.map((obj) => ({
-        id: obj.id,
-        order: obj.order,
-      }));
+      const order = this.articls.map((obj) => {
+
+        return {
+          id: obj.id,
+          order: obj.order,
+        };
+
+      });
 
       await this.saveOrder(order);
 
@@ -198,7 +202,7 @@ export default {
 import { mapGetters } from "vuex";
 import DraggableItems from "vuedraggable";
 import { isEqual } from "lodash";
-import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
+import ArticlsListItem from "@/components/layout/ArticlsListItem";
 
 export default {
   name: "ArticlsList",

@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
 
-  state() {
+  state: () => {
 
     return {
       accessTokenExpires: undefined,
@@ -13,25 +13,25 @@ export default {
   },
 
   mutations: {
-    SET_ACCESS_TOKEN_VALUE(state, payload) {
+    SET_ACCESS_TOKEN_VALUE: (state, payload) => {
 
       state.accessTokenValue = payload;
 
     },
 
-    SET_ACCESS_TOKEN_EXPIRES(state, payload) {
+    SET_ACCESS_TOKEN_EXPIRES: (state, payload) => {
 
       state.accessTokenExpires = payload;
 
     },
 
-    SET_REFRESH_TOKEN_VALUE(state, payload) {
+    SET_REFRESH_TOKEN_VALUE: (state, payload) => {
 
       state.refreshTokenValue = payload;
 
     },
 
-    SET_REFRESH_TOKEN_EXPIRES(state, payload) {
+    SET_REFRESH_TOKEN_EXPIRES: (state, payload) => {
 
       state.refreshTokenExpires = payload;
 
@@ -39,7 +39,7 @@ export default {
   },
 
   actions: {
-    logout(context) {
+    logout: (context) => {
 
       context.commit('SET_ACCESS_TOKEN_EXPIRES', '');
 
@@ -51,7 +51,7 @@ export default {
 
     },
 
-    accessTokenExpires(context, payload) {
+    accessTokenExpires: (context, payload) => {
 
       if (payload) {
 
@@ -61,7 +61,7 @@ export default {
 
     },
 
-    accessTokenValue(context, payload) {
+    accessTokenValue: (context, payload) => {
 
       if (payload) {
 
@@ -71,7 +71,7 @@ export default {
 
     },
 
-    refreshTokenExpires(context, payload) {
+    refreshTokenExpires: (context, payload) => {
 
       if (payload) {
 
@@ -81,7 +81,7 @@ export default {
 
     },
 
-    refreshTokenValue(context, payload) {
+    refreshTokenValue: (context, payload) => {
 
       if (payload) {
 
@@ -93,7 +93,7 @@ export default {
   },
 
   getters: {
-    isLoggedIn(state) {
+    isLoggedIn: (state) => {
 
       const now = Date.now();
 
@@ -101,25 +101,25 @@ export default {
 
     },
 
-    accessTokenExpires(state) {
+    accessTokenExpires: (state) => {
 
       return state.accessTokenExpires;
 
     },
 
-    accessTokenValue(state) {
+    accessTokenValue: (state) => {
 
       return state.accessTokenValue;
 
     },
 
-    refreshTokenExpires(state) {
+    refreshTokenExpires: (state) => {
 
       return state.refreshTokenExpires;
 
     },
 
-    refreshTokenValue(state) {
+    refreshTokenValue: (state) => {
 
       return state.refreshTokenValue;
 

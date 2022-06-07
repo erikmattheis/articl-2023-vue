@@ -6,7 +6,8 @@
         v-for=" category in categories || [] "
         :key="category.slug"
       >
-        <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }"> {{ category.title }}
+        <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
+          {{ category.title }}
         </router-link>
       </li>
       <li v-if="isLoggedIn">
@@ -26,7 +27,7 @@ import { isLoggedIn } from '@/services/tokensService';
 export default {
   name: 'HomePage',
   // components: { TheBreadcrumbs },
-  data() {
+  data: () => {
 
     return {
       isLoading: true,

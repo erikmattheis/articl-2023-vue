@@ -23,7 +23,7 @@ export default {
     TheArticlsSearchParams,
     ArticlsList,
   },
-  data() {
+  data: () => {
 
     return {
     };

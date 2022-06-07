@@ -376,7 +376,7 @@ export default {
         method: 'GET',
         url: `/articls/${id}`,
       })
-        .then((result) => result.data)
+        .then((result) => { return result.data; })
         .catch((error) => {
 
           this.$store.dispatch('errors/setError', error);

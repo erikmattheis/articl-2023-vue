@@ -50,7 +50,7 @@ app.config.globalProperties.$http.interceptors.request.use(
     return Promise.resolve(req);
 
   },
-  (error) => Promise.reject(error),
+  (error) => { return error; },
 );
 
 app.use(router);
@@ -61,10 +61,10 @@ app.use(VueCookies, {
 
 app.use(store);
 
-function createAxiosResponseInterceptor() {
+const createAxiosResponseInterceptor = () => {
 
   app.config.globalProperties.$http.interceptors.response.use(
-    (response) => response,
+    (response) => { return response; },
     (error) => {
 
       if (error?.response?.status === 401 && router.currentRoute.path !== '/login') {
@@ -84,7 +84,7 @@ function createAxiosResponseInterceptor() {
     },
   );
 
-}
+};
 
 createAxiosResponseInterceptor();
 

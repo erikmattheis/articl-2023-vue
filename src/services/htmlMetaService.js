@@ -1,11 +1,11 @@
 import store from '@/store';
 
-const setTitle = function (documentTitle) {
+const setTitle = (documentTitle) => {
 
   document.title = documentTitle;
 
 };
-const setMetaDescription = function (metaDescription) {
+const setMetaDescription = (metaDescription) => {
 
   let meta = document.querySelector('meta[name="description"]');
 
@@ -27,7 +27,7 @@ const setMetaDescription = function (metaDescription) {
   }
 
 };
-const setTitleAndDescription = function (object) {
+const setTitleAndDescription = (object) => {
 
   setTitle(object.title);
 
@@ -40,4 +40,6 @@ const setTitleAndDescription = function (object) {
 
 };
 
-export { setMetaDescription, setTitle, setTitleAndDescription };
+export {
+  setMetaDescription, setTitle, setTitleAndDescription,
+};

@@ -2,7 +2,7 @@ import VueCookies from 'vue-cookies';
 
 import store from '@/store';
 
-const getAccessTokenExpires = function () {
+const getAccessTokenExpires = () => {
 
   const accessTokenExpires = VueCookies.get('accessTokenExpires');
 
@@ -25,7 +25,7 @@ const updateSeconds = function () {
 
 let interval;
 
-const isLoggedIn = function () {
+const isLoggedIn = () => {
 
   const currentYear = new Date().getUTCFullYear();
   const currentTime = new Date().setUTCFullYear(currentYear);
@@ -43,7 +43,7 @@ const isLoggedIn = function () {
   return expires > currentTime;
 
 };
-const getAccessTokenValue = function () {
+const getAccessTokenValue = () => {
 
   const accessTokenValue = VueCookies.get('accessTokenValue');
 
@@ -56,7 +56,7 @@ const getAccessTokenValue = function () {
   return accessTokenValue;
 
 };
-const getRefreshTokenExpires = function () {
+const getRefreshTokenExpires = () => {
 
   const refreshTokenExpires = VueCookies.get(
     'refreshTokenExpires',
@@ -71,7 +71,7 @@ const getRefreshTokenExpires = function () {
   return refreshTokenExpires;
 
 };
-const getRefreshTokenValue = function () {
+const getRefreshTokenValue = () => {
 
   const refreshTokenValue = VueCookies.get('refreshTokenValue');
 
@@ -84,7 +84,7 @@ const getRefreshTokenValue = function () {
   return refreshTokenValue;
 
 };
-const setTokensInVuex = function (val) {
+const setTokensInVuex = (val) => {
 
   if (val?.access?.token) {
 
@@ -99,7 +99,7 @@ const setTokensInVuex = function (val) {
   }
 
 };
-const setTokensInLocalStorage = function (val) {
+const setTokensInLocalStorage = (val) => {
 
   if (val?.access?.token) {
 
@@ -114,7 +114,7 @@ const setTokensInLocalStorage = function (val) {
   }
 
 };
-const convertStringDatesToMS = function (serverResult) {
+const convertStringDatesToMS = (serverResult) => {
 
   if (serverResult?.data?.tokens) {
 
@@ -136,7 +136,7 @@ const convertStringDatesToMS = function (serverResult) {
   };
 
 };
-const setTokens = function (response) {
+const setTokens = (response) => {
 
   const result = convertStringDatesToMS(response);
 
@@ -148,11 +148,13 @@ const setTokens = function (response) {
 
 };
 
-export { convertStringDatesToMS,
+export {
+  convertStringDatesToMS,
   getAccessTokenExpires,
   getAccessTokenValue,
   getRefreshTokenExpires,
   getRefreshTokenValue,
   isLoggedIn,
   setTokens, setTokensInLocalStorage,
-  setTokensInVuex };
+  setTokensInVuex,
+};

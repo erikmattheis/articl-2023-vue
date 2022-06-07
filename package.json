@@ -1,16 +1,10 @@
 {
-  "name": "articl-frontent-dev",
-  "version": "1.0.0",
-  "description": "",
   "author": "",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "postinstall.xxx": "npm run build",
-    "start": "node index.js"
-  },
-  "main": "index.js",
+  "browserslist": [
+    "> 1%",
+    "not ie 11",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@picocss/pico": "^1.5.2",
     "axios": "^0.27.2",
@@ -28,10 +22,10 @@
     "vuedraggable": "^4.1.0",
     "vuex": "^4.0.0"
   },
+  "description": "",
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.6",
-    "@stayradiated/eslint-plugin-prefer-arrow-functions": "^4.4.0",
     "@vue/cli-plugin-babel": "^5.0.4",
     "@vue/cli-plugin-eslint": "^5.0.4",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -41,10 +35,10 @@
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prefer-arrow-functions": "^3.1.4",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-sonarjs": "^0.13.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-vue": "^8.0.3",
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
@@ -53,26 +47,12 @@
     "typescript": "^4.7.3"
   },
   "eslintConfig": {
-    "root": true,
     "env": {
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-recommended",
-      "eslint:recommended",
-      "@vue/airbnb",
-      "plugin:promise/recommended",
-      "plugin:vuejs-accessibility/recommended",
-      "plugin:sonarjs/recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "plugins": [
-      "simple-import-sort",
-      "import",
-      "sonarjs",
-      "prefer-arrow-functions"
+
+      "@vue/airbnb"
     ],
     "overrides": [
       {
@@ -82,16 +62,34 @@
         ]
       }
     ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "plugins": [
+      "simple-import-sort",
+      "prefer-arrow",
+      "import"
+    ],
+    "root": true,
     "rules": {
-      "vue/html-closing-bracket-newline": "off",
-      "vue/max-attributes-per-line": "off",
-      "vue/attributes-order": "off",
-      "vue/singleline-html-element-content-newline": "off",
-      "import/newline-after-import": "error",
+      "arrow-body-style": [
+        "error",
+        "always"
+      ],
+      "func-names": "off",
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "vue": "never"
+        }
+      ],
       "max-len": "off",
       "no-console": "off",
       "no-debugger": "off",
-      "sonarjs/no-duplicate-string": "off",
       "no-multiple-empty-lines": [
         "error",
         {
@@ -100,14 +98,13 @@
           "maxEOF": 1
         }
       ],
-      "vuejs-accessibility/no-onchange": "off",
       "object-curly-newline": [
         "error",
         {
-          "ObjectExpression": "always",
-          "ObjectPattern": "always",
+          "ExportDeclaration": "always",
           "ImportDeclaration": "never",
-          "ExportDeclaration": "never"
+          "ObjectExpression": "always",
+          "ObjectPattern": "always"
         }
       ],
       "padded-blocks": [
@@ -125,49 +122,69 @@
         "error",
         {
           "blankLine": "always",
-          "prev": "*",
-          "next": "*"
+          "next": "*",
+          "prev": "*"
         },
         {
           "blankLine": "never",
-          "prev": "const",
-          "next": "const"
+          "next": "const",
+          "prev": "const"
         },
         {
           "blankLine": "never",
-          "prev": "let",
-          "next": "let"
+          "next": "let",
+          "prev": "let"
         },
         {
           "blankLine": "always",
-          "prev": "expression",
-          "next": "expression"
+          "next": "expression",
+          "prev": "expression"
         },
         {
           "blankLine": "any",
-          "prev": "import",
-          "next": "import"
+          "next": "import",
+          "prev": "import"
         }
       ],
       "prefer-arrow-callback": "error",
-      "prefer-arrow-functions/prefer-arrow-functions": [
-        "warn",
+      "prefer-arrow/prefer-arrow-functions": [
+        "error",
         {
+          "disallowPrototype": true,
+          "singleReturnOnly": false,
           "classPropertiesAllowed": false,
-          "disallowPrototype": false,
-          "returnStyle": "unchanged",
-          "singleReturnOnly": false
+          "allowStandaloneDeclarations": false
         }
       ],
-      "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
-      "func-names": "off"
-    }
+      "simple-import-sort/imports": "error",
+      "vue/attributes-order": "off",
+      "vue/html-closing-bracket-newline": "off",
+      "vue/max-attributes-per-line": "off",
+      "vue/singleline-html-element-content-newline": "off",
+      "vuejs-accessibility/no-onchange": "off"
+    },
+    "settings": {
+			"import/resolver": {
+				"webpack": {
+					"config": "webpack.conf.json"
+				},
+        "node": {
+          "extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]
+        }
+			}
+		}
   },
-  "browserslist": [
-    "> 1%",
-    "not ie 11",
-    "not op_mini all"
-  ],
-  "license": "ISC"
+  "license": "ISC",
+  "main": "index.js",
+  "name": "articl-frontent-dev",
+  "scripts": {
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "postinstall.xxx": "npm run build",
+    "serve": "vue-cli-service serve",
+    "start": "node index.js"
+  },
+  "type": "module",
+  "version": "1.0.0"
 }

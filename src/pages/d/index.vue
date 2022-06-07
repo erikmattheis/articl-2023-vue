@@ -75,7 +75,7 @@ export default {
   components: {
     DraggableItems, ArticlsListItem,
   },
-  data() {
+  data: () => {
 
     return {
       isLoading: true,
@@ -154,9 +154,9 @@ export default {
         categories: result.data.categories,
         category: result.data.category,
         articlTypes: result.data.articls?.length
-          ? [...new Set(result.data.articls.map((item) => item.type))]
+          ? [...new Set(result.data.articls.map((item) => { return item.type; }))]
           : [],
-        articls: groupBy(result.data.articls, (articl) => articl.type),
+        articls: groupBy(result.data.articls, (articl) => { return articl.type; }),
       };
 
     },
@@ -175,9 +175,13 @@ export default {
 
     async saveOrderValues() {
 
-      const order = this.categories.map((obj) => ({
-        id: obj.id, order: obj.order,
-      }));
+      const order = this.categories.map((obj) => {
+
+        return {
+          id: obj.id, order: obj.order,
+        };
+
+      });
 
       await this.saveOrder(order);
 

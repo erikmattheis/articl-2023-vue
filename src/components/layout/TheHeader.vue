@@ -145,7 +145,7 @@ export default {
   components: {
     VueFeather,
   },
-  data() {
+  data: () => {
 
     return {
       theme: 'light',
@@ -187,7 +187,7 @@ export default {
 
     clearLocalData() {
 
-      this.$cookies.keys().forEach((cookie) => this.$cookies.remove(cookie));
+      this.$cookies.keys().forEach((cookie) => { return this.$cookies.remove(cookie); });
 
       clearLocalStorage();
 

@@ -57,7 +57,7 @@ export default {
   emits: {
     typeaheadUpdated: null,
   },
-  data() {
+  data: () => {
 
     return {
       items: [],
@@ -172,7 +172,7 @@ export default {
 
     },
 
-    cancel() {
+    cancel: () => {
       // used to cancel after request made
     },
 

@@ -8,7 +8,7 @@
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  data() {
+  data: () => {
 
     return {
       result: null,

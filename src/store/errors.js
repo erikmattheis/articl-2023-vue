@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
 
-  state() {
+  state: () => {
 
     return {
       errorMessage: undefined,
@@ -14,37 +14,37 @@ export default {
   },
 
   mutations: {
-    SET_SUCCESS_MESSAGE(state, payload) {
+    SET_SUCCESS_MESSAGE: (state, payload) => {
 
       state.successMessage = payload;
 
     },
 
-    SET_ERROR_TITLE(state, payload) {
+    SET_ERROR_TITLE: (state, payload) => {
 
       state.errorTitle = payload;
 
     },
 
-    SET_ERROR_MESSAGE(state, payload) {
+    SET_ERROR_MESSAGE: (state, payload) => {
 
       state.errorMessage = payload;
 
     },
 
-    SET_ERROR_FILE_NAME(state, payload) {
+    SET_ERROR_FILE_NAME: (state, payload) => {
 
       state.errorFileName = payload;
 
     },
 
-    SET_ERROR_LINE_NUMBER(state, payload) {
+    SET_ERROR_LINE_NUMBER: (state, payload) => {
 
       state.errorLineNumber = payload;
 
     },
 
-    SET_ERROR_STACK(state, payload) {
+    SET_ERROR_STACK: (state, payload) => {
 
       state.errorStack = payload;
 
@@ -52,7 +52,7 @@ export default {
   },
 
   actions: {
-    setError(context, payload) {
+    setError: (context, payload) => {
 
       let errorTitle = 'Error';
       let errorMessage = 'Unknown error';
@@ -134,7 +134,7 @@ export default {
 
     },
 
-    clearError(context) {
+    clearError: (context) => {
 
       context.commit('SET_ERROR_TITLE', '');
 
@@ -148,9 +148,9 @@ export default {
 
     },
 
-    setMetaDescriptionAndDocumentTitle(context, {
+    setMetaDescriptionAndDocumentTitle: (context, {
       documentTitle, metaDescription,
-    }) {
+    }) => {
 
       context.commit('SET_DOCUMENT_TITLE', documentTitle);
 
@@ -181,46 +181,46 @@ export default {
   },
 
   getters: {
-    errorMessage(state) {
+    errorMessage: (state) => {
 
       return state.errorMessage;
 
     },
 
-    errorTitle(state) {
+    errorTitle: (state) => {
 
       // console.error(state.error.title);
       return state.errorTitle;
 
     },
 
-    errorFileName(state) {
+    errorFileName: (state) => {
 
       // console.error(state.error.fileName);
       return state.errorFileName;
 
     },
 
-    errorLineNumber(state) {
+    errorLineNumber: (state) => {
 
       // console.error(state.error.lineNumber);
       return state.errorLineNumber;
 
     },
 
-    errorStack(state) {
+    errorStack: (state) => {
 
       return state.errorStack;
 
     },
 
-    documentTitle(state) {
+    documentTitle: (state) => {
 
       return state.documentTitle;
 
     },
 
-    metaDescription(state) {
+    metaDescription: (state) => {
 
       return state.metaDescription;
 

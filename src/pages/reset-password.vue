@@ -100,7 +100,7 @@ export default {
   components: {
     theButtonToggleHidden,
   },
-  data() {
+  data: () => {
 
     return {
       email: null,
@@ -126,7 +126,7 @@ export default {
       },
     },
   },
-  mounted() {
+  mounted: () => {
 
     setTitleAndDescription({
       title: 'Reset Password',

@@ -82,7 +82,7 @@ export default {
       default: undefined,
     },
   },
-  data() {
+  data: () => {
 
     return {
       articls: [],

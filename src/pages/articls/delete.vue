@@ -6,7 +6,9 @@
       <button
         v-if="!!id"
         @click="deleteArticl()"
-      > Delete </button>
+      >
+        Delete
+      </button>
     </form>
   </article>
 </template>
@@ -16,7 +18,7 @@ export default {
   name: 'DeleteArticl',
   components: {
   },
-  data() {
+  data: () => {
 
     return {
       id: undefined,

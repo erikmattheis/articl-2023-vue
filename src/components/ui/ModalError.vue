@@ -64,7 +64,7 @@ export default {
   components: {
     VueFeather,
   },
-  data() {
+  data: () => {
 
     return {
       title: '',

@@ -1,15 +1,14 @@
-function charCounts(val) {
+const charCounts = (val) => {
 
   return {
     numUpper: val.length - val.replace(/[A-Z]/g, '').length,
     numLower: val.length - val.replace(/[a-z]/g, '').length,
-    numDigit: val.length - val.replace(/[0-9]/g, '').length,
+    numDigit: val.length - val.replace(/\d/g, '').length,
     numSpecial: val.length - val.replace(/\W|_/g, '').length,
   };
 
-}
-
-function scoreChars(val) {
+};
+const scoreChars = (val) => {
 
   if (!val) {
 
@@ -25,9 +24,8 @@ function scoreChars(val) {
 
   return a + b + c + d;
 
-}
-
-const validateEmail = function (email) {
+};
+const validateEmail = (email) => {
 
   if (!email) {
 
@@ -38,10 +36,12 @@ const validateEmail = function (email) {
   return email.match(
 
     // eslint-disable-next-line
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   );
 
 };
 
-export { scoreChars, validateEmail };
+export {
+  scoreChars, validateEmail,
+};

@@ -1,12 +1,15 @@
-const express = require("express");
-const serveStatic = require("serve-static");
-const path = require("path");
+import express from 'express';
+import path from 'path';
+import serveStatic from 'serve-static';
+
 const app = express();
 
-app.use(serveStatic(path.join(__dirname, "dist")));
+app.use(serveStatic(path.join(__dirname, 'dist')));
 
-app.get(/.*/, function (req, res) {
-  res.sendFile(__dirname + "/dist/index.html");
+app.get(/.*/, (_, res) => {
+
+  res.sendFile(`${__dirname}/dist/index.html`);
+
 });
 
 const port = process.env.PORT || 3000;

@@ -1,4 +1,4 @@
-const set = function (name, val) {
+const set = (name, val) => {
 
   localStorage.setItem(
     name,
@@ -16,15 +16,17 @@ const set = function (name, val) {
   }
 
 };
-const get = function (item) {
+const get = (item) => {
 
   return localStorage.getItem(item);
 
 };
-const clear = function () {
+const clear = () => {
 
   return localStorage.clear();
 
 };
 
-export { clear, get, set };
+export {
+  clear, get, set,
+};

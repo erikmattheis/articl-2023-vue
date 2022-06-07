@@ -11,7 +11,7 @@
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  mounted() {
+  mounted: () => {
 
     setTitleAndDescription({
       title: 'Not Found',

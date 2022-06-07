@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
 
-  state() {
+  state: () => {
 
     return {
       user: undefined,
@@ -13,7 +13,7 @@ export default {
   },
 
   mutations: {
-    SET_USER(state, payload) {
+    SET_USER: (state, payload) => {
 
       state.user = payload;
 
@@ -21,31 +21,31 @@ export default {
   },
 
   actions: {
-    setUser(context, payload) {
+    setUser: (context, payload) => {
 
       context.commit('SET_USER', payload);
 
     },
   },
   getters: {
-    user(state) {
+    user: (state) => {
 
       return state.user;
 
     },
-    userId(state) {
+    userId: (state) => {
 
       return state.user.id;
 
     },
 
-    userFullName(state) {
+    userFullName: (state) => {
 
       return `${state.user.nameFirst} ${state.user.nameLast}`;
 
     },
 
-    isEmailVerified(state) {
+    isEmailVerified: (state) => {
 
       return state.user.isEmailVerified;
 

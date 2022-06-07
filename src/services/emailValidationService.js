@@ -1,5 +1,5 @@
 export default {
-  validateEmail(email) {
+  validateEmail: (email) => {
 
     if (!email) {
 

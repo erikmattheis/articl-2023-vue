@@ -12,7 +12,7 @@ import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'VerifyEmailPage',
-  data() {
+  data: () => {
 
     return {
       resultTitle: null,

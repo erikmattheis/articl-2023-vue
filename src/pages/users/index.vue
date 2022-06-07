@@ -78,7 +78,7 @@ import { validateEmail } from '@/services/userService';
 
 export default {
   name: 'UsersPage',
-  data() {
+  data: () => {
 
     return {
       nameFirst: '',

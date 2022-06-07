@@ -21,7 +21,7 @@ export default {
       type: String, default: '',
     },
   },
-  data() {
+  data: () => {
 
     return {
       title: '',

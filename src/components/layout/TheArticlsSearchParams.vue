@@ -50,7 +50,7 @@
         </a>
       </li>
       <li v-if="params.year && Number(params.year) !== yearsStart"> Year is <strong>{{ params.yearComparison }} {{
-          params.year
+        params.year
       }}</strong>
         <a
           href
@@ -64,9 +64,10 @@
           </vue-feather>
         </a>
       </li>
-      <li v-if="
-        params.types?.length && params.types?.length !== allTypes?.length
-      "> Type is <span v-if="params.types?.length > 1">one of </span>
+      <li
+        v-if="
+          params.types?.length && params.types?.length !== allTypes?.length
+        "> Type is <span v-if="params.types?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.types, "or") }}</strong>
         <a
           href
@@ -79,10 +80,11 @@
           /><span class="sr">Reset type value to all types</span>
         </a>
       </li>
-      <li v-if="
-        params?.statuses?.length &&
-        params?.statuses?.length !== allStatuses?.length
-      "> Status is <span v-if="params?.statuses?.length > 1">one of </span>
+      <li
+        v-if="
+          params?.statuses?.length &&
+            params?.statuses?.length !== allStatuses?.length
+        "> Status is <span v-if="params?.statuses?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.statuses, "or") }}</strong>
         <a
           href
@@ -112,7 +114,7 @@ export default {
   components: {
     VueFeather,
   },
-  data() {
+  data: () => {
 
     return {
     };

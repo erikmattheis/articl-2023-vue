@@ -1,4 +1,4 @@
-function noCaseIndexOf(str, subString) {
+const noCaseIndexOf = (str, subString) => {
 
   if (!str || !subString) {
 
@@ -8,9 +8,8 @@ function noCaseIndexOf(str, subString) {
 
   return str.toLowerCase().indexOf(subString.toLowerCase());
 
-}
-
-function highlightedSubstring(str, subString, part) {
+};
+const highlightedSubstring = (str, subString, part) => {
 
   if (!subString && part === 'prefix') {
 
@@ -52,29 +51,8 @@ function highlightedSubstring(str, subString, part) {
 
   return str;
 
-}
-/*
-function emphasizeSubstring(str, subString, length_) {
-
-  if (!str || !subString || !length_) {
-
-    return false;
-
-  }
-
-  let position = str.toLowerCase().indexOf(subString.toLowerCase());
-  let result = position > length_ / 2
-    ? `...${str.substring(Math.floor(length_ / 2), length_ - 3)}${Math.ceil(length_ / 2)}`
-    : str;
-
-  position = result.toLowerCase().indexOf(subString.toLowerCase());
-
-  if (position < length_) result = `${result.substring(result.length - Math.ceil(length_ / 2), length_ - 3)}...`;
-
-}
-*/
-
-function toListWithOptionalConjuction(array, conj = '') {
+};
+const toListWithOptionalConjuction = (array, conj = '') => {
 
   if (!array || array.length === 0 || !Array.isArray(array)) {
 
@@ -86,8 +64,10 @@ function toListWithOptionalConjuction(array, conj = '') {
     array.slice(0, -1).join(', ') + (array.length > 1 ? ` ${conj} ` : '') + array[array.length - 1]
   );
 
-}
+};
 
-export { highlightedSubstring,
+export {
+  highlightedSubstring,
   noCaseIndexOf,
-  toListWithOptionalConjuction };
+  toListWithOptionalConjuction,
+};

@@ -43,7 +43,7 @@ import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'ForgotPass',
-  data() {
+  data: () => {
 
     return {
       email: null,
@@ -54,7 +54,7 @@ export default {
     };
 
   },
-  mounted() {
+  mounted: () => {
 
     setTitleAndDescription({
       title: 'Forgot pass',
