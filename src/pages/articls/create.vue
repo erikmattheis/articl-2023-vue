@@ -366,10 +366,6 @@ export default {
 
       }
 
-      this.$store.dispatch('errors/setError', {
-        message: this.errorMessage,
-      });
-
     },
 
     async getArticl(id) {

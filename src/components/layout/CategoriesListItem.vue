@@ -15,7 +15,6 @@
     </div>
     <ul>
       <li>
-        category.slug: {{ category.slug }}
         <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
           {{ category.title }}
         </router-link>

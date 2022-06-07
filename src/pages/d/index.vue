@@ -12,13 +12,9 @@
     >
       >
       <template #item="{element}">
-        <div>
-          order:{{ element }}
-
-          <categories-list-item
-            :category="element"
-          />
-        </div>
+        <categories-list-item
+          :category="element"
+        />
       </template>
     </draggable-items>
 
@@ -50,15 +46,24 @@
       :key="articlType"
     >
       <ul>
-        <li
-          v-for="articl in articls[ articlType ] || []"
-          :key="articl.id"
+        <draggable-items
+          v-model="articls[articlType]"
+          tag="ul"
+          item-key="id"
+          handle=".handle"
+          ghost-class="ghost"
+          @change="onUpdateArticlsOrderValues(articlType)"
         >
-          <articls-list-item
-            :articl="articl"
-            :order="articl.order"
-          />
-        </li>
+          <template #item="{element}">
+            <div>
+              order:{{ element.order }}
+              <articls-list-item
+                :articl="element"
+                :order="element.order"
+              />
+            </div>
+          </template>
+        </draggable-items>
       </ul>
     </template>
   </article>
@@ -198,6 +203,60 @@ export default {
       this.updateOrderValues();
 
       this.saveOrderValues();
+
+    },
+
+    updateArticlsOrderValues(articlType) {
+
+      console.log('this.articls', this.articls[articlType]);
+
+      this.articls[articlType].forEach((obj, index) => {
+
+        const objRef = obj;
+
+        objRef.order = index;
+
+      });
+
+    },
+
+    async saveArticlsOrderValues(articlType) {
+
+      const order = this.articls[articlType].map((obj) => {
+
+        return {
+          id: obj.id, order: obj.order,
+        };
+
+      });
+
+      await this.saveArticlsOrder(order);
+
+    },
+
+    async saveArticlsOrder(order) {
+
+      this.isLoading = true;
+
+      const result = await this.$http({
+        method: 'POST',
+        url: '/articls/order',
+        data: {
+          order,
+        },
+      });
+
+      this.isLoading = false;
+
+      return result.data;
+
+    },
+
+    onUpdateArticlsOrderValues(articlType) {
+
+      this.updateArticlsOrderValues(articlType);
+
+      this.saveArticlsOrderValues(articlType);
 
     },
   },
