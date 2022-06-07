@@ -131,5 +131,9 @@ strong:not([class="not-strong"]) {
 li {
   font-size: 0.65rem;
 }
+
+a {
+  cursor:pointer;
+}
 </style>
 

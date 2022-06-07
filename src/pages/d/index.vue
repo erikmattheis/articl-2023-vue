@@ -12,10 +12,12 @@
     >
       >
       <template #item="{element}">
-        <articls-list-item
-          :articl="element"
-          order="0"
-        />
+        <div>
+          <categories-list-item
+            :category="element"
+            order="0"
+          />
+        </div>
       </template>
     </draggable-items>
 
@@ -66,14 +68,15 @@
 import { groupBy } from 'lodash';
 import DraggableItems from 'vuedraggable';
 
-import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
+import articlsListItem from '@/components/layout/ArticlsListItem.vue';
+import categoriesListItem from '@/components/layout/CategoriesListItem.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'CategoryPage',
   components: {
-    DraggableItems, ArticlsListItem,
+    DraggableItems, categoriesListItem, articlsListItem,
   },
   data: () => {
 
@@ -201,18 +204,22 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-pre {
+<style
+  lang="css"
+  scoped
+>
+  pre {
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
-}
+  }
 
-.ghost {
+  .ghost {
   border: 2px dashed red;
-}
+  }
 
-.ghost {
+  .ghost {
   border: 2px dashed red;
-}
+  }
 </style>
+

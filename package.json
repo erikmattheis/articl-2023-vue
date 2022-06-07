@@ -84,7 +84,7 @@
         "error",
         "always"
       ],
-      "camelcase": "warn",
+      "vue/camelcase": "warn",
       "func-names": "off",
       "max-len": "off",
       "no-console": "off",
