@@ -5,43 +5,39 @@
         href="#"
         :class="isInFirstPage ? 'disabled' : ''"
         @click.prevent="onClickFirstPage"
-      >First</a
-      >
+      >First</a>
     </li>
     <li class="pagination-item">
       <a
         href="#"
         :class="isInFirstPage ? 'disabled' : ''"
         @click.prevent="onClickPreviousPage"
-      >«</a
-      >
+      >«</a>
     </li>
     <li
       v-for="page in pages"
       :key="page.id"
-      class="pagination-item">
+      class="pagination-item"
+    >
       <a
         href="#"
         :class="{ active: isPageActive(page.name) }"
         @click.prevent="onClickPage(page.name)"
-      >{{ page.name }}</a
-      >
+      >{{ page.name }}</a>
     </li>
     <li class="pagination-item">
       <a
         href="#"
         :class="isInLastPage ? 'disabled' : ''"
         @click.prevent="onClickNextPage"
-      >»</a
-      >
+      >»</a>
     </li>
     <li class="pagination-item">
       <a
         href="#"
         :class="isInLastPage ? 'disabled' : ''"
         @click.prevent="onClickLastPage"
-      >Last</a
-      >
+      >Last</a>
     </li>
   </ul>
 </template>

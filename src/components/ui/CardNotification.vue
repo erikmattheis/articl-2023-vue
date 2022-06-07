@@ -2,10 +2,12 @@
   <section>
     <div
       class="tab"
-      title="success">
+      title="success"
+    >
       <vue-feather
         size="60"
-        type="check" />
+        type="check"
+      />
     </div>
     <div class="info">
       <aside>{{ successMessage }}</aside>

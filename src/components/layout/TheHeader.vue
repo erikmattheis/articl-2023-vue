@@ -29,11 +29,13 @@
           <li>
             <router-link
               :to="{ name: 'searchArticls' }"
-              class="search-articls">
+              class="search-articls"
+            >
               <vue-feather
                 size="2rem"
                 type="search"
-                aria-label="Search" />
+                aria-label="Search"
+              />
             </router-link>
           </li>
 
@@ -42,7 +44,8 @@
               <vue-feather
                 size="2rem"
                 type="user"
-                aria-label="User" />
+                aria-label="User"
+              />
             </router-link>
           </li>
 
@@ -52,7 +55,8 @@
                 <vue-feather
                   size="2rem"
                   type="user"
-                  aria-label="User" />
+                  aria-label="User"
+                />
               </summary>
 
               <ul role="listbox">
@@ -122,7 +126,8 @@
                 <li>
                   <router-link
                     class="less-margin"
-                    to="/users/me">
+                    to="/users/me"
+                  >
                     Edit profile
                   </router-link>
                 </li>
@@ -131,16 +136,14 @@
                     href="#"
                     class="less-margin"
                     @click.prevent="logout"
-                  >Log out</a
-                  >
+                  >Log out</a>
                 </li>
                 <li>
                   <a
                     href="#"
                     class="less-margin"
                     @click.prevent="clearLocalData"
-                  >For development: clear data</a
-                  >
+                  >For development: clear data</a>
                 </li>
               </ul>
             </details>

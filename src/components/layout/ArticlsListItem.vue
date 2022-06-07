@@ -20,7 +20,8 @@
           }}<strong
             :class="{
               'not-strong': noCaseIndexOf(articl.title,params.title)===-1,
-            }">{{
+            }"
+          >{{
             highlightedSubstring(articl.title,params.title,"term")
           }}</strong>{{ highlightedSubstring(articl.title,params.title,"suffix") }}</a>
       </li>
@@ -31,7 +32,8 @@
             :class="{
               'not-strong':
                 noCaseIndexOf(articl.titleExcerpt,params.title)===-1,
-            }">{{
+            }"
+          >{{
             highlightedSubstring(articl.titleExcerpt,params.title,"term")
           }}</strong>{{
             highlightedSubstring(articl.titleExcerpt,params.title,"suffix")
@@ -42,7 +44,8 @@
         }}<strong
           :class="{
             'not-strong': noCaseIndexOf(articl.authors,params.authors)===-1,
-          }">{{
+          }"
+        >{{
           highlightedSubstring(articl.authors,params.authors,"term")
         }}</strong>{{ highlightedSubstring(articl.authors,params.authors,"suffix") }}
       </li>

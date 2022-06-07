@@ -67,7 +67,8 @@
       <li
         v-if="
           params.types?.length && params.types?.length !== allTypes?.length
-        "> Type is <span v-if="params.types?.length > 1">one of </span>
+        "
+      > Type is <span v-if="params.types?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.types, "or") }}</strong>
         <a
           href
@@ -84,7 +85,8 @@
         v-if="
           params?.statuses?.length &&
             params?.statuses?.length !== allStatuses?.length
-        "> Status is <span v-if="params?.statuses?.length > 1">one of </span>
+        "
+      > Status is <span v-if="params?.statuses?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.statuses, "or") }}</strong>
         <a
           href

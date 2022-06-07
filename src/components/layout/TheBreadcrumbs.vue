@@ -6,7 +6,8 @@
       </li>
       <li
         v-for="crumb in breadcrumbs"
-        :key="crumb.slug">
+        :key="crumb.slug"
+      >
         <router-link :to="`/d/${crumb.slug}`">
           {{ crumb.name }}
         </router-link>
