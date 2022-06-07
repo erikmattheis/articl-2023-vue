@@ -27,21 +27,32 @@
 
         <ul class="right">
           <li>
-            <router-link :to="{ name: 'searchArticls' }" class="search-articls">
-              <vue-feather size="2rem" type="search" aria-label="Search" />
+            <router-link
+              :to="{ name: 'searchArticls' }"
+              class="search-articls">
+              <vue-feather
+                size="2rem"
+                type="search"
+                aria-label="Search" />
             </router-link>
           </li>
 
           <li v-if="!isLoggedIn">
             <router-link to="/users/me">
-              <vue-feather size="2rem" type="user" aria-label="User" />
+              <vue-feather
+                size="2rem"
+                type="user"
+                aria-label="User" />
             </router-link>
           </li>
 
           <li v-else>
             <details role="list">
               <summary aria-haspopup="listbox">
-                <vue-feather size="2rem" type="user" aria-label="User" />
+                <vue-feather
+                  size="2rem"
+                  type="user"
+                  aria-label="User" />
               </summary>
 
               <ul role="listbox">
@@ -109,12 +120,17 @@
                   </div>
                 </li>
                 <li>
-                  <router-link class="less-margin" to="/users/me">
+                  <router-link
+                    class="less-margin"
+                    to="/users/me">
                     Edit profile
                   </router-link>
                 </li>
                 <li>
-                  <a href="#" class="less-margin" @click.prevent="logout"
+                  <a
+                    href="#"
+                    class="less-margin"
+                    @click.prevent="logout"
                   >Log out</a
                   >
                 </li>

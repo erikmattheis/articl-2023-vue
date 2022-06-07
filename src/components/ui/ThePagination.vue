@@ -16,7 +16,10 @@
       >«</a
       >
     </li>
-    <li v-for="page in pages" :key="page.id" class="pagination-item">
+    <li
+      v-for="page in pages"
+      :key="page.id"
+      class="pagination-item">
       <a
         href="#"
         :class="{ active: isPageActive(page.name) }"

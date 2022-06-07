@@ -4,7 +4,9 @@
       <li>
         <router-link to="/"> Home </router-link>
       </li>
-      <li v-for="crumb in breadcrumbs" :key="crumb.slug">
+      <li
+        v-for="crumb in breadcrumbs"
+        :key="crumb.slug">
         <router-link :to="`/d/${crumb.slug}`">
           {{ crumb.name }}
         </router-link>

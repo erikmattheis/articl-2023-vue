@@ -52,8 +52,11 @@
       "node": true
     },
     "extends": [
-      "@vue/airbnb",
-      "plugin:vue/vue3-recommended"
+
+        "plugin:vue/vue3-essential",
+        "eslint:recommended",
+        "@vue/airbnb"
+      
     ],
     "overrides": [
       {
@@ -68,7 +71,8 @@
     },
     "plugins": [
       "simple-import-sort",
-      "prefer-arrow"
+      "prefer-arrow",
+      "vue"
     ],
     "root": true,
 
@@ -151,7 +155,6 @@
       "simple-import-sort/imports": "error",
       "vue/attributes-order": "off",
       "vue/html-closing-bracket-newline": "off",
-      "vue/max-attributes-per-line": "off",
       "vue/singleline-html-element-content-newline": "off",
       "vuejs-accessibility/no-onchange": "off"
     }
@@ -166,6 +169,6 @@
     "serve": "vue-cli-service serve",
     "start": "node index.js"
   },
-  "type": "module",
+
   "version": "1.0.0"
 }

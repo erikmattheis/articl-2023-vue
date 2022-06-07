@@ -1,7 +1,11 @@
 <template>
   <section>
-    <div class="tab" title="success">
-      <vue-feather size="60" type="check" />
+    <div
+      class="tab"
+      title="success">
+      <vue-feather
+        size="60"
+        type="check" />
     </div>
     <div class="info">
       <aside>{{ successMessage }}</aside>

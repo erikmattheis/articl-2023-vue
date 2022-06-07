@@ -53,8 +53,8 @@ export default {
         this.isLoading = true;
 
         const result = await this.getCategoryPageBySlug(slug);
-        const documentTitle = result.category[0].title;
-        const metaDescription = result.category[0].description;
+        const documentTitle = result.data.category[0].title;
+        const metaDescription = result.data.category[0].description;
 
         this.title = documentTitle;
 
