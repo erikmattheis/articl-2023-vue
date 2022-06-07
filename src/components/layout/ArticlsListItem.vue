@@ -19,7 +19,7 @@
           {{ highlightedSubstring(articl.title,params.title,"prefix")
           }}<strong
             :class="{
-              'not-strong': noCaseIndexOf(articl.title,params.title)===-1,
+              'not-strong': !noCaseIndexOf(articl.title,params.title) > 0,
             }"
           >{{
             highlightedSubstring(articl.title,params.title,"term")
@@ -30,8 +30,7 @@
           {{ highlightedSubstring(articl.titleExcerpt,params.title,"prefix")
           }}<strong
             :class="{
-              'not-strong':
-                noCaseIndexOf(articl.titleExcerpt,params.title)===-1,
+              'not-strong': !noCaseIndexOf(articl.titleExcerpt,params.title) > 0,
             }"
           >{{
             highlightedSubstring(articl.titleExcerpt,params.title,"term")
@@ -43,7 +42,7 @@
         {{ highlightedSubstring(articl.authors,params.authors,"prefix")
         }}<strong
           :class="{
-            'not-strong': noCaseIndexOf(articl.authors,params.authors)===-1,
+            'not-strong': !noCaseIndexOf(articl.titleExcerpt,params.title) > 0,
           }"
         >{{
           highlightedSubstring(articl.authors,params.authors,"term")

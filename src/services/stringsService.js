@@ -11,6 +11,8 @@ const noCaseIndexOf = (str, subString) => {
 };
 const highlightedSubstring = (str, subString, part) => {
 
+  console.log('str.toLowerCase().indexOf(subString.toLowerCase())', str?.toLowerCase().indexOf(subString?.toLowerCase()));
+
   if (!subString && part === 'prefix') {
 
     return str;
