@@ -43,8 +43,8 @@
         @typeahead-updated="onAuthorsChange"
       />
       <label for="yearComparison">Year published <label
-        for="year"
         v-if="yearsStart === Number(year)"
+        for="year"
         class="horizontal"
       ><input
         v-model="yearComparison"
@@ -53,10 +53,10 @@
         name="yearComparison"
       > After </label>
         <label
-          for="yearComparison"
           v-for="comparison in yearComparisons"
           v-else
           :key="comparison"
+          for="yearComparison"
           class="horizontal"
         ><input
           v-model="yearComparison"
@@ -78,32 +78,32 @@
           <div>
             <fieldset>
               <legend>Type</legend> <label
-                :for="articlType"
                 v-for="articlType in allTypes"
                 :key="articlType"
+                :for="articlType"
               >
                 <input
+                  :id="articlType"
                   v-model="types"
                   type="checkbox"
                   :value="articlType"
                   checked="checked"
-                  :id="articlType"
                 >{{ articlType }}</label>
             </fieldset>
           </div>
           <div>
             <fieldset>
               <legend>Status</legend> <label
-                :for="status"
                 v-for="status in allStatuses"
                 :key="status"
+                :for="status"
               >
                 <input
+                  :id="status"
                   v-model="statuses"
                   type="checkbox"
                   :value="status"
                   checked="checked"
-                  :id="status"
                 >{{ status }}</label>
             </fieldset>
           </div>

@@ -8,6 +8,7 @@
         aria-label="Search"
       />
       <input
+        :id="query"
         ref="input"
         v-model="stringValue"
         type="text"
@@ -18,7 +19,6 @@
         @keydown.esc="removeItems"
         @blur="removeItems"
         @keyup="update"
-        :id="query"
       >
     </label>
     <ul v-show="hasItems">

@@ -156,7 +156,7 @@
       ],
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
-      "vue/attributes-order": "off",
+      
       "vue/html-closing-bracket-newline": "off",
       "vue/max-attributes-per-line": ["error", {
         "singleline": {
