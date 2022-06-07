@@ -71,10 +71,6 @@ export default {
   width: 1rem !important;
 }
 
-li {
-  font-size: 0.65rem;
-}
-
 a {
   cursor: pointer;
 }
