@@ -13,9 +13,10 @@
       >
       <template #item="{element}">
         <div>
+          order:{{ element }}
+
           <categories-list-item
             :category="element"
-            order="0"
           />
         </div>
       </template>

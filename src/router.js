@@ -118,6 +118,7 @@ const router = createRouter({
       component: createArticlPage,
       props: true,
     },
+
     {
       name: 'deleteArticl',
       path: '/articls/delete',
@@ -130,6 +131,7 @@ const router = createRouter({
 
       props: true,
     },
+
     {
       name: 'NotFound', path: '/:notFound(.*)', component: notFound,
     },
