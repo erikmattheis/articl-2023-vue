@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li>
-      <router-link :to="{ name: 'editCategory', params: { id } }">
+      <router-link :to="{ name: 'editCategory', params: { passedId: id } }">
         edit
       </router-link>
     </li>

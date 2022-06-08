@@ -1,12 +1,11 @@
 <template>
   <article>
     <h1 v-if="!success">
-      Create category
+      {{ formAction }}  category {{ id }}
     </h1>
     <h1 v-else>
-      Category created
+      Success
     </h1>
-
     <template v-if="isLoggedIn">
       <form v-if="!success">
         <label for="title">Title
@@ -40,12 +39,11 @@
             cols="70"
           /></label>
         <button
-          id="Login"
           type="submit"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm()"
+          @click.prevent="submitForm(id)"
         >
-          <span v-if="!buttonDisabled">Create Category</span>
+          <span v-if="!buttonDisabled">{{ formAction }} category</span>
         </button>
       </form>
       <template v-else>
@@ -72,13 +70,21 @@ export default {
   components: {
     CardNotification,
   },
+  props: {
+    passedId: {
+      default: '',
+      type: String,
+    },
+  },
   data: () => {
 
     return {
+      id: '',
       title: null,
       description: null,
       parentSlug: null,
       categories: [],
+      formAction: '',
       buttonDisabled: false,
       errorMessage: '',
       success: false,
@@ -112,12 +118,42 @@ export default {
 
     this.parentSlug = this.$route.query.parentSlug;
 
-  },
+    this.id = this.passedId;
 
+    this.formAction = this.id ? 'Edit' : 'Create';
+
+    if (this.id) {
+
+      this.getCurrentCategory(this.id);
+
+    }
+
+  },
   params: {
     slug: String,
   },
   methods: {
+    async getCurrentCategory(id) {
+
+      this.buttonDisabled = true;
+
+      const result = await this.getCategory(id);
+
+      console.log(result);
+
+      Object.assign(this, result.data);
+
+      this.buttonDisabled = false;
+
+    },
+    async getCategory(id) {
+
+      return this.$http({
+        method: 'GET',
+        url: `/categories/${id}`,
+      });
+
+    },
     resetFormErrors() {
 
       this.success = null;
@@ -162,7 +198,7 @@ export default {
       return passed;
 
     },
-    async submitForm() {
+    async submitForm(id) {
 
       this.resetFormErrors();
 
@@ -170,8 +206,9 @@ export default {
 
         this.buttonDisabled = true;
 
+        const verb = id ? 'PUT' : 'POST';
         const result = await this.$http({
-          method: 'POST',
+          method: verb,
           url: '/categories',
           data: {
             title: this.title,

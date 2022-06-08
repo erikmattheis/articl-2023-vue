@@ -1,11 +1,12 @@
 <template>
   <article>
     <h1 v-if="!success">
-      {{ formAction }} articl id {{ id }}
+      {{ formAction }} articl
     </h1>
     <h1 v-else>
       Success
     </h1>
+
     <template v-if="isLoggedIn">
       <form v-if="!success">
         <template v-if="!id">
@@ -31,7 +32,8 @@
             v-model="title"
             name="title"
             autocomplete="off"
-          ></label>
+          >
+        </label>
 
         <label for="authors">Authors
           <input
@@ -247,8 +249,6 @@ export default {
       this.buttonDisabled = true;
 
       const result = await this.getArticl(id);
-
-      console.log(result.data);
 
       Object.assign(this, result.data);
 

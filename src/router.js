@@ -93,7 +93,7 @@ const router = createRouter({
 
     {
       name: 'editCategory',
-      path: '/articls',
+      path: '/categories',
       component: createCategoryPage,
       props: true,
     },
