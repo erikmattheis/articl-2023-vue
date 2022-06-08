@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li>
-      <router-link :to="{ name: 'editArticl', params: { id } }">
+      <router-link :to="{ name: 'editArticl', params: { passedId: id } }">
         edit
       </router-link>
     </li>

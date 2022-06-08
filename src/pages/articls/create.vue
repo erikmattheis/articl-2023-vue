@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1 v-if="!success">
-      {{ formAction }} articl
+      {{ formAction }} articl id {{ id }}
     </h1>
     <h1 v-else>
       Success
@@ -186,7 +186,7 @@ export default {
     inputTypeahead,
   },
   props: {
-    id: {
+    passedId: {
       default: '',
       type: String,
     },
@@ -196,6 +196,7 @@ export default {
     return {
       abstract: '',
       affiliation: '',
+      id: '',
       articlUrl: '',
       authors: '',
       buttonDisabled: false,
@@ -217,6 +218,8 @@ export default {
   },
   mounted() {
 
+    this.id = this.passedId;
+
     this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
@@ -229,7 +232,7 @@ export default {
 
     } else {
 
-      this.getCurrentArticl();
+      this.getCurrentArticl(this.id);
 
     }
 
@@ -239,19 +242,17 @@ export default {
 
   },
   methods: {
-    async getCurrentArticl() {
+    async getCurrentArticl(id) {
 
-      if (this.id) {
+      this.buttonDisabled = true;
 
-        this.buttonDisabled = true;
+      const result = await this.getArticl(id);
 
-        const result = await this.getArticl(this.id);
+      console.log(result.data);
 
-        Object.assign(this, result);
+      Object.assign(this, result.data);
 
-        this.buttonDisabled = false;
-
-      }
+      this.buttonDisabled = false;
 
     },
     async getData() {
