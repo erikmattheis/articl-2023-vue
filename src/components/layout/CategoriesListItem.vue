@@ -1,18 +1,5 @@
 <template>
   <li class="grid">
-    <div
-      v-if="isLoggedIn&&category"
-      class="handle handle-container"
-    >
-      <a href="#"><span class="sr">Reorder category</span>
-        <vue-feather
-          alt="reorder category"
-          size="1rem"
-          type="move"
-          aria-label="move"
-        />
-      </a>
-    </div>
     <ul>
       <li>
         <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
@@ -20,25 +7,22 @@
         </router-link>
       </li>
     </ul>
-    <div v-if="isLoggedIn">
-      <category-actions
-        :id="category.id"
-        :title="category.title"
-      />
-    </div>
+
+    <category-actions
+      v-if="isLoggedIn"
+      :id="category.id"
+      :title="category.title"
+    />
   </li>
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-
 import CategoryActions from '@/components/layout/CategoryActions.vue';
 import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'CategoriesListItem',
   components: {
-    VueFeather,
     CategoryActions,
   },
   props: {
@@ -66,7 +50,9 @@ export default {
 </script>
 
 <style scoped>
-
+.bg {
+  background-color:#f00;
+}
 .handle-container {
   width: 1rem !important;
 }

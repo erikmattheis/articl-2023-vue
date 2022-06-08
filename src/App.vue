@@ -20,6 +20,12 @@
  *
  * 4/15, 5/20, 6/1, 6/6
  * 5183,6937,7420
+ * ==================
+ *
+ * proj, 4/15, 6/8
+ * vue, 2556, 5223
+ * node, 2094, 2593
+ * total, 4650, 7816
  *** */
 import TheFooter from '@/components/layout/TheFooter.vue';
 import TheHeader from '@/components/layout/TheHeader.vue';

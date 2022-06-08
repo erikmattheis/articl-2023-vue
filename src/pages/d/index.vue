@@ -56,7 +56,6 @@
         >
           <template #item="{element}">
             <div>
-              order:{{ element.order }}
               <articls-list-item
                 :articl="element"
                 :order="element.order"
@@ -271,10 +270,6 @@ export default {
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-all;
-  }
-
-  .ghost {
-  border: 2px dashed red;
   }
 
   .ghost {
