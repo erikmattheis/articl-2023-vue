@@ -83,6 +83,7 @@ export default {
       title: null,
       description: null,
       parentSlug: null,
+      oldSlug: null,
       categories: [],
       formAction: '',
       buttonDisabled: false,
@@ -139,9 +140,9 @@ export default {
 
       const result = await this.getCategory(id);
 
-      console.log(result);
-
       Object.assign(this, result.data);
+
+      this.oldSlug = result.slug;
 
       this.buttonDisabled = false;
 
@@ -207,15 +208,23 @@ export default {
         this.buttonDisabled = true;
 
         const verb = id ? 'PUT' : 'POST';
+        const data = {
+          title: this.title,
+          slug: this.slug,
+          description: this.description,
+          parentSlug: this.parentSlug,
+        };
+
+        if (id) {
+
+          data.oldSlug = this.oldSlug;
+
+        }
+
         const result = await this.$http({
           method: verb,
-          url: '/categories',
-          data: {
-            title: this.title,
-            slug: this.slug,
-            description: this.description,
-            parentSlug: this.parentSlug,
-          },
+          url: `/categories/${id}`,
+          data,
         });
 
         this.buttonDisabled = false;
