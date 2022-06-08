@@ -1,74 +1,62 @@
 <template>
-  <li class="grid">
-    <div
-      v-if="isLoggedIn&&$route.name!=='searchArticls'&&articl"
-      class="handle handle-container"
-    >
-      <a href="#"><span class="sr">Reorder articl</span>
-        <vue-feather
-          alt="reorder articl"
-          size="1rem"
-          type="move"
-          aria-label="move"
-        />
-      </a>
-    </div>
-    <ul>
-      <li>
-        <a
-          :href="articl.articlUrl"
-          target="_blank"
-        >
-          {{ highlightedSubstring(articl.title,params.title,"prefix")
-          }}<strong
-            :class="{
-              'not-strong': !noCaseIndexOf(articl.title,params.title) > 0,
-            }"
-          >{{
-            highlightedSubstring(articl.title,params.title,"term")
-          }}</strong>{{ highlightedSubstring(articl.title,params.title,"suffix") }}</a>
-      </li>
-      <li v-if="articl.titleExcerpt">
-        <a :href="articl.url">
-          {{ highlightedSubstring(articl.titleExcerpt,params.title,"prefix")
+  <li>
+    <div class="grid">
+      <ul>
+        <li>
+          <a
+            :href="articl.articlUrl"
+            target="_blank"
+          >
+            {{ highlightedSubstring(articl.title,params.title,"prefix")
+            }}<strong
+              :class="{
+                'not-strong': !noCaseIndexOf(articl.title,params.title) > 0,
+              }"
+            >{{
+              highlightedSubstring(articl.title,params.title,"term")
+            }}</strong>{{ highlightedSubstring(articl.title,params.title,"suffix") }}</a>
+        </li>
+        <li v-if="articl.titleExcerpt">
+          <a :href="articl.url">
+            {{ highlightedSubstring(articl.titleExcerpt,params.title,"prefix")
+            }}<strong
+              :class="{
+                'not-strong': !noCaseIndexOf(articl.titleExcerpt,params.title) > 0,
+              }"
+            >{{
+              highlightedSubstring(articl.titleExcerpt,params.title,"term")
+            }}</strong>{{
+              highlightedSubstring(articl.titleExcerpt,params.title,"suffix")
+            }}</a>
+        </li>
+        <li v-if="params.authors">
+          {{ highlightedSubstring(articl.authors,params.authors,"prefix")
           }}<strong
             :class="{
               'not-strong': !noCaseIndexOf(articl.titleExcerpt,params.title) > 0,
             }"
           >{{
-            highlightedSubstring(articl.titleExcerpt,params.title,"term")
-          }}</strong>{{
-            highlightedSubstring(articl.titleExcerpt,params.title,"suffix")
-          }}</a>
-      </li>
-      <li v-if="params.authors">
-        {{ highlightedSubstring(articl.authors,params.authors,"prefix")
-        }}<strong
-          :class="{
-            'not-strong': !noCaseIndexOf(articl.titleExcerpt,params.title) > 0,
-          }"
-        >{{
-          highlightedSubstring(articl.authors,params.authors,"term")
-        }}</strong>{{ highlightedSubstring(articl.authors,params.authors,"suffix") }}
-      </li>
-      <li v-if="params.journal">
-        <strong>{{ articl.journal }}</strong>
-      </li>
-      <li v-if="articl.yearComparison&&Number(articl.year)!==yearsStart">
-        <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
-      </li>
-    </ul>
-    <div v-if="isLoggedIn">
-      <articl-actions
-        :id="articl.id"
-        :title="articl.title"
-      />
+            highlightedSubstring(articl.authors,params.authors,"term")
+          }}</strong>{{ highlightedSubstring(articl.authors,params.authors,"suffix") }}
+        </li>
+        <li v-if="params.journal">
+          <strong>{{ articl.journal }}</strong>
+        </li>
+        <li v-if="articl.yearComparison&&Number(articl.year)!==yearsStart">
+          <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
+        </li>
+      </ul>
+      <div v-if="isLoggedIn">
+        <articl-actions
+          :id="articl.id"
+          :title="articl.title"
+        />
+      </div>
     </div>
   </li>
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
 import ArticlActions from '@/components/layout/ArticlActions.vue';
@@ -78,7 +66,6 @@ import { isLoggedIn } from '@/services/tokensService';
 export default {
   name: 'ArticlsListItem',
   components: {
-    VueFeather,
     ArticlActions,
   },
   props: {

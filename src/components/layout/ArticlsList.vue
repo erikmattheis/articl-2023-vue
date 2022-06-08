@@ -2,9 +2,9 @@
   <div>
     <draggable-items
       v-model="articls"
-      tag="ol"
+      tag="ul"
       item-key="id"
-      handle=".my-handle"
+      handle=".handle"
       ghost-class="ghost"
       @change="onUpdateOrderValues"
     >
@@ -173,9 +173,6 @@ export default {
   background-color: #20303d;
 }
 
-.ghost {
-  border: 2px dashed red;
-}
 </style>
 
 <!--

@@ -11,7 +11,7 @@
       </router-link>
     </li>
     <li class="handle">
-      <a href="#"><span class="sr">Reorder category</span>
+      <a href="#"><div class="sr">Reorder category</div>
         <vue-feather
           alt="reorder category"
           size="1rem"
@@ -55,26 +55,24 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  list-style: none;
-  background-color: #444;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-}
 li {
   display: inline-block;
   border: 1px solid #888;
+  border-right: 0px;
   font-size: 0.8rem;
   vertical-align: middle;
 }
 
+li:last-child {
+  border-right: 1px solid #888;
+}
+
 a {
   text-decoration: none;
-  display: block;
+  height: 1.6rem;
   padding: 0 0.5rem;
-  transition: .3s background-color;
-
+  transition: background-color .3s ;
+  display:flex;justify-content:center;align-items:center;
 }
 
 a:hover {

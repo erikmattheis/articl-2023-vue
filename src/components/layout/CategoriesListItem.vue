@@ -1,18 +1,20 @@
 <template>
-  <li class="grid">
-    <ul>
-      <li>
-        <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
-          {{ category.title }}
-        </router-link>
-      </li>
-    </ul>
+  <li>
+    <div class="grid">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
+            {{ category.title }}
+          </router-link>
+        </li>
+      </ul>
 
-    <category-actions
-      v-if="isLoggedIn"
-      :id="category.id"
-      :title="category.title"
-    />
+      <category-actions
+        v-if="isLoggedIn"
+        :id="category.id"
+        :title="category.title"
+      />
+    </div>
   </li>
 </template>
 
@@ -50,12 +52,6 @@ export default {
 </script>
 
 <style scoped>
-.bg {
-  background-color:#f00;
-}
-.handle-container {
-  width: 1rem !important;
-}
 
 a {
   cursor: pointer;

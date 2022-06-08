@@ -132,12 +132,14 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   height: initial;
 }
 
-a span.sr {
- height: 1px;
- width: 1px;
- position: absolute;
- overflow: hidden;
- top: -10px;
+.ghost {
+  border: 2px dashed red !important;
+}
+
+.sr {
+  display: inline-block;
+    line-height:0.5rem;
+  text-indent: -10000px;
 }
 
 @import "~/node_modules/@picocss/pico/scss/_variables.scss";

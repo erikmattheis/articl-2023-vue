@@ -14,6 +14,7 @@
       <template #item="{element}">
         <categories-list-item
           :category="element"
+          class="list-item"
         />
       </template>
     </draggable-items>
@@ -272,8 +273,8 @@ export default {
   word-break: break-all;
   }
 
-  .ghost {
-  border: 2px dashed red;
+  .list-item {
+    border-bottom:1px solid #444;
   }
 </style>
 
