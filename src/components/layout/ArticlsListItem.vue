@@ -117,7 +117,12 @@ strong:not([class="not-strong"]) {
   color: black;
   padding: 0.2rem 0.1rem;
 }
-
+li {
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis
+}
 a {
   cursor:pointer;
 }

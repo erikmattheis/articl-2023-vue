@@ -53,6 +53,13 @@ export default {
 
 <style scoped>
 
+li {
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis
+}
+
 a {
   cursor: pointer;
 }
