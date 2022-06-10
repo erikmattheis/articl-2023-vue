@@ -145,6 +145,64 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   height: initial;
 }
 
+.nav-tabs {
+  column-gap: 0;
+}
+
+.tab-content {
+  width: 100%;
+  padding: 1.2rem;
+}
+
+.nav-tabs li,
+.articl-actions li {
+  display: inline-block;
+  border: 1px solid #888;
+  border-right: 0px;
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.nav-tabs li:last-child,
+.articl-actions li:last-child {
+  border-right: 1px solid #888;
+}
+
+.nav-tabs li a,
+.articl-actions a {
+  text-decoration: none;
+  height: 1.6rem;
+  padding: 0 0.5rem;
+  transition: background-color .3s ;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+html[data-theme="light"] {
+.nav-tabs li a:hover,
+.articl-actions a:hover,
+  .nav-tabs li.active,
+  .active {
+    background-color: #17262b;
+    font-weight:bold;
+    color:#fff;
+  }
+}
+
+html[data-theme="dark"] {
+.nav-tabs li.active a,
+.nav-tabs li a:hover,
+.articl-actions a:hover,
+.nav-tabs li a:active,
+.articl-actions a:active,
+  .nav-tabs li.active,
+  .active {
+    background-color: #d4d4d4;
+    color:#000 !important;
+  }
+}
+
 .ghost {
   border: 2px dashed red !important;
 }

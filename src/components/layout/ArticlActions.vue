@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="articl-actions">
     <li>
       <router-link :to="{ name: 'editArticl', params: { passedId: id } }">
         edit
@@ -61,28 +61,5 @@ export default {
 </script>
 
 <style scoped>
-li {
-  display: inline-block;
-  border: 1px solid #888;
-  border-right: 0px;
-  font-size: 0.8rem;
-  vertical-align: middle;
-}
-
-li:last-child {
-  border-right: 1px solid #888;
-}
-
-a {
-  text-decoration: none;
-  height: 1.6rem;
-  padding: 0 0.5rem;
-  transition: background-color .3s ;
-  display:flex;justify-content:center;align-items:center;
-}
-
-a:hover {
-  background-color: #d4d4d4;
-}
 
 </style>

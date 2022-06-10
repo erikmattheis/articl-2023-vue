@@ -40,7 +40,7 @@
         </router-link>
       </li>
     </ul>
-    <ul class="grid nav-tabs">
+    <ul class="nav-tabs">
       <li
         v-for="articlType in articlTypes"
         :key="articlType"
