@@ -27,6 +27,10 @@
 
         <ul class="right">
           <li>
+            isLoggedIn():{{ isLoggedIn() }}<br>
+
+            isLoggedIn:{{ isLoggedIn }}<br>
+
             <router-link
               :to="{ name: 'searchArticls' }"
               class="search-articls"
@@ -156,9 +160,10 @@
 
 <script>
 import VueFeather from 'vue-feather';
+import mapGetters from 'vuex';
 
 import { clear as clearLocalStorage } from '@/services/localStorageService';
-import { getRefreshTokenValue, isLoggedIn } from '@/services/tokensService';
+import { getRefreshTokenValue } from '@/services/tokensService';
 
 export default {
   components: {
@@ -172,8 +177,9 @@ export default {
 
   },
   computed: {
-    isLoggedIn,
+    ...mapGetters(['isLoggedIn']),
   },
+
   beforeMount() {
 
     const theme = this.$cookies.get('data-theme');
@@ -191,7 +197,6 @@ export default {
     }
 
   },
-
   methods: {
     setTextSize(size) {
 

@@ -27,18 +27,17 @@ let interval;
 
 const isLoggedIn = () => {
 
-  const currentYear = new Date().getUTCFullYear();
-  const currentTime = new Date().setUTCFullYear(currentYear);
-
   if (!interval) {
 
     interval = setInterval(updateSeconds, 2000);
 
   }
 
+  const currentYear = new Date().getUTCFullYear();
+  const currentTime = new Date().setUTCFullYear(currentYear);
   const expires = Number(getAccessTokenExpires());
 
-  clearInterval(interval);
+  // clearInterval(interval);
 
   return expires > currentTime;
 

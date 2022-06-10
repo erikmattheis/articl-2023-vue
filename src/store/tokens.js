@@ -4,6 +4,7 @@ export default {
   state: () => {
 
     return {
+      loggedIn: false,
       accessTokenExpires: undefined,
       accessTokenValue: undefined,
       refreshTokenExpires: undefined,
@@ -95,9 +96,11 @@ export default {
   getters: {
     isLoggedIn: (state) => {
 
-      const now = Date.now();
+      const currentYear = new Date().getUTCFullYear();
+      const currentTime = new Date().setUTCFullYear(currentYear);
+      const expires = Number(state.accessTokenExpires);
 
-      return state.accessTokenExpires > now;
+      return expires > currentTime;
 
     },
 
