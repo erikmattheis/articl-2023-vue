@@ -1,6 +1,8 @@
 <template>
   <p>
-    Please <a href="/login?reditect=/articls/create">log in</a> to continue.
+    Please <router-link :to="{name:'login',query:{redirect:$route.path}}">
+      log in
+    </router-link> to continue.
   </p>
 </template>
 

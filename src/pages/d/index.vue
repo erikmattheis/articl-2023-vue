@@ -1,80 +1,83 @@
 <template>
   <article>
-    <h2>{{ title }}</h2>
+    <template v-if="!isLoading">
+      <h2>{{ title }}</h2>
 
-    <draggable-items
-      v-model="categories"
-      tag="ul"
-      item-key="id"
-      handle=".handle"
-      ghost-class="ghost"
-      @change="onUpdateOrderValues"
-    >
-      <template #item="{element}">
-        <categories-list-item
-          :category="element"
-          class="list-item"
-        />
-      </template>
-    </draggable-items>
-
-    <ul v-if="isLoggedIn">
-      <li>
-        <router-link
-          :to="{
-            name: 'createCategoryPage',
-            query: {parentSlug: $route.params.slug},
-          }"
-        >
-          New Category Here
-        </router-link>
-      </li>
-      <li>
-        <router-link
-          :to="{
-            name: 'createArticlPage',
-            query: {slug: $route.params.slug},
-          }"
-        >
-          New Articl Here
-        </router-link>
-      </li>
-    </ul>
-    <ul class="nav-tabs">
-      <li
-        v-for="articlType in articlTypes"
-        :key="articlType"
-        :class="{ active: articlTypeCurrent === articlType }"
-      >
-        <a
-          href
-          @click.prevent="articlTypeCurrent = articlType"
-          @keyup.enter.prevent="articlTypeCurrent = articlType"
-        >
-          {{ articlType }}</a>
-      </li>
-    </ul>
-
-    <h3>{{ articlTypeCurrent }}</h3>
-    <ul>
       <draggable-items
-        v-model="articls[articlTypeCurrent]"
+        v-model="categories"
         tag="ul"
         item-key="id"
         handle=".handle"
         ghost-class="ghost"
-        @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+        @change="onUpdateOrderValues"
       >
         <template #item="{element}">
-          <div>
-            <articls-list-item
-              :articl="element"
-              :order="element.order"
-            />
-          </div>
+          <categories-list-item
+            :category="element"
+            class="list-item"
+          />
         </template>
       </draggable-items>
-    </ul>
+
+      <ul v-if="isLoggedIn">
+        <li>
+          <router-link
+            :to="{
+              name: 'createCategoryPage',
+              query: {parentSlug: $route.params.slug},
+            }"
+          >
+            New Category Here
+          </router-link>
+        </li>
+        <li>
+          <router-link
+            :to="{
+              name: 'createArticlPage',
+              query: {slug: $route.params.slug},
+            }"
+          >
+            New Articl Here
+          </router-link>
+        </li>
+      </ul>
+      <ul class="nav-tabs">
+        <li
+          v-for="articlType in articlTypes"
+          :key="articlType"
+          :class="{ active: articlTypeCurrent === articlType }"
+        >
+          <a
+            href
+            @click.prevent="articlTypeCurrent = articlType"
+            @keyup.enter.prevent="articlTypeCurrent = articlType"
+          >
+            {{ articlType }}</a>
+        </li>
+      </ul>
+
+      <h3>{{ articlTypeCurrent }}</h3>
+      <ul>
+        <draggable-items
+          v-model="articls[articlTypeCurrent]"
+          tag="ul"
+          item-key="id"
+          handle=".handle"
+          ghost-class="ghost"
+          @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+        >
+          <template #item="{element}">
+            <div>
+              <articls-list-item
+                :articl="element"
+                :order="element.order"
+              />
+            </div>
+          </template>
+        </draggable-items>
+      </ul>
+    </template>
+    <article-placeholder v-else />
   </article>
 </template>
 
@@ -83,6 +86,7 @@ import { groupBy } from 'lodash';
 import DraggableItems from 'vuedraggable';
 import { mapGetters } from 'vuex';
 
+import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
 import articlsListItem from '@/components/layout/ArticlsListItem.vue';
 import categoriesListItem from '@/components/layout/CategoriesListItem.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
@@ -90,7 +94,7 @@ import { setTitleAndDescription } from '@/services/htmlMetaService';
 export default {
   name: 'CategoryPage',
   components: {
-    DraggableItems, categoriesListItem, articlsListItem,
+    ArticlePlaceholder, DraggableItems, categoriesListItem, articlsListItem,
   },
   data: () => {
 
@@ -127,6 +131,8 @@ export default {
   },
   methods: {
     async updateData() {
+
+      this.isLoading = 'true';
 
       const results = await this.fetchData(this.$route.params.slug);
 

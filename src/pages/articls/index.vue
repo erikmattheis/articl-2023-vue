@@ -23,12 +23,6 @@ export default {
     TheArticlsSearchParams,
     ArticlsList,
   },
-  data: () => {
-
-    return {
-    };
-
-  },
 };
 </script>
 

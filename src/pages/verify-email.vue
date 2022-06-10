@@ -1,17 +1,22 @@
 <template>
-  <article>
+  <article v-if="isLoggedIn">
     <h1>{{ resultTitle }}</h1>
     <p v-if="resultTitle">
       Please <a href="/login">log in</a> to continue.
     </p>
   </article>
+  <article-placeholder v-else />
 </template>
 
 <script>
+import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'VerifyEmailPage',
+  components: {
+    ArticlePlaceholder,
+  },
   data: () => {
 
     return {
@@ -32,7 +37,7 @@ export default {
   methods: {
     async submitForm() {
 
-      this.buttonDisabled = true;
+      this.isLoading = true;
 
       const response = await this.$http({
         method: 'GET',
@@ -52,7 +57,7 @@ export default {
 
       }
 
-      this.buttonDisabled = false;
+      this.isLoading = false;
 
     },
   },

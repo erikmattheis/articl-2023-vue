@@ -34,13 +34,6 @@ export default {
       default: undefined,
     },
   },
-  data: () => {
-
-    return {
-      isLoading: false,
-    };
-
-  },
 
   computed: {
     ...mapGetters({

@@ -78,7 +78,6 @@ export default {
     return {
       articls: [],
       totalResults: '--',
-      isLoading: false,
     };
 
   },

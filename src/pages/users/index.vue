@@ -7,76 +7,79 @@
       Account Updated
     </h1>
     <form v-if="isLoggedIn">
-      <fieldset class="grid">
-        <div>
-          <label for="nameFirst">First Name
-            <input
-              id="nameFirst"
-              v-model="nameFirst"
-              type="text"
-              name="nameFirst"
-              autocomplete="given-name"
-            ></label>
-        </div>
-        <div>
-          <label for="nameLast">Last Name
-            <input
-              id="nameLast"
-              v-model="nameLast"
-              type="text"
-              name="nameLast"
-              autocomplete="family-name"
-            ></label>
-        </div>
-      </fieldset>
-      <label for="email">Email
+      <template v-if="isLoading">
+        <fieldset class="grid">
+          <div>
+            <label for="nameFirst">First Name
+              <input
+                id="nameFirst"
+                v-model="nameFirst"
+                type="text"
+                name="nameFirst"
+                autocomplete="given-name"
+              ></label>
+          </div>
+          <div>
+            <label for="nameLast">Last Name
+              <input
+                id="nameLast"
+                v-model="nameLast"
+                type="text"
+                name="nameLast"
+                autocomplete="family-name"
+              ></label>
+          </div>
+        </fieldset>
+        <label for="email">Email
+          <input
+            id="email"
+            v-model="email"
+            type="text"
+            name="email"
+            autocomplete="email"
+          ></label>
         <input
-          id="email"
-          v-model="email"
-          type="text"
-          name="email"
-          autocomplete="email"
-        ></label>
-      <input
-        id="username"
-        type="hidden"
-        name="username"
-        value=""
-        autocomplete="username"
-      >
-      <label for="institution">Institution
-        <input
-          id="institution"
-          v-model="institution"
-          type="text"
-          name="institution"
-          autocomplete="organization"
-        ></label>
-      <label for="education">Education
-        <input
-          id="education"
-          v-model="education"
-          type="text"
-          name="education"
-          autocomplete="education"
-        ></label>
-      <button
-        id="Login"
-        type="submit"
-        :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
-        <span v-if="!buttonDisabled">Update Account</span>
-      </button>
-      <router-link to="/reset-password">
-        Reset pass
-      </router-link>
-      <router-link
-        to="/logout"
-        class="right"
-      >
-        Log out
-      </router-link>
+          id="username"
+          type="hidden"
+          name="username"
+          value=""
+          autocomplete="username"
+        >
+        <label for="institution">Institution
+          <input
+            id="institution"
+            v-model="institution"
+            type="text"
+            name="institution"
+            autocomplete="organization"
+          ></label>
+        <label for="education">Education
+          <input
+            id="education"
+            v-model="education"
+            type="text"
+            name="education"
+            autocomplete="education"
+          ></label>
+        <button
+          id="Login"
+          type="submit"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()"
+        >
+          <span v-if="!buttonDisabled">Update Account</span>
+        </button>
+        <router-link to="/reset-password">
+          Reset pass
+        </router-link>
+        <router-link
+          to="/logout"
+          class="right"
+        >
+          Log out
+        </router-link>
+      </template>
+      <article-placeholder v-else />
     </form>
     <please-log-in-alert v-else />
   </article>
@@ -85,6 +88,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
+import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
 import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { validateEmail } from '@/services/userService';
@@ -92,7 +96,7 @@ import { validateEmail } from '@/services/userService';
 export default {
   name: 'UsersPage',
   components: {
-    pleaseLogInAlert,
+    ArticlePlaceholder, pleaseLogInAlert,
   },
   data: () => {
 
