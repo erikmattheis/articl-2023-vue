@@ -54,7 +54,7 @@
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
-            class="togglePasswordMask"
+            class="toggle-password-mask"
             @show="showPassword = !showPassword"
           />
         </div>
@@ -78,7 +78,7 @@
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
-            class="togglePasswordMask"
+            class="toggle-password-mask"
             @show="showPassword2 = !showPassword2"
           />
         </div>

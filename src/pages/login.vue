@@ -35,7 +35,7 @@
           autocomplete="current-password"
         >
         <the-button-toggle-hidden
-          class="togglePasswordMask"
+          class="toggle-password-mask"
           @show="showPassword = !showPassword"
         />
       </div></label>

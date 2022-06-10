@@ -151,7 +151,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   position: relative;
 }
 
-.togglePasswordMask {
+.toggle-password-mask {
   position: absolute;
   right: 1rem;
   top: 40%;
