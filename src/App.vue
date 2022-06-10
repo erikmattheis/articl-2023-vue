@@ -180,8 +180,9 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 }
 
 html[data-theme="light"] {
-.nav-tabs li a:hover,
-.articl-actions a:hover,
+  .nav-tabs li.active a,
+  .nav-tabs li a:hover,
+  .articl-actions a:hover,
   .nav-tabs li.active,
   .active {
     background-color: #17262b;
@@ -191,11 +192,11 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-.nav-tabs li.active a,
-.nav-tabs li a:hover,
-.articl-actions a:hover,
-.nav-tabs li a:active,
-.articl-actions a:active,
+  .nav-tabs li.active a,
+  .nav-tabs li a:hover,
+  .articl-actions a:hover,
+  .nav-tabs li a:active,
+  .articl-actions a:active,
   .nav-tabs li.active,
   .active {
     background-color: #d4d4d4;
