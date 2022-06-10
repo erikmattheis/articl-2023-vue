@@ -10,7 +10,6 @@
       ghost-class="ghost"
       @change="onUpdateOrderValues"
     >
-      >
       <template #item="{element}">
         <categories-list-item
           :category="element"
@@ -41,31 +40,41 @@
         </router-link>
       </li>
     </ul>
-
-    <template
-      v-for="articlType in articlTypes"
-      :key="articlType"
-    >
-      <ul>
-        <draggable-items
-          v-model="articls[articlType]"
-          tag="ul"
-          item-key="id"
-          handle=".handle"
-          ghost-class="ghost"
-          @change="onUpdateArticlsOrderValues(articlType)"
+    <ul class="grid nav-tabs">
+      <li
+        v-for="articlType in articlTypes"
+        :key="articlType"
+        :class="{ active: articlTypeCurrent === articlType }"
+      >
+        <a
+          href
+          @click.prevent="articlTypeCurrent = articlType"
+          @keyup.enter.prevent="articlTypeCurrent = articlType"
         >
-          <template #item="{element}">
-            <div>
-              <articls-list-item
-                :articl="element"
-                :order="element.order"
-              />
-            </div>
-          </template>
-        </draggable-items>
-      </ul>
-    </template>
+          {{ articlType }}</a>
+      </li>
+    </ul>
+
+    <h3>{{ articlTypeCurrent }}</h3>
+    <ul>
+      <draggable-items
+        v-model="articls[articlTypeCurrent]"
+        tag="ul"
+        item-key="id"
+        handle=".handle"
+        ghost-class="ghost"
+        @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+      >
+        <template #item="{element}">
+          <div>
+            <articls-list-item
+              :articl="element"
+              :order="element.order"
+            />
+          </div>
+        </template>
+      </draggable-items>
+    </ul>
   </article>
 </template>
 
@@ -92,6 +101,7 @@ export default {
       categories: [],
       articls: [],
       articlTypes: [],
+      articlTypeCurrent: undefined,
     };
 
   },

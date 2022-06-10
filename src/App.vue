@@ -34,6 +34,7 @@ import ModalError from '@/components/ui/ModalError.vue';
 import ModalSuccess from '@/components/ui/ModalSuccess.vue';
 
 export default {
+  name: 'App',
   components: {
     TheHeader,
     TheFooter,

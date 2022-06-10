@@ -163,6 +163,7 @@ import { mapGetters } from 'vuex';
 import { clear as clearLocalStorage } from '@/services/localStorageService';
 
 export default {
+  name: 'TheHeader',
   components: {
     VueFeather,
   },
