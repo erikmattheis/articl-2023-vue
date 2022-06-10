@@ -5,6 +5,8 @@ export default {
 
     return {
       loggedIn: false,
+      interval: null,
+      now: undefined,
       accessTokenExpires: undefined,
       accessTokenValue: undefined,
       refreshTokenExpires: undefined,
@@ -14,6 +16,18 @@ export default {
   },
 
   mutations: {
+    SET_NOW: (state, payload) => {
+
+      state.now = payload;
+
+    },
+
+    SET_INTERVAL: (state, payload) => {
+
+      state.interval = payload;
+
+    },
+
     SET_ACCESS_TOKEN_VALUE: (state, payload) => {
 
       state.accessTokenValue = payload;
@@ -50,13 +64,37 @@ export default {
 
       context.commit('SET_REFRESH_TOKEN_VALUE', '');
 
+      context.commit('SET_INTERVAL', null);
+
+      context.commit('SET_NOW', null);
+
     },
 
-    accessTokenExpires: (context, payload) => {
+    accessTokenExpires: ({
+      state,
+      commit,
+    }, payload) => {
 
       if (payload) {
 
-        context.commit('SET_ACCESS_TOKEN_EXPIRES', payload);
+        commit('SET_ACCESS_TOKEN_EXPIRES', payload);
+
+      }
+
+      if (!state.interval) {
+
+        const updateSeconds = () => {
+
+          console.log('updateSeconds');
+
+          const now = Math.round(Date.now() / 1000);
+
+          commit('SET_NOW', now);
+
+        };
+        const interval = setInterval(updateSeconds, 1000);
+
+        commit('SET_INTERVAL', interval);
 
       }
 
@@ -94,19 +132,18 @@ export default {
   },
 
   getters: {
+
     isLoggedIn: (state) => {
 
-      const currentYear = new Date().getUTCFullYear();
-      const currentTime = new Date().setUTCFullYear(currentYear);
-      const expires = Number(state.accessTokenExpires);
+      console.log(state.accessTokenExpires, state.now);
 
-      return expires > currentTime;
+      return state.accessTokenExpires > state.now * 1000;
 
     },
 
     accessTokenExpires: (state) => {
 
-      return state.accessTokenExpires;
+      return state.accessTokenExpires * 1000;
 
     },
 
@@ -118,7 +155,7 @@ export default {
 
     refreshTokenExpires: (state) => {
 
-      return state.refreshTokenExpires;
+      return state.refreshTokenExpires * 1000;
 
     },
 

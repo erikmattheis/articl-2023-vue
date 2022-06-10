@@ -27,8 +27,6 @@
 
         <ul class="right">
           <li>
-            isLoggedIn():{{ isLoggedIn() }}<br>
-
             isLoggedIn:{{ isLoggedIn }}<br>
 
             <router-link
@@ -160,7 +158,7 @@
 
 <script>
 import VueFeather from 'vue-feather';
-import mapGetters from 'vuex';
+import { mapGetters } from 'vuex';
 
 import { clear as clearLocalStorage } from '@/services/localStorageService';
 import { getRefreshTokenValue } from '@/services/tokensService';
@@ -177,7 +175,9 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
 
   beforeMount() {

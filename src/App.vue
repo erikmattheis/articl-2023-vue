@@ -27,6 +27,7 @@
  * node, 2094, 2593
  * total, 4650, 7816
  *** */
+
 import TheFooter from '@/components/layout/TheFooter.vue';
 import TheHeader from '@/components/layout/TheHeader.vue';
 import ModalError from '@/components/ui/ModalError.vue';
@@ -38,6 +39,17 @@ export default {
     TheFooter,
     ModalError,
     ModalSuccess,
+  },
+  mounted() {
+
+    this.$store.dispatch('tokens/accessTokenValue', this.$cookies.get('accessTokenValue'));
+
+    this.$store.dispatch('tokens/accessTokenExpires', this.$cookies.get('accessTokenExpires'));
+
+    this.$store.dispatch('tokens/refreshTokenValue', this.$cookies.get('refreshTokenValue'));
+
+    this.$store.dispatch('tokens/refreshTokenExpires', this.$cookies.get('refreshTokenExpires'));
+
   },
 };
 </script>
