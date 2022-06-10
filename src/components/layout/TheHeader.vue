@@ -27,8 +27,6 @@
 
         <ul class="right">
           <li>
-            isLoggedIn:{{ isLoggedIn }}<br>
-
             <router-link
               :to="{ name: 'searchArticls' }"
               class="search-articls"

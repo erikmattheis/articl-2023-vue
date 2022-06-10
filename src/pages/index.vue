@@ -1,6 +1,6 @@
 <template>
-  <article>
-    <h2>{{ title }} <span :aria-busy="isLoading" /></h2>
+  <article v-if="!isLoading">
+    <h2>{{ title }}</h2>
     <ul>
       <li
         v-for=" category in categories || [] "
@@ -18,15 +18,21 @@
       </li>
     </ul>
   </article>
+
+  <article-placeholder v-else />
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
+import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'HomePage',
+  components: {
+    ArticlePlaceholder,
+  },
   data: () => {
 
     return {

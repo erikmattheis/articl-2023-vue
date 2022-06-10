@@ -58,6 +58,8 @@ export default {
 <style lang="scss">
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
+@import "./assets/placeholder.scss";
+
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
@@ -103,7 +105,7 @@ ul li {
 }
 
 .right {
-  text-align: right;
+  float: right;
 }
 
 header article,
@@ -186,7 +188,6 @@ html[data-theme="light"] {
   .nav-tabs li.active,
   .active {
     background-color: #17262b;
-    font-weight:bold;
     color:#fff;
   }
 }

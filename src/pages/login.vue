@@ -211,7 +211,4 @@ export default {
   width: 2.2rem;
 }
 
-.right {
-  float: right;
-}
 </style>

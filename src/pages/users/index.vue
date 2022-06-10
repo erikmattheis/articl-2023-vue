@@ -68,6 +68,15 @@
       >
         <span v-if="!buttonDisabled">Update Account</span>
       </button>
+      <router-link to="/reset-password">
+        Reset pass
+      </router-link>
+      <router-link
+        to="/logout"
+        class="right"
+      >
+        Log out
+      </router-link>
     </form>
     <please-log-in-alert v-else />
   </article>
