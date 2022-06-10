@@ -136,6 +136,8 @@ export default {
 
       this.articls = results.articls;
 
+      [this.articlTypeCurrent] = results.articlTypes;
+
       this.title = results.category[0]?.title;
 
       const description = results.category[0]?.description;
