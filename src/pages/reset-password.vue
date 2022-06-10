@@ -208,19 +208,6 @@ export default {
 </script>
 
 <style scoped>
-.toggle-password {
-  position: relative;
-}
-
-.togglePasswordMask {
-  position: absolute;
-  right: 1rem;
-  top: 40%;
-  transform: translateY(-40%);
-  cursor: pointer;
-  height: 2.2rem;
-  width: 2.2rem;
-}
 
 .success {
   border: 8px solid green;

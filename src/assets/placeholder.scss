@@ -1,8 +1,8 @@
 $ph-direction:            ltr !default;
 $ph-bg:                   #fff !default;
-$ph-color:                #32333566 !default;
-$ph-bg-dark:                   #000 !default;
-$ph-color-dark:                #ced4da66 !default;
+$ph-color:                #efefef !default;
+$ph-bg-dark:                   rgb(20, 30, 38) !default;
+$ph-color-dark:                rgb(30, 44, 56)  !default;
 $ph-border:               0px solid darken($ph-bg, 10%) !default;
 $ph-border-radius:        0 !default;
 

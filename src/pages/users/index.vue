@@ -137,7 +137,7 @@ export default {
 
       try {
 
-        this.buttonDisabled = true;
+        this.isLoading = true;
 
         const result = await this.getMe();
 
@@ -161,7 +161,7 @@ export default {
 
       } finally {
 
-        this.buttonDisabled = false;
+        this.isLoading = false;
 
       }
 

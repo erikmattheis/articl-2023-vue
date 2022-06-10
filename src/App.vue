@@ -147,6 +147,20 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   height: initial;
 }
 
+.toggle-password {
+  position: relative;
+}
+
+.togglePasswordMask {
+  position: absolute;
+  right: 1rem;
+  top: 40%;
+  transform: translateY(-40%);
+  cursor: pointer;
+  height: 2.2rem;
+  width: 2.2rem;
+}
+
 .nav-tabs {
   column-gap: 0;
 }
