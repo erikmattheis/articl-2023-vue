@@ -64,10 +64,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import validateEmail from '@/services/emailValidationService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { isLoggedIn, setTokens } from '@/services/tokensService';
+import { setTokens } from '@/services/tokensService';
 
 export default {
   name: 'LoginPage',
@@ -87,7 +89,9 @@ export default {
 
   },
   computed: {
-    isLoggedIn,
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
   mounted: () => {
 

@@ -168,23 +168,24 @@
         >Create another article</a>
       </template>
     </template>
-    <p v-else>
-      Please <a href="/login?reditect=/articls/create">log in</a> to continue.
-    </p>
+    <please-log-in-alert v-else />
   </article>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
 import cardNotification from '@/components/ui/CardNotification.vue';
 import inputTypeahead from '@/components/ui/InputTypeahead.vue';
 import { fetchData } from '@/services/fetchingService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'EditArticlPage',
   components: {
     cardNotification,
+    pleaseLogInAlert,
     inputTypeahead,
   },
   props: {
@@ -216,7 +217,9 @@ export default {
 
   },
   computed: {
-    isLoggedIn,
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
   mounted() {
 

@@ -55,20 +55,21 @@
         >Create another category</a>
       </template>
     </template>
-    <p v-else>
-      Please <a href="/login?reditect=/categories">log in</a> to continue.
-    </p>
+    <please-log-in-alert v-else />
   </article>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
 import CardNotification from '@/components/ui/CardNotification.vue';
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'CreateCategoryPage',
   components: {
     CardNotification,
+    pleaseLogInAlert,
   },
   props: {
     passedId: {
@@ -113,7 +114,11 @@ export default {
       return encodeURIComponent(str);
 
     },
-    isLoggedIn,
+
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
+
   },
   mounted() {
 

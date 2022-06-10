@@ -19,8 +19,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import CategoryActions from '@/components/layout/CategoryActions.vue';
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'CategoriesListItem',
@@ -42,7 +43,9 @@ export default {
   },
 
   computed: {
-    isLoggedIn,
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
   methods: {
 

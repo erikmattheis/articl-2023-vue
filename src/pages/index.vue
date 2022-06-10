@@ -21,12 +21,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'HomePage',
-  // components: { TheBreadcrumbs },
   data: () => {
 
     return {
@@ -38,8 +38,11 @@ export default {
 
   },
   computed: {
-    isLoggedIn,
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
+
   created() {
 
     this.categories = this.fetchData('0');

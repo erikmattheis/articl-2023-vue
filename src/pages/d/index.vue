@@ -72,11 +72,11 @@
 <script>
 import { groupBy } from 'lodash';
 import DraggableItems from 'vuedraggable';
+import { mapGetters } from 'vuex';
 
 import articlsListItem from '@/components/layout/ArticlsListItem.vue';
 import categoriesListItem from '@/components/layout/CategoriesListItem.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'CategoryPage',
@@ -96,7 +96,9 @@ export default {
 
   },
   computed: {
-    isLoggedIn,
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
   watch: {
     '$route.params.slug': {

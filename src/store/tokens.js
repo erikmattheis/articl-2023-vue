@@ -64,6 +64,8 @@ export default {
 
       context.commit('SET_REFRESH_TOKEN_VALUE', '');
 
+      clearInterval(context.state.interval);
+
       context.commit('SET_INTERVAL', null);
 
       context.commit('SET_NOW', null);
@@ -134,8 +136,6 @@ export default {
   getters: {
 
     isLoggedIn: (state) => {
-
-      console.log(state.accessTokenExpires, state.now);
 
       return state.accessTokenExpires > state.now * 1000;
 

@@ -161,7 +161,6 @@ import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
 import { clear as clearLocalStorage } from '@/services/localStorageService';
-import { getRefreshTokenValue } from '@/services/tokensService';
 
 export default {
   components: {
@@ -218,7 +217,7 @@ export default {
     },
     async logout() {
 
-      const refreshToken = getRefreshTokenValue();
+      const refreshToken = this.$store.state.refreshTokenValue;
 
       if (refreshToken) {
 
@@ -234,7 +233,7 @@ export default {
 
         this.$store.dispatch('tokens/logout');
 
-        this.$router.push('/');
+        // this.$router.push('/');
 
       } else {
 

@@ -15,33 +15,6 @@ const getAccessTokenExpires = () => {
   return accessTokenExpires;
 
 };
-const updateSeconds = function () {
-
-  console.log('updateSeconds');
-
-  this.now = Math.round(Date.now() / 1000);
-
-};
-
-let interval;
-
-const isLoggedIn = () => {
-
-  if (!interval) {
-
-    interval = setInterval(updateSeconds, 2000);
-
-  }
-
-  const currentYear = new Date().getUTCFullYear();
-  const currentTime = new Date().setUTCFullYear(currentYear);
-  const expires = Number(getAccessTokenExpires());
-
-  // clearInterval(interval);
-
-  return expires > currentTime;
-
-};
 const getAccessTokenValue = () => {
 
   const accessTokenValue = VueCookies.get('accessTokenValue');
@@ -139,8 +112,6 @@ const setTokens = (response) => {
 
   const result = convertStringDatesToMS(response);
 
-  console.log('result', result);
-
   setTokensInLocalStorage(result.data.tokens);
 
   setTokensInVuex(result.data.tokens);
@@ -153,7 +124,7 @@ export {
   getAccessTokenValue,
   getRefreshTokenExpires,
   getRefreshTokenValue,
-  isLoggedIn,
-  setTokens, setTokensInLocalStorage,
+  setTokens,
+  setTokensInLocalStorage,
   setTokensInVuex,
 };

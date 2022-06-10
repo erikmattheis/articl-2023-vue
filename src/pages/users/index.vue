@@ -1,12 +1,12 @@
 <template>
   <article>
     <h1 v-if="!success">
-      Articl.net User: {{ fullName }}
+      Articl.net User: {{ nameFirst }} {{ nameLast }}
     </h1>
     <h1 v-else>
       Account Updated
     </h1>
-    <form>
+    <form v-if="isLoggedIn">
       <fieldset class="grid">
         <div>
           <label for="nameFirst">First Name
@@ -69,15 +69,22 @@
         <span v-if="!buttonDisabled">Update Account</span>
       </button>
     </form>
+    <please-log-in-alert v-else />
   </article>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { validateEmail } from '@/services/userService';
 
 export default {
   name: 'UsersPage',
+  components: {
+    pleaseLogInAlert,
+  },
   data: () => {
 
     return {
@@ -96,11 +103,9 @@ export default {
 
   },
   computed: {
-    fullName() {
-
-      return `${this.nameFirst} ${this.nameLast}`;
-
-    },
+    ...mapGetters({
+      isLoggedIn: 'tokens/isLoggedIn',
+    }),
   },
   mounted() {
 

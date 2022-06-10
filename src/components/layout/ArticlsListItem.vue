@@ -61,7 +61,6 @@ import { mapGetters } from 'vuex';
 
 import ArticlActions from '@/components/layout/ArticlActions.vue';
 import { highlightedSubstring, noCaseIndexOf } from '@/services/stringsService';
-import { isLoggedIn } from '@/services/tokensService';
 
 export default {
   name: 'ArticlsListItem',
@@ -85,14 +84,15 @@ export default {
   },
 
   computed: {
-    isLoggedIn,
     ...mapGetters({
       params: 'articlsParams/params',
       allTypes: 'articlsParams/allTypes',
       allStatuses: 'articlsParams/allStatuses',
       yearsStart: 'articlsParams/yearsStart',
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
   },
+
   methods: {
     highlightedSubstring,
     noCaseIndexOf,
