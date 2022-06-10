@@ -7,7 +7,7 @@
       Account Updated
     </h1>
     <form v-if="isLoggedIn">
-      <template v-if="isLoading">
+      <template v-if="!isLoading">
         <fieldset class="grid">
           <div>
             <label for="nameFirst">First Name
@@ -109,6 +109,7 @@ export default {
       institution: null,
       education: null,
       buttonDisabled: false,
+      isLoading: true,
       errorMessage: '',
       success: false,
       result: null,

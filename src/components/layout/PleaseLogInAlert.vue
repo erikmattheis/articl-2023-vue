@@ -1,6 +1,6 @@
 <template>
   <p>
-    Please <router-link :to="{name:'login',query:{redirect:$route.path}}">
+    Please <router-link :to="{name:'loginPage',query:{redirect:$route.path}}">
       log in
     </router-link> to continue.
   </p>

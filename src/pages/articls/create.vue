@@ -8,7 +8,7 @@
     </h1>
 
     <template v-if="isLoggedIn">
-      <template v-if="isLoading">
+      <template v-if="!isLoading">
         <form v-if="!success">
           <template v-if="!id">
             <label for="articlUrl">URL
@@ -240,6 +240,8 @@ export default {
       this.onTypeaheadHit({
         value: this.categorySlug,
       });
+
+      this.isLoading = false;
 
     } else {
 
