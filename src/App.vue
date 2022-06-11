@@ -152,7 +152,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 }
 
 .toggle-password-mask {
-  position: absolute;
+    position: absolute;
   right: 1rem;
   top: 40%;
   transform: translateY(-40%);
