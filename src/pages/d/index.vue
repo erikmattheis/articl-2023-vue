@@ -78,6 +78,8 @@
       </ul>
     </template>
     <article-placeholder v-else />
+
+    <note-crud />
   </article>
 </template>
 
@@ -89,12 +91,13 @@ import { mapGetters } from 'vuex';
 import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
 import articlsListItem from '@/components/layout/ArticlsListItem.vue';
 import categoriesListItem from '@/components/layout/CategoriesListItem.vue';
+import NoteCrud from '@/components/layout/NoteCrud.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'CategoryPage',
   components: {
-    ArticlePlaceholder, DraggableItems, categoriesListItem, articlsListItem,
+    ArticlePlaceholder, NoteCrud, DraggableItems, categoriesListItem, articlsListItem,
   },
   data: () => {
 
@@ -227,8 +230,6 @@ export default {
     },
 
     updateArticlsOrderValues(articlType) {
-
-      console.log('this.articls', this.articls[articlType]);
 
       this.articls[articlType].forEach((obj, index) => {
 
