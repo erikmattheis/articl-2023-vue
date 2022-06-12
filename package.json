@@ -34,8 +34,6 @@
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
     "eslint": "^7.32.0",
-    "eslint-config-hardcore": "^24.7.0",
-    "eslint-config-ultra-refined": "^2.5.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-simple-import-sort": "^7.0.0",
@@ -62,7 +60,6 @@
     "extends": [
       "plugin:vuejs-accessibility/recommended",
       "plugin:vue/vue3-recommended",
-      "eslint:recommended",
       "@vue/airbnb"
     ],
     "plugins": [
@@ -146,11 +143,6 @@
           "blankLine": "never",
           "next": "let",
           "prev": "let"
-        },
-        {
-          "blankLine": "always",
-          "next": "expression",
-          "prev": "expression"
         },
         {
           "blankLine": "any",

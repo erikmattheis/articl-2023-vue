@@ -1,51 +1,34 @@
 <template>
   <section>
-    <h3 v-if="!success">
-      {{ formAction }} note
-    </h3>
-    <h1 v-else>
-      Success
-    </h1>
-
+    <h3 v-if="!success"> {{ formAction }} note </h3>
+    <h1 v-else> Success </h1>
     <template v-if="isLoggedIn">
       <template v-if="!isLoading">
         <form v-if="!success">
-          <label for="fullText">Note
-            <textarea
-              id="fullText"
-              v-model="fullText"
-              name="fullText"
-              autocomplete="off"
-            />
+          <label for="fullText">Note <textarea
+            id="fullText"
+            v-model="fullText"
+            name="fullText"
+            autocomplete="off"
+          />
           </label>
-
-          <label for="status">Status
-            <select
-              id="status"
-              v-model="status"
-              name="status"
-            >
-              <option value="Published">
-                Published
-              </option>
-              <option value="Draft">
-                Draft
-              </option>
-              <option value="Pending">
-                Pending
-              </option>
-              <option value="Trash">
-                Trash
-              </option>
-            </select>
+          <label for="status">Status <select
+            id="status"
+            v-model="status"
+            name="status"
+          >
+            <option value="Published"> Published </option>
+            <option value="Draft"> Draft </option>
+            <option value="Pending"> Pending </option>
+            <option value="Trash"> Trash </option>
+          </select>
           </label>
-
           <button
             type="button"
             :aria-busy="buttonDisabled"
             @click.prevent="submitForm(id)"
           >
-            {{ !id ? "Create" : "Edit" }} Note
+            {{ !id? "Create":"Edit" }} Note
           </button>
         </form>
         <template v-else>
@@ -272,8 +255,9 @@ export default {
 form input.another {
   padding-right: 4.6 rem;
 }
+
 form input.another button {
-   position: absolute;
+  position: absolute;
   top: 0;
   right: 0;
   width: 4.4rem;

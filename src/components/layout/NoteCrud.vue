@@ -3,6 +3,7 @@
     <h3 v-if="!success">
       {{ formAction }} note
     </h3>
+
     <h1 v-else>
       Success
     </h1>
