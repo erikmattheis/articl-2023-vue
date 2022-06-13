@@ -92,6 +92,8 @@ const convertStringDatesToMS = (serverResult) => {
 
     const result = JSON.parse(JSON.stringify(serverResult));
 
+    console.log(result);
+
     result.data.tokens.access.expires = Date.parse(
       result.data.tokens.access.expires,
     );

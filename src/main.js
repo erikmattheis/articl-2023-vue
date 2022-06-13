@@ -1,34 +1,34 @@
-import 'core-js/actual/array/group-by';
+import "core-js/actual/array/group-by";
 
-import axios from 'axios';
-import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import { createApp } from 'vue';
-import VueCookies from 'vue-cookies';
+import axios from "axios";
+import createAuthRefreshInterceptor from "axios-auth-refresh";
+import { createApp } from "vue";
+import VueCookies from "vue-cookies";
 
-import { getAccessTokenValue, getRefreshTokenValue, setTokensInLocalStorage, setTokensInVuex } from '@/services/tokensService';
+import { getAccessTokenValue, getRefreshTokenValue, setTokens } from "@/services/tokensService";
 
-import App from './App.vue';
-import router from './router';
-import store from './store/index';
+import App from "./App.vue";
+import router from "./router";
+import store from "./store/index";
 
 const app = createApp(App);
 
 let baseURL;
 let secure = true;
 
-if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
+if (window.location.hostname === "192.168.1.130" || window.location.hostname === "localhost") {
 
-  baseURL = 'http://localhost:5000/v1';
+  baseURL = "http://localhost:5000/v1";
 
   secure = false;
 
-} else if (process.env.NODE_ENV === 'development') {
+} else if (process.env.NODE_ENV === "development") {
 
-  baseURL = 'https://articl-api-dev.herokuapp.com/v1';
+  baseURL = "https://articl-api-dev.herokuapp.com/v1";
 
 } else {
 
-  baseURL = 'https://api.articl.net/v1';
+  baseURL = "https://api.articl.net/v1";
 
 }
 
@@ -42,7 +42,7 @@ app.config.globalProperties.$http.interceptors.request.use(
     const req = request;
     const accessTokenValue = getAccessTokenValue();
 
-    if (accessTokenValue && req.url !== '/auth/refresh-tokens') {
+    if (accessTokenValue && req.url !== "/auth/refresh-tokens") {
 
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
 
@@ -56,28 +56,28 @@ app.config.globalProperties.$http.interceptors.request.use(
 
 const refreshAuthLogic = async (failedRequest) => {
 
+  console.log("refreshAuthLogic", app);
+
   const request = failedRequest;
-  const result = await this.$http({
-    method: 'POST',
-    url: '/auth/refresh-tokens',
+  const result = await app.config.globalProperties.$http({
+    method: "POST",
+    url: "/auth/refresh-tokens",
     data: {
       refreshToken: getRefreshTokenValue(),
     },
   });
 
-  console.log('auto reauth result.data', result.data);
+  console.log("auto reauth result.data", result.data);
 
-  setTokensInVuex(result.data);
-
-  setTokensInLocalStorage(result.data);
+  setTokens(result.data);
 
   request.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
 
-  return Promise.resolve(request);
+  return Promise.resolve();
 
 };
 
-createAuthRefreshInterceptor(axios, refreshAuthLogic);
+createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
 app.use(router);
 
@@ -87,6 +87,7 @@ app.use(VueCookies, {
 
 app.use(store);
 
+/*
 const createAxiosResponseInterceptor = () => {
 
   app.config.globalProperties.$http.interceptors.response.use(
@@ -113,7 +114,8 @@ const createAxiosResponseInterceptor = () => {
 };
 
 createAxiosResponseInterceptor();
+*/
 
 export default app;
 
-app.mount('#app');
+app.mount("#app");

@@ -1,12 +1,8 @@
 <template>
   <section>
-    <h3 v-if="!success">
-      {{ formAction }} note
-    </h3>
+    <h3 v-if="!success">{{ formAction }} note</h3>
 
-    <h1 v-else>
-      Success
-    </h1>
+    <h1 v-else>Success</h1>
 
     <template v-if="isLoggedIn">
       <template v-if="!isLoading">
@@ -26,18 +22,10 @@
               v-model="status"
               name="status"
             >
-              <option value="Published">
-                Published
-              </option>
-              <option value="Draft">
-                Draft
-              </option>
-              <option value="Pending">
-                Pending
-              </option>
-              <option value="Trash">
-                Trash
-              </option>
+              <option value="Published">Published</option>
+              <option value="Draft">Draft</option>
+              <option value="Pending">Pending</option>
+              <option value="Trash">Trash</option>
             </select>
           </label>
 
@@ -65,15 +53,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
-import cardNotification from '@/components/ui/CardNotification.vue';
-import { fetchData } from '@/services/fetchingService';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import pleaseLogInAlert from "@/components/layout/PleaseLogInAlert.vue";
+import cardNotification from "@/components/ui/CardNotification.vue";
+import { fetchData } from "@/services/fetchingService";
 
 export default {
-  name: 'NoteCrudComponent',
+  name: "NoteCrudComponent",
   components: {
     ArticlePlaceholder,
     cardNotification,
@@ -81,28 +69,30 @@ export default {
   },
   props: {
     passedId: {
-      default: '',
+      default: "",
       type: String,
     },
   },
   data: () => {
 
     return {
-      fullText: '',
-      status: 'Published',
+      fullText: "",
+      status: "Published",
+      success: false,
+      buttonDisabled: false,
     };
 
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
   mounted() {
 
     this.id = this.passedId;
 
-    this.formAction = this.id ? 'Edit' : 'Create';
+    this.formAction = this.id ? "Edit" : "Create";
 
     if (!this.id) {
 
@@ -135,7 +125,7 @@ export default {
 
         try {
 
-          this.buttonFetchDisabled = true;
+          this.buttonDisabled = true;
 
           const result = await fetchData(this.noteUrl);
 
@@ -143,21 +133,25 @@ export default {
 
             Object.assign(this, result);
 
+            this.success = true;
+
           }
 
         } catch (error) {
 
-          this.$store.dispatch('errors/setError', error);
+          this.$store.dispatch("errors/setError", error);
 
         } finally {
 
           this.isLoading = false;
 
+          this.buttonDisabled = false;
+
         }
 
       } else {
 
-        this.$store.dispatch('errors/setError', 'Please enter a URL');
+        this.$store.dispatch("errors/setError", "Please enter a URL");
 
       }
 
@@ -166,7 +160,7 @@ export default {
 
       this.success = null;
 
-      this.errorMessage = '';
+      this.errorMessage = "";
 
     },
     checkForm() {
@@ -175,15 +169,15 @@ export default {
 
       let passed = true;
 
-      if (this.title === '') {
+      if (this.title === "") {
 
-        this.errorMessage = 'Please enter a title.';
+        this.errorMessage = "Please enter a title.";
 
         passed = false;
 
-      } else if (this.status === '') {
+      } else if (this.status === "") {
 
-        this.errorMessage = 'Please choose a status.';
+        this.errorMessage = "Please choose a status.";
 
         passed = false;
 
@@ -200,7 +194,7 @@ export default {
 
         this.buttonDisabled = true;
 
-        const verb = id ? 'PUT' : 'POST';
+        const verb = id ? "PUT" : "POST";
         const result = await this.$http({
           method: verb,
           url: `/notes/${id}`,
@@ -224,7 +218,7 @@ export default {
     async getNote(id) {
 
       return this.$http({
-        method: 'GET',
+        method: "GET",
         url: `/notes/${id}`,
       });
 
@@ -238,7 +232,7 @@ form input.another {
   padding-right: 4.6 rem;
 }
 form input.another button {
-   position: absolute;
+  position: absolute;
   top: 0;
   right: 0;
   width: 4.4rem;

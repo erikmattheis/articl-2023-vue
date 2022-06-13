@@ -3,29 +3,29 @@ export default {
   state: () => {
 
     return {
-      allStatuses: ['Published', 'Draft', 'Pending', 'Trash'],
+      allStatuses: ["Published", "Draft", "Pending", "Trash"],
       allTypes: [
-        'Review (OA)',
-        'Review (PA)',
-        'Research (OA)',
-        'Research (PA)',
-        'Images',
-        'Non-medical journal articles',
-        'Presentations',
-        'Videos',
-        'Web',
+        "Review (OA)",
+        "Review (PA)",
+        "Research (OA)",
+        "Research (PA)",
+        "Images",
+        "Non-medical journal articles",
+        "Presentations",
+        "Videos",
+        "Web",
       ],
-      text: '',
-      authors: '',
-      yearComparisons: ['after', 'before', 'exactly'],
-      journal: '',
+      text: "",
+      authors: "",
+      yearComparisons: ["after", "before", "exactly"],
+      journal: "",
       paramsCurrent: {
       },
       statuses: [],
-      title: '',
+      title: "",
       types: [],
       year: 1944,
-      yearComparison: 'after',
+      yearComparison: "after",
       years: [],
       yearsStart: 1944,
     };
@@ -76,32 +76,32 @@ export default {
   actions: {
     text: (context, payload) => {
 
-      context.commit('SET_TEXT', payload);
+      context.commit("SET_TEXT", payload);
 
     },
     authors: (context, payload) => {
 
-      context.commit('SET_AUTHORS', payload);
+      context.commit("SET_AUTHORS", payload);
 
     },
     journal: (context, payload) => {
 
-      context.commit('SET_JOURNAL', payload);
+      context.commit("SET_JOURNAL", payload);
 
     },
     statuses: (context, payload) => {
 
-      context.commit('SET_STATUSES', payload.slice());
+      context.commit("SET_STATUSES", payload.slice());
 
     },
     title: (context, payload) => {
 
-      context.commit('SET_TITLE', payload);
+      context.commit("SET_TITLE", payload);
 
     },
     types: (context, payload) => {
 
-      context.commit('SET_TYPES', payload.slice());
+      context.commit("SET_TYPES", payload.slice());
 
     },
     year: ({
@@ -110,37 +110,37 @@ export default {
 
       if (payload === state.yearsStart) {
 
-        commit('SET_YEAR_COMPARISON', payload);
+        commit("SET_YEAR_COMPARISON", payload);
 
       }
 
-      commit('SET_YEAR', payload);
+      commit("SET_YEAR", payload);
 
     },
     yearComparison: (context, payload) => {
 
-      context.commit('SET_YEAR_COMPARISON', payload);
+      context.commit("SET_YEAR_COMPARISON", payload);
 
     },
     reset: ({
       commit,
     }, _ = undefined) => {
 
-      commit('SET_TEXT', _);
+      commit("SET_TEXT", _);
 
-      commit('SET_AUTHORS', _);
+      commit("SET_AUTHORS", _);
 
-      commit('SET_JOURNAL', _);
+      commit("SET_JOURNAL", _);
 
-      commit('SET_STATUSES', []);
+      commit("SET_STATUSES", []);
 
-      commit('SET_TITLE', _);
+      commit("SET_TITLE", _);
 
-      commit('SET_TYPES', []);
+      commit("SET_TYPES", []);
 
-      commit('SET_YEAR_COMPARISON', _);
+      commit("SET_YEAR_COMPARISON", _);
 
-      commit('SET_YEAR', _);
+      commit("SET_YEAR", _);
 
     },
   },

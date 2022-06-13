@@ -28,13 +28,13 @@
  * total, 4650, 7816
  *** */
 
-import TheFooter from '@/components/layout/TheFooter.vue';
-import TheHeader from '@/components/layout/TheHeader.vue';
-import ModalError from '@/components/ui/ModalError.vue';
-import ModalSuccess from '@/components/ui/ModalSuccess.vue';
+import TheFooter from "@/components/layout/TheFooter.vue";
+import TheHeader from "@/components/layout/TheHeader.vue";
+import ModalError from "@/components/ui/ModalError.vue";
+import ModalSuccess from "@/components/ui/ModalSuccess.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     TheHeader,
     TheFooter,
@@ -42,15 +42,13 @@ export default {
     ModalSuccess,
   },
   mounted() {
+    this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
 
-    this.$store.dispatch('tokens/accessTokenValue', this.$cookies.get('accessTokenValue'));
+    this.$store.dispatch("tokens/accessTokenExpires", this.$cookies.get("accessTokenExpires"));
 
-    this.$store.dispatch('tokens/accessTokenExpires', this.$cookies.get('accessTokenExpires'));
+    this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
 
-    this.$store.dispatch('tokens/refreshTokenValue', this.$cookies.get('refreshTokenValue'));
-
-    this.$store.dispatch('tokens/refreshTokenExpires', this.$cookies.get('refreshTokenExpires'));
-
+    this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
   },
 };
 </script>
@@ -152,7 +150,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 }
 
 .toggle-password-mask {
-    position: absolute;
+  position: absolute;
   right: 1rem;
   top: 40%;
   transform: translateY(-40%);
@@ -189,10 +187,10 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   text-decoration: none;
   height: 1.6rem;
   padding: 0 0.5rem;
-  transition: background-color .3s ;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 html[data-theme="light"] {
@@ -202,7 +200,7 @@ html[data-theme="light"] {
   .nav-tabs li.active,
   .active {
     background-color: #17262b;
-    color:#fff;
+    color: #fff;
   }
 }
 
@@ -215,7 +213,7 @@ html[data-theme="dark"] {
   .nav-tabs li.active,
   .active {
     background-color: #d4d4d4;
-    color:#000 !important;
+    color: #000 !important;
   }
 }
 
@@ -225,7 +223,7 @@ html[data-theme="dark"] {
 
 .sr {
   display: inline-block;
-    line-height:0.5rem;
+  line-height: 0.5rem;
   text-indent: -10000px;
 }
 
