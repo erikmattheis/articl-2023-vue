@@ -91,12 +91,12 @@
 </template>
 
 <script>
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { scoreChars, validateEmail } from '@/services/userService';
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
-  name: 'PasswordReset',
+  name: "PasswordReset",
   components: {
     theButtonToggleHidden,
   },
@@ -110,7 +110,7 @@ export default {
       showPassword2: false,
       buttonDisabled: false,
       passwordComplexity: 0,
-      errorMessage: '',
+      errorMessage: "",
       success: false,
       result: null,
       chrs: 0,
@@ -129,7 +129,7 @@ export default {
   mounted: () => {
 
     setTitleAndDescription({
-      title: 'Reset Password',
+      title: "Reset Password",
     });
 
   },
@@ -140,13 +140,13 @@ export default {
 
       if (this.validateEmail(this.email)) {
 
-        this.errorMessage = 'Please enter a valid email.';
+        this.errorMessage = "Please enter a valid email.";
 
         passed = false;
 
       } else if (this.password && this.password.length < 8) {
 
-        this.errorMessage = 'Passwords are at least eight characters.';
+        this.errorMessage = "Passwords are at least eight characters.";
 
         passed = false;
 
@@ -175,8 +175,8 @@ export default {
         this.buttonDisabled = true;
 
         await this.$http({
-          method: 'POST',
-          url: '/auth/reset-password',
+          method: "POST",
+          url: "/auth/reset-password",
           params: {
             token,
           },
@@ -185,18 +185,18 @@ export default {
           },
         });
 
-        this.$store.dispatch('modals/setSuccessTitle', 'Password updated');
+        this.$store.dispatch("modals/setSuccessTitle", "Password updated");
 
         this.$store.dispatch(
-          'modals/setSuccessMessage',
-          'You have successfully changed your password.',
+          "modals/setSuccessMessage",
+          "You have successfully changed your password.",
         );
 
         this.buttonDisabled = false;
 
       } else {
 
-        this.$store.dispatch('errors/setError', this.errorMessage);
+        this.$store.dispatch("errors/setError", this.errorMessage);
 
       }
 

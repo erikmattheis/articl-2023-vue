@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -67,25 +67,25 @@ export default {
   data: () => {
 
     return {
-      title: '',
-      showErrorStack: '',
+      title: "",
+      showErrorStack: "",
     };
 
   },
   computed: {
     ...mapGetters({
-      errorTitle: 'errors/errorTitle',
-      errorMessage: 'errors/errorMessage',
-      errorDetail: 'errors/errorDetail',
-      errorLineNumber: 'errors/errorLineNumber',
-      errorFileName: 'errors/errorFileName',
-      errorStack: 'errors/errorStack',
+      errorTitle: "errors/errorTitle",
+      errorMessage: "errors/errorMessage",
+      errorDetail: "errors/errorDetail",
+      errorLineNumber: "errors/errorLineNumber",
+      errorFileName: "errors/errorFileName",
+      errorStack: "errors/errorStack",
     }),
   },
   methods: {
     close() {
 
-      this.$store.dispatch('errors/clearError');
+      this.$store.dispatch("errors/clearError");
 
     },
   },

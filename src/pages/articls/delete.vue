@@ -15,14 +15,14 @@
 
 <script>
 export default {
-  name: 'DeleteArticl',
+  name: "DeleteArticl",
   components: {
   },
   data: () => {
 
     return {
       id: undefined,
-      title: 'Nothing to delete',
+      title: "Nothing to delete",
     };
 
   },
@@ -42,12 +42,12 @@ export default {
 
       const result = await this.submitDelete(this.id);
 
-      console.log('result', result);
+      console.log("result", result);
 
-      this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
+      this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
 
       this.$store.dispatch(
-        'modals/setSuccessMessage',
+        "modals/setSuccessMessage",
         `The articl "${this.title}" has been permanently deleted.`,
       );
 
@@ -57,8 +57,8 @@ export default {
       this.buttonDisabled = true;
 
       return this.$http({
-        method: 'DELETE',
-        url: '/articls',
+        method: "DELETE",
+        url: "/articls",
         data: {
           id,
         },

@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: 'ThePagination',
+  name: "ThePagination",
   props: {
     numberOfButtons: {
       type: Number,
@@ -56,7 +56,7 @@ export default {
     },
   },
   emits: [
-    'page-changed',
+    "page-changed",
   ],
   computed: {
     isInFirstPage() {
@@ -144,7 +144,7 @@ export default {
 
       }
 
-      this.$emit('page-changed', 1);
+      this.$emit("page-changed", 1);
 
     },
     onClickPreviousPage() {
@@ -157,12 +157,12 @@ export default {
 
       this.currentPage -= 1;
 
-      this.$emit('page-changed', this.currentPage);
+      this.$emit("page-changed", this.currentPage);
 
     },
     onClickPage(page) {
 
-      this.$emit('page-changed', page);
+      this.$emit("page-changed", page);
 
     },
     onClickNextPage() {
@@ -175,7 +175,7 @@ export default {
 
       this.currentPage += 1;
 
-      this.$emit('page-changed', this.currentPage);
+      this.$emit("page-changed", this.currentPage);
 
     },
     onClickLastPage() {
@@ -186,7 +186,7 @@ export default {
 
       }
 
-      this.$emit('page-changed', this.totalPages);
+      this.$emit("page-changed", this.totalPages);
 
     },
     isPageActive(page) {

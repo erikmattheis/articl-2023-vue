@@ -23,7 +23,7 @@ export default {
   actions: {
     setUser: (context, payload) => {
 
-      context.commit('SET_USER', payload);
+      context.commit("SET_USER", payload);
 
     },
   },

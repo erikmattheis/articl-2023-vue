@@ -155,42 +155,42 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
-import { clear as clearLocalStorage } from '@/services/localStorageService';
+import { clear as clearLocalStorage } from "@/services/localStorageService";
 
 export default {
-  name: 'TheHeader',
+  name: "TheHeader",
   components: {
     VueFeather,
   },
   data: () => {
 
     return {
-      theme: 'light',
+      theme: "light",
     };
 
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
 
   beforeMount() {
 
-    const theme = this.$cookies.get('data-theme');
+    const theme = this.$cookies.get("data-theme");
 
-    this.theme = theme !== 'dark' ? 'light' : 'dark';
+    this.theme = theme !== "dark" ? "light" : "dark";
 
-    document.documentElement.setAttribute('data-theme', this.theme);
+    document.documentElement.setAttribute("data-theme", this.theme);
 
-    if (this.$cookies.isKey('--font-size')) {
+    if (this.$cookies.isKey("--font-size")) {
 
-      this.setTextSize(this.$cookies.get('--font-size'));
+      this.setTextSize(this.$cookies.get("--font-size"));
 
-      this.originalFontSize = parseInt(getComputedStyle(document.body).getPropertyValue('--font-size'), 10);
+      this.originalFontSize = parseInt(getComputedStyle(document.body).getPropertyValue("--font-size"), 10);
 
     }
 
@@ -199,11 +199,11 @@ export default {
     setTextSize(size) {
 
       document.documentElement.style.setProperty(
-        '--font-size',
+        "--font-size",
         `${18 * size}px`,
       );
 
-      this.$cookies.set('--font-size', size);
+      this.$cookies.set("--font-size", size);
 
     },
 
@@ -221,8 +221,8 @@ export default {
       if (refreshToken) {
 
         await this.$http({
-          method: 'POST',
-          url: '/auth/logout',
+          method: "POST",
+          url: "/auth/logout",
           data: {
             refreshToken,
           },
@@ -230,7 +230,7 @@ export default {
 
         localStorage.clear();
 
-        this.$store.dispatch('tokens/logout');
+        this.$store.dispatch("tokens/logout");
 
         // this.$router.push('/');
 
@@ -238,18 +238,18 @@ export default {
 
         localStorage.clear();
 
-        this.$store.dispatch('tokens/logout');
+        this.$store.dispatch("tokens/logout");
 
       }
 
     },
     toggleTheme() {
 
-      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      this.theme = this.theme === "light" ? "dark" : "light";
 
-      document.documentElement.setAttribute('data-theme', this.theme);
+      document.documentElement.setAttribute("data-theme", this.theme);
 
-      this.$cookies.set('data-theme', this.theme);
+      this.$cookies.set("data-theme", this.theme);
 
     },
   },

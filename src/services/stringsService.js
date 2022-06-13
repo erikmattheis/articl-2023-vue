@@ -11,7 +11,7 @@ const noCaseIndexOf = (str, subString) => {
 };
 const highlightedSubstring = (str, subString, part) => {
 
-  if (!subString && part === 'prefix') {
+  if (!subString && part === "prefix") {
 
     return str;
 
@@ -19,7 +19,7 @@ const highlightedSubstring = (str, subString, part) => {
 
   if (!subString) {
 
-    return '';
+    return "";
 
   }
 
@@ -31,19 +31,19 @@ const highlightedSubstring = (str, subString, part) => {
 
   }
 
-  if (part === 'prefix') {
+  if (part === "prefix") {
 
     return str.slice(0, Math.max(0, position));
 
   }
 
-  if (part === 'term') {
+  if (part === "term") {
 
     return str.substring(position, position + subString.length);
 
   }
 
-  if (part === 'suffix') {
+  if (part === "suffix") {
 
     return str.slice(Math.max(0, position + subString.length));
 
@@ -52,16 +52,16 @@ const highlightedSubstring = (str, subString, part) => {
   return str;
 
 };
-const toListWithOptionalConjuction = (array, conj = '') => {
+const toListWithOptionalConjuction = (array, conj = "") => {
 
   if (!array || array.length === 0 || !Array.isArray(array)) {
 
-    return '';
+    return "";
 
   }
 
   return (
-    array.slice(0, -1).join(', ') + (array.length > 1 ? ` ${conj} ` : '') + array[array.length - 1]
+    array.slice(0, -1).join(", ") + (array.length > 1 ? ` ${conj} ` : "") + array[array.length - 1]
   );
 
 };

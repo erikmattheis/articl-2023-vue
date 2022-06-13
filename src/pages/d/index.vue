@@ -84,18 +84,18 @@
 </template>
 
 <script>
-import { groupBy } from 'lodash';
-import DraggableItems from 'vuedraggable';
-import { mapGetters } from 'vuex';
+import { groupBy } from "lodash";
+import DraggableItems from "vuedraggable";
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import articlsListItem from '@/components/layout/ArticlsListItem.vue';
-import categoriesListItem from '@/components/layout/CategoriesListItem.vue';
-import NoteCrud from '@/components/layout/NoteCrud.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import articlsListItem from "@/components/layout/ArticlsListItem.vue";
+import categoriesListItem from "@/components/layout/CategoriesListItem.vue";
+import NoteCrud from "@/components/layout/NoteCrud.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
-  name: 'CategoryPage',
+  name: "CategoryPage",
   components: {
     ArticlePlaceholder, NoteCrud, DraggableItems, categoriesListItem, articlsListItem,
   },
@@ -104,7 +104,7 @@ export default {
     return {
       isLoading: true,
       slug: null,
-      title: '',
+      title: "",
       categories: [],
       articls: [],
       articlTypes: [],
@@ -114,11 +114,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
   watch: {
-    '$route.params.slug': {
+    "$route.params.slug": {
       handler() {
 
         this.updateData();
@@ -135,7 +135,7 @@ export default {
   methods: {
     async updateData() {
 
-      this.isLoading = 'true';
+      this.isLoading = "true";
 
       const results = await this.fetchData(this.$route.params.slug);
 
@@ -162,8 +162,8 @@ export default {
     async fetchData(slug) {
 
       const result = await this.$http({
-        method: 'GET',
-        url: `/d/${slug || ''}`,
+        method: "GET",
+        url: `/d/${slug || ""}`,
       });
 
       return {
@@ -208,8 +208,8 @@ export default {
       this.isLoading = true;
 
       const result = await this.$http({
-        method: 'POST',
-        url: '/categories/order',
+        method: "POST",
+        url: "/categories/order",
         data: {
           order,
         },
@@ -260,8 +260,8 @@ export default {
       this.isLoading = true;
 
       const result = await this.$http({
-        method: 'POST',
-        url: '/articls/order',
+        method: "POST",
+        url: "/articls/order",
         data: {
           order,
         },

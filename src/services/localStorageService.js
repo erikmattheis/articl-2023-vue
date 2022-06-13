@@ -6,8 +6,8 @@ const set = (name, val) => {
   );
 
   if (
-    window.location.hostname === 'localhost'
-    || window.location.hostname === '192.168.1.130'
+    window.location.hostname === "localhost"
+    || window.location.hostname === "192.168.1.130"
   ) {
 
     // Chrome localhost bug

@@ -101,13 +101,13 @@
 </template>
 
 <script>
-import cardNotification from '@/components/ui/CardNotification.vue';
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { scoreChars, validateEmail } from '@/services/userService';
+import cardNotification from "@/components/ui/CardNotification.vue";
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
-  name: 'RegisterPage',
+  name: "RegisterPage",
   components: {
     theButtonToggleHidden,
     cardNotification,
@@ -122,7 +122,7 @@ export default {
       buttonDisabled: false,
       passwordMismatch: false,
       passwordComplexity: 0,
-      errorMessage: '',
+      errorMessage: "",
       success: false,
       result: null,
       chrs: 0,
@@ -141,7 +141,7 @@ export default {
   mounted: () => {
 
     setTitleAndDescription({
-      title: 'Registration',
+      title: "Registration",
     });
 
   },
@@ -152,7 +152,7 @@ export default {
 
       this.result = null;
 
-      this.errorMessage = '';
+      this.errorMessage = "";
 
     },
     checkForm() {
@@ -163,25 +163,25 @@ export default {
 
       if (!this.validateEmail(this.email)) {
 
-        this.errorMessage = 'Please enter a valid email.';
+        this.errorMessage = "Please enter a valid email.";
 
         passed = false;
 
       } else if (this.scoreChars(this.password) < 3) {
 
-        this.errorMessage = 'Please choose a more complex password.';
+        this.errorMessage = "Please choose a more complex password.";
 
         passed = false;
 
       } else if (this.password && this.password.length < 8) {
 
-        this.errorMessage = 'Please choose a longer password.';
+        this.errorMessage = "Please choose a longer password.";
 
         passed = false;
 
       } else if (this.password !== this.password2) {
 
-        this.errorMessage = 'The password fields must match.';
+        this.errorMessage = "The password fields must match.";
 
         passed = false;
 
@@ -200,8 +200,8 @@ export default {
         this.buttonDisabled = true;
 
         const result = this.$http({
-          method: 'POST',
-          url: '/auth/register',
+          method: "POST",
+          url: "/auth/register",
           data: {
             password: this.password,
             email: this.email,
@@ -220,7 +220,7 @@ export default {
 
       } else {
 
-        this.$store.dispatch('errors/setError', {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
 

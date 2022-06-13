@@ -39,16 +39,16 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
-  name: 'ForgotPass',
+  name: "ForgotPass",
   data: () => {
 
     return {
       email: null,
       emailInvalid: null,
-      errorMessage: '',
+      errorMessage: "",
       buttonDisabled: false,
       result: null,
     };
@@ -57,7 +57,7 @@ export default {
   mounted: () => {
 
     setTitleAndDescription({
-      title: 'Forgot pass',
+      title: "Forgot pass",
     });
 
   },
@@ -71,7 +71,7 @@ export default {
     },
     checkForm() {
 
-      return this.email !== '';
+      return this.email !== "";
 
     },
     async submitForm() {
@@ -83,16 +83,16 @@ export default {
         this.buttonDisabled = true;
 
         const result = await this.$http({
-          method: 'POST',
-          url: '/auth/forgot-password',
+          method: "POST",
+          url: "/auth/forgot-password",
           data: {
             email: this.email,
           },
         });
 
-        this.$store.dispatch('modals/setSuccessTitle', 'Email sent');
+        this.$store.dispatch("modals/setSuccessTitle", "Email sent");
 
-        this.$store.dispatch('modals/setSuccessMessage', 'Check your email for instructions how to reset your password.');
+        this.$store.dispatch("modals/setSuccessMessage", "Check your email for instructions how to reset your password.");
 
         if (result?.data?.message) {
 

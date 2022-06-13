@@ -23,15 +23,15 @@
 </template>
 
 <script>
-import { isEqual } from 'lodash';
-import DraggableItems from 'vuedraggable';
-import { mapGetters } from 'vuex';
+import { isEqual } from "lodash";
+import DraggableItems from "vuedraggable";
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
 
 export default {
-  name: 'ArticlsList',
+  name: "ArticlsList",
   components: {
     DraggableItems,
     ArticlePlaceholder,
@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      params: 'articlsParams/params',
+      params: "articlsParams/params",
     }),
   },
   watch: {
@@ -100,7 +100,7 @@ export default {
 
         this.articls = [];
 
-        this.totalResults = '--';
+        this.totalResults = "--";
 
         return;
 
@@ -118,7 +118,7 @@ export default {
 
           this.articls = [];
 
-          this.totalResults = '--';
+          this.totalResults = "--";
 
         }
 
@@ -138,8 +138,8 @@ export default {
       this.isLoading = true;
 
       const result = await this.$http({
-        method: 'POST',
-        url: '/articls/order',
+        method: "POST",
+        url: "/articls/order",
         data: {
           order,
         },
@@ -155,8 +155,8 @@ export default {
       this.isLoading = true;
 
       const result = await this.$http({
-        method: 'GET',
-        url: '/articls',
+        method: "GET",
+        url: "/articls",
         params,
       });
 

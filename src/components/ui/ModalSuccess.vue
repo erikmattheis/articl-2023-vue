@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -56,14 +56,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      successTitle: 'modals/successTitle',
-      successMessage: 'modals/successMessage',
+      successTitle: "modals/successTitle",
+      successMessage: "modals/successMessage",
     }),
   },
   methods: {
     close() {
 
-      this.$store.dispatch('modals/clearSuccess');
+      this.$store.dispatch("modals/clearSuccess");
 
     },
   },

@@ -114,13 +114,13 @@
 </template>
 
 <script>
-import { debounce } from 'lodash';
-import { mapGetters } from 'vuex';
+import { debounce } from "lodash";
+import { mapGetters } from "vuex";
 
-import InputTypeahead from '@/components/ui/InputTypeahead.vue';
+import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 
 export default {
-  name: 'TheArticlsFormSearch',
+  name: "TheArticlsFormSearch",
   components: {
     InputTypeahead,
   },
@@ -142,7 +142,7 @@ export default {
 
     },
     ...mapGetters({
-      years: 'articlsParams/years',
+      years: "articlsParams/years",
     }),
     text: {
       get() {
@@ -152,7 +152,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/text', value);
+        this.$store.dispatch("articlsParams/text", value);
 
       },
     },
@@ -164,7 +164,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/title', value);
+        this.$store.dispatch("articlsParams/title", value);
 
       },
     },
@@ -176,7 +176,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/journal', value);
+        this.$store.dispatch("articlsParams/journal", value);
 
       },
     },
@@ -188,7 +188,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/authors', value);
+        this.$store.dispatch("articlsParams/authors", value);
 
       },
     },
@@ -200,7 +200,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/yearComparison', value);
+        this.$store.dispatch("articlsParams/yearComparison", value);
 
       },
     },
@@ -214,11 +214,11 @@ export default {
 
         if (Number(value) === Number(this.yearsStart)) {
 
-          this.$store.dispatch('articlsParams/yearComparison', 'after');
+          this.$store.dispatch("articlsParams/yearComparison", "after");
 
         }
 
-        this.$store.dispatch('articlsParams/year', value);
+        this.$store.dispatch("articlsParams/year", value);
 
       },
     },
@@ -230,7 +230,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/types', value);
+        this.$store.dispatch("articlsParams/types", value);
 
       },
     },
@@ -242,7 +242,7 @@ export default {
       },
       set(value) {
 
-        this.$store.dispatch('articlsParams/statuses', value);
+        this.$store.dispatch("articlsParams/statuses", value);
 
       },
     },
@@ -251,7 +251,7 @@ export default {
     yearComparison: {
       handler(newValue) {
 
-        this.$store.dispatch('articlsParams/yearComparison', newValue);
+        this.$store.dispatch("articlsParams/yearComparison", newValue);
 
       },
       deep: true,
@@ -260,12 +260,12 @@ export default {
   created() {
 
     this.$store.dispatch(
-      'articlsParams/statuses',
+      "articlsParams/statuses",
       this.$store.state.articlsParams.allStatuses,
     );
 
     this.$store.dispatch(
-      'articlsParams/types',
+      "articlsParams/types",
       this.$store.state.articlsParams.allTypes,
     );
 
@@ -275,32 +275,32 @@ export default {
   methods: {
     onTypesChange(event) {
 
-      this.$store.dispatch('articlsParams/types', event.target.value);
+      this.$store.dispatch("articlsParams/types", event.target.value);
 
     },
     onYearChange(event) {
 
-      this.$store.dispatch('articlsParams/year', event.target.value);
+      this.$store.dispatch("articlsParams/year", event.target.value);
 
     },
     onJournalChange(event) {
 
-      this.$store.dispatch('articlsParams/journal', event.value);
+      this.$store.dispatch("articlsParams/journal", event.value);
 
     },
     onAuthorsChange(event) {
 
-      this.$store.dispatch('articlsParams/authors', event.value);
+      this.$store.dispatch("articlsParams/authors", event.value);
 
     },
     onTitleChange(event) {
 
-      this.$store.dispatch('articlsParams/title', event.target.value);
+      this.$store.dispatch("articlsParams/title", event.target.value);
 
     },
     onYearComparisonChange(event) {
 
-      this.$store.dispatch('articlsParams/yearComparison', event.target.value);
+      this.$store.dispatch("articlsParams/yearComparison", event.target.value);
 
     },
   },

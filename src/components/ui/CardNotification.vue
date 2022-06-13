@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
+import VueFeather from "vue-feather";
 
 export default {
   components: {
@@ -24,13 +24,13 @@ export default {
   },
   props: {
     successMessage: {
-      type: String, default: '',
+      type: String, default: "",
     },
   },
   data: () => {
 
     return {
-      title: '',
+      title: "",
     };
 
   },

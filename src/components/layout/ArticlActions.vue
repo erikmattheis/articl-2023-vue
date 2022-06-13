@@ -27,22 +27,22 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'ArticlActions',
+  name: "ArticlActions",
   components: {
     VueFeather,
   },
   props: {
     id: {
       type: String,
-      default: '',
+      default: "",
     },
     title: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data: () => {
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
 };

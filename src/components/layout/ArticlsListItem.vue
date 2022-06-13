@@ -57,13 +57,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlActions from '@/components/layout/ArticlActions.vue';
-import { highlightedSubstring, noCaseIndexOf } from '@/services/stringsService';
+import ArticlActions from "@/components/layout/ArticlActions.vue";
+import { highlightedSubstring, noCaseIndexOf } from "@/services/stringsService";
 
 export default {
-  name: 'ArticlsListItem',
+  name: "ArticlsListItem",
   components: {
     ArticlActions,
   },
@@ -77,18 +77,18 @@ export default {
 
     return {
       articls: [],
-      totalResults: '--',
+      totalResults: "--",
     };
 
   },
 
   computed: {
     ...mapGetters({
-      params: 'articlsParams/params',
-      allTypes: 'articlsParams/allTypes',
-      allStatuses: 'articlsParams/allStatuses',
-      yearsStart: 'articlsParams/yearsStart',
-      isLoggedIn: 'tokens/isLoggedIn',
+      params: "articlsParams/params",
+      allTypes: "articlsParams/allTypes",
+      allStatuses: "articlsParams/allStatuses",
+      yearsStart: "articlsParams/yearsStart",
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
 

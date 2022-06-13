@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
-  name: 'HomePage',
+  name: "HomePage",
   components: {
     ArticlePlaceholder,
   },
@@ -38,20 +38,20 @@ export default {
     return {
       isLoading: true,
       slug: null,
-      title: '',
+      title: "",
       categories: [],
     };
 
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
 
   created() {
 
-    this.categories = this.fetchData('0');
+    this.categories = this.fetchData("0");
 
   },
   methods: {
@@ -75,7 +75,7 @@ export default {
 
       } catch (error) {
 
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
 
       } finally {
 
@@ -88,8 +88,8 @@ export default {
 
       return this.$http({
 
-        method: 'GET',
-        url: `/d/${slug || ''}`,
+        method: "GET",
+        url: `/d/${slug || ""}`,
 
       });
 

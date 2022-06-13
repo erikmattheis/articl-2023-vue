@@ -56,19 +56,19 @@ export default {
   actions: {
     logout: (context) => {
 
-      context.commit('SET_ACCESS_TOKEN_EXPIRES', '');
+      context.commit("SET_ACCESS_TOKEN_EXPIRES", "");
 
-      context.commit('SET_ACCESS_TOKEN_VALUE', '');
+      context.commit("SET_ACCESS_TOKEN_VALUE", "");
 
-      context.commit('SET_REFRESH_TOKEN_EXPIRES', '');
+      context.commit("SET_REFRESH_TOKEN_EXPIRES", "");
 
-      context.commit('SET_REFRESH_TOKEN_VALUE', '');
+      context.commit("SET_REFRESH_TOKEN_VALUE", "");
 
       clearInterval(context.state.interval);
 
-      context.commit('SET_INTERVAL', null);
+      context.commit("SET_INTERVAL", null);
 
-      context.commit('SET_NOW', null);
+      context.commit("SET_NOW", null);
 
     },
 
@@ -79,7 +79,7 @@ export default {
 
       if (payload) {
 
-        commit('SET_ACCESS_TOKEN_EXPIRES', payload);
+        commit("SET_ACCESS_TOKEN_EXPIRES", payload);
 
       }
 
@@ -87,16 +87,16 @@ export default {
 
         const updateSeconds = () => {
 
-          console.log('updateSeconds');
+          console.log("updateSeconds");
 
           const now = Math.round(Date.now() / 1000);
 
-          commit('SET_NOW', now);
+          commit("SET_NOW", now);
 
         };
         const interval = setInterval(updateSeconds, 1000);
 
-        commit('SET_INTERVAL', interval);
+        commit("SET_INTERVAL", interval);
 
       }
 
@@ -106,7 +106,7 @@ export default {
 
       if (payload) {
 
-        context.commit('SET_ACCESS_TOKEN_VALUE', payload);
+        context.commit("SET_ACCESS_TOKEN_VALUE", payload);
 
       }
 
@@ -116,7 +116,7 @@ export default {
 
       if (payload) {
 
-        context.commit('SET_REFRESH_TOKEN_EXPIRES', payload);
+        context.commit("SET_REFRESH_TOKEN_EXPIRES", payload);
 
       }
 
@@ -126,7 +126,7 @@ export default {
 
       if (payload) {
 
-        context.commit('SET_REFRESH_TOKEN_VALUE', payload);
+        context.commit("SET_REFRESH_TOKEN_VALUE", payload);
 
       }
 

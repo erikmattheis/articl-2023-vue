@@ -54,11 +54,11 @@ export default {
   actions: {
     setError: (context, payload) => {
 
-      let errorTitle = 'Error';
-      let errorMessage = 'Unknown error';
-      let errorFileName = '';
-      let errorLineNumber = '';
-      let errorStack = '';
+      let errorTitle = "Error";
+      let errorMessage = "Unknown error";
+      let errorFileName = "";
+      let errorLineNumber = "";
+      let errorStack = "";
 
       if (payload?.response?.data?.message) {
 
@@ -68,7 +68,7 @@ export default {
 
         errorMessage = payload?.message;
 
-      } else if (typeof payload === 'string' && payload.length > 0) {
+      } else if (typeof payload === "string" && payload.length > 0) {
 
         errorMessage = payload;
 
@@ -108,7 +108,7 @@ export default {
 
       }
 
-      if (payload?.response?.data?.error && typeof payload?.response?.data?.error === 'string') {
+      if (payload?.response?.data?.error && typeof payload?.response?.data?.error === "string") {
 
         errorTitle = payload.response.data.error;
 
@@ -122,29 +122,29 @@ export default {
 
       }
 
-      context.commit('SET_ERROR_TITLE', errorTitle);
+      context.commit("SET_ERROR_TITLE", errorTitle);
 
-      context.commit('SET_ERROR_MESSAGE', errorMessage);
+      context.commit("SET_ERROR_MESSAGE", errorMessage);
 
-      context.commit('SET_ERROR_FILE_NAME', errorFileName);
+      context.commit("SET_ERROR_FILE_NAME", errorFileName);
 
-      context.commit('SET_ERROR_LINE_NUMBER', errorLineNumber);
+      context.commit("SET_ERROR_LINE_NUMBER", errorLineNumber);
 
-      context.commit('SET_ERROR_STACK', errorStack);
+      context.commit("SET_ERROR_STACK", errorStack);
 
     },
 
     clearError: (context) => {
 
-      context.commit('SET_ERROR_TITLE', '');
+      context.commit("SET_ERROR_TITLE", "");
 
-      context.commit('SET_ERROR_MESSAGE', '');
+      context.commit("SET_ERROR_MESSAGE", "");
 
-      context.commit('SET_ERROR_FILE_NAME', '');
+      context.commit("SET_ERROR_FILE_NAME", "");
 
-      context.commit('SET_ERROR_LINE_NUMBER', '');
+      context.commit("SET_ERROR_LINE_NUMBER", "");
 
-      context.commit('SET_ERROR_STACK', '');
+      context.commit("SET_ERROR_STACK", "");
 
     },
 
@@ -152,24 +152,24 @@ export default {
       documentTitle, metaDescription,
     }) => {
 
-      context.commit('SET_DOCUMENT_TITLE', documentTitle);
+      context.commit("SET_DOCUMENT_TITLE", documentTitle);
 
-      context.commit('SET_META_DESCRIPTION', metaDescription);
+      context.commit("SET_META_DESCRIPTION", metaDescription);
 
       document.title = documentTitle;
 
-      let meta = document.querySelector('meta[name="description"]');
+      let meta = document.querySelector("meta[name=\"description\"]");
 
       if (!meta) {
 
-        meta = document.createElement('meta');
+        meta = document.createElement("meta");
 
-        meta.name = 'description';
+        meta.name = "description";
 
         document
-          .querySelectorAll('head')[0]
+          .querySelectorAll("head")[0]
           .appendChild(meta)
-          .setAttribute('content', metaDescription);
+          .setAttribute("content", metaDescription);
 
       } else {
 

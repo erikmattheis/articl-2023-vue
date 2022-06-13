@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  emits: ['show'],
+  emits: ["show"],
   data: () => {
 
     return {

@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import CategoryActions from '@/components/layout/CategoryActions.vue';
+import CategoryActions from "@/components/layout/CategoryActions.vue";
 
 export default {
-  name: 'CategoriesListItem',
+  name: "CategoriesListItem",
   components: {
     CategoryActions,
   },
@@ -37,7 +37,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
   methods: {

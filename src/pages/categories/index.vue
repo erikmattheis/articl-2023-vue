@@ -63,14 +63,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
-import CardNotification from '@/components/ui/CardNotification.vue';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import pleaseLogInAlert from "@/components/layout/PleaseLogInAlert.vue";
+import CardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
-  name: 'CreateCategoryPage',
+  name: "CreateCategoryPage",
   components: {
     CardNotification,
     ArticlePlaceholder,
@@ -78,23 +78,23 @@ export default {
   },
   props: {
     passedId: {
-      default: '',
+      default: "",
       type: String,
     },
   },
   data: () => {
 
     return {
-      id: '',
+      id: "",
       title: null,
       description: null,
       parentSlug: null,
       oldSlug: null,
       isLoading: true,
       categories: [],
-      formAction: '',
+      formAction: "",
       buttonDisabled: false,
-      errorMessage: '',
+      errorMessage: "",
       success: false,
       result: null,
       chrs: 0,
@@ -106,13 +106,13 @@ export default {
 
       if (!this.title) {
 
-        return '';
+        return "";
 
       }
 
       let str = this.title.replace(
         /\s/g,
-        '-',
+        "-",
       );
 
       str = str.toLowerCase();
@@ -122,7 +122,7 @@ export default {
     },
 
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
 
   },
@@ -132,7 +132,7 @@ export default {
 
     this.id = this.passedId;
 
-    this.formAction = this.id ? 'Edit' : 'Create';
+    this.formAction = this.id ? "Edit" : "Create";
 
     if (this.id) {
 
@@ -161,7 +161,7 @@ export default {
     async getCategory(id) {
 
       return this.$http({
-        method: 'GET',
+        method: "GET",
         url: `/categories/${id}`,
       });
 
@@ -172,7 +172,7 @@ export default {
 
       this.result = null;
 
-      this.errorMessage = '';
+      this.errorMessage = "";
 
     },
     checkForm() {
@@ -185,7 +185,7 @@ export default {
 
         this.titleInvalid = true;
 
-        this.errorMessage = 'Please enter a title.';
+        this.errorMessage = "Please enter a title.";
 
         passed = false;
 
@@ -193,7 +193,7 @@ export default {
 
         this.slugInvalid = true;
 
-        this.errorMessage = 'Please enter a slug.';
+        this.errorMessage = "Please enter a slug.";
 
         passed = false;
 
@@ -201,7 +201,7 @@ export default {
 
         this.parentIdInvalid = true;
 
-        this.errorMessage = 'Please eselect a parent category.';
+        this.errorMessage = "Please eselect a parent category.";
 
         passed = false;
 
@@ -218,7 +218,7 @@ export default {
 
         this.buttonDisabled = true;
 
-        const verb = id ? 'PUT' : 'POST';
+        const verb = id ? "PUT" : "POST";
         const data = {
           title: this.title,
           slug: this.slug,
@@ -247,7 +247,7 @@ export default {
       } else {
 
         this.$store.dispatch(
-          'errors/setError',
+          "errors/setError",
           {
             message: this.errorMessage,
           },

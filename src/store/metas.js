@@ -25,9 +25,9 @@ export default {
       documentTitle, metaDescription,
     }) => {
 
-      context.commit('SET_DOCUMENT_TITLE', documentTitle);
+      context.commit("SET_DOCUMENT_TITLE", documentTitle);
 
-      context.commit('SET_META_DESCRIPTION', metaDescription);
+      context.commit("SET_META_DESCRIPTION", metaDescription);
 
     },
   },

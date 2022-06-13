@@ -28,6 +28,6 @@
 
 <script>
 export default {
-  name: 'ArticlPlaceholder',
+  name: "ArticlPlaceholder",
 };
 </script>

@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
-  name: 'VerifyEmailPage',
+  name: "VerifyEmailPage",
   components: {
     ArticlePlaceholder,
   },
@@ -30,7 +30,7 @@ export default {
     this.submitForm();
 
     setTitleAndDescription({
-      title: 'Forgot Password',
+      title: "Forgot Password",
     });
 
   },
@@ -40,18 +40,18 @@ export default {
       this.isLoading = true;
 
       const response = await this.$http({
-        method: 'GET',
+        method: "GET",
         url: `/auth/verify-email?token=${this.$route.query.token}`,
       });
 
       if (response?.status === 204) {
 
-        this.resultTitle = 'Email verified';
+        this.resultTitle = "Email verified";
 
       } else {
 
         this.$store.dispatch(
-          'errors/setError',
+          "errors/setError",
           response,
         );
 

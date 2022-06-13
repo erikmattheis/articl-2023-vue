@@ -47,16 +47,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
-import cardNotification from '@/components/ui/CardNotification.vue';
-import { fetchData } from '@/services/fetchingService';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import pleaseLogInAlert from "@/components/layout/PleaseLogInAlert.vue";
+import cardNotification from "@/components/ui/CardNotification.vue";
+import { fetchData } from "@/services/fetchingService";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
-  name: 'EditNoteComponent',
+  name: "EditNoteComponent",
   components: {
     ArticlePlaceholder,
     cardNotification,
@@ -64,28 +64,28 @@ export default {
   },
   props: {
     passedId: {
-      default: '',
+      default: "",
       type: String,
     },
   },
   data: () => {
 
     return {
-      fullText: '',
-      status: 'Published',
+      fullText: "",
+      status: "Published",
     };
 
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
   mounted() {
 
     this.id = this.passedId;
 
-    this.formAction = this.id ? 'Edit' : 'Create';
+    this.formAction = this.id ? "Edit" : "Create";
 
     if (!this.id) {
 
@@ -138,7 +138,7 @@ export default {
 
         } catch (error) {
 
-          this.$store.dispatch('errors/setError', error);
+          this.$store.dispatch("errors/setError", error);
 
         } finally {
 
@@ -148,7 +148,7 @@ export default {
 
       } else {
 
-        this.$store.dispatch('errors/setError', 'Please enter a URL');
+        this.$store.dispatch("errors/setError", "Please enter a URL");
 
       }
 
@@ -159,7 +159,7 @@ export default {
 
       this.result = null;
 
-      this.errorMessage = '';
+      this.errorMessage = "";
 
     },
     checkForm() {
@@ -168,27 +168,27 @@ export default {
 
       let passed = true;
 
-      if (this.title === '') {
+      if (this.title === "") {
 
-        this.errorMessage = 'Please enter a title.';
-
-        passed = false;
-
-      } else if (this.authors === '') {
-
-        this.errorMessage = 'Please enter author names.';
+        this.errorMessage = "Please enter a title.";
 
         passed = false;
 
-      } else if (this.type === '') {
+      } else if (this.authors === "") {
 
-        this.errorMessage = 'Please enter a type.';
+        this.errorMessage = "Please enter author names.";
 
         passed = false;
 
-      } else if (this.status === '') {
+      } else if (this.type === "") {
 
-        this.errorMessage = 'Please choose a status.';
+        this.errorMessage = "Please enter a type.";
+
+        passed = false;
+
+      } else if (this.status === "") {
+
+        this.errorMessage = "Please choose a status.";
 
         passed = false;
 
@@ -205,7 +205,7 @@ export default {
 
         this.buttonDisabled = true;
 
-        const verb = id ? 'PUT' : 'POST';
+        const verb = id ? "PUT" : "POST";
         const result = await this.$http({
           method: verb,
           url: `/notes/${id}`,
@@ -237,7 +237,7 @@ export default {
     async getNote(id) {
 
       return this.$http({
-        method: 'GET',
+        method: "GET",
         url: `/notes/${id}`,
       });
 

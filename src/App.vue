@@ -42,6 +42,7 @@ export default {
     ModalSuccess,
   },
   mounted() {
+
     this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
 
     this.$store.dispatch("tokens/accessTokenExpires", this.$cookies.get("accessTokenExpires"));
@@ -49,6 +50,7 @@ export default {
     this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
 
     this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
+
   },
 };
 </script>

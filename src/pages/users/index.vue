@@ -86,31 +86,31 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from '@/components/layout/ArticlePlaceholder.vue';
-import pleaseLogInAlert from '@/components/layout/PleaseLogInAlert.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { validateEmail } from '@/services/userService';
+import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import pleaseLogInAlert from "@/components/layout/PleaseLogInAlert.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { validateEmail } from "@/services/userService";
 
 export default {
-  name: 'UsersPage',
+  name: "UsersPage",
   components: {
     ArticlePlaceholder, pleaseLogInAlert,
   },
   data: () => {
 
     return {
-      nameFirst: '',
-      nameLast: '',
-      formAction: 'Create',
+      nameFirst: "",
+      nameLast: "",
+      formAction: "Create",
       email: null,
       password2: undefined,
       institution: null,
       education: null,
       buttonDisabled: false,
       isLoading: true,
-      errorMessage: '',
+      errorMessage: "",
       success: false,
       result: null,
     };
@@ -118,14 +118,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
   mounted() {
 
     this.fetchData();
 
-    this.formAction = this.id ? 'Edit' : 'Create';
+    this.formAction = this.id ? "Edit" : "Create";
 
     setTitleAndDescription({
       title: this.formAction,
@@ -143,21 +143,21 @@ export default {
 
         if (result) {
 
-          this.nameFirst = result.nameFirst ? result.nameFirst : '';
+          this.nameFirst = result.nameFirst ? result.nameFirst : "";
 
-          this.nameLast = result.nameLast ? result.nameLast : '';
+          this.nameLast = result.nameLast ? result.nameLast : "";
 
-          this.email = result.email ? result.email : '';
+          this.email = result.email ? result.email : "";
 
-          this.institution = result.institution ? result.institution : '';
+          this.institution = result.institution ? result.institution : "";
 
-          this.education = result.education ? result.education : '';
+          this.education = result.education ? result.education : "";
 
         }
 
       } catch (error) {
 
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
 
       } finally {
 
@@ -170,8 +170,8 @@ export default {
     async getMe() {
 
       const result = await this.$http({
-        method: 'GET',
-        url: '/users/me',
+        method: "GET",
+        url: "/users/me",
       });
 
       return result.data;
@@ -183,7 +183,7 @@ export default {
 
       this.result = null;
 
-      this.errorMessage = '';
+      this.errorMessage = "";
 
     },
     checkForm() {
@@ -194,7 +194,7 @@ export default {
 
       if (!this.validateEmail(this.email)) {
 
-        this.errorMessage = 'Please enter a valid email.';
+        this.errorMessage = "Please enter a valid email.";
 
         passed = false;
 
@@ -213,8 +213,8 @@ export default {
         this.buttonDisabled = true;
 
         const result = await this.$http({
-          method: 'PATCH',
-          url: '/users/me',
+          method: "PATCH",
+          url: "/users/me",
           data: {
             nameFirst: this.nameFirst,
             nameLast: this.nameLast,
@@ -231,11 +231,11 @@ export default {
 
           this.result = result.data;
 
-          this.$store.dispatch('modals/setSuccessTitle', 'User Updated');
+          this.$store.dispatch("modals/setSuccessTitle", "User Updated");
 
           this.$store.dispatch(
-            'modals/setSuccessMessage',
-            'Your account information was successfully updated.',
+            "modals/setSuccessMessage",
+            "Your account information was successfully updated.",
           );
 
           this.buttonDisabled = false;
@@ -244,7 +244,7 @@ export default {
 
       } else {
 
-        this.$store.dispatch('errors/setError', {
+        this.$store.dispatch("errors/setError", {
           message: this.errorMessage,
         });
 

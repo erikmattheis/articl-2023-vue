@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'ImportCategoriesPage',
+  name: "ImportCategoriesPage",
   data: () => {
 
     return {
@@ -39,8 +39,8 @@ export default {
       this.buttonDisabled = true;
 
       const result = await this.$http({
-        method: 'POST',
-        url: '/categories/import-categories',
+        method: "POST",
+        url: "/categories/import-categories",
       });
 
       this.success = true;

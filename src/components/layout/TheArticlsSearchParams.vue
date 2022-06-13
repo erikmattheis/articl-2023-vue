@@ -105,13 +105,13 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
-import { toListWithOptionalConjuction } from '@/services/stringsService';
+import { toListWithOptionalConjuction } from "@/services/stringsService";
 
 export default {
-  name: 'TheArticlsSearchParams',
+  name: "TheArticlsSearchParams",
   components: {
     VueFeather,
   },
@@ -123,10 +123,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      params: 'articlsParams/params',
-      allTypes: 'articlsParams/allTypes',
-      allStatuses: 'articlsParams/allStatuses',
-      yearsStart: 'articlsParams/yearsStart',
+      params: "articlsParams/params",
+      allTypes: "articlsParams/allTypes",
+      allStatuses: "articlsParams/allStatuses",
+      yearsStart: "articlsParams/yearsStart",
     }),
   },
   methods: {
@@ -134,10 +134,10 @@ export default {
 
       switch (arrName) {
 
-        case 'statuses': {
+        case "statuses": {
 
           this.$store.dispatch(
-            'articlsParams/statuses',
+            "articlsParams/statuses",
             this.allStatuses.slice(),
           );
 
@@ -145,56 +145,56 @@ export default {
 
         }
 
-        case 'types': {
+        case "types": {
 
-          this.$store.dispatch('articlsParams/types', this.allTypes.slice());
-
-          break;
-
-        }
-
-        case 'text': {
-
-          this.$store.dispatch('articlsParams/text', '');
+          this.$store.dispatch("articlsParams/types", this.allTypes.slice());
 
           break;
 
         }
 
-        case 'title': {
+        case "text": {
 
-          this.$store.dispatch('articlsParams/title', '');
-
-          break;
-
-        }
-
-        case 'journal': {
-
-          this.$store.dispatch('articlsParams/journal', '');
+          this.$store.dispatch("articlsParams/text", "");
 
           break;
 
         }
 
-        case 'authors': {
+        case "title": {
 
-          this.$store.dispatch('articlsParams/authors', '');
+          this.$store.dispatch("articlsParams/title", "");
 
           break;
 
         }
 
-        case 'year': {
+        case "journal": {
 
-          this.$store.dispatch('articlsParams/year', this.yearsStart);
+          this.$store.dispatch("articlsParams/journal", "");
+
+          break;
+
+        }
+
+        case "authors": {
+
+          this.$store.dispatch("articlsParams/authors", "");
+
+          break;
+
+        }
+
+        case "year": {
+
+          this.$store.dispatch("articlsParams/year", this.yearsStart);
 
           break;
 
         }
 
         default:
-          throw new Error('Unknown search parameter passed.');
+          throw new Error("Unknown search parameter passed.");
 
       }
 

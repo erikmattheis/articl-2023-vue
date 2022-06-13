@@ -64,15 +64,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import validateEmail from '@/services/emailValidationService';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { setTokens } from '@/services/tokensService';
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import validateEmail from "@/services/emailValidationService";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { setTokens } from "@/services/tokensService";
 
 export default {
-  name: 'LoginPage',
+  name: "LoginPage",
   components: {
     theButtonToggleHidden,
   },
@@ -90,20 +90,20 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      isLoggedIn: "tokens/isLoggedIn",
     }),
   },
   mounted: () => {
 
     setTitleAndDescription({
-      title: 'Login',
+      title: "Login",
     });
 
   },
   methods: {
     resetFormErrors() {
 
-      this.errorMessage = '';
+      this.errorMessage = "";
 
     },
     checkForm() {
@@ -112,13 +112,13 @@ export default {
 
       if (!validateEmail.validateEmail(this.email)) {
 
-        this.errorMessage = 'Please enter a valid email.';
+        this.errorMessage = "Please enter a valid email.";
 
         passed = false;
 
       } else if (this.password && this.password.length < 8) {
 
-        this.errorMessage = 'Passwords are at least eight characters.';
+        this.errorMessage = "Passwords are at least eight characters.";
 
         passed = false;
 
@@ -135,8 +135,8 @@ export default {
         this.buttonDisabled = true;
 
         const result = await this.$http({
-          method: 'POST',
-          url: '/auth/login',
+          method: "POST",
+          url: "/auth/login",
           data: {
             password: this.password,
             email: this.email,
@@ -146,7 +146,7 @@ export default {
         if (result?.status > 309) {
 
           this.$store.dispatch(
-            'errors/setError',
+            "errors/setError",
             result,
           );
 
@@ -158,21 +158,21 @@ export default {
 
         setTokens(result);
 
-        const theme = result?.data?.user?.theme !== 'dark' ? 'light' : 'dark';
+        const theme = result?.data?.user?.theme !== "dark" ? "light" : "dark";
 
         this.$cookies.set(
-          'data-theme',
+          "data-theme",
           theme,
         );
 
         document.documentElement.setAttribute(
-          'data-theme',
+          "data-theme",
           theme,
         );
 
         if (
           this.$route.query.redirect
-          && this.$route.query.redirect !== '/login'
+          && this.$route.query.redirect !== "/login"
         ) {
 
           this.$router.push({
@@ -182,7 +182,7 @@ export default {
         } else {
 
           this.$router.push({
-            name: 'homePage',
+            name: "homePage",
           });
 
         }

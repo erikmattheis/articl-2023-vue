@@ -36,8 +36,8 @@
   </div>
 </template>
 <script>
-import { debounce } from 'lodash';
-import VueFeather from 'vue-feather';
+import { debounce } from "lodash";
+import VueFeather from "vue-feather";
 
 export default {
   components: {
@@ -45,13 +45,13 @@ export default {
   },
   props: {
     src: {
-      type: String, default: '',
+      type: String, default: "",
     },
     query: {
-      type: String, default: '',
+      type: String, default: "",
     },
     inputValue: {
-      type: String, default: '',
+      type: String, default: "",
     },
   },
   emits: {
@@ -64,7 +64,7 @@ export default {
       current: -1,
       loading: false,
       selectFirst: true,
-      stringValue: '',
+      stringValue: "",
     };
 
   },
@@ -99,7 +99,7 @@ export default {
   mounted() {
 
     this.$refs.input.addEventListener(
-      'blur',
+      "blur",
       () => {
         // it will work now
       },
@@ -124,9 +124,9 @@ export default {
 
       if (!this.stringValue) {
 
-        this.$emit('typeaheadUpdated', {
+        this.$emit("typeaheadUpdated", {
           field: this.query,
-          value: '',
+          value: "",
         });
 
         this.removeItems();
@@ -137,7 +137,7 @@ export default {
 
       this.hit();
 
-      this.$emit('typeaheadUpdated', {
+      this.$emit("typeaheadUpdated", {
         field: this.query,
         value: this.stringValue,
       });
@@ -244,7 +244,7 @@ export default {
 
       this.stringValue = val;
 
-      this.$emit('typeaheadUpdated', {
+      this.$emit("typeaheadUpdated", {
         field: this.query, value: val,
       });
 
