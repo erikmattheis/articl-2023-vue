@@ -134,6 +134,8 @@ export default {
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
     };
 
+    Git;
+
   },
   computed: {
     queryUC: (val) => {
