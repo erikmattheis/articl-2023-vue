@@ -7,171 +7,168 @@
       Success
     </h1>
 
-    <template v-if="isLoggedIn">
-      <template v-if="!isLoading">
-        <form v-if="!success">
-          <template v-if="!id">
-            <label for="articlUrl">URL
-              <input
-                id="articlUrl"
-                v-model="articlUrl"
-                type="text"
-                name="articlUrl"
-              ></label>
-
-            <button
-              type="button"
-              :aria-busy="buttonFetchDisabled"
-              @click.prevent="getData()"
-            >
-              FETCH DATA
-            </button>
-          </template>
-          <label for="title">Title
+    <template v-if="!isLoading">
+      <form v-if="!success">
+        <template v-if="!id">
+          <label for="articlUrl">URL
             <input
-              id="title"
-              v-model="title"
-              name="title"
-              autocomplete="off"
-            >
-          </label>
-
-          <label for="authors">Authors
-            <input
-              id="authors"
-              v-model="authors"
-              name="authors"
-              autocomplete="off"
+              id="articlUrl"
+              v-model="articlUrl"
+              type="text"
+              name="articlUrl"
             ></label>
 
-          <label for="affiliation">Affiliation
-            <input
-              id="affiliation"
-              v-model="affiliation"
-              name="affiliation"
-              autocomplete="off"
-            ></label>
-
-          <label for="journal">Journal
-            <input
-              id="journal"
-              v-model="journal"
-              name="journal"
-              autocomplete="off"
-            ></label>
-
-          <label for="year">Publication Year
-            <input
-              id="year"
-              v-model="year"
-              name="year"
-              autocomplete="off"
-            ></label>
-
-          <label for="month">Publication Month
-            <input
-              id="month"
-              v-model="month"
-              name="month"
-              autocomplete="off"
-            ></label>
-
-          <label for="abstract">Abstract
-            <input
-              id="abstract"
-              v-model="abstract"
-              name="abstract"
-              autocomplete="off"
-            ></label>
-
-          <label for="type">Link type
-            <select
-              id="type"
-              v-model="type"
-              name="type"
-              autocomplete="off"
-            >
-              <optgroup value="Resources">
-                <option value="Review (OA)">
-                  Review (OA)
-                </option>
-                <option value="Review (OA)">
-                  Review (PA)
-                </option>
-                <option value="Research (OA)">
-                  Research (OA)
-                </option>
-                <option value="Research (PA)">
-                  Research (PA)
-                </option>
-                <option value="Web">
-                  Web
-                </option>
-                <option value="on-medical journal articles">
-                  Non-medical journal articles
-                </option>
-                <option value="Images">
-                  Images
-                </option>
-                <option value="Presentations">
-                  Presentations
-                </option>
-                <option value="Videos">
-                  Videos
-                </option>
-                <option value="Podcast">
-                  Podcast
-                </option>
-              </optgroup>
-            </select></label>
-
-          <label for="status">Status
-            <select
-              id="status"
-              v-model="status"
-              name="status"
-            >
-              <option value="Published">
-                Published
-              </option>
-              <option value="Draft">
-                Draft
-              </option>
-              <option value="Pending">
-                Pending
-              </option>
-              <option value="Trash">
-                Trash
-              </option>
-            </select></label>
-
-          <input-typeahead
-            src="/categories/titles"
-            query="category"
-            :input-value="categorySlug"
-            @update-value="onTypeaheadHit"
-            @keyup="onTypeaheadHit"
-          />
           <button
             type="button"
-            :aria-busy="buttonDisabled"
-            @click.prevent="submitForm(id)"
+            :aria-busy="buttonFetchDisabled"
+            @click.prevent="getData()"
           >
-            {{ !id ? "Create" : "Edit" }} Articl
+            FETCH DATA
           </button>
-        </form>
-        <template v-else>
-          <card-notification success-message="Success" />
-          <a
-            href
-            @click="$router.go()"
-            @keyup.enter="$router.go()"
-          >Create another article</a>
         </template>
+        <label for="title">Title
+          <input
+            id="title"
+            v-model="title"
+            name="title"
+            autocomplete="off"
+          >
+        </label>
+
+        <label for="authors">Authors
+          <input
+            id="authors"
+            v-model="authors"
+            name="authors"
+            autocomplete="off"
+          ></label>
+
+        <label for="affiliation">Affiliation
+          <input
+            id="affiliation"
+            v-model="affiliation"
+            name="affiliation"
+            autocomplete="off"
+          ></label>
+
+        <label for="journal">Journal
+          <input
+            id="journal"
+            v-model="journal"
+            name="journal"
+            autocomplete="off"
+          ></label>
+
+        <label for="year">Publication Year
+          <input
+            id="year"
+            v-model="year"
+            name="year"
+            autocomplete="off"
+          ></label>
+
+        <label for="month">Publication Month
+          <input
+            id="month"
+            v-model="month"
+            name="month"
+            autocomplete="off"
+          ></label>
+
+        <label for="abstract">Abstract
+          <input
+            id="abstract"
+            v-model="abstract"
+            name="abstract"
+            autocomplete="off"
+          ></label>
+
+        <label for="type">Link type
+          <select
+            id="type"
+            v-model="type"
+            name="type"
+            autocomplete="off"
+          >
+            <optgroup value="Resources">
+              <option value="Review (OA)">
+                Review (OA)
+              </option>
+              <option value="Review (OA)">
+                Review (PA)
+              </option>
+              <option value="Research (OA)">
+                Research (OA)
+              </option>
+              <option value="Research (PA)">
+                Research (PA)
+              </option>
+              <option value="Web">
+                Web
+              </option>
+              <option value="on-medical journal articles">
+                Non-medical journal articles
+              </option>
+              <option value="Images">
+                Images
+              </option>
+              <option value="Presentations">
+                Presentations
+              </option>
+              <option value="Videos">
+                Videos
+              </option>
+              <option value="Podcast">
+                Podcast
+              </option>
+            </optgroup>
+          </select></label>
+
+        <label for="status">Status
+          <select
+            id="status"
+            v-model="status"
+            name="status"
+          >
+            <option value="Published">
+              Published
+            </option>
+            <option value="Draft">
+              Draft
+            </option>
+            <option value="Pending">
+              Pending
+            </option>
+            <option value="Trash">
+              Trash
+            </option>
+          </select></label>
+
+        <input-typeahead
+          src="/categories/titles"
+          query="category"
+          :input-value="categorySlug"
+          @update-value="onTypeaheadHit"
+          @keyup="onTypeaheadHit"
+        />
+        <button
+          type="button"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm(id)"
+        >
+          {{ !id ? "Create" : "Edit" }} Articl
+        </button>
+      </form>
+      <template v-else>
+        <card-notification success-message="Success" />
+        <a
+          href
+          @click="$router.go()"
+          @keyup.enter="$router.go()"
+        >Create another article</a>
       </template>
-      <article-placeholder v-else />
     </template>
-    <please-log-in-alert v-else />
+    <article-placeholder v-else />
   </article>
 </template>
 
@@ -179,7 +176,6 @@
 import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
-import pleaseLogInAlert from "@/components/layout/PleaseLogInAlert.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
@@ -190,7 +186,6 @@ export default {
   components: {
     ArticlePlaceholder,
     cardNotification,
-    pleaseLogInAlert,
     inputTypeahead,
   },
   props: {
@@ -288,7 +283,7 @@ export default {
 
         } finally {
 
-          this.isLoading = false;
+          this.buttonFetchDisabled = false;
 
         }
 

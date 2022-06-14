@@ -86,37 +86,34 @@ const setTokensInLocalStorage = (val) => {
   }
 
 };
-const convertStringDatesToMS = (serverResult) => {
+const convertStringDatesToMS = (tokens) => {
 
-  if (serverResult?.data?.tokens) {
+  const result = JSON.parse(JSON.stringify(tokens));
 
-    const result = JSON.parse(JSON.stringify(serverResult));
+  console.log("convertStringDatesToMS", result);
 
-    console.log(result);
+  result.access.expires = Date.parse(
+    tokens.access.expires,
+  );
 
-    result.data.tokens.access.expires = Date.parse(
-      result.data.tokens.access.expires,
-    );
+  result.refresh.expires = Date.parse(
+    tokens.refresh.expires,
+  );
 
-    result.data.tokens.refresh.expires = Date.parse(
-      result.data.tokens.refresh.expires,
-    );
-
-    return result;
-
-  }
-
-  return {
-  };
+  return result;
 
 };
-const setTokens = (response) => {
+const setTokens = (tokens) => {
 
-  const result = convertStringDatesToMS(response);
+  console.log("passed tokens", tokens);
 
-  setTokensInLocalStorage(result.data.tokens);
+  const tokensMS = convertStringDatesToMS(tokens);
 
-  setTokensInVuex(result.data.tokens);
+  console.log("tokens", tokensMS);
+
+  setTokensInLocalStorage(tokensMS);
+
+  setTokensInVuex(tokensMS);
 
 };
 

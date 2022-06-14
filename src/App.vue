@@ -41,8 +41,8 @@ export default {
     ModalError,
     ModalSuccess,
   },
-  mounted() {
-
+  mounted: () => {
+    /*
     this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
 
     this.$store.dispatch("tokens/accessTokenExpires", this.$cookies.get("accessTokenExpires"));
@@ -50,7 +50,7 @@ export default {
     this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
 
     this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
-
+*/
   },
 };
 </script>
@@ -124,25 +124,26 @@ header article {
   padding-top: 0;
   padding-bottom: 0;
 }
+
 main article {
   margin-top: 0;
   margin-bottom: 0;
 }
+
 main form {
   margin-bottom: 0;
 }
+
 footer article {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
-form ul li,
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
 select,
 textarea {
   padding: 0.4rem 0.6rem !important;
 }
-form ul li,
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   height: initial;
 }
@@ -173,15 +174,9 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 .nav-tabs li,
 .articl-actions li {
   display: inline-block;
-  border: 1px solid #888;
-  border-right: 0px;
+  border-bottom: 1px solid transparent;
   font-size: 0.8rem;
   vertical-align: middle;
-}
-
-.nav-tabs li:last-child,
-.articl-actions li:last-child {
-  border-right: 1px solid #888;
 }
 
 .nav-tabs li a,
@@ -196,26 +191,18 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 }
 
 html[data-theme="light"] {
-  .nav-tabs li.active a,
-  .nav-tabs li a:hover,
-  .articl-actions a:hover,
   .nav-tabs li.active,
   .active {
-    background-color: #17262b;
-    color: #fff;
+    background-color: #fefefe;
+    border-color: #888;
   }
 }
 
 html[data-theme="dark"] {
-  .nav-tabs li.active a,
-  .nav-tabs li a:hover,
-  .articl-actions a:hover,
-  .nav-tabs li a:active,
-  .articl-actions a:active,
   .nav-tabs li.active,
   .active {
-    background-color: #d4d4d4;
-    color: #000 !important;
+    background-color: #17262b;
+    border-color:#888;
   }
 }
 

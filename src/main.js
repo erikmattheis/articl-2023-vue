@@ -56,7 +56,15 @@ app.config.globalProperties.$http.interceptors.request.use(
 
 const refreshAuthLogic = async (failedRequest) => {
 
-  console.log("refreshAuthLogic", app);
+  console.log("refreshAuthLogic", app.config.globalProperties.$http);
+
+  console.log("getRefreshTokenValue", getRefreshTokenValue());
+
+  if (!getRefreshTokenValue()) {
+
+    return Promise.resolve(failedRequest);
+
+  }
 
   const request = failedRequest;
   const result = await app.config.globalProperties.$http({
@@ -73,9 +81,11 @@ const refreshAuthLogic = async (failedRequest) => {
 
   request.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
 
-  return Promise.resolve();
+  return Promise.reject(request);
 
 };
+
+console.log("app.config.globalProperties.$http", app.config.globalProperties.$http);
 
 createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 

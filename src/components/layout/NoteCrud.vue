@@ -80,6 +80,9 @@ export default {
       status: "Published",
       success: false,
       buttonDisabled: false,
+      formAction: undefined,
+      isLoading: true,
+      id: undefined,
     };
 
   },

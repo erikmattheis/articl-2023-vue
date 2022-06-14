@@ -156,7 +156,7 @@ export default {
 
         this.resetFormErrors();
 
-        setTokens(result);
+        setTokens(result.data.tokens);
 
         const theme = result?.data?.user?.theme !== "dark" ? "light" : "dark";
 
