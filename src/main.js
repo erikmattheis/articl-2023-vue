@@ -58,32 +58,29 @@ const refreshAuthLogic = async (failedRequest) => {
 
   if (!getRefreshTokenValue() || failedRequest.isRetry) {
 
-    console.log("not trying");
-
     return Promise.resolve();
 
   }
 
-  const request = failedRequest;
-  const result = await app.config.globalProperties.$http({
+  const tokens = await axios({
     method: "POST",
-    url: "/auth/refresh-tokens",
+    url: `${baseURL}/auth/refresh-tokens`,
     data: {
       refreshToken: getRefreshTokenValue(),
     },
   });
 
-  setTokens(result.data);
+  setTokens(tokens.data);
 
-  request.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
+  // eslint-disable-next-line no-param-reassign
+  failedRequest.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
 
-  request.isRetry = true;
+  // eslint-disable-next-line no-param-reassign
+  failedRequest.isRetry = true;
 
-  return app.config.globalProperties.$http(request); // Promise.reject(request);
+  return Promise.resolve();
 
 };
-
-console.log("app.config.globalProperties.$http", app.config.globalProperties.$http);
 
 createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
@@ -94,35 +91,6 @@ app.use(VueCookies, {
 });
 
 app.use(store);
-
-/*
-const createAxiosResponseInterceptor = () => {
-
-  app.config.globalProperties.$http.interceptors.response.use(
-    (response) => { return response; },
-    (error) => {
-
-      if (error?.response?.status === 401 && router.currentRoute.path !== '/login') {
-
-        router.push({
-          name: 'loginPage',
-
-          query: {
-            redirect: window.location.pathname + window.location.search,
-          },
-        });
-
-      }
-
-      return Promise.reject(error);
-
-    },
-  );
-
-};
-
-createAxiosResponseInterceptor();
-*/
 
 export default app;
 

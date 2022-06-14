@@ -40,9 +40,7 @@ export default {
   methods: {
     async deleteArticl() {
 
-      const result = await this.submitDelete(this.id);
-
-      console.log("result", result);
+      await this.submitDelete(this.id);
 
       this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
 

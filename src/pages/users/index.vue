@@ -85,8 +85,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";

@@ -90,8 +90,6 @@ const convertStringDatesToMS = (tokens) => {
 
   const result = JSON.parse(JSON.stringify(tokens));
 
-  console.log("convertStringDatesToMS", result);
-
   result.access.expires = Date.parse(
     tokens.access.expires,
   );
@@ -105,11 +103,7 @@ const convertStringDatesToMS = (tokens) => {
 };
 const setTokens = (tokens) => {
 
-  console.log("passed tokens", tokens);
-
   const tokensMS = convertStringDatesToMS(tokens);
-
-  console.log("tokens", tokensMS);
 
   setTokensInLocalStorage(tokensMS);
 

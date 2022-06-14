@@ -40,7 +40,7 @@
           </li>
 
           <li v-if="!isLoggedIn">
-            <router-link to="/users/me">
+            <router-link to="/login">
               <vue-feather
                 size="2rem"
                 type="user"
@@ -190,7 +190,7 @@ export default {
 
       this.setTextSize(this.$cookies.get("--font-size"));
 
-      this.originalFontSize = parseInt(getComputedStyle(document.body).getPropertyValue("--font-size"), 10);
+      // this.originalFontSize = parseInt(getComputedStyle(document.body).getPropertyValue("--font-size"), 10);
 
     }
 

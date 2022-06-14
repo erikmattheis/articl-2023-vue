@@ -87,8 +87,6 @@ export default {
 
         const updateSeconds = () => {
 
-          console.log("updateSeconds");
-
           const now = Math.round(Date.now() / 1000);
 
           commit("SET_NOW", now);
