@@ -135,23 +135,6 @@ export default {
     };
 
   },
-  unmounted() {
-
-    this.$store.dispatch("articlsParams/text", undefined);
-
-    this.$store.dispatch("articlsParams/title", undefined);
-
-    this.$store.dispatch("articlsParams/journal", undefined);
-
-    this.$store.dispatch("articlsParams/author", undefined);
-
-    this.$store.dispatch("articlsParams/yearComparison", undefined);
-
-    this.$store.dispatch("articlsParams/types", []);
-
-    this.$store.dispatch("articlsParams/statuses", []);
-
-  },
   computed: {
     queryUC: (val) => {
 
@@ -287,6 +270,23 @@ export default {
     );
 
     this.onTitleChange = debounce(this.onTitleChange, 200);
+
+  },
+  unmounted() {
+
+    this.$store.dispatch("articlsParams/text", undefined);
+
+    this.$store.dispatch("articlsParams/title", undefined);
+
+    this.$store.dispatch("articlsParams/journal", undefined);
+
+    this.$store.dispatch("articlsParams/authors", undefined);
+
+    this.$store.dispatch("articlsParams/yearComparison", undefined);
+
+    this.$store.dispatch("articlsParams/types", []);
+
+    this.$store.dispatch("articlsParams/statuses", []);
 
   },
   methods: {
