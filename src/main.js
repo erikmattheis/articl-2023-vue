@@ -56,13 +56,11 @@ app.config.globalProperties.$http.interceptors.request.use(
 
 const refreshAuthLogic = async (failedRequest) => {
 
-  console.log("refreshAuthLogic", app.config.globalProperties.$http);
+  if (!getRefreshTokenValue() || failedRequest.isRetry) {
 
-  console.log("getRefreshTokenValue", getRefreshTokenValue());
+    console.log("not trying");
 
-  if (!getRefreshTokenValue()) {
-
-    return Promise.resolve(failedRequest);
+    return Promise.resolve();
 
   }
 
@@ -75,13 +73,13 @@ const refreshAuthLogic = async (failedRequest) => {
     },
   });
 
-  console.log("auto reauth result.data", result.data);
-
   setTokens(result.data);
 
   request.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
 
-  return Promise.reject(request);
+  request.isRetry = true;
+
+  return app.config.globalProperties.$http(request); // Promise.reject(request);
 
 };
 
