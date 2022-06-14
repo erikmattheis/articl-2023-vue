@@ -3,83 +3,125 @@
     <template v-if="!isLoading">
       <h2>{{ title }}</h2>
 
-      <draggable-items
-        v-model="categories"
-        tag="ul"
-        item-key="id"
-        handle=".handle"
-        ghost-class="ghost"
-        @change="onUpdateOrderValues"
-      >
-        <template #item="{element}">
-          <categories-list-item
-            :category="element"
-            class="list-item"
-          />
-        </template>
-      </draggable-items>
-
-      <ul v-if="isLoggedIn">
-        <li>
-          <router-link
-            :to="{
-              name: 'createCategoryPage',
-              query: {parentSlug: $route.params.slug},
-            }"
-          >
-            New Category Here
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            :to="{
-              name: 'createArticlPage',
-              query: {slug: $route.params.slug},
-            }"
-          >
-            New Articl Here
-          </router-link>
-        </li>
-      </ul>
       <ul class="nav-tabs">
-        <li
-          v-for="articlType in articlTypes"
-          :key="articlType"
-          :class="{ active: articlTypeCurrent === articlType }"
-        >
+        <li :class="{ active: activeTab === 0 }">
           <a
             href
-            @click.prevent="articlTypeCurrent = articlType"
-            @keyup.enter.prevent="articlTypeCurrent = articlType"
+            @click.prevent="activeTab = 0"
+            @keyup.enter.prevent="activeTab = 0"
           >
-            {{ articlType }}</a>
+            Sub-categories &amp; Articls</a>
+        </li>
+        <li :class="{ active: activeTab === 1 }">
+          <a
+            href
+            @click.prevent="activeTab = 1"
+            @keyup.enter.prevent="activeTab = 1"
+          >
+            Notes</a>
         </li>
       </ul>
 
-      <h3>{{ articlTypeCurrent }}</h3>
-      <ul>
+      <div
+        v-show="activeTab === 0"
+        class="tab-content"
+      >
         <draggable-items
-          v-model="articls[articlTypeCurrent]"
+          v-model="categories"
           tag="ul"
           item-key="id"
           handle=".handle"
           ghost-class="ghost"
-          @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+          @change="onUpdateOrderValues"
         >
           <template #item="{element}">
-            <div>
-              <articls-list-item
-                :articl="element"
-                :order="element.order"
-              />
-            </div>
+            <categories-list-item
+              :category="element"
+              class="list-item"
+            />
           </template>
         </draggable-items>
-      </ul>
-    </template>
-    <article-placeholder v-else />
 
-    <note-crud :slug="slug" />
+        <ul v-if="isLoggedIn">
+          <li>
+            <router-link
+              :to="{
+                name: 'createCategoryPage',
+                query: {parentSlug: $route.params.slug},
+              }"
+            >
+              New Category Here
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              :to="{
+                name: 'createArticlPage',
+                query: {slug: $route.params.slug},
+              }"
+            >
+              New Articl Here
+            </router-link>
+          </li>
+        </ul>
+        <ul class="nav-tabs">
+          <li
+            v-for="articlType in articlTypes"
+            :key="articlType"
+            :class="{ active: articlTypeCurrent === articlType }"
+          >
+            <a
+              href
+              @click.prevent="articlTypeCurrent = articlType"
+              @keyup.enter.prevent="articlTypeCurrent = articlType"
+            >
+              {{ articlType }}</a>
+          </li>
+        </ul>
+
+        <h3>{{ articlTypeCurrent }}</h3>
+        <ul>
+          <draggable-items
+            v-model="articls[articlTypeCurrent]"
+            tag="ul"
+            item-key="id"
+            handle=".handle"
+            ghost-class="ghost"
+            @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+          >
+            <template #item="{element}">
+              <div>
+                <articls-list-item
+                  :articl="element"
+                  :order="element.order"
+                />
+              </div>
+            </template>
+          </draggable-items>
+        </ul>
+      </div>
+
+      <div
+        v-show="activeTab === 1"
+        class="tab-content"
+      >
+        <ul>
+          <li
+            v-for="note in notes || [] "
+            :key="note.id"
+          >
+            {{ note.fullText }}
+
+            {{ note.author?.nameFirst }} {{ note.author?.nameLast }}
+
+            {{ note.createdAt }}
+          </li>
+        </ul>
+        <note-crud :slug="slug" />
+      </div>
+    </template>
+
+    <article-placeholder v-else />
   </article>
 </template>
 
@@ -103,8 +145,10 @@ export default {
 
     return {
       isLoading: true,
+      activeTab: 0,
       title: "",
       slug: "",
+      notes: [],
       categories: [],
       articls: [],
       articlTypes: [],
@@ -147,6 +191,8 @@ export default {
 
       this.articls = results.articls;
 
+      this.notes = results.notes.results;
+
       [this.articlTypeCurrent] = results.articlTypes;
 
       this.title = results.category[0]?.title;
@@ -175,6 +221,7 @@ export default {
           ? [...new Set(result.data.articls.map((item) => { return item.type; }))]
           : [],
         articls: groupBy(result.data.articls, (articl) => { return articl.type; }),
+        notes: result.data.notes,
       };
 
     },

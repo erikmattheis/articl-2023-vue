@@ -195,7 +195,8 @@ export default {
         this.buttonDisabled = true;
 
         const verb = id ? "PUT" : "POST";
-        const result = await this.$http({
+
+        await this.$http({
           method: verb,
           url: `/notes/${id}`,
           data: {
@@ -208,8 +209,6 @@ export default {
         this.buttonDisabled = false;
 
         this.success = true;
-
-        Object.assign(this, result.data);
 
       }
 
