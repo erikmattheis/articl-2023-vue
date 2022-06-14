@@ -2,7 +2,7 @@ const noCaseIndexOf = (str, subString) => {
 
   if (!str || !subString) {
 
-    return false;
+    return -1;
 
   }
 
@@ -17,19 +17,13 @@ const highlightedSubstring = (str, subString, part) => {
 
   }
 
-  if (!subString) {
+  if (!subString && part !== "prefix") {
 
     return "";
 
   }
 
   const position = noCaseIndexOf(str, subString);
-
-  if (!str) {
-
-    return false;
-
-  }
 
   if (part === "prefix") {
 

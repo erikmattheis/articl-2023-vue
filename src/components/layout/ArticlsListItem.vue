@@ -3,6 +3,7 @@
     <div class="grid">
       <ul>
         <li>
+          noCaseIndexOf(articl.title, params.title):{{ noCaseIndexOf(articl.title, params.title) }}
           <a
             :href="articl.articlUrl"
             target="_blank"
@@ -10,11 +11,11 @@
             {{ highlightedSubstring(articl.title,params.title,"prefix")
             }}<strong
               :class="{
-                'not-strong': noCaseIndexOf(articl.title,params.title) === -1,
+                'not-strong': noCaseIndexOf(articl.title, params.title) === -1,
               }"
             >{{
-              highlightedSubstring(articl.title,params.title,"term")
-            }}</strong>{{ highlightedSubstring(articl.title,params.title,"suffix") }}</a>
+              highlightedSubstring(articl.title, params.title, "term")
+            }}</strong>{{ highlightedSubstring(articl.title, params.title, "suffix") }}</a>
         </li>
         <li v-if="articl.titleExcerpt">
           <a :href="articl.url">
@@ -33,7 +34,7 @@
           {{ highlightedSubstring(articl.authors,params.authors,"prefix")
           }}<strong
             :class="{
-              'not-strong': noCaseIndexOf(articl.authors,params.title) === -1,
+              'not-strong': noCaseIndexOf(articl.authors,params.authors) === -1,
             }"
           >{{
             highlightedSubstring(articl.authors,params.authors,"term")
