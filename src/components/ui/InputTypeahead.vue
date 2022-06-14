@@ -22,7 +22,6 @@
       >
     </label>
     <ul v-show="hasItems">
-      <!-- for vue@1.0 use: ($item, item) -->
       <li
         v-for="(item, $index) in items"
         :key="$index"
@@ -257,7 +256,7 @@ export default {
 ul {
   position: absolute;
   z-index: 1;
-  background-color: #11191f;
+  background-color: var(--bg1);
   width: 100%;
 }
 
@@ -279,7 +278,7 @@ label .icon {
 }
 
 .active {
-  background-color: #1095c1;
+  background-color: var(--primary);
   cursor: pointer;
 }
 

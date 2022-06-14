@@ -110,14 +110,18 @@
             v-for="note in notes || [] "
             :key="note.id"
           >
-            {{ note.fullText }}
+            <ul>
+              <li class="detail-line">
+                {{ note.fullText }}
 
-            {{ note.author?.nameFirst }} {{ note.author?.nameLast }}
+                {{ note.author?.nameFirst }} {{ note.author?.nameLast }}
 
-            {{ note.createdAt }}
+                {{ note.createdAt }}
+              </li>
+            </ul>
+            <note-crud :slug="slug" />
           </li>
         </ul>
-        <note-crud :slug="slug" />
       </div>
     </template>
 

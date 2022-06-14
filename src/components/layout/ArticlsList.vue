@@ -175,10 +175,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.light-bg {
-  background-color: #20303d;
-}
-
-</style>

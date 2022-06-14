@@ -62,10 +62,25 @@ export default {
 
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+:root[data-theme="light"]  {
+  --bg0: #daf3fb;
+  --bg1: #b5e6f9;
+  --bg2: #80dfff;
+}
+
+:root[data-theme="dark"]  {
+  --bg0: #17262b;
+  --bg1: #00f;
+  --bg2: #457181;
+}
+:where(:root) {
+  background-color:var(--bg0);
+}
 body {
   border-radius: 0;
 }
 
+:where(:root),
 body,
 input:-webkit-autofill::first-line,
 input:-webkit-autofill,
@@ -75,6 +90,7 @@ input:-webkit-autofill:active {
   font: "Poppins", sans-serif;
   font-size: 1rem;
   line-height: 1.6rem;
+  --primary-focus: transparent;
 }
 
 body {
@@ -110,12 +126,12 @@ ul li {
 
 header article,
 footer article {
-  background-color: #efefef;
+  background-color: var(--bg0);
 }
 
 html[data-theme="dark"] header article,
 html[data-theme="dark"] footer article {
-  background-color: #0f191c;
+  background-color: var(--bg0);
 }
 
 header article {
@@ -193,15 +209,16 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 html[data-theme="light"] {
   .nav-tabs li.active,
   .active {
-    background-color: #fefefe;
     border-color: #888;
+  }
+  .detail-line {
+    background-color: var(--bg1)
   }
 }
 
 html[data-theme="dark"] {
   .nav-tabs li.active,
   .active {
-    background-color: #17262b;
     border-color:#888;
   }
 }

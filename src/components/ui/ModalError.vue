@@ -100,14 +100,14 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
-  background-color: black;
+  background-color: var(--bg0);
   display: flex;
 }
 
 .modal {
   margin: auto;
   width: 90%;
-  background-color: white;
+  background-color: var(--bg1);
   border: 0.2rem;
 }
 
@@ -163,15 +163,15 @@ dialog article ul li {
 }
 
 html[data-theme="dark"] .modal-container {
-  background-color: black;
+  background-color: var(--bg0);
 }
 
 html[data-theme="dark"] .modal {
-  background-color: black;
+  background-color: var(--bg0);
 }
 
 html[data-theme="dark"] article {
-  background-color: #141e26;
+  background-color: var(--bg1);
 }
 
 html[data-theme="dark"] #app > div > dialog > article > section > div.info,
@@ -184,7 +184,7 @@ html[data-theme="dark"]
   > div.info
   ul
   li {
-  color: black !important;
+  color: var(--bg0) !important;
 }
 
 small {
