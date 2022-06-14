@@ -28,7 +28,6 @@
 
 <script>
 import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
 
 export default {
   name: "ArticlActions",
@@ -51,11 +50,6 @@ export default {
       expanded: false,
     };
 
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
   },
 };
 </script>

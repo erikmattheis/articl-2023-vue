@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1>Log in</h1>
-    <form v-if="!isLoggedIn">
+    <form>
       <input
         id="username"
         type="hidden"
@@ -48,9 +48,6 @@
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
-    <p v-else>
-      You are already logged in.
-    </p>
     <router-link to="/forgot-pass">
       Forgot pass
     </router-link>
@@ -64,8 +61,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import validateEmail from "@/services/emailValidationService";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
@@ -87,11 +82,6 @@ export default {
       buttonDisabled: false,
     };
 
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
   },
   mounted: () => {
 

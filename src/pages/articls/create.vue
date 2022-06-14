@@ -173,8 +173,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
@@ -216,11 +214,6 @@ export default {
       year: "",
     };
 
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
   },
   mounted() {
 

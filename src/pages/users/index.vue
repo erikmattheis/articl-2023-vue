@@ -6,7 +6,7 @@
     <h1 v-else>
       Account Updated
     </h1>
-    <form v-if="isLoggedIn">
+    <form>
       <template v-if="!isLoading">
         <fieldset class="grid">
           <div>
@@ -81,7 +81,6 @@
       </template>
       <article-placeholder v-else />
     </form>
-    <please-log-in-alert v-else />
   </article>
 </template>
 
@@ -89,14 +88,13 @@
 import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
-import pleaseLogInAlert from "@/components/layout/PleaseLogInAlert.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "UsersPage",
   components: {
-    ArticlePlaceholder, pleaseLogInAlert,
+    ArticlePlaceholder,
   },
   data: () => {
 
@@ -115,11 +113,6 @@ export default {
       result: null,
     };
 
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
   },
   mounted() {
 
