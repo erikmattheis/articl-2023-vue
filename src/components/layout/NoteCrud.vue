@@ -67,6 +67,10 @@ export default {
       default: "",
       type: String,
     },
+    slug: {
+      default: "",
+      type: String,
+    },
   },
   data: () => {
 
@@ -93,8 +97,6 @@ export default {
     this.formAction = this.id ? "Edit" : "Create";
 
     if (!this.id) {
-
-      this.categorySlug = this.$route.query.slug;
 
       this.isLoading = false;
 
@@ -198,7 +200,7 @@ export default {
           url: `/notes/${id}`,
           data: {
             fullText: this.fullText,
-            categorySlug: this.categorySlug,
+            slug: this.slug,
             status: this.status,
           },
         });

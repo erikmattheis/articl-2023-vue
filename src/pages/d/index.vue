@@ -79,7 +79,7 @@
     </template>
     <article-placeholder v-else />
 
-    <note-crud />
+    <note-crud :slug="slug" />
   </article>
 </template>
 
@@ -103,8 +103,8 @@ export default {
 
     return {
       isLoading: true,
-      slug: null,
       title: "",
+      slug: "",
       categories: [],
       articls: [],
       articlTypes: [],
@@ -136,6 +136,8 @@ export default {
     async updateData() {
 
       this.isLoading = "true";
+
+      this.slug = this.$route.params.slug;
 
       const results = await this.fetchData(this.$route.params.slug);
 

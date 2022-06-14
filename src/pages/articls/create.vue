@@ -147,7 +147,7 @@
         <input-typeahead
           src="/categories/titles"
           query="category"
-          :input-value="categorySlug"
+          :input-value="slug"
           @update-value="onTypeaheadHit"
           @keyup="onTypeaheadHit"
         />
@@ -202,7 +202,7 @@ export default {
       authors: "",
       buttonDisabled: false,
       buttonFetchDisabled: false,
-      categorySlug: this.$route.query.slug,
+      slug: this.$route.query.slug,
       formAction: "",
       isLoading: true,
       journal: "",
@@ -223,10 +223,10 @@ export default {
 
     if (!this.id) {
 
-      this.categorySlug = this.$route.query.slug;
+      this.slug = this.$route.query.slug;
 
       this.onTypeaheadHit({
-        value: this.categorySlug,
+        value: this.slug,
       });
 
       this.isLoading = false;
@@ -349,7 +349,7 @@ export default {
             articlUrl: this.articlUrl,
             type: this.type,
             authors: this.authors,
-            categorySlug: this.categorySlug,
+            slug: this.slug,
             journal: this.journal,
             month: this.month,
             status: this.status,
@@ -378,7 +378,7 @@ export default {
     },
     onTypeaheadHit(e) {
 
-      this.categorySlug = e.value;
+      this.slug = e.value;
 
     },
   },

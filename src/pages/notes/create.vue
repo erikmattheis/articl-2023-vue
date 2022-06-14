@@ -78,10 +78,10 @@ export default {
 
     if (!this.id) {
 
-      this.categorySlug = this.$route.query.slug;
+      this.slug = this.$route.query.slug;
 
       this.onTypeaheadHit({
-        value: this.categorySlug,
+        value: this.slug,
       });
 
       this.isLoading = false;
@@ -204,7 +204,7 @@ export default {
             noteUrl: this.noteUrl,
             type: this.type,
             authors: this.authors,
-            categorySlug: this.categorySlug,
+            slug: this.slug,
             journal: this.journal,
             month: this.month,
             status: this.status,
@@ -233,7 +233,7 @@ export default {
     },
     onTypeaheadHit(e) {
 
-      this.categorySlug = e.value;
+      this.slug = e.value;
 
     },
   },

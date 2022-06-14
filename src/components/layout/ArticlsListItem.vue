@@ -3,7 +3,6 @@
     <div class="grid">
       <ul>
         <li>
-          noCaseIndexOf(articl.title, params.title):{{ noCaseIndexOf(articl.title, params.title) }}
           <a
             :href="articl.articlUrl"
             target="_blank"
