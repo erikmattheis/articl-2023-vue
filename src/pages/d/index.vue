@@ -108,20 +108,19 @@
         <ul>
           <li
             v-for="note in notes || [] "
-            :key="note.id"
+            :key="note.fullText"
           >
             <ul>
               <li class="detail-line">
-                {{ note.fullText }}
-
                 {{ note.author?.nameFirst }} {{ note.author?.nameLast }}
 
                 {{ note.createdAt }}
               </li>
-            </ul>
-            <note-crud :slug="slug" />
+              <li />
+            </ul>{{ note.fullText }}
           </li>
         </ul>
+        <note-crud :slug="slug" />
       </div>
     </template>
 
@@ -175,11 +174,6 @@ export default {
       immediate: true,
     },
   },
-  created() {
-
-    this.updateData();
-
-  },
   methods: {
     async updateData() {
 
@@ -194,6 +188,8 @@ export default {
       this.articlTypes = results.articlTypes;
 
       this.articls = results.articls;
+
+      console.log(results.notes.results);
 
       this.notes = results.notes.results;
 

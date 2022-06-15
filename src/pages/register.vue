@@ -117,6 +117,7 @@ export default {
     return {
       email: null,
       password: null,
+      password2: null,
       showPassword: false,
       showPassword2: false,
       buttonDisabled: false,

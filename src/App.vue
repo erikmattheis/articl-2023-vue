@@ -184,7 +184,6 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 
 .tab-content {
   width: 100%;
-  padding: 1.2rem;
 }
 
 .nav-tabs li,
@@ -206,21 +205,14 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
   align-items: center;
 }
 
-html[data-theme="light"] {
-  .nav-tabs li.active,
-  .active {
-    border-color: #888;
-  }
-  .detail-line {
-    background-color: var(--bg1)
-  }
+.nav-tabs li.active,
+.active {
+  border-color: #888;
 }
-
-html[data-theme="dark"] {
-  .nav-tabs li.active,
-  .active {
-    border-color:#888;
-  }
+.detail-line {
+  background-color: var(--bg1);
+  font-size:80%;
+  padding:0 0.5rem;
 }
 
 .ghost {

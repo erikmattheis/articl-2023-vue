@@ -134,6 +134,10 @@ export default {
 
       this.getCurrentCategory(this.id);
 
+    } else {
+
+      this.isLoading = false;
+
     }
 
   },
