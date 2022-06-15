@@ -105,21 +105,7 @@
         v-show="activeTab === 1"
         class="tab-content"
       >
-        <ul>
-          <li
-            v-for="note in notes || [] "
-            :key="note.fullText"
-          >
-            <ul>
-              <li class="detail-line">
-                {{ note.author?.nameFirst }} {{ note.author?.nameLast }}
-
-                {{ note.createdAt }}
-              </li>
-              <li />
-            </ul>{{ note.fullText }}
-          </li>
-        </ul>
+        <notes-list :notes="notes" />
         <note-crud :slug="slug" />
       </div>
     </template>
@@ -137,12 +123,13 @@ import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import articlsListItem from "@/components/layout/ArticlsListItem.vue";
 import categoriesListItem from "@/components/layout/CategoriesListItem.vue";
 import NoteCrud from "@/components/layout/NoteCrud.vue";
+import NotesList from "@/components/layout/NotesList.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "CategoryPage",
   components: {
-    ArticlePlaceholder, NoteCrud, DraggableItems, categoriesListItem, articlsListItem,
+    ArticlePlaceholder, NoteCrud, DraggableItems, categoriesListItem, articlsListItem, NotesList,
   },
   data: () => {
 
