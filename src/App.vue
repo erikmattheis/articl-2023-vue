@@ -73,7 +73,14 @@ export default {
   opacity: 0;
   transform: scale(0.9);
   transform: opacity(0.6);
+}
 
+.scale-enter-from {
+  transform: translateX(-4rem);
+}
+
+.scale-leave-to {
+  transform: translateX(4rem);
 }
 
 @import "~/node_modules/@picocss/pico/css/pico.css";

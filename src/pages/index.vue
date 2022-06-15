@@ -3,7 +3,7 @@
     <h2>{{ title }}</h2>
     <ul>
       <li
-        v-for=" category in categories || [] "
+        v-for=" category in categories || []"
         :key="category.slug"
       >
         <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
@@ -97,3 +97,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.1s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+  transform: opacity(0.6);
+}
+
+.scale-enter-from {
+  transform: translateX(-4rem);
+}
+
+.scale-leave-to {
+  transform: translateX(4rem);
+}
+</style>

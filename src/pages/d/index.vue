@@ -1,117 +1,123 @@
 <template>
-  <article>
-    <template v-if="!isLoading">
-      <h2>{{ title }}</h2>
+  <transition
+    name="scale"
+    mode="out-in"
+  >
+    <article v-if="trigger">
+      <template v-if="!isLoading">
+        <h2>{{ title }}</h2>
 
-      <ul class="nav-tabs">
-        <li :class="{ active: activeTab === 0 }">
-          <a
-            href
-            @click.prevent="activeTab = 0"
-            @keyup.enter.prevent="activeTab = 0"
-          >
-            Sub-categories &amp; Articls</a>
-        </li>
-        <li :class="{ active: activeTab === 1 }">
-          <a
-            href
-            @click.prevent="activeTab = 1"
-            @keyup.enter.prevent="activeTab = 1"
-          >
-            Notes</a>
-        </li>
-      </ul>
-
-      <div
-        v-show="activeTab === 0"
-        class="tab-content"
-      >
-        <draggable-items
-          v-model="categories"
-          tag="ul"
-          item-key="id"
-          handle=".handle"
-          ghost-class="ghost"
-          @change="onUpdateOrderValues"
-        >
-          <template #item="{element}">
-            <categories-list-item
-              :category="element"
-              class="list-item"
-            />
-          </template>
-        </draggable-items>
-
-        <ul v-if="isLoggedIn">
-          <li>
-            <router-link
-              :to="{
-                name: 'createCategoryPage',
-                query: {parentSlug: $route.params.slug},
-              }"
-            >
-              New Category Here
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              :to="{
-                name: 'createArticlPage',
-                query: {slug: $route.params.slug},
-              }"
-            >
-              New Articl Here
-            </router-link>
-          </li>
-        </ul>
         <ul class="nav-tabs">
-          <li
-            v-for="articlType in articlTypes"
-            :key="articlType"
-            :class="{ active: articlTypeCurrent === articlType }"
-          >
+          <li :class="{ active: activeTab === 0 }">
             <a
               href
-              @click.prevent="articlTypeCurrent = articlType"
-              @keyup.enter.prevent="articlTypeCurrent = articlType"
+              @click.prevent="activeTab = 0"
+              @keyup.enter.prevent="activeTab = 0"
             >
-              {{ articlType }}</a>
+              Sub-categories &amp; Articls</a>
+          </li>
+          <li :class="{ active: activeTab === 1 }">
+            <a
+              href
+              @click.prevent="activeTab = 1"
+              @keyup.enter.prevent="activeTab = 1"
+            >
+              Notes</a>
           </li>
         </ul>
 
-        <h3>{{ articlTypeCurrent }}</h3>
-        <ul v-if="articls[articlTypeCurrent]">
+        <div
+          v-show="activeTab === 0"
+          class="tab-content"
+        >
           <draggable-items
-            v-model="articls[articlTypeCurrent]"
+            v-model="categories"
             tag="ul"
             item-key="id"
             handle=".handle"
             ghost-class="ghost"
-            @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+            @change="onUpdateOrderValues"
           >
             <template #item="{element}">
-              <div>
-                <articls-list-item
-                  :articl="element"
-                  :order="element.order"
-                />
-              </div>
+              <categories-list-item
+                :category="element"
+                class="list-item"
+              />
             </template>
           </draggable-items>
-        </ul>
-      </div>
 
-      <div
-        v-show="activeTab === 1"
-        class="tab-content"
-      >
-        <notes-list :notes="notes" />
-        <note-crud :slug="slug" />
-      </div>
-    </template>
+          <ul v-if="isLoggedIn">
+            <li>
+              <router-link
+                :to="{
+                  name: 'createCategoryPage',
+                  query: {parentSlug: $route.params.slug},
+                }"
+              >
+                New Category Here
+              </router-link>
+            </li>
+            <li>
+              <router-link
+                :to="{
+                  name: 'createArticlPage',
+                  query: {slug: $route.params.slug},
+                }"
+              >
+                New Articl Here
+              </router-link>
+            </li>
+          </ul>
+          <ul class="nav-tabs">
+            <li
+              v-for="articlType in articlTypes"
+              :key="articlType"
+              :class="{ active: articlTypeCurrent === articlType }"
+            >
+              <a
+                href
+                @click.prevent="articlTypeCurrent = articlType"
+                @keyup.enter.prevent="articlTypeCurrent = articlType"
+              >
+                {{ articlType }}</a>
+            </li>
+          </ul>
 
-    <article-placeholder v-else />
-  </article>
+          <h3>{{ articlTypeCurrent }}</h3>
+
+          <ul v-if="articlTypeCurrent && articls.length">
+            <draggable-items
+              v-model="articls[articlTypeCurrent]"
+              tag="ul"
+              item-key="id"
+              handle=".handle"
+              ghost-class="ghost"
+              @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+            >
+              <template #item="{element}">
+                <div>
+                  <articls-list-item
+                    :articl="element"
+                    :order="element.order"
+                  />
+                </div>
+              </template>
+            </draggable-items>
+          </ul>
+        </div>
+
+        <div
+          v-show="activeTab === 1"
+          class="tab-content"
+        >
+          <notes-list :notes="notes" />
+          <note-crud :slug="slug" />
+        </div>
+      </template>
+
+      <article-placeholder v-else />
+    </article>
+  </transition>
 </template>
 
 <script>
@@ -143,6 +149,7 @@ export default {
       articls: [],
       articlTypes: [],
       articlTypeCurrent: "",
+      trigger: true,
     };
 
   },
@@ -165,6 +172,16 @@ export default {
     async updateData() {
 
       try {
+
+        this.trigger = false;
+
+        this.$nextTick(function () {
+
+          // to trigger page change animation
+
+          this.trigger = true;
+
+        });
 
         this.isLoading = true;
 
