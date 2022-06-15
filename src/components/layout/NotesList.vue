@@ -6,9 +6,13 @@
     >
       <ul>
         <li class="detail-line">
-          {{ note.author?.nameFirst }} {{ note.author?.nameLast }}
-
-          {{ note.createdAt }}
+          <template v-if="note.author?.nameFirst || note.author?.nameLast">
+            {{ note.author.nameFirst }} {{ note.author.nameLast }}
+          </template>
+          <template v-else>
+            Anonymous
+          </template>
+          <span class="right"> created at: {{ note.createdAt }}</span>
         </li>
         <li />
       </ul>{{ note.fullText }}
@@ -20,7 +24,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "NotesList",
+  name: "NoteListt",
   components: {
 
   },
