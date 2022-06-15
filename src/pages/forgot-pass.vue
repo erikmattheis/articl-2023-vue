@@ -76,35 +76,43 @@ export default {
     },
     async submitForm() {
 
-      this.resetForm();
+      try {
 
-      if (this.checkForm() === true) {
+        this.resetForm();
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const result = await this.$http({
-          method: "POST",
-          url: "/auth/forgot-password",
-          data: {
-            email: this.email,
-          },
-        });
+          this.buttonDisabled = true;
 
-        this.$store.dispatch("modals/setSuccessTitle", "Email sent");
+          const result = await this.$http({
+            method: "POST",
+            url: "/auth/forgot-password",
+            data: {
+              email: this.email,
+            },
+          });
 
-        this.$store.dispatch("modals/setSuccessMessage", "Check your email for instructions how to reset your password.");
+          this.$store.dispatch("modals/setSuccessTitle", "Email sent");
 
-        if (result?.data?.message) {
+          this.$store.dispatch("modals/setSuccessMessage", "Check your email for instructions how to reset your password.");
 
-          this.result = result.data.message;
+          if (result?.data?.message) {
 
-        } else {
+            this.result = result.data.message;
 
-          this.result = result.response;
+          } else {
+
+            this.result = result.response;
+
+          }
+
+          this.buttonDisabled = false;
 
         }
 
-        this.buttonDisabled = false;
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
 

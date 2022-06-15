@@ -63,27 +63,43 @@ export default {
   methods: {
     updateOrderValues() {
 
-      this.articls.forEach((obj, index) => {
+      try {
 
-        const objValue = obj;
+        this.articls.forEach((obj, index) => {
 
-        objValue.order = index;
+          const objValue = obj;
 
-      });
+          objValue.order = index;
+
+        });
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
     async saveOrderValues() {
 
-      const order = this.articls.map((obj) => {
+      try {
 
-        return {
-          id: obj.id,
-          order: obj.order,
-        };
+        const order = this.articls.map((obj) => {
 
-      });
+          return {
+            id: obj.id,
+            order: obj.order,
+          };
 
-      await this.saveOrder(order);
+        });
+
+        await this.saveOrder(order);
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
     onUpdateOrderValues() {
@@ -95,40 +111,48 @@ export default {
     },
     async updateValues(params) {
 
-      if (isEqual(params, {
-      })) {
+      try {
 
-        this.articls = [];
-
-        this.totalResults = "--";
-
-        return;
-
-      }
-
-      if (params) {
-
-        this.isLoading = true;
-
-        const result = await this.getArticls(params);
-
-        this.isLoading = false;
-
-        if (Number(result.page) === 1 || result.results?.length === 0) {
+        if (isEqual(params, {
+        })) {
 
           this.articls = [];
 
           this.totalResults = "--";
 
+          return;
+
         }
 
-        this.articls = this.articls.concat(result.results);
+        if (params) {
 
-        this.totalPages = result.totalPages;
+          this.isLoading = true;
 
-        this.limit = result.limit;
+          const result = await this.getArticls(params);
 
-        this.totalResults = result.totalResults;
+          this.isLoading = false;
+
+          if (Number(result.page) === 1 || result.results?.length === 0) {
+
+            this.articls = [];
+
+            this.totalResults = "--";
+
+          }
+
+          this.articls = this.articls.concat(result.results);
+
+          this.totalPages = result.totalPages;
+
+          this.limit = result.limit;
+
+          this.totalResults = result.totalResults;
+
+        }
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
 

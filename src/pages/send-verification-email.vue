@@ -17,11 +17,19 @@ export default {
   },
   mounted() {
 
-    this.sendEmail();
+    try {
 
-    setTitleAndDescription({
-      title: "Verification sent",
-    });
+      this.sendEmail();
+
+      setTitleAndDescription({
+        title: "Verification sent",
+      });
+
+    } catch (error) {
+
+      this.$store.dispatch("errors/setError", error);
+
+    }
 
   },
   methods: {

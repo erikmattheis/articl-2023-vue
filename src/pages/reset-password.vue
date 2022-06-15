@@ -166,37 +166,45 @@ export default {
 
     async submitForm() {
 
-      const {
-        token,
-      } = this.$route.query;
+      try {
 
-      if (this.checkForm() === true) {
+        const {
+          token,
+        } = this.$route.query;
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        await this.$http({
-          method: "POST",
-          url: "/auth/reset-password",
-          params: {
-            token,
-          },
-          data: {
-            password: this.password,
-          },
-        });
+          this.buttonDisabled = true;
 
-        this.$store.dispatch("modals/setSuccessTitle", "Password updated");
+          await this.$http({
+            method: "POST",
+            url: "/auth/reset-password",
+            params: {
+              token,
+            },
+            data: {
+              password: this.password,
+            },
+          });
 
-        this.$store.dispatch(
-          "modals/setSuccessMessage",
-          "You have successfully changed your password.",
-        );
+          this.$store.dispatch("modals/setSuccessTitle", "Password updated");
 
-        this.buttonDisabled = false;
+          this.$store.dispatch(
+            "modals/setSuccessMessage",
+            "You have successfully changed your password.",
+          );
 
-      } else {
+          this.buttonDisabled = false;
 
-        this.$store.dispatch("errors/setError", this.errorMessage);
+        } else {
+
+          this.$store.dispatch("errors/setError", this.errorMessage);
+
+        }
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
 

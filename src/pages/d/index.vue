@@ -80,7 +80,7 @@
         </ul>
 
         <h3>{{ articlTypeCurrent }}</h3>
-        <ul>
+        <ul v-if="articls[articlTypeCurrent]">
           <draggable-items
             v-model="articls[articlTypeCurrent]"
             tag="ul"
@@ -142,7 +142,7 @@ export default {
       categories: [],
       articls: [],
       articlTypes: [],
-      articlTypeCurrent: undefined,
+      articlTypeCurrent: "",
     };
 
   },
@@ -164,33 +164,39 @@ export default {
   methods: {
     async updateData() {
 
-      this.isLoading = "true";
+      try {
 
-      this.slug = this.$route.params.slug;
+        this.isLoading = true;
 
-      const results = await this.fetchData(this.$route.params.slug);
+        this.slug = this.$route.params.slug;
 
-      this.categories = results.categories;
+        const results = await this.fetchData(this.$route.params.slug);
 
-      this.articlTypes = results.articlTypes;
+        this.categories = results.categories;
 
-      this.articls = results.articls;
+        this.articlTypes = results.articlTypes;
 
-      console.log(results.notes.results);
+        this.articls = results.articls;
 
-      this.notes = results.notes.results;
+        this.notes = results.notes?.results;
 
-      [this.articlTypeCurrent] = results.articlTypes;
+        this.articlTypeCurrent = results.articls;
 
-      this.title = results.category[0]?.title;
+        this.title = results.category[0]?.title;
 
-      const description = results.category[0]?.description;
+        const description = results.category[0]?.description;
 
-      setTitleAndDescription({
-        title: this.title, description,
-      });
+        setTitleAndDescription({
+          title: this.title, description,
+        });
 
-      this.isLoading = false;
+        this.isLoading = false;
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
 
@@ -215,27 +221,43 @@ export default {
 
     updateOrderValues() {
 
-      this.categories.forEach((obj, index) => {
+      try {
 
-        const objRef = obj;
+        this.categories.forEach((obj, index) => {
 
-        objRef.order = index;
+          const objRef = obj;
 
-      });
+          objRef.order = index;
+
+        });
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
 
     async saveOrderValues() {
 
-      const order = this.categories.map((obj) => {
+      try {
 
-        return {
-          id: obj.id, order: obj.order,
-        };
+        const order = this.categories.map((obj) => {
 
-      });
+          return {
+            id: obj.id, order: obj.order,
+          };
 
-      await this.saveOrder(order);
+        });
+
+        await this.saveOrder(order);
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
 
@@ -267,27 +289,43 @@ export default {
 
     updateArticlsOrderValues(articlType) {
 
-      this.articls[articlType].forEach((obj, index) => {
+      try {
 
-        const objRef = obj;
+        this.articls[articlType].forEach((obj, index) => {
 
-        objRef.order = index;
+          const objRef = obj;
 
-      });
+          objRef.order = index;
+
+        });
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
 
     async saveArticlsOrderValues(articlType) {
 
-      const order = this.articls[articlType].map((obj) => {
+      try {
 
-        return {
-          id: obj.id, order: obj.order,
-        };
+        const order = this.articls[articlType].map((obj) => {
 
-      });
+          return {
+            id: obj.id, order: obj.order,
+          };
 
-      await this.saveArticlsOrder(order);
+        });
+
+        await this.saveArticlsOrder(order);
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
 

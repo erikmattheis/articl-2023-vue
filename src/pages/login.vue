@@ -120,66 +120,74 @@ export default {
 
     async submitForm() {
 
-      if (this.checkForm() === true) {
+      try {
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const result = await this.$http({
-          method: "POST",
-          url: "/auth/login",
-          data: {
-            password: this.password,
-            email: this.email,
-          },
-        });
+          this.buttonDisabled = true;
 
-        if (result?.status > 309) {
+          const result = await this.$http({
+            method: "POST",
+            url: "/auth/login",
+            data: {
+              password: this.password,
+              email: this.email,
+            },
+          });
 
-          this.$store.dispatch(
-            "errors/setError",
-            result,
+          if (result?.status > 309) {
+
+            this.$store.dispatch(
+              "errors/setError",
+              result,
+            );
+
+            return;
+
+          }
+
+          this.resetFormErrors();
+
+          setTokens(result.data.tokens);
+
+          const theme = result?.data?.user?.theme !== "dark" ? "light" : "dark";
+
+          this.$cookies.set(
+            "data-theme",
+            theme,
           );
 
-          return;
+          document.documentElement.setAttribute(
+            "data-theme",
+            theme,
+          );
 
-        }
-
-        this.resetFormErrors();
-
-        setTokens(result.data.tokens);
-
-        const theme = result?.data?.user?.theme !== "dark" ? "light" : "dark";
-
-        this.$cookies.set(
-          "data-theme",
-          theme,
-        );
-
-        document.documentElement.setAttribute(
-          "data-theme",
-          theme,
-        );
-
-        if (
-          this.$route.query.redirect
+          if (
+            this.$route.query.redirect
           && this.$route.query.redirect !== "/login"
-        ) {
+          ) {
 
-          this.$router.push({
-            path: this.$route.query.redirect,
-          });
+            this.$router.push({
+              path: this.$route.query.redirect,
+            });
 
-        } else {
+          } else {
 
-          this.$router.push({
-            name: "homePage",
-          });
+            this.$router.push({
+              name: "homePage",
+            });
+
+          }
 
         }
+
+        this.buttonDisabled = false;
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
-
-      this.buttonDisabled = false;
 
     },
   },

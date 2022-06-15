@@ -194,36 +194,44 @@ export default {
 
     async submitForm() {
 
-      this.resetFormErrors();
+      try {
 
-      if (this.checkForm() === true) {
+        this.resetFormErrors();
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const result = this.$http({
-          method: "POST",
-          url: "/auth/register",
-          data: {
-            password: this.password,
-            email: this.email,
-          },
-        });
+          this.buttonDisabled = true;
 
-        if (result.data) {
+          const result = this.$http({
+            method: "POST",
+            url: "/auth/register",
+            data: {
+              password: this.password,
+              email: this.email,
+            },
+          });
 
-          this.success = true;
+          if (result.data) {
 
-          this.result = result.data;
+            this.success = true;
+
+            this.result = result.data;
+
+          }
+
+          this.buttonDisabled = false;
+
+        } else {
+
+          this.$store.dispatch("errors/setError", {
+            message: this.errorMessage,
+          });
 
         }
 
-        this.buttonDisabled = false;
+      } catch (error) {
 
-      } else {
-
-        this.$store.dispatch("errors/setError", {
-          message: this.errorMessage,
-        });
+        this.$store.dispatch("errors/setError", error);
 
       }
 

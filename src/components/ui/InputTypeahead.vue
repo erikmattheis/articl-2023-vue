@@ -119,43 +119,51 @@ export default {
   methods: {
     async update() {
 
-      this.cancel();
+      try {
 
-      if (!this.stringValue) {
+        this.cancel();
+
+        if (!this.stringValue) {
+
+          this.$emit("typeaheadUpdated", {
+            field: this.query,
+            value: "",
+          });
+
+          this.removeItems();
+
+        }
+
+        this.loading = true;
+
+        this.hit();
 
         this.$emit("typeaheadUpdated", {
           field: this.query,
-          value: "",
+          value: this.stringValue,
         });
 
-        this.removeItems();
+        if (this.stringValue.length < 2) {
+
+          return;
+
+        }
+
+        const response = await this.fetchData();
+
+        this.items = response.data.slice(0, 7);
+
+        this.current = -1;
+
+        this.loading = false;
+
+        this.hit();
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
-
-      this.loading = true;
-
-      this.hit();
-
-      this.$emit("typeaheadUpdated", {
-        field: this.query,
-        value: this.stringValue,
-      });
-
-      if (this.stringValue.length < 2) {
-
-        return;
-
-      }
-
-      const response = await this.fetchData();
-
-      this.items = response.data.slice(0, 7);
-
-      this.current = -1;
-
-      this.loading = false;
-
-      this.hit();
 
     },
 

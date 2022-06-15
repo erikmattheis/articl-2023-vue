@@ -245,13 +245,21 @@ export default {
   methods: {
     async getCurrentArticl(id) {
 
-      this.isLoading = true;
+      try {
 
-      const result = await this.getArticl(id);
+        this.isLoading = true;
 
-      Object.assign(this, result.data);
+        const result = await this.getArticl(id);
 
-      this.isLoading = false;
+        Object.assign(this, result.data);
+
+        this.isLoading = false;
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
     async getData() {
@@ -333,36 +341,44 @@ export default {
     },
     async submitForm(id) {
 
-      this.resetFormErrors();
+      try {
 
-      if (this.checkForm() === true) {
+        this.resetFormErrors();
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const verb = id ? "PUT" : "POST";
-        const result = await this.$http({
-          method: verb,
-          url: `/articls/${id}`,
-          data: {
-            abstract: this.abstract,
-            affiliation: this.affiliation,
-            articlUrl: this.articlUrl,
-            type: this.type,
-            authors: this.authors,
-            slug: this.slug,
-            journal: this.journal,
-            month: this.month,
-            status: this.status,
-            title: this.title,
-            year: this.year,
-          },
-        });
+          this.buttonDisabled = true;
 
-        this.buttonDisabled = false;
+          const verb = id ? "PUT" : "POST";
+          const result = await this.$http({
+            method: verb,
+            url: `/articls/${id}`,
+            data: {
+              abstract: this.abstract,
+              affiliation: this.affiliation,
+              articlUrl: this.articlUrl,
+              type: this.type,
+              authors: this.authors,
+              slug: this.slug,
+              journal: this.journal,
+              month: this.month,
+              status: this.status,
+              title: this.title,
+              year: this.year,
+            },
+          });
 
-        this.success = true;
+          this.buttonDisabled = false;
 
-        Object.assign(this, result.data);
+          this.success = true;
+
+          Object.assign(this, result.data);
+
+        }
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
 

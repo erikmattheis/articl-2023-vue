@@ -54,7 +54,6 @@ import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
-import { fetchData } from "@/services/fetchingService";
 
 export default {
   name: "NoteCrudComponent",
@@ -110,48 +109,19 @@ export default {
   methods: {
     async getCurrentNote(id) {
 
-      this.isLoading = true;
+      try {
 
-      const result = await this.getNote(id);
+        this.isLoading = true;
 
-      Object.assign(this, result.data);
+        const result = await this.getNote(id);
 
-      this.isLoading = false;
+        Object.assign(this, result.data);
 
-    },
-    async getData() {
+        this.isLoading = false;
 
-      if (this.noteUrl) {
+      } catch (error) {
 
-        try {
-
-          this.buttonDisabled = true;
-
-          const result = await fetchData(this.noteUrl);
-
-          if (result) {
-
-            Object.assign(this, result);
-
-            this.success = true;
-
-          }
-
-        } catch (error) {
-
-          this.$store.dispatch("errors/setError", error);
-
-        } finally {
-
-          this.isLoading = false;
-
-          this.buttonDisabled = false;
-
-        }
-
-      } else {
-
-        this.$store.dispatch("errors/setError", "Please enter a URL");
+        this.$store.dispatch("errors/setError", error);
 
       }
 

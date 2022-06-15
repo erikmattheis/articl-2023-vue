@@ -254,7 +254,6 @@ export default {
         this.$store.dispatch("articlsParams/yearComparison", newValue);
 
       },
-      deep: true,
     },
   },
   created() {

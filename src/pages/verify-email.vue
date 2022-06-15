@@ -23,11 +23,19 @@ export default {
   },
   mounted() {
 
-    this.submitForm();
+    try {
 
-    setTitleAndDescription({
-      title: "Forgot Password",
-    });
+      this.submitForm();
+
+      setTitleAndDescription({
+        title: "Forgot Password",
+      });
+
+    } catch (error) {
+
+      this.$store.dispatch("errors/setError", error);
+
+    }
 
   },
   methods: {

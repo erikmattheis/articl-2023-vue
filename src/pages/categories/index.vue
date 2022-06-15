@@ -147,15 +147,23 @@ export default {
   methods: {
     async getCurrentCategory(id) {
 
-      this.isLoading = true;
+      try {
 
-      const result = await this.getCategory(id);
+        this.isLoading = true;
 
-      Object.assign(this, result.data);
+        const result = await this.getCategory(id);
 
-      this.oldSlug = result.slug;
+        Object.assign(this, result.data);
 
-      this.isLoading = false;
+        this.oldSlug = result.slug;
+
+        this.isLoading = false;
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
     async getCategory(id) {
@@ -212,46 +220,54 @@ export default {
     },
     async submitForm(id) {
 
-      this.resetFormErrors();
+      try {
 
-      if (this.checkForm() === true) {
+        this.resetFormErrors();
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const verb = id ? "PUT" : "POST";
-        const data = {
-          title: this.title,
-          slug: this.slug,
-          description: this.description,
-          parentSlug: this.parentSlug,
-        };
+          this.buttonDisabled = true;
 
-        if (id) {
+          const verb = id ? "PUT" : "POST";
+          const data = {
+            title: this.title,
+            slug: this.slug,
+            description: this.description,
+            parentSlug: this.parentSlug,
+          };
 
-          data.oldSlug = this.oldSlug;
+          if (id) {
+
+            data.oldSlug = this.oldSlug;
+
+          }
+
+          const result = await this.$http({
+            method: verb,
+            url: `/categories/${id}`,
+            data,
+          });
+
+          this.buttonDisabled = false;
+
+          this.success = true;
+
+          this.result = result.data;
+
+        } else {
+
+          this.$store.dispatch(
+            "errors/setError",
+            {
+              message: this.errorMessage,
+            },
+          );
 
         }
 
-        const result = await this.$http({
-          method: verb,
-          url: `/categories/${id}`,
-          data,
-        });
+      } catch (error) {
 
-        this.buttonDisabled = false;
-
-        this.success = true;
-
-        this.result = result.data;
-
-      } else {
-
-        this.$store.dispatch(
-          "errors/setError",
-          {
-            message: this.errorMessage,
-          },
-        );
+        this.$store.dispatch("errors/setError", error);
 
       }
 

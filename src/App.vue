@@ -1,7 +1,14 @@
 <template>
   <the-header />
   <main>
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition
+        name="scale"
+        mode="out-in"
+      >
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </main>
   <the-footer />
   <modal-error />
@@ -56,6 +63,19 @@ export default {
 </script>
 
 <style lang="scss">
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.1s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+  transform: opacity(0.6);
+
+}
+
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
 @import "./assets/placeholder.scss";
@@ -63,15 +83,15 @@ export default {
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 :root[data-theme="light"]  {
-  --bg0: #daf3fb;
-  --bg1: #b5e6f9;
-  --bg2: #80dfff;
+  --bg0: #b5e6f9;
+  --bg1: #cdeefb;
+  --bg2: #daf3fb;
 }
 
 :root[data-theme="dark"]  {
   --bg0: #17262b;
-  --bg1: #264048;
-  --bg2: #457181;
+  --bg1: #121f23;
+  --bg2: #1d3036;
 }
 :where(:root) {
   background-color:var(--bg0);
@@ -127,12 +147,7 @@ ul li {
 
 header article,
 footer article {
-  background-color: var(--bg0);
-}
-
-html[data-theme="dark"] header article,
-html[data-theme="dark"] footer article {
-  background-color: var(--bg0);
+  background-color: var(--bg1);
 }
 
 header article {
@@ -145,6 +160,7 @@ header article {
 main article {
   margin-top: 0;
   margin-bottom: 0;
+  background-color: var(--bg2);
 }
 
 main form {

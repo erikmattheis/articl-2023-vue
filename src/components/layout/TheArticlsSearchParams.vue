@@ -132,69 +132,77 @@ export default {
   methods: {
     resetValue(arrName) {
 
-      switch (arrName) {
+      try {
 
-        case "statuses": {
+        switch (arrName) {
 
-          this.$store.dispatch(
-            "articlsParams/statuses",
-            this.allStatuses.slice(),
-          );
+          case "statuses": {
 
-          break;
+            this.$store.dispatch(
+              "articlsParams/statuses",
+              this.allStatuses.slice(),
+            );
+
+            break;
+
+          }
+
+          case "types": {
+
+            this.$store.dispatch("articlsParams/types", this.allTypes.slice());
+
+            break;
+
+          }
+
+          case "text": {
+
+            this.$store.dispatch("articlsParams/text", "");
+
+            break;
+
+          }
+
+          case "title": {
+
+            this.$store.dispatch("articlsParams/title", "");
+
+            break;
+
+          }
+
+          case "journal": {
+
+            this.$store.dispatch("articlsParams/journal", "");
+
+            break;
+
+          }
+
+          case "authors": {
+
+            this.$store.dispatch("articlsParams/authors", "");
+
+            break;
+
+          }
+
+          case "year": {
+
+            this.$store.dispatch("articlsParams/year", this.yearsStart);
+
+            break;
+
+          }
+
+          default:
+            throw new Error("Unknown search parameter passed.");
 
         }
 
-        case "types": {
+      } catch (error) {
 
-          this.$store.dispatch("articlsParams/types", this.allTypes.slice());
-
-          break;
-
-        }
-
-        case "text": {
-
-          this.$store.dispatch("articlsParams/text", "");
-
-          break;
-
-        }
-
-        case "title": {
-
-          this.$store.dispatch("articlsParams/title", "");
-
-          break;
-
-        }
-
-        case "journal": {
-
-          this.$store.dispatch("articlsParams/journal", "");
-
-          break;
-
-        }
-
-        case "authors": {
-
-          this.$store.dispatch("articlsParams/authors", "");
-
-          break;
-
-        }
-
-        case "year": {
-
-          this.$store.dispatch("articlsParams/year", this.yearsStart);
-
-          break;
-
-        }
-
-        default:
-          throw new Error("Unknown search parameter passed.");
+        this.$store.dispatch("errors/setError", error);
 
       }
 

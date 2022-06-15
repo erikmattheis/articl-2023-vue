@@ -197,47 +197,55 @@ export default {
 
     async submitForm() {
 
-      this.resetFormErrors();
+      try {
 
-      if (this.checkForm() === true) {
+        this.resetFormErrors();
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const result = await this.$http({
-          method: "PATCH",
-          url: "/users/me",
-          data: {
-            nameFirst: this.nameFirst,
-            nameLast: this.nameLast,
-            email: this.email,
-            institution: this.institution,
-            education: this.education,
-            theme: this.theme,
-          },
-        });
+          this.buttonDisabled = true;
 
-        if (result.data) {
+          const result = await this.$http({
+            method: "PATCH",
+            url: "/users/me",
+            data: {
+              nameFirst: this.nameFirst,
+              nameLast: this.nameLast,
+              email: this.email,
+              institution: this.institution,
+              education: this.education,
+              theme: this.theme,
+            },
+          });
 
-          this.success = true;
+          if (result.data) {
 
-          this.result = result.data;
+            this.success = true;
 
-          this.$store.dispatch("modals/setSuccessTitle", "User Updated");
+            this.result = result.data;
 
-          this.$store.dispatch(
-            "modals/setSuccessMessage",
-            "Your account information was successfully updated.",
-          );
+            this.$store.dispatch("modals/setSuccessTitle", "User Updated");
 
-          this.buttonDisabled = false;
+            this.$store.dispatch(
+              "modals/setSuccessMessage",
+              "Your account information was successfully updated.",
+            );
+
+            this.buttonDisabled = false;
+
+          }
+
+        } else {
+
+          this.$store.dispatch("errors/setError", {
+            message: this.errorMessage,
+          });
 
         }
 
-      } else {
+      } catch (error) {
 
-        this.$store.dispatch("errors/setError", {
-          message: this.errorMessage,
-        });
+        this.$store.dispatch("errors/setError", error);
 
       }
 

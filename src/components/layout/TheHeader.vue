@@ -198,47 +198,71 @@ export default {
   methods: {
     setTextSize(size) {
 
-      document.documentElement.style.setProperty(
-        "font-size",
-        `${18 * size}px`,
-      );
+      try {
 
-      this.$cookies.set("--font-size", size);
+        document.documentElement.style.setProperty(
+          "font-size",
+          `${18 * size}px`,
+        );
+
+        this.$cookies.set("--font-size", size);
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
 
     clearLocalData() {
 
-      this.$cookies.keys().forEach((cookie) => { return this.$cookies.remove(cookie); });
+      try {
 
-      clearLocalStorage();
+        this.$cookies.keys().forEach((cookie) => { return this.$cookies.remove(cookie); });
+
+        clearLocalStorage();
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
     async logout() {
 
-      const refreshToken = this.$store.state.refreshTokenValue;
+      try {
 
-      if (refreshToken) {
+        const refreshToken = this.$store.state.refreshTokenValue;
 
-        await this.$http({
-          method: "POST",
-          url: "/auth/logout",
-          data: {
-            refreshToken,
-          },
-        });
+        if (refreshToken) {
 
-        localStorage.clear();
+          await this.$http({
+            method: "POST",
+            url: "/auth/logout",
+            data: {
+              refreshToken,
+            },
+          });
 
-        this.$store.dispatch("tokens/logout");
+          localStorage.clear();
 
-        // this.$router.push('/');
+          this.$store.dispatch("tokens/logout");
 
-      } else {
+          // this.$router.push('/');
 
-        localStorage.clear();
+        } else {
 
-        this.$store.dispatch("tokens/logout");
+          localStorage.clear();
+
+          this.$store.dispatch("tokens/logout");
+
+        }
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
 

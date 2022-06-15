@@ -77,7 +77,7 @@ export default {
   props: {
     articl: {
       type: Object,
-      default: undefined,
+      default: null,
     },
   },
   data: () => {

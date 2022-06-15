@@ -40,14 +40,22 @@ export default {
   methods: {
     async deleteArticl() {
 
-      await this.submitDelete(this.id);
+      try {
 
-      this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
+        await this.submitDelete(this.id);
 
-      this.$store.dispatch(
-        "modals/setSuccessMessage",
-        `The articl "${this.title}" has been permanently deleted.`,
-      );
+        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
+
+        this.$store.dispatch(
+          "modals/setSuccessMessage",
+          `The articl "${this.title}" has been permanently deleted.`,
+        );
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
 
     },
     async submitDelete(id) {
