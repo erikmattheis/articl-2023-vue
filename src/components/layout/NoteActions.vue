@@ -1,9 +1,12 @@
 <template>
   <ul class="note-actions">
     <li>
-      <router-link :to="{ name: 'editNote', params: { passedId: id } }">
+      <a
+        href="#"
+        @click.prevent="$emit('edit-mode')"
+      >
         edit
-      </router-link>
+      </a>
     </li>
     <li>
       <a>Change status</a>
@@ -29,9 +32,7 @@ export default {
       default: "",
     },
   },
-  data: () => {
-
-  },
+  emits: ["edit-mode"],
 };
 </script>
 

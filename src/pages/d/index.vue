@@ -85,7 +85,7 @@
 
           <h3>{{ articlTypeCurrent }}</h3>
 
-          <ul v-if="articlTypeCurrent && articls.length">
+          <ul v-if="articlTypeCurrent">
             <draggable-items
               v-model="articls[articlTypeCurrent]"
               tag="ul"
@@ -193,11 +193,11 @@ export default {
 
         this.articlTypes = results.articlTypes;
 
+        [this.articlTypeCurrent] = Object.keys(results.articls);
+
         this.articls = results.articls;
 
         this.notes = results.notes?.results;
-
-        this.articlTypeCurrent = results.articls;
 
         this.title = results.category[0]?.title;
 

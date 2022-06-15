@@ -211,6 +211,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 }
 
 .nav-tabs li,
+.note-actions li,
 .articl-actions li {
   display: inline-block;
   border-bottom: 1px solid transparent;
@@ -219,6 +220,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 }
 
 .nav-tabs li a,
+.note-actions a,
 .articl-actions a {
   text-decoration: none;
   height: 1.6rem;

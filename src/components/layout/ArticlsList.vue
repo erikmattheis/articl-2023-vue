@@ -25,7 +25,6 @@
 <script>
 import { isEqual } from "lodash";
 import DraggableItems from "vuedraggable";
-import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
@@ -44,11 +43,6 @@ export default {
       isLoading: true,
     };
 
-  },
-  computed: {
-    ...mapGetters({
-      params: "articlsParams/params",
-    }),
   },
   watch: {
     params: {
@@ -103,6 +97,8 @@ export default {
 
     },
     onUpdateOrderValues() {
+
+      console.log("onUpdateOrderValues");
 
       this.updateOrderValues();
 
@@ -187,13 +183,6 @@ export default {
       this.isLoading = false;
 
       return result.data;
-
-    },
-    getComponentData() {
-
-      return {
-        articls: this.articls,
-      };
 
     },
   },

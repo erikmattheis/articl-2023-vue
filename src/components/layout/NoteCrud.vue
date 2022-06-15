@@ -66,10 +66,6 @@ export default {
       default: "",
       type: String,
     },
-    slug: {
-      default: "",
-      type: String,
-    },
   },
   data: () => {
 
@@ -81,6 +77,7 @@ export default {
       formAction: undefined,
       isLoading: true,
       id: undefined,
+      slug: undefined,
     };
 
   },
@@ -158,27 +155,35 @@ export default {
     },
     async submitForm(id) {
 
-      this.resetFormErrors();
+      try {
 
-      if (this.checkForm() === true) {
+        this.resetFormErrors();
 
-        this.buttonDisabled = true;
+        if (this.checkForm() === true) {
 
-        const verb = id ? "PUT" : "POST";
+          this.buttonDisabled = true;
 
-        await this.$http({
-          method: verb,
-          url: `/notes/${id}`,
-          data: {
-            fullText: this.fullText,
-            slug: this.slug,
-            status: this.status,
-          },
-        });
+          const verb = id ? "PUT" : "POST";
 
-        this.buttonDisabled = false;
+          await this.$http({
+            method: verb,
+            url: `/notes/${id}`,
+            data: {
+              fullText: this.fullText,
+              slug: this.slug,
+              status: this.status,
+            },
+          });
 
-        this.success = true;
+          this.buttonDisabled = false;
+
+          this.success = true;
+
+        }
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
 
       }
 

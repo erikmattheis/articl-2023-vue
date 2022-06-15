@@ -8,6 +8,7 @@ import categoryPage from "@/pages/d/index.vue";
 import forgotPassPage from "@/pages/forgot-pass.vue";
 import homePage from "@/pages/index.vue";
 import loginPage from "@/pages/login.vue";
+import deleteNote from "@/pages/notes/delete.vue";
 import notFound from "@/pages/NotFound.vue";
 import registerPage from "@/pages/register.vue";
 import resetPasswordPage from "@/pages/reset-password.vue";
@@ -127,6 +128,19 @@ const router = createRouter({
       meta: {
         id: true,
         title: true,
+      },
+
+      props: true,
+    },
+
+    {
+      name: "deleteNote",
+      path: "/notes/delete",
+      component: deleteNote,
+
+      meta: {
+        id: true,
+        fullText: true,
       },
 
       props: true,
