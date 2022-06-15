@@ -189,7 +189,6 @@ html[data-theme="dark"]
 
 small {
   display: inline-block;
-  font-size: 0.7rem;
   line-height: 1;
 }
 </style>

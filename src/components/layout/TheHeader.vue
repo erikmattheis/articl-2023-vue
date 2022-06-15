@@ -199,7 +199,7 @@ export default {
     setTextSize(size) {
 
       document.documentElement.style.setProperty(
-        "--font-size",
+        "font-size",
         `${18 * size}px`,
       );
 

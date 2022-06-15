@@ -2,7 +2,7 @@
   <li>
     <div class="grid">
       <ul>
-        <li>
+        <li class="line-main-inv">
           <a
             :href="articl.articlUrl"
             target="_blank"
@@ -16,7 +16,10 @@
               highlightedSubstring(articl.title, params.title, "term")
             }}</strong>{{ highlightedSubstring(articl.title, params.title, "suffix") }}</a>
         </li>
-        <li v-if="articl.titleExcerpt">
+        <li
+          v-if="articl.titleExcerpt"
+          class="line-main"
+        >
           <a :href="articl.url">
             {{ highlightedSubstring(articl.titleExcerpt,params.title,"prefix")
             }}<strong
@@ -29,21 +32,25 @@
               highlightedSubstring(articl.titleExcerpt,params.title,"suffix")
             }}</a>
         </li>
-        <li v-if="params.authors">
-          {{ highlightedSubstring(articl.authors,params.authors,"prefix")
-          }}<strong
-            :class="{
-              'not-strong': noCaseIndexOf(articl.authors,params.authors) === -1,
-            }"
-          >{{
-            highlightedSubstring(articl.authors,params.authors,"term")
-          }}</strong>{{ highlightedSubstring(articl.authors,params.authors,"suffix") }}
-        </li>
-        <li v-if="params.journal">
-          <strong>{{ articl.journal }}</strong>
-        </li>
-        <li v-if="articl.yearComparison&&Number(articl.year)!==yearsStart">
-          <strong>{{ articl.yearComparison }}{{ articl.year }}</strong>
+        <li
+          v-if="params.authors"
+          class="line-detail"
+        >
+          <small>
+            {{ highlightedSubstring(articl.authors,params.authors,"prefix")
+            }}<strong
+              :class="{
+                'not-strong': noCaseIndexOf(articl.authors,params.authors) === -1,
+              }"
+            >{{
+              highlightedSubstring(articl.authors,params.authors,"term")
+            }}</strong>{{ highlightedSubstring(articl.authors,params.authors,"suffix") }}
+
+            <ul class="right">
+              <li v-if="articl.journal"><strong>{{ articl.journal }}</strong></li>
+              <li v-if="articl.yearComparison && Number(articl.year)!==yearsStart"><strong>{{ articl.yearComparison }}{{ articl.year }}</strong></li>
+            </ul>
+          </small>
         </li>
       </ul>
       <div v-if="isLoggedIn">

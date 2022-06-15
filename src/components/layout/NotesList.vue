@@ -14,8 +14,14 @@
           </template>
           <span class="right"> created at: {{ note.createdAt }}</span>
         </li>
-        <li />
-      </ul>{{ note.fullText }}
+        <li class="main-line">{{ note.fullText }}</li>
+      </ul>
+      <div v-if="isLoggedIn">
+        <note-actions
+          :id="articl.id"
+          :title="articl.title"
+        />
+      </div>
     </li>
   </ul>
 </template>
@@ -23,10 +29,12 @@
 <script>
 import { mapGetters } from "vuex";
 
+import { NoteActions } from "@/components/layout/NoteActions.vue";
+
 export default {
   name: "NoteListt",
   components: {
-
+    NoteActions,
   },
   props: {
     notes: {

@@ -70,7 +70,7 @@ export default {
 
 :root[data-theme="dark"]  {
   --bg0: #17262b;
-  --bg1: #00f;
+  --bg1: #264048;
   --bg2: #457181;
 }
 :where(:root) {
@@ -81,13 +81,14 @@ body {
 }
 
 :where(:root),
+html,
 body,
 input:-webkit-autofill::first-line,
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  font: "Poppins", sans-serif;
+  font-family: "Poppins", "Arial", sans-serif !important;
   font-size: 1rem;
   line-height: 1.6rem;
   --primary-focus: transparent;
@@ -190,7 +191,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 .articl-actions li {
   display: inline-block;
   border-bottom: 1px solid transparent;
-  font-size: 0.8rem;
+  font-size: 1rem;
   vertical-align: middle;
 }
 
@@ -209,10 +210,17 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 .active {
   border-color: #888;
 }
-.detail-line {
+.line-detail {
   background-color: var(--bg1);
-  font-size:80%;
-  padding:0 0.5rem;
+
+  padding: 0 0.5rem;
+}
+.line-main {
+  padding: 0 0.5rem;
+}
+
+small {
+  font-size: 0.7rem;
 }
 
 .ghost {
