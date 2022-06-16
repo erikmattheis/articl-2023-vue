@@ -60,9 +60,12 @@ export default {
 */
   },
 };
+
 </script>
 
 <style lang="scss">
+@import "./assets/variables.scss";
+@import "./assets/placeholder.scss";
 /*
 .scale-enter-active,
 .scale-leave-active {
@@ -125,50 +128,26 @@ transform-style: preserve-3d;
     transform: translateX();
   }
   100% {
-    transform: translateX(-2rem);
+    transform: translateX(2rem);
   }
 }
 
-.fade-enter-active {
-  animation: scale-in 0.2s;
-}
+.fade-enter-active,
 .fade-leave-active {
-  animation: scale-out 0.2s;
+  transition: opacity 0.5s ease;
+  position: absolute;
+  z-index: 100;
 }
-@keyframes fade-in {
-  0% {
-    transform: opacity(0.5);
-  }
-  100% {
-    transform: opacity(1);
-  }
-}
-@keyframes scale-out {
-  0% {
-    transform: opacity(1);
-  }
-  100% {
-    transform: opacity(0.5);
-  }
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
-@import "./assets/placeholder.scss";
-
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-:root[data-theme="light"]  {
-  --bg0: #b5e6f9;
-  --bg1: #cdeefb;
-  --bg2: #daf3fb;
-}
-
-:root[data-theme="dark"]  {
-  --bg0: #17262b;
-  --bg1: #121f23;
-  --bg2: #1d3036;
-}
 :where(:root) {
   background-color:var(--bg0);
 }
@@ -327,26 +306,4 @@ small {
   text-indent: -10000px;
 }
 
-@import "~/node_modules/@picocss/pico/scss/_variables.scss";
-
-@media (min-width: map-get($breakpoints, "xs")) {
-  #app,
-  .max-container-width {
-    width: 96%;
-  }
-}
-
-@media (min-width: map-get($breakpoints, "lg")) {
-  #app,
-  .max-container-width {
-    max-width: map-get($viewports, "lg");
-  }
-}
-
-@media (min-width: map-get($breakpoints, "xl")) {
-  #app,
-  .max-container-width {
-    width: map-get($viewports, "lg");
-  }
-}
 </style>

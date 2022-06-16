@@ -176,6 +176,7 @@
         }
       ],
       "vue/singleline-html-element-content-newline": "off",
+      "vuejs-accessibility/heading-has-content": "off",
       "vuejs-accessibility/no-onchange": "off"
     }
   },

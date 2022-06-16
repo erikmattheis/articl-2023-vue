@@ -64,3 +64,56 @@ $viewports: (
   md: 700px,
   lg: 920px,
   xl: 1130px) !default;
+
+$bg-light2: #d5f3ff;
+$bg-light1: darken($bg-light2, 10%
+);
+$bg-light0: darken($bg-light2, 20%);
+
+$bg-dark0: #15242a;
+$bg-dark1: lighten($bg-dark0, 5%);
+$bg-dark2: lighten($bg-dark0, 10%);
+
+:root[data-theme="light"] {
+
+  --bg0: #{$bg-light0};
+  --bg1: #{$bg-light1};
+  --bg2: #{$bg-light2};
+
+}
+
+:root[data-theme="dark"] {
+
+  --bg0: #{$bg-dark0};
+  --bg1: #{$bg-dark1};
+  --bg2: #{$bg-dark2};
+
+  --card-box-shadow: 0 0.125rem 1rem rgba(255, 255, 255, 0.06), 0 0.125rem 2rem rgba(255, 255, 255, 0.12), 0 0 0 0.0625rem rgba(255, 255, 255, 0.036);
+}
+
+
+
+
+@media (min-width: map-get($breakpoints, "xs")) {
+
+  #app,
+  .max-container-width {
+    width: 96%;
+  }
+}
+
+@media (min-width: map-get($breakpoints, "lg")) {
+
+  #app,
+  .max-container-width {
+    max-width: map-get($viewports, "lg");
+  }
+}
+
+@media (min-width: map-get($breakpoints, "xl")) {
+
+  #app,
+  .max-container-width {
+    width: map-get($viewports, "lg");
+  }
+}

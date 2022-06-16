@@ -1,31 +1,13 @@
 <template>
-  <article class="placeholder-item">
-    <div class="placeholder-col-12">
-      <div class="placeholder-row">
-        <div
-          class="big"
-          :class="pickClass()"
-        />
+  <article>
+    <div class="box-placeholder">
+      <h2 class="text line">&nbsp;</h2>
 
-        <div class="placeholder-col-12 empty" />
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-
-        <div :class="pickClass()" />
-      </div>
+      <ul class="nav-tabs">
+        <li class="text line link">&nbsp;</li>
+        <li class="text line">&nbsp;</li>
+        <li class="text">&nbsp;</li>
+      </ul>
     </div>
   </article>
 </template>
@@ -45,3 +27,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+li { height: 1rem;}
+</style>
