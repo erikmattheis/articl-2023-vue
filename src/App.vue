@@ -117,10 +117,12 @@ transform-style: preserve-3d;
 }
 @keyframes scale-in {
   0% {
-    transform: translateX(-2rem);
+    //transform: translateX(-2rem);
+    opacity:0;
   }
   100% {
-    transform: translateX(0);
+    //transform: translateX(0);
+    opacity:0;
   }
 }
 @keyframes scale-out {

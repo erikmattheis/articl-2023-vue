@@ -281,6 +281,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+details[role=list],
+details[role=list] summary:not([role]):focus,
+details summary {
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+details summary::after {
+  display:none !important;
+}
+
 svg {
   width: 2rem;
   height: 2rem;
