@@ -1,11 +1,7 @@
 <template>
   <section>
-    <h3 v-if="!success">{{ formAction }} note</h3>
-
-    <h1 v-else>Success</h1>
-
     <template v-if="!isLoading">
-      <form v-if="!success">
+      <form>
         <label for="fullText">Note
           <textarea
             id="fullText"
@@ -36,16 +32,13 @@
           {{ !id ? "Create" : "Edit" }} Note
         </button>
       </form>
-      <template v-else>
-        <card-notification success-message="Success" />
-        <a
-          href
-          @click="$router.go()"
-          @keyup.enter="$router.go()"
-        >Create another note</a>
-      </template>
     </template>
-    <article-placeholder v-else />
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <article-placeholder v-if="isLoading" />
+    </transition>
   </section>
 </template>
 
@@ -53,13 +46,11 @@
 import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
-import cardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
   name: "NoteCrudComponent",
   components: {
     ArticlePlaceholder,
-    cardNotification,
   },
   props: {
     passedId: {
@@ -67,12 +58,12 @@ export default {
       type: String,
     },
   },
+  emits: ["view-mode"],
   data: () => {
 
     return {
       fullText: "",
       status: "Published",
-      success: false,
       buttonDisabled: false,
       formAction: undefined,
       isLoading: true,
@@ -89,6 +80,8 @@ export default {
   mounted() {
 
     this.id = this.passedId;
+
+    console.log("id is", this.id);
 
     this.formAction = this.id ? "Edit" : "Create";
 
@@ -125,8 +118,6 @@ export default {
     },
     resetFormErrors() {
 
-      this.success = null;
-
       this.errorMessage = "";
 
     },
@@ -155,6 +146,8 @@ export default {
     },
     async submitForm(id) {
 
+      console.log("submitting", id);
+
       try {
 
         this.resetFormErrors();
@@ -177,7 +170,7 @@ export default {
 
           this.buttonDisabled = false;
 
-          this.success = true;
+          this.$emit("view-mode", id);
 
         }
 

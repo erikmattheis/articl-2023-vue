@@ -63,24 +63,93 @@ export default {
 </script>
 
 <style lang="scss">
+/*
 .scale-enter-active,
 .scale-leave-active {
-  transition: all 0.1s ease;
+  transition: all 0.3s ease-out;
+  -webkit-backface-visibility: hidden;
+   -moz-backface-visibility: hidden;
+   -ms-backface-visibility: hidden;
+   backface-visibility: hidden;
+-webkit-transform-style: preserve-3d;
+   -moz-transform-style: preserve-3d;
+   -ms-transform-style: preserve-3d;
+transform-style: preserve-3d;
+   -webkit-perspective: 1000;
+   -moz-perspective: 1000;
+   -ms-perspective: 1000;
+   perspective: 1000;
+
+   -webkit-transform: translate3d(0, 0, 0);
+   -moz-transform: translate3d(0, 0, 0);
+   -ms-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0);
+
+}
+
+.scale-enter-active *,
+.scale-leave-active * {
+   transform: translate3d(0, 0, 0);
 }
 
 .scale-enter-from,
 .scale-leave-to {
-  opacity: 0;
-  transform: scale(0.9);
-  transform: opacity(0.6);
+  transform: scale(50%);
+  transform: opacity(0.2);
 }
 
 .scale-enter-from {
-  transform: translateX(-4rem);
+  transform: translateX(-0.2rem);
 }
 
 .scale-leave-to {
-  transform: translateX(4rem);
+  transform: translateX(0.2rem);
+}
+*/
+.scale-enter-active {
+  animation: scale-in 0.2s;
+}
+.scale-leave-active {
+  animation: scale-out 0.2s;
+}
+@keyframes scale-in {
+  0% {
+    transform: translateX(-2rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes scale-out {
+  0% {
+    transform: translateX();
+  }
+  100% {
+    transform: translateX(-2rem);
+  }
+}
+
+.fade-enter-active {
+  animation: scale-in 0.2s;
+}
+.fade-leave-active {
+  animation: scale-out 0.2s;
+}
+@keyframes fade-in {
+  0% {
+    transform: opacity(0.5);
+  }
+  100% {
+    transform: opacity(1);
+  }
+}
+@keyframes scale-out {
+  0% {
+    transform: opacity(1);
+  }
+  100% {
+    transform: opacity(0.5);
+  }
 }
 
 @import "~/node_modules/@picocss/pico/css/pico.css";

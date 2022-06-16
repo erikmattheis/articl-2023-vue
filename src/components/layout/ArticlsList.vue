@@ -18,7 +18,12 @@
         </li>
       </template>
     </draggable-items>
-    <article-placeholder v-else />
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <article-placeholder v-if="isLoading" />
+    </transition>
   </div>
 </template>
 

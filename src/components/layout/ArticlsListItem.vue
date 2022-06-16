@@ -2,7 +2,7 @@
   <li>
     <div class="grid">
       <ul>
-        <li class="line-main-inv">
+        <li class="line-main">
           <a
             :href="articl.articlUrl"
             target="_blank"

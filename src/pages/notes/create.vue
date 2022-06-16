@@ -40,7 +40,12 @@
         >Create another note</a>
       </template>
     </template>
-    <article-placeholder v-else />
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <article-placeholder v-if="isLoading" />
+    </transition>
   </section>
 </template>
 

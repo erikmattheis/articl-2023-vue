@@ -10,7 +10,11 @@
         </template>
         <span class="right"> created at: {{ note.createdAt }}</span>
       </li>
-      <li class="main-line">{{ note.fullText }}</li>
+      <li
+        class="main-line"
+      >
+        <span :aria-busy="isLoading" /> <span v-if="!isLoading">{{ note.fullText }}</span>
+      </li>
     </ul>
     <div v-if="isLoggedIn">
       <note-actions
@@ -23,6 +27,7 @@
   <note-crud
     v-else
     :passed-id="note.id"
+    @view-mode="getCurrentNote"
   />
 </template>
 
@@ -38,7 +43,7 @@ export default {
     NoteActions, NoteCrud,
   },
   props: {
-    note: {
+    passedNote: {
       type: Object,
       default: null,
     },
@@ -47,6 +52,7 @@ export default {
 
     return {
       isEditing: false,
+      isLoading: false,
     };
 
   },
@@ -55,6 +61,49 @@ export default {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
     }),
+  },
+
+  created() {
+
+    this.note = this.passedNote;
+
+  },
+  methods: {
+    async getCurrentNote(id) {
+
+      console.log("well it is", id);
+
+      try {
+
+        this.isLoading = true;
+
+        this.isEditing = false;
+
+        const result = await this.getNote(id);
+
+        console.log("result.data", result.data);
+
+        this.note = result.data;
+
+        Object.assign(this, result.data);
+
+        this.isLoading = false;
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
+
+    },
+    async getNote(id) {
+
+      return this.$http({
+        method: "GET",
+        url: `/notes/${id}`,
+      });
+
+    },
   },
 };
 </script>

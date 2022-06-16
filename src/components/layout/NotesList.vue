@@ -4,7 +4,7 @@
       v-for="note in notes || [] "
       :key="note.fullText"
     >
-      <notes-list-item :note="note" />
+      <notes-list-item :passed-note="note" />
     </li>
   </ul>
 </template>

@@ -17,9 +17,14 @@
         <router-link :to="{ name: 'createArticlPage', query: { slug: '0' } }"> New Articl Here </router-link>
       </li>
     </ul>
-  </article>
 
-  <article-placeholder v-else />
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <article-placeholder v-if="isLoading" />
+    </transition>
+  </article>
 </template>
 
 <script>
@@ -99,23 +104,5 @@ export default {
 </script>
 
 <style scoped>
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 0.2s ease;
-}
 
-.scale-enter-from,
-.scale-leave-to {
-  opacity: 0;
-  transform: scale(0.9);
-  transform: opacity(0.6);
-}
-
-.scale-enter-from {
-  transform: translateX(-4rem);
-}
-
-.scale-leave-to {
-  transform: translateX(4rem);
-}
 </style>

@@ -111,11 +111,18 @@
           class="tab-content"
         >
           <notes-list :notes="notes" />
-          <note-crud :slug="slug" />
+          <note-crud
+            :slug="slug"
+          />
         </div>
       </template>
 
-      <article-placeholder v-else />
+      <transition
+        name="fade"
+        mode="out-in"
+      >
+        <article-placeholder v-if="isLoading" />
+      </transition>
     </article>
   </transition>
 </template>

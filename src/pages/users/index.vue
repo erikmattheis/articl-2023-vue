@@ -79,7 +79,12 @@
           Log out
         </router-link>
       </template>
-      <article-placeholder v-else />
+      <transition
+        name="fade"
+        mode="out-in"
+      >
+        <article-placeholder v-if="isLoading" />
+      </transition>
     </form>
   </article>
 </template>

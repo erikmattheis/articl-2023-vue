@@ -1,23 +1,24 @@
-$ph-direction:            ltr !default;
-$ph-bg:                   #fff !default;
-$ph-color:                #efefef !default;
-$ph-bg-dark:                   rgb(20, 30, 38) !default;
-$ph-color-dark:                rgb(30, 44, 56)  !default;
-$ph-border:               0px solid darken($ph-bg, 10%) !default;
-$ph-border-radius:        0 !default;
+$ph-direction: ltr !default;
+$ph-bg: #ddd !default;
+$ph-color: #ccc !default;
+$ph-bg-dark: #17262b !default;
+$ph-color-dark: #17262b !default;
+$ph-border: 0px solid black !default;
+$ph-border-radius: 0 !default;
 
-$ph-cols:                 12 !default;
-$ph-cols-remove-odd:      true !default;
-$ph-gutter:               30px !default;
-$ph-spacer:               15px !default;
+$ph-cols: 12 !default;
+$ph-cols-remove-odd: true !default;
+$ph-gutter: 30px !default;
+$ph-spacer: 15px !default;
 
 $ph-avatar-border-radius: 50% !default;
 
-$ph-animation-duration:   0.8s !default;
+$ph-animation-duration: 0.8s !default;
 
 @use 'sass:math';
 
 .placeholder-item {
+
     &,
     *,
     ::after,
@@ -51,7 +52,7 @@ $ph-animation-duration:   0.8s !default;
         pointer-events: none;
     }
 
-    > * {
+    >* {
         display: flex;
         flex: 1 1 auto;
         flex-flow: column;
@@ -85,11 +86,12 @@ $ph-animation-duration:   0.8s !default;
 @mixin placeholder-make-col($size, $columns) {
     .placeholder-col-#{$size} {
         flex: 0 0 percentage(math.div($size, $columns));
+        display: block;
     }
 }
 
 @for $i from 1 through $ph-cols {
-    @if $ph-cols-remove-odd and $i % 2 == 0 {
+    @if $ph-cols-remove-odd and $i % 2==0 {
         @include placeholder-make-col($i, $ph-cols);
     }
 
@@ -103,12 +105,12 @@ $ph-animation-duration:   0.8s !default;
 [class*="placeholder-col"] {
     direction: $ph-direction;
 
-    > * {
-        + .placeholder-row {
+    >* {
+        +.placeholder-row {
             margin-top: 0;
         }
 
-        + * {
+        +* {
             margin-top: ($ph-spacer * 0.5);
         }
     }
@@ -162,12 +164,12 @@ html[data-theme="dark"] .placeholder-item {
 [class*="placeholder-col"] {
     direction: $ph-direction;
 
-    > * {
-        + .placeholder-row {
+    >* {
+        +.placeholder-row {
             margin-top: 0;
         }
 
-        + * {
+        +* {
             margin-top: ($ph-spacer * 0.5);
         }
     }
