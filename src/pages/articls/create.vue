@@ -379,6 +379,10 @@ export default {
 
           Object.assign(this, result.data);
 
+        } else {
+
+          this.$store.dispatch("errors/setError", this.errorMessage);
+
         }
 
       } catch (error) {

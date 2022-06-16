@@ -172,6 +172,10 @@ export default {
 
           this.$emit("view-mode", id);
 
+        } else {
+
+          this.$store.dispatch("errors/setError", this.errorMessage);
+
         }
 
       } catch (error) {

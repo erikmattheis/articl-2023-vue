@@ -179,6 +179,10 @@ export default {
 
           }
 
+        } else {
+
+          this.$store.dispatch("errors/setError", this.errorMessage);
+
         }
 
         this.buttonDisabled = false;

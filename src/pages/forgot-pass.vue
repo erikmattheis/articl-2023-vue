@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import validateEmail from "@/services/emailValidationService";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
@@ -71,7 +72,15 @@ export default {
     },
     checkForm() {
 
-      return this.email !== "";
+      if (!this.email || !validateEmail.validateEmail(this.email)) {
+
+        this.errorMessage = "Please enter a valid email address";
+
+        return false;
+
+      }
+
+      return true;
 
     },
     async submitForm() {
@@ -107,6 +116,10 @@ export default {
           }
 
           this.buttonDisabled = false;
+
+        } else {
+
+          this.$store.dispatch("errors/setError", this.errorMessage);
 
         }
 

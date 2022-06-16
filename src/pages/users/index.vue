@@ -242,9 +242,10 @@ export default {
 
         } else {
 
-          this.$store.dispatch("errors/setError", {
-            message: this.errorMessage,
-          });
+          this.$store.dispatch(
+            "errors/setError",
+            this.errorMessage,
+          );
 
         }
 
