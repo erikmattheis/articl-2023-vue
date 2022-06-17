@@ -3,20 +3,20 @@ export default {
   state: () => {
 
     return {
-      metaDescription: undefined,
-      documentTitle: undefined,
+      description: undefined,
+      title: undefined,
     };
 
   },
   mutations: {
     SET_DOCUMENT_TITLE: (state, payload) => {
 
-      state.documentTitle = payload;
+      state.title = payload;
 
     },
     SET_META_DESCRIPTION: (state, payload) => {
 
-      state.metaDescription = payload;
+      state.description = payload;
 
     },
   },
@@ -32,14 +32,14 @@ export default {
     },
   },
   getters: {
-    documentTitle: (state) => {
+    title: (state) => {
 
-      return state.documentTitle;
+      return state.title;
 
     },
-    metaDescription: (state) => {
+    description: (state) => {
 
-      return state.metaDescription;
+      return state.description;
 
     },
   },

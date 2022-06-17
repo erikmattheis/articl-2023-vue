@@ -150,9 +150,9 @@ export default {
       return state.text;
 
     },
-    documentTitle: (state) => {
+    title: (state) => {
 
-      return state.documentTitle;
+      return state.title;
 
     },
     allStatuses: (state) => {
@@ -184,11 +184,6 @@ export default {
     statuses: (state) => {
 
       return state.statuses;
-
-    },
-    title: (state) => {
-
-      return state.title;
 
     },
     types: (state) => {

@@ -149,14 +149,14 @@ export default {
     },
 
     setMetaDescriptionAndDocumentTitle: (context, {
-      documentTitle, metaDescription,
+      title, description,
     }) => {
 
-      context.commit("SET_DOCUMENT_TITLE", documentTitle);
+      context.commit("SET_DOCUMENT_TITLE", title);
 
-      context.commit("SET_META_DESCRIPTION", metaDescription);
+      context.commit("SET_META_DESCRIPTION", description);
 
-      document.title = documentTitle;
+      document.title = title;
 
       let meta = document.querySelector("meta[name=\"description\"]");
 
@@ -169,11 +169,11 @@ export default {
         document
           .querySelectorAll("head")[0]
           .appendChild(meta)
-          .setAttribute("content", metaDescription);
+          .setAttribute("content", description);
 
       } else {
 
-        meta.content = metaDescription;
+        meta.content = description;
 
       }
 
@@ -211,18 +211,6 @@ export default {
     errorStack: (state) => {
 
       return state.errorStack;
-
-    },
-
-    documentTitle: (state) => {
-
-      return state.documentTitle;
-
-    },
-
-    metaDescription: (state) => {
-
-      return state.metaDescription;
 
     },
   },

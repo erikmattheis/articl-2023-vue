@@ -1,8 +1,8 @@
 import store from "@/store";
 
-const setTitle = (documentTitle) => {
+const setTitle = (title) => {
 
-  document.title = documentTitle;
+  document.title = title;
 
 };
 const setMetaDescription = (metaDescription) => {
@@ -34,8 +34,8 @@ const setTitleAndDescription = (object) => {
   setMetaDescription(object.description);
 
   store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-    documentTitle: object.title,
-    metaDescription: object.description,
+    title: object.title,
+    description: object.description,
   });
 
 };
