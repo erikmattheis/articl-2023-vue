@@ -118,7 +118,11 @@ export default {
 
       str = str.toLowerCase();
 
-      return encodeURIComponent(str);
+      str = encodeURIComponent(str);
+
+      str = str.replace(/'/g, "%27");
+
+      return str;
 
     },
 
