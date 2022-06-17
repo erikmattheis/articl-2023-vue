@@ -22,12 +22,12 @@ export default {
   },
   actions: {
     setMetaDescriptionAndDocumentTitle: (context, {
-      documentTitle, metaDescription,
+      title, description,
     }) => {
 
-      context.commit("SET_DOCUMENT_TITLE", documentTitle);
+      context.commit("SET_DOCUMENT_TITLE", title);
 
-      context.commit("SET_META_DESCRIPTION", metaDescription);
+      context.commit("SET_META_DESCRIPTION", description);
 
     },
   },
