@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1 v-if="!success">
-      {{ formAction }}  category {{ id }}
+      {{ formAction }}  category
     </h1>
     <h1 v-else>
       Success

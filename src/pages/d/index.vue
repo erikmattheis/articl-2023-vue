@@ -1,9 +1,9 @@
 <template>
   <transition
-    name="scale"
+    name="fade"
     mode="out-in"
   >
-    <article v-if="isLoading">
+    <article v-if="!isLoading">
       <h2>{{ title }}</h2>
 
       <ul class="nav-tabs">

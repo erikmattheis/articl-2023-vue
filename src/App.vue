@@ -3,7 +3,7 @@
   <main>
     <router-view v-slot="{ Component }">
       <transition
-        name="scale"
+        name="fade"
         mode="out-in"
       >
         <component :is="Component" />
@@ -66,83 +66,12 @@ export default {
 <style lang="scss">
 @import "./assets/variables.scss";
 @import "./assets/placeholder.scss";
-/*
-.scale-enter-active,
-.scale-leave-active {
-  transition: all 0.3s ease-out;
-  -webkit-backface-visibility: hidden;
-   -moz-backface-visibility: hidden;
-   -ms-backface-visibility: hidden;
-   backface-visibility: hidden;
--webkit-transform-style: preserve-3d;
-   -moz-transform-style: preserve-3d;
-   -ms-transform-style: preserve-3d;
-transform-style: preserve-3d;
-   -webkit-perspective: 1000;
-   -moz-perspective: 1000;
-   -ms-perspective: 1000;
-   perspective: 1000;
 
-   -webkit-transform: translate3d(0, 0, 0);
-   -moz-transform: translate3d(0, 0, 0);
-   -ms-transform: translate3d(0, 0, 0);
-   transform: translate3d(0, 0, 0);
-
+.fade-enter-active {
+  transition: opacity 0.2s ease;
 }
 
-.scale-enter-active *,
-.scale-leave-active * {
-   transform: translate3d(0, 0, 0);
-}
-
-.scale-enter-from,
-.scale-leave-to {
-  transform: scale(50%);
-  transform: opacity(0.2);
-}
-
-.scale-enter-from {
-  transform: translateX(-0.2rem);
-}
-
-.scale-leave-to {
-  transform: translateX(0.2rem);
-}
-*/
-.scale-enter-active {
-  animation: scale-in 0.2s;
-}
-.scale-leave-active {
-  animation: scale-out 0.2s;
-}
-@keyframes scale-in {
-  0% {
-    //transform: translateX(-2rem);
-    opacity:0;
-  }
-  100% {
-    //transform: translateX(0);
-    opacity:0;
-  }
-}
-@keyframes scale-out {
-  0% {
-    transform: translateX();
-  }
-  100% {
-    transform: translateX(2rem);
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-  position: absolute;
-  z-index: 100;
-}
-
-.fade-enter-from,
-.fade-leave-to {
+.fade-enter-from {
   opacity: 0;
 }
 

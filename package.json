@@ -194,7 +194,7 @@
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "postinstall.xxx": "npm run build",
+    "postinstall": "npm run build",
     "serve": "vue-cli-service serve",
     "start": "node index.js"
   },
