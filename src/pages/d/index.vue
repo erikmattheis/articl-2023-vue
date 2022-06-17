@@ -37,7 +37,7 @@
           ghost-class="ghost"
           @change="onUpdateOrderValues"
         >
-          <template #item="{element}">
+          <template #item="{ element }">
             <categories-list-item
               :category="element"
               class="list-item"
@@ -50,7 +50,7 @@
             <router-link
               :to="{
                 name: 'createCategoryPage',
-                query: {parentSlug: $route.params.slug},
+                query: { parentSlug: $route.params.slug },
               }"
             >
               New Category Here
@@ -60,7 +60,7 @@
             <router-link
               :to="{
                 name: 'createArticlPage',
-                query: {slug: $route.params.slug},
+                query: { slug: $route.params.slug },
               }"
             >
               New Articl Here
@@ -93,7 +93,7 @@
             ghost-class="ghost"
             @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
           >
-            <template #item="{element}">
+            <template #item="{ element }">
               <div>
                 <articls-list-item
                   :articl="element"
@@ -110,9 +110,7 @@
         class="tab-content"
       >
         <notes-list :notes="notes" />
-        <note-crud
-          :slug="slug"
-        />
+        <note-crud :slug="slug" />
       </div>
     </article>
 
@@ -135,7 +133,12 @@ import { setTitleAndDescription } from "@/services/htmlMetaService";
 export default {
   name: "CategoryPage",
   components: {
-    ArticlePlaceholder, NoteCrud, DraggableItems, categoriesListItem, articlsListItem, NotesList,
+    ArticlePlaceholder,
+    NoteCrud,
+    DraggableItems,
+    categoriesListItem,
+    articlsListItem,
+    NotesList,
   },
   data: () => {
 
@@ -204,7 +207,8 @@ export default {
         const description = results.category[0]?.description;
 
         setTitleAndDescription({
-          title: this.title, description,
+          title: this.title,
+          description,
         });
 
         this.isLoading = false;
@@ -228,9 +232,21 @@ export default {
         categories: result.data.categories,
         category: result.data.category,
         articlTypes: result.data.articls?.length
-          ? [...new Set(result.data.articls.map((item) => { return item.type; }))]
+          ? [
+            ...new Set(
+              result.data.articls.map((item) => {
+
+                return item.type;
+
+              }),
+            ),
+          ]
           : [],
-        articls: groupBy(result.data.articls, (articl) => { return articl.type; }),
+        articls: groupBy(result.data.articls, (articl) => {
+
+          return articl.type;
+
+        }),
         notes: result.data.notes,
       };
 
@@ -263,7 +279,8 @@ export default {
         const order = this.categories.map((obj) => {
 
           return {
-            id: obj.id, order: obj.order,
+            id: obj.id,
+            order: obj.order,
           };
 
         });
@@ -331,7 +348,8 @@ export default {
         const order = this.articls[articlType].map((obj) => {
 
           return {
-            id: obj.id, order: obj.order,
+            id: obj.id,
+            order: obj.order,
           };
 
         });
@@ -376,17 +394,17 @@ export default {
 </script>
 
 <style
-  lang="css"
+  lang="scss"
   scoped
 >
-  pre {
+pre {
   overflow: auto;
   white-space: pre-wrap;
-  word-break: break-all;
-  }
+   word-break: break-all;
+}
 
-  .list-item {
-    border-bottom:1px solid #444;
-  }
+.list-item {
+  border-bottom: 1px solid var(--bg1);
+}
 </style>
 

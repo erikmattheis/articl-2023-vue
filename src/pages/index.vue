@@ -17,14 +17,8 @@
         <router-link :to="{ name: 'createArticlPage', query: { slug: '0' } }"> New Articl Here </router-link>
       </li>
     </ul>
-
-    <transition
-      name="fade"
-      mode="out-in"
-    >
-      <article-placeholder v-if="isLoading" />
-    </transition>
   </article>
+  <article-placeholder v-else />
 </template>
 
 <script>
@@ -67,9 +61,6 @@ export default {
         this.isLoading = true;
 
         const result = await this.getCategoryPageBySlug(slug);
-
-        console.log(result);
-
         const {
           title,
         } = result.data.category[0];

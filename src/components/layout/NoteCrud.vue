@@ -81,8 +81,6 @@ export default {
 
     this.id = this.passedId;
 
-    console.log("id is", this.id);
-
     this.formAction = this.id ? "Edit" : "Create";
 
     if (!this.id) {

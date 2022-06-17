@@ -82,6 +82,7 @@ $bg-dark2: lighten($bg-dark0, 10%);
 
 }
 
+
 :root[data-theme="dark"] {
 
   --bg0: #{$bg-dark0};
@@ -90,9 +91,6 @@ $bg-dark2: lighten($bg-dark0, 10%);
 
   --card-box-shadow: 0 0.125rem 1rem rgba(255, 255, 255, 0.06), 0 0.125rem 2rem rgba(255, 255, 255, 0.12), 0 0 0 0.0625rem rgba(255, 255, 255, 0.036);
 }
-
-
-
 
 @media (min-width: map-get($breakpoints, "xs")) {
 

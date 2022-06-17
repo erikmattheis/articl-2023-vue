@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>Articls</h1>
+    <h1>Search Articls</h1>
     <div class="grid">
       <the-articls-form-search />
       <div>

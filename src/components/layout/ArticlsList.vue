@@ -45,7 +45,7 @@ export default {
 
     return {
       articls: [],
-      isLoading: true,
+      isLoading: false,
     };
 
   },

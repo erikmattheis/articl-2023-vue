@@ -19,6 +19,14 @@
 
 <script>
 /* VUE
+          @before-enter="onBeforeEnter"
+          @enter="onEnter"
+          @after-enter="onAfterEnter"
+          @enter-cancelled="onEnterCancelled"
+          @before-leave="onBeforeLeave"
+          @leave="onLeave"
+          @after-leave="onAfterLeave"
+          @leave-cancelled="onLeaveCancelled"
  * 1939,1200, 1,244, 1983, 1883 .js
  *  538, 3250, 3,623, 3,910, 5,475
  *
@@ -50,7 +58,15 @@ export default {
     ModalError,
     ModalSuccess,
   },
+  data: () => {
+
+    return {
+      start: 0,
+    };
+
+  },
   mounted: () => {
+
     /*
     this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
 
@@ -59,7 +75,98 @@ export default {
     this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
 
     this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
+
 */
+
+  },
+  created() {
+
+    this.start = performance.now();
+
+  },
+  methods: {
+    // called before the element is inserted into the DOM.
+    // use this to set the "enter-from" state of the element
+    onBeforeEnter() {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onBeforeEnter`);
+
+    },
+
+    // called one frame after the element is inserted.
+    // use this to start the animation.
+    onEnter(_el, done) {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onEnter`);
+
+      done();
+
+    },
+
+    // called when the enter transition has finished.
+    onAfterEnter() {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onAfterEnter`);
+
+      console.log("----------------");
+
+    },
+    onEnterCancelled() {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onEnterCancelled`);
+
+    },
+    // called before the leave hook.
+    // Most of the time, you shoud just use the leave hook.
+    onBeforeLeave() {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onBeforeLeave`);
+
+    },
+    // called when the leave transition starts.
+    // use this to start the leaving animation.
+    onLeave(_el, done) {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onLeave`);
+
+      // call the done callback to indicate transition end
+      // optional if used in combination with CSS
+      done();
+
+    },
+
+    // called when the leave transition has finished and the
+    // element has been removed from the DOM.
+    onAfterLeave() {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} onAfterLeave`);
+
+      console.log("----------------");
+
+    },
+
+    // only available with v-show transitions
+    onLeaveCancelled() {
+
+      const result = performance.now() - this.start;
+
+      console.log(`${result} leaveCancelled`);
+
+    },
   },
 };
 
@@ -73,7 +180,9 @@ export default {
 .fade-enter-active {
   transition: opacity 0.2s ease;
 }
-
+.fade-enter-active {
+transition-delay: 0.2s;
+}
 .fade-leave-to,
 .fade-enter-from {
   opacity: 0;
@@ -158,11 +267,11 @@ footer article {
 }
 
 #app {
-  background-color: var(--bg2);
+   background-color: var(--bg2);
 }
 
 header article {
-  margin-top: 0.5rem;
+  margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -180,7 +289,7 @@ main form {
 
 footer article {
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
@@ -237,7 +346,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 
 .nav-tabs li.active,
 .active {
-  border-color: #888;
+  border-color: var(--bg0);
 }
 .line-detail {
   background-color: var(--bg1);
