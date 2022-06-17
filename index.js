@@ -1,10 +1,10 @@
-import express from 'express';
-import path from 'path';
-import serveStatic from 'serve-static';
+import express from "express";
+import path from "path";
+import serveStatic from "serve-static";
 
 const app = express();
 
-app.use(serveStatic(path.join(__dirname, 'dist')));
+app.use(serveStatic(path.join(__dirname, "dist")));
 
 app.get(/.*/, (_, res) => {
 

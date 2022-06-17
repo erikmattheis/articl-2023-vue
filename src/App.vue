@@ -1,16 +1,18 @@
 <template>
-  <the-header />
-  <main>
-    <router-view v-slot="{ Component }">
-      <transition
-        name="fade"
-        mode="out-in"
-      >
-        <component :is="Component" />
-      </transition>
-    </router-view>
-  </main>
-  <the-footer />
+  <div class="vertical-container">
+    <the-header />
+    <main>
+      <router-view v-slot="{ Component }">
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
+    <the-footer />
+  </div>
   <modal-error />
   <modal-success />
 </template>
@@ -67,10 +69,12 @@ export default {
 @import "./assets/variables.scss";
 @import "./assets/placeholder.scss";
 
+.fade-leave-active,
 .fade-enter-active {
   transition: opacity 0.2s ease;
 }
 
+.fade-leave-to,
 .fade-enter-from {
   opacity: 0;
 }
@@ -114,6 +118,23 @@ input[type="radio"] {
   border-radius: 1rem !important;
 }
 
+.vertical-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.vertical-container main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.vertical-container main article {
+    flex-grow: 1;
+}
+
 ul {
   padding-left: 0;
   list-style-type: none !important;
@@ -134,6 +155,10 @@ ul li {
 header article,
 footer article {
   background-color: var(--bg1);
+}
+
+#app {
+  background-color: var(--bg2);
 }
 
 header article {
