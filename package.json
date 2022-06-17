@@ -198,5 +198,6 @@
     "serve": "vue-cli-service serve",
     "start": "node index.js"
   },
+  "type": "module",
   "version": "1.0.0"
 }
