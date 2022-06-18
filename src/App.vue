@@ -2,7 +2,9 @@
   <div class="vertical-container">
     <the-header />
     <main>
-      <router-view v-slot="{ Component }">
+      <router-view
+        v-slot="{ Component }"
+      >
         <transition
           name="fade"
           mode="out-in"
@@ -216,6 +218,7 @@ input:-webkit-autofill:active {
 }
 
 body {
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -349,7 +352,9 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
 .nav-tabs li.active,
 .active {
   border-color: var(--bg0);
+
 }
+
 .line-detail {
   background-color: var(--bg1);
 

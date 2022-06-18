@@ -28,6 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.6",
+    "@volar-plugins/prettier": "^1.1.4",
     "@vue/cli-plugin-babel": "^5.0.4",
     "@vue/cli-plugin-eslint": "^5.0.4",
     "@vue/cli-plugin-router": "~5.0.0",
@@ -42,7 +43,15 @@
     "eslint-plugin-vue": "^8.0.3",
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
     "sass": "^1.52.2",
-    "sass-loader": "^13.0.0"
+    "sass-loader": "^13.0.0",
+    "stylelint": "^14.9.1",
+    "stylelint-config-css-modules": "^4.1.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard": "^26.0.0",
+    "stylelint-config-standard-scss": "^4.0.0",
+    "stylelint-scss": "^4.0.0"
   },
   "eslintConfig": {
     "env": {
@@ -75,7 +84,6 @@
       "sourceType": "module"
     },
     "plugins": [
-      "import",
       "vuejs-accessibility",
       "simple-import-sort",
       "prefer-arrow",
@@ -145,6 +153,11 @@
           "blankLine": "any",
           "next": "import",
           "prev": "import"
+        },
+        {
+          "blankLine": "any",
+          "next": "cjs-import",
+          "prev": "cjs-import"
         }
       ],
       "prefer-arrow-callback": "error",
@@ -194,9 +207,57 @@
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "postinstall": "npm run build",
+    "postinstalldd": "npm run build",
     "serve": "vue-cli-service serve",
     "start": "node index.js"
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-recommended-vue",
+      "stylelint-config-standard",
+      "stylelint-config-standard-scss",
+      "stylelint-config-recommended-vue/scss",
+      "stylelint-config-recess-order",
+      "stylelint-config-css-modules",
+      "stylelint-config-prettier"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.vue",
+          "**/*.vue"
+        ],
+        "rules": {
+          "unit-allowed-list": [
+            "em",
+            "s"
+          ],
+          "block-closing-brace-newline-after": "never",
+          "block-closing-brace-newline-before": null,
+          "block-closing-brace-space-before": "never",
+          "block-opening-brace-newline-after": null,
+          "block-opening-brace-space-after": "never",
+          "color-no-invalid-hex": true
+        }
+      }
+    ],
+    "plugins": [
+      "stylelint-scss"
+    ],
+    "rules": {
+      "block-closing-brace-empty-line-before": "never",
+      "block-closing-brace-newline-after": "never",
+      "block-closing-brace-newline-before": null,
+      "block-closing-brace-space-before": "never",
+      "block-opening-brace-newline-after": null,
+      "block-opening-brace-space-after": "never",
+      "color-no-invalid-hex": true,
+      "unit-allowed-list": [
+        "rem",
+        "%",
+        "s"
+      ]
+    }
   },
   "type": "module",
   "version": "1.0.0"

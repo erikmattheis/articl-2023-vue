@@ -1,19 +1,10 @@
-import express from "express";
-import path, { dirname } from "path";
-import serveStatic from "serve-static";
-import { fileURLToPath } from "url";
-
-const filename = fileURLToPath(import.meta.url);
-const thedirname = dirname(filename);
+/* eslint-disable import/newline-after-import */
+const path = require("path");
+const express = require("express");
+const serveStatic = require("serve-static");
 const app = express();
 
-app.use(serveStatic(path.join(thedirname, "dist")));
-
-app.get(/.*/, (_, res) => {
-
-  res.sendFile(`${thedirname}/dist/index.html`);
-
-});
+app.use(serveStatic(path.join(__dirname, "dist")));
 
 const port = process.env.PORT || 3000;
 
