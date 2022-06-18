@@ -45,28 +45,6 @@
           </template>
         </draggable-items>
 
-        <ul v-if="isLoggedIn">
-          <li>
-            <router-link
-              :to="{
-                name: 'createCategoryPage',
-                query: { parentSlug: $route.params.slug },
-              }"
-            >
-              New Category Here
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              :to="{
-                name: 'createArticlPage',
-                query: { slug: $route.params.slug },
-              }"
-            >
-              New Articl Here
-            </router-link>
-          </li>
-        </ul>
         <ul class="nav-tabs">
           <li
             v-for="articlType in articlTypes"
@@ -94,12 +72,10 @@
             @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
           >
             <template #item="{ element }">
-              <div>
-                <articls-list-item
-                  :articl="element"
-                  :order="element.order"
-                />
-              </div>
+              <articls-list-item
+                :articl="element"
+                :order="element.order"
+              />
             </template>
           </draggable-items>
         </ul>

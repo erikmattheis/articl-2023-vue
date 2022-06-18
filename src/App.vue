@@ -176,9 +176,11 @@ export default {
 @import "./assets/variables.scss";
 @import "./assets/placeholder.scss";
 
-.fade-leave-active,
 .fade-enter-active {
   transition: opacity 0.2s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.1s ease;
 }
 .fade-enter-active {
 transition-delay: 0.2s;

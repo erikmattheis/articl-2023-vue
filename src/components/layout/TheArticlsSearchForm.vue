@@ -33,12 +33,14 @@
       <input-typeahead
         src="/articls/journal"
         :input-value="journal"
+        label-value="Journal"
         query="journal"
         @typeahead-updated="onJournalChange"
       />
       <input-typeahead
         src="/articls/authors"
         :input-value="authors"
+        label-value="Authors"
         query="authors"
         @typeahead-updated="onAuthorsChange"
       />

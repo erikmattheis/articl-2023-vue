@@ -148,6 +148,7 @@
           src="/categories/titles"
           query="category"
           :input-value="slug"
+          label-value="Category slug"
           @update-value="onTypeaheadHit"
           @keyup="onTypeaheadHit"
         />

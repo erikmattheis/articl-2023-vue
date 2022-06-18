@@ -85,10 +85,6 @@ export default {
 
       this.slug = this.$route.query.slug;
 
-      this.onTypeaheadHit({
-        value: this.slug,
-      });
-
       this.isLoading = false;
 
     } else {
@@ -254,11 +250,6 @@ export default {
         method: "GET",
         url: `/notes/${id}`,
       });
-
-    },
-    onTypeaheadHit(e) {
-
-      this.slug = e.value;
 
     },
   },

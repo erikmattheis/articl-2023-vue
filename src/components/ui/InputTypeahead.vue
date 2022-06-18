@@ -1,7 +1,9 @@
 <template>
   <div>
     <label :for="query">
+      <template v-if="labelValue">{{ labelValue }}</template>
       <vue-feather
+        v-else
         class="icon"
         size="1.5rem"
         type="search"
@@ -50,6 +52,9 @@ export default {
       type: String, default: "",
     },
     inputValue: {
+      type: String, default: "",
+    },
+    labelValue: {
       type: String, default: "",
     },
   },
