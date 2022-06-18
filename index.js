@@ -1,14 +1,17 @@
 import express from "express";
-import path from "path";
+import path, { dirname } from "path";
 import serveStatic from "serve-static";
+import { fileURLToPath } from "url";
 
+const filename = fileURLToPath(import.meta.url);
+const thedirname = dirname(filename);
 const app = express();
 
-app.use(serveStatic(path.join(__dirname, "dist")));
+app.use(serveStatic(path.join(thedirname, "dist")));
 
 app.get(/.*/, (_, res) => {
 
-  res.sendFile(`${__dirname}/dist/index.html`);
+  res.sendFile(`${thedirname}/dist/index.html`);
 
 });
 
