@@ -199,17 +199,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pagination {
-  list-style-type: none;
   float: right;
   margin: 1rem 0;
+  list-style-type: none;
 
   .pagination-item {
     display: inline-block;
     color: #ddd;
 
     a {
-      text-decoration: none;
       margin: 0.5rem;
+      text-decoration: none;
     }
 
     a.disabled {
@@ -218,10 +218,10 @@ export default {
     }
 
     .active {
-      background-color: --primary;
-      color: #ffffff !important;
-      font-weight: bold;
       padding: 3px 8px;
+      font-weight: bold;
+      color: #fff !important;
+      background-color: --primary;
     }
   }
 }

@@ -243,7 +243,7 @@ export default {
 <style scoped>
 
 .success {
-  border: 8px solid green;
   background-color: honeydew;
+  border: 8px solid green;
 }
 </style>

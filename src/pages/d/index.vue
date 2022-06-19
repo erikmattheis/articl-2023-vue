@@ -375,8 +375,8 @@ export default {
 >
 pre {
   overflow: auto;
-  white-space: pre-wrap;
    word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .list-item {

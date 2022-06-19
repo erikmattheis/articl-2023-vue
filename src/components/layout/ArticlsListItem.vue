@@ -107,30 +107,33 @@ export default {
 </script>
 
 <style scoped>
+a {
+cursor:pointer;
+}
+
 #app > main > article > div > div > small > ul > li > a {
+margin-top: 0.5rem;
   margin-left: 0.5rem;
-  margin-top: 0.5rem;
-  cursor: pointer;
   color: red !important;
+  cursor: pointer;
 }
 
 .handle-container {
-  width: 1rem !important;
+width: 1rem !important;
 }
 
 strong:not([class="not-strong"]) {
-  background-color: #749157;
+padding: 0.2rem 0.1rem;
   color: black;
-  padding: 0.2rem 0.1rem;
+  background-color: #749157;
 }
+
 li {
-  width:100%;
-  white-space: nowrap;
+width:100%;
   overflow: hidden;
-  text-overflow:ellipsis
+  text-overflow:ellipsis;
+  white-space: nowrap
 }
-a {
-  cursor:pointer;
-}
+
 </style>
 

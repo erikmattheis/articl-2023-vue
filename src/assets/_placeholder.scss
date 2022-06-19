@@ -2,14 +2,13 @@
 .box-placeholder {
     display: inline-block;
     width: 100%;
-}
+ }
 
 .box-placeholder {
-
     .text {
         display: inline-block;
-        background-color: var(--bg1);
         min-width: 100px;
+        background-color: var(--bg1);
         opacity: 0.2;
         animation: fading 1.5s infinite;
 
@@ -17,39 +16,39 @@
         &.link {
             background-color: var(--primary);
             opacity: .4;
-        }
+ }
 
         &.line {
             width: 100%;
-        }
+ }
 
         &.category {
             width: 100px;
-        }
-    }
+ }
+ }
 
     h2.text {
         opacity: 0.2;
-    }
+ }
 
     .image {
         background-color: var(--bg1);
-    }
-}
+ }
+ }
 
 @keyframes fading {
     0% {
         opacity: .1;
-    }
+ }
 
     50% {
         opacity: .2;
-    }
+ }
 
     100% {
         opacity: .1;
-    }
-}
+ }
+ }
 
 
 // $ph-direction: ltr !default;

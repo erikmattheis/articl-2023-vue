@@ -51,9 +51,9 @@ export default {
 
 li {
   width:100%;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow:ellipsis
+  text-overflow:ellipsis;
+  white-space: nowrap
 }
 
 a {

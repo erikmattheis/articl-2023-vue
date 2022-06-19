@@ -100,13 +100,13 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
-  background-color: var(--bg0);
   display: flex;
+  background-color: var(--bg0);
 }
 
 .modal {
-  margin: auto;
   width: 90%;
+  margin: auto;
   background-color: var(--bg1);
   border: 0.2rem;
 }
@@ -121,10 +121,10 @@ section {
 }
 
 section div {
-  float: left;
   display: flex;
   align-items: center;
   justify-content: center;
+  float: left;
 }
 
 .tab {
@@ -133,20 +133,23 @@ section div {
 }
 
 #app > div > dialog > article > section > div.info {
-  min-height: 6rem;
   min-width: calc(100% - 6rem);
+  min-height: 6rem;
   padding: 1rem;
-  background-color: #fca;
   color: #dd2c00;
+  background-color: #fca;
 }
+
 .tab,
 dialog article button {
-  background-color: #dd2c00;
   color: #fff;
+  background-color: #dd2c00;
 }
+
 .close {
   cursor: pointer;
 }
+
 dialog article header,
 dialog article button:hover {
   background-color: #b30202;
@@ -154,12 +157,13 @@ dialog article button:hover {
 }
 
 dialog article header h2 {
-  color: #fff;
   margin-bottom: 0;
+  color: #fff;
 }
+
 dialog article ul li {
-  white-space: pre-wrap;
   word-break: break-all;
+  white-space: pre-wrap;
 }
 
 html[data-theme="dark"] .modal-container {

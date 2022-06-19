@@ -43,15 +43,17 @@ section {
 }
 
 section div {
-  float: left;
   display: flex;
   align-items: center;
   justify-content: center;
+  float: left;
 }
+
 #app > main > article > section > div.info,
 #app > main > article > section > div.info > aside {
   min-width: calc(100% - 6rem) !important;
 }
+
 .tab {
   width: 4rem;
   height: 4rem;
@@ -60,8 +62,8 @@ section div {
 
 .info {
   height: 4rem;
-  background: #dcedc8;
   padding: 0 1rem;
   color: black;
+  background: #dcedc8;
 }
 </style>

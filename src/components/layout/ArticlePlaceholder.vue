@@ -29,5 +29,7 @@ export default {
 </script>
 
 <style scoped>
-li { height: 1rem;}
+li {
+ height: 1rem;
+}
 </style>

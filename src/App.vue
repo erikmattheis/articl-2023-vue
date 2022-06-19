@@ -175,39 +175,40 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./assets/variables.scss";
-@import "./assets/placeholder.scss";
+@import "./assets/variables";
+@import "./assets/placeholder";
 
 .fade-enter-active {
-  transition: opacity 0.2s ease;
+transition: opacity 0.2s ease;
+  transition-delay: 0.2s;
 }
+
 .fade-leave-active {
-  transition: opacity 0.1s ease;
+transition: opacity 0.1s ease;
 }
-.fade-enter-active {
-transition-delay: 0.2s;
-}
+
 .fade-leave-to,
 .fade-enter-from {
-  opacity: 0;
+opacity: 0;
 }
 
 @media (prefers-reduced-motion) {
-  .fade-leave-to,
+.fade-leave-to,
   .fade-enter-from {
-    opacity: 1;
-  }
+opacity: 1;
+}
 }
 
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
-@import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
 :where(:root) {
-  background-color:var(--bg0);
+background-color:var(--bg0);
 }
+
 body {
-  border-radius: 0;
+border-radius: 0;
 }
 
 :where(:root),
@@ -218,169 +219,170 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  font-family: "Poppins", "Arial", sans-serif !important;
+font-family: Poppins, Arial, sans-serif !important;
   font-size: 1rem;
   line-height: 1.6rem;
+
   --primary-focus: transparent;
 }
 
 body {
-
-  display: flex;
+display: flex;
   align-items: center;
   justify-content: center;
 }
 
 body * {
-  border-radius: 0 !important;
+border-radius: 0 !important;
 }
+
 input[role="switch"],
 input[type="radio"] {
-  border-radius: 1rem !important;
+border-radius: 1rem !important;
 }
 
 .vertical-container {
-  display: flex;
-  min-height: 100vh;
+display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 100vh;
 }
 
 .vertical-container main {
-  display: flex;
+display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .vertical-container main article {
-    flex-grow: 1;
+flex-grow: 1;
 }
 
 ul {
-  padding-left: 0;
+padding-left: 0;
   list-style-type: none !important;
 }
 
 ul li {
-  list-style-type: none !important;
+list-style-type: none !important;
 }
 
 .left-space {
-  padding-left: 2rem;
+padding-left: 2rem;
 }
 
 .right {
-  float: right;
+float: right;
 }
 
 header article,
 footer article {
-  background-color: var(--bg1);
+background-color: var(--bg1);
 }
 
 #app {
-   background-color: var(--bg2);
+background-color: var(--bg2);
 }
 
 header article {
+padding-top: 0;
+  padding-bottom: 0;
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 main article {
-  margin-top: 0;
+margin-top: 0;
   margin-bottom: 0;
   background-color: var(--bg2);
 }
 
 main form {
-  margin-bottom: 0;
+margin-bottom: 0;
 }
 
 footer article {
-  margin-top: 0;
+margin-top: 0;
   margin-bottom: 0;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
 select,
 textarea {
-  padding: 0.4rem 0.6rem !important;
+padding: 0.4rem 0.6rem !important;
 }
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
-  height: initial;
+
+input:not([type="checkbox"], [type="radio"], [type="range"]) {
+height: initial;
 }
 
 .toggle-password {
-  position: relative;
+position: relative;
 }
 
 .toggle-password-mask {
-  position: absolute;
-  right: 1rem;
+position: absolute;
   top: 40%;
-  transform: translateY(-40%);
-  cursor: pointer;
-  height: 2.2rem;
+  right: 1rem;
   width: 2.2rem;
+  height: 2.2rem;
+  cursor: pointer;
+  transform: translateY(-40%);
 }
 
 .nav-tabs {
-  column-gap: 0;
+column-gap: 0;
 }
 
 .tab-content {
-  width: 100%;
+width: 100%;
 }
 
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
-  display: inline-block;
-  border-bottom: 1px solid transparent;
+display: inline-block;
   font-size: 1rem;
   vertical-align: middle;
+  border-bottom: 1px solid transparent;
 }
 
 .nav-tabs li a,
 .note-actions a,
 .articl-actions a {
-  text-decoration: none;
+display: flex;
+  align-items: center;
+  justify-content: center;
   height: 1.6rem;
   padding: 0 0.5rem;
+  text-decoration: none;
   transition: background-color 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .nav-tabs li.active,
 .active {
-  border-color: var(--bg0);
-
+border-color: var(--bg0);
 }
 
 .line-detail {
+padding: 0 0.5rem;
   background-color: var(--bg1);
-
-  padding: 0 0.5rem;
 }
+
 .line-main {
-  padding: 0 0.5rem;
+padding: 0 0.5rem;
 }
 
 small {
-  font-size: 0.7rem;
+font-size: 0.7rem;
 }
 
 .ghost {
-  border: 2px dashed red !important;
+border: 2px dashed red !important;
 }
 
 .sr {
-  display: inline-block;
+display: inline-block;
   line-height: 0.5rem;
   text-indent: -10000px;
 }

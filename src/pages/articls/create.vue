@@ -415,6 +415,7 @@ export default {
 form input.another {
   padding-right: 4.6 rem;
 }
+
 form input.another button {
    position: absolute;
   top: 0;

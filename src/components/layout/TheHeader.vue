@@ -283,12 +283,14 @@ export default {
 <style scoped lang="scss">
 
 details[role=list],
-details[role=list] summary:not([role]):focus,
-details summary {
+details summary,
+details[role=list] summary:not([role]):focus
+{
+  padding: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
-  padding: 0 !important;
 }
+
 details summary::after {
   display:none !important;
 }
@@ -303,8 +305,8 @@ li .grid {
 }
 
 .less-margin {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 .a {

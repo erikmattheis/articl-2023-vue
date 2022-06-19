@@ -286,7 +286,7 @@ export default {
 }
 
 .success {
-  border: 8px solid green;
   background-color: honeydew;
+  border: 8px solid green;
 }
 </style>

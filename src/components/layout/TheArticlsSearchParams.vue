@@ -214,15 +214,15 @@ export default {
 
 <style scoped>
 #app>main>article>div>div>small>ul>li>a {
-  margin-left: 0.5rem;
   margin-top: 0.5rem;
-  cursor: pointer;
+  margin-left: 0.5rem;
   color: red !important;
+  cursor: pointer;
 }
 
 strong:not([class="not-strong"]) {
-  background-color: #749157;
-  color: black;
   padding: 0.2rem 0.1rem;
+  color: black;
+  background-color: #749157;
 }
 </style>

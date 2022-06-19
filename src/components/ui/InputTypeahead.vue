@@ -269,8 +269,8 @@ export default {
 ul {
   position: absolute;
   z-index: 1;
-  background-color: var(--bg1);
   width: 100%;
+  background-color: var(--bg1);
 }
 
 li {
@@ -278,21 +278,21 @@ li {
 }
 
 label {
-  margin-top: 0;
-  display: block;
   position: relative;
+  display: block;
+  margin-top: 0;
 }
 
 label .icon {
   position: absolute;
   top: 0.5rem;
   right: 0.4rem;
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .active {
-  background-color: var(--primary);
   cursor: pointer;
+  background-color: var(--primary);
 }
 
 label> :where(input, select, textarea) {
