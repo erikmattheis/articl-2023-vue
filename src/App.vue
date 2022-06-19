@@ -192,6 +192,13 @@ transition-delay: 0.2s;
   opacity: 0;
 }
 
+@media (prefers-reduced-motion) {
+  .fade-leave-to,
+  .fade-enter-from {
+    opacity: 1;
+  }
+}
+
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
 @import url("//fonts.googleapis.com/css2?family=Poppins&display=swap");
