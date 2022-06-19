@@ -231,16 +231,18 @@
           "**/*.vue"
         ],
         "rules": {
+          "block-closing-brace-empty-line-before": "always",
+          "block-closing-brace-newline-after": "always",
+          "block-closing-brace-newline-before": "always",
+          "block-closing-brace-space-before": "always",
+          "block-opening-brace-newline-after": "always",
+          "block-opening-brace-space-after": "always",
+          "color-no-invalid-hex": true,
           "unit-allowed-list": [
-            "em",
+            "rem",
+            "%",
             "s"
-          ],
-          "block-closing-brace-newline-after": "never",
-          "block-closing-brace-newline-before": null,
-          "block-closing-brace-space-before": "never",
-          "block-opening-brace-newline-after": null,
-          "block-opening-brace-space-after": "never",
-          "color-no-invalid-hex": true
+          ]
         }
       }
     ],
@@ -249,11 +251,11 @@
     ],
     "rules": {
       "block-closing-brace-empty-line-before": "never",
-      "block-closing-brace-newline-after": "never",
-      "block-closing-brace-newline-before": null,
-      "block-closing-brace-space-before": "never",
-      "block-opening-brace-newline-after": null,
-      "block-opening-brace-space-after": "never",
+      "block-closing-brace-newline-after": "always",
+      "block-closing-brace-newline-before": "always",
+      "block-closing-brace-space-before": "always",
+      "block-opening-brace-newline-after": "always",
+      "block-opening-brace-space-after": "always",
       "color-no-invalid-hex": true,
       "unit-allowed-list": [
         "rem",
