@@ -53,6 +53,9 @@
     "stylelint-config-standard-scss": "^4.0.0",
     "stylelint-scss": "^4.0.0"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "eslintConfig": {
     "env": {
       "browser": true,
@@ -259,6 +262,5 @@
       ]
     }
   },
-  "type": "module",
   "version": "1.0.0"
 }

@@ -11,8 +11,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/index";
 
-console.log(createAuthRefreshInterceptor);
-
 const app = createApp(App);
 
 let baseURL;
@@ -60,31 +58,36 @@ const refreshAuthLogic = async (failedRequest) => {
 
   if (!getRefreshTokenValue() || failedRequest.isRetry) {
 
-    return Promise.resolve();
+    return Promise.reject();
 
   }
 
-  const tokens = await axios({
+  // does it need axios instance returned
+  return axios({
     method: "POST",
     url: `${baseURL}/auth/refresh-tokens`,
     data: {
       refreshToken: getRefreshTokenValue(),
     },
-  });
+  })
+    .then((tokens) => {
 
-  setTokens(tokens.data);
+      // eslint-disable-next-line no-param-reassign
+      failedRequest.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
 
-  // eslint-disable-next-line no-param-reassign
-  failedRequest.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
+      // eslint-disable-next-line no-param-reassign
+      failedRequest.isRetry = true;
 
-  // eslint-disable-next-line no-param-reassign
-  failedRequest.isRetry = true;
+      setTokens(tokens.data);
 
-  return Promise.resolve();
+      return Promise.resolve();
+
+    });
 
 };
+const r = createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
-createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
+console.log("r", r);
 
 app.use(router);
 
