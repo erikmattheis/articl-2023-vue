@@ -219,8 +219,6 @@ export default {
 
           }
 
-          this.buttonDisabled = false;
-
         } else {
 
           this.$store.dispatch("errors/setError", this.errorMessage);
@@ -230,6 +228,10 @@ export default {
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.buttonDisabled = false;
 
       }
 

@@ -43,6 +43,8 @@ export default {
 
       try {
 
+        this.buttonDisabled = true;
+
         await this.submitDelete(this.id);
 
         this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
@@ -56,12 +58,14 @@ export default {
 
         this.$store.dispatch("errors/setError", error);
 
+      } finally {
+
+        this.buttonDisabled = false;
+
       }
 
     },
     async submitDelete(id) {
-
-      this.buttonDisabled = true;
 
       return this.$http({
         method: "DELETE",

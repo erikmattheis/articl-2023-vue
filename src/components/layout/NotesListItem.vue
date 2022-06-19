@@ -1,7 +1,7 @@
 <template>
   <template v-if="!isEditing">
     <ul>
-      <li class="detail-line">
+      <li class="line-detail">
         <template v-if="note.author?.nameFirst || note.author?.nameLast">
           {{ note.author.nameFirst }} {{ note.author.nameLast }}
         </template>

@@ -374,8 +374,6 @@ export default {
             },
           });
 
-          this.buttonDisabled = false;
-
           this.success = true;
 
           Object.assign(this, result.data);
@@ -389,6 +387,10 @@ export default {
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.buttonDisabled = false;
 
       }
 

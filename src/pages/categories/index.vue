@@ -257,8 +257,6 @@ export default {
             data,
           });
 
-          this.buttonDisabled = false;
-
           this.success = true;
 
           this.result = result.data;
@@ -272,6 +270,10 @@ export default {
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.buttonDisabled = false;
 
       }
 

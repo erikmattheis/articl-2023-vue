@@ -185,11 +185,13 @@ export default {
 
         }
 
-        this.buttonDisabled = false;
-
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.buttonDisabled = false;
 
       }
 

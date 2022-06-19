@@ -253,7 +253,7 @@ export default {
 
       } finally {
 
-        this.  = false;
+        this.buttonDisabled = false;
 
       }
 

@@ -166,8 +166,6 @@ export default {
             },
           });
 
-          this.buttonDisabled = false;
-
           this.$emit("view-mode", id);
 
         } else {
@@ -179,6 +177,10 @@ export default {
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.buttonDisabled = false;
 
       }
 

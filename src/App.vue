@@ -177,6 +177,9 @@ export default {
 <style lang="scss">
 @import "./assets/variables";
 @import "./assets/placeholder";
+@import "~/node_modules/@picocss/pico/css/pico.css";
+
+@import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
 .fade-enter-active {
 transition: opacity 0.2s ease;
@@ -199,26 +202,13 @@ opacity: 1;
 }
 }
 
-@import "~/node_modules/@picocss/pico/css/pico.css";
-
-@import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
-
 :where(:root) {
 background-color:var(--bg0);
 }
 
-body {
-border-radius: 0;
-}
-
 :where(:root),
 html,
-body,
-input:-webkit-autofill::first-line,
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+body{
 font-family: Poppins, Arial, sans-serif !important;
   font-size: 1rem;
   line-height: 1.6rem;
@@ -230,32 +220,11 @@ body {
 display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 0;
 }
 
 body * {
 border-radius: 0 !important;
-}
-
-input[role="switch"],
-input[type="radio"] {
-border-radius: 1rem !important;
-}
-
-.vertical-container {
-display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
-
-.vertical-container main {
-display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.vertical-container main article {
-flex-grow: 1;
 }
 
 ul {
@@ -267,21 +236,9 @@ ul li {
 list-style-type: none !important;
 }
 
-.left-space {
-padding-left: 2rem;
-}
-
-.right {
-float: right;
-}
-
 header article,
 footer article {
 background-color: var(--bg1);
-}
-
-#app {
-background-color: var(--bg2);
 }
 
 header article {
@@ -316,6 +273,40 @@ input:not([type="checkbox"], [type="radio"], [type="range"]) {
 height: initial;
 }
 
+input[role="switch"],
+input[type="radio"] {
+border-radius: 1rem !important;
+}
+
+.vertical-container {
+display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+#app {
+background-color: var(--bg2);
+}
+
+.vertical-container main {
+display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.vertical-container main article {
+flex-grow: 1;
+}
+
+.left-space {
+padding-left: 2rem;
+}
+
+.right {
+float: right;
+}
+
 .toggle-password {
 position: relative;
 }
@@ -347,9 +338,10 @@ display: inline-block;
   border-bottom: 1px solid transparent;
 }
 
-.nav-tabs li a,
 .note-actions a,
-.articl-actions a {
+.articl-actions a
+.nav-tabs li a
+{
 display: flex;
   align-items: center;
   justify-content: center;
@@ -385,6 +377,18 @@ border: 2px dashed red !important;
 display: inline-block;
   line-height: 0.5rem;
   text-indent: -10000px;
+}
+
+input:-webkit-autofill::first-line,
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+font-family: Poppins, Arial, sans-serif !important;
+  font-size: 1rem;
+  line-height: 1.6rem;
+
+  --primary-focus: transparent;
 }
 
 </style>
