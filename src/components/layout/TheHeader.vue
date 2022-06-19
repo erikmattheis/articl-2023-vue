@@ -313,7 +313,7 @@ li .grid {
   fill: #039be5;
 }
 
-articl nav {
+article nav {
   overflow: auto;
 }
 
