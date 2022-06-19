@@ -236,8 +236,6 @@ export default {
               "Your account information was successfully updated.",
             );
 
-            this.buttonDisabled = false;
-
           }
 
         } else {
@@ -252,6 +250,10 @@ export default {
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.  = false;
 
       }
 
