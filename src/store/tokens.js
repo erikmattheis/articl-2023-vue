@@ -1,16 +1,18 @@
+import VueCookies from "vue-cookies";
+
 export default {
   namespaced: true,
 
   state: () => {
 
     return {
-      accessTokenExpires: undefined,
-      accessTokenValue: undefined,
+      accessTokenExpires: VueCookies.get("accessTokenExpires"),
+      accessTokenValue: VueCookies.get("accessTokenValue"),
       interval: null,
       loggedIn: false,
-      now: undefined,
-      refreshTokenExpires: undefined,
-      refreshTokenValue: undefined,
+      now: Math.round(Date.now() / 1000),
+      refreshTokenExpires: VueCookies.get("refreshTokenExpires"),
+      refreshTokenValue: VueCookies.get("refreshTokenValue"),
     };
 
   },
@@ -136,6 +138,8 @@ export default {
     isLoggedIn: (state) => {
 
       console.log("isLoggedIn", state.accessTokenExpires > state.now * 1000);
+      console.log("accessTokenExpires", state.accessTokenExpires);
+      console.log("now", state.now);
 
       return state.accessTokenExpires > state.now * 1000;
 
