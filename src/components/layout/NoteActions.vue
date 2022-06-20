@@ -35,4 +35,3 @@ export default {
   emits: ["edit-mode"],
 };
 </script>
-

@@ -1,7 +1,7 @@
 <template>
   <article>
     <div class="box-placeholder">
-      <h2 class="text line">&nbsp;</h2>
+      <h2 class="text line">r&nbsp;</h2>
 
       <ul class="nav-tabs">
         <li class="text line link">&nbsp;</li>
@@ -31,5 +31,6 @@ export default {
 <style scoped>
 li {
   height: 1rem;
+  text-indent:-999rem;
 }
 </style>

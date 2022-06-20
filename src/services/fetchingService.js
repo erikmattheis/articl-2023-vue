@@ -398,4 +398,3 @@ const fetchData = async (url) => {
 export {
   copyToClipboard, fetchData, generateJSON,
 };
-

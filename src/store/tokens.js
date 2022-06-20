@@ -4,11 +4,11 @@ export default {
   state: () => {
 
     return {
-      loggedIn: false,
-      interval: null,
-      now: undefined,
       accessTokenExpires: undefined,
       accessTokenValue: undefined,
+      interval: null,
+      loggedIn: false,
+      now: undefined,
       refreshTokenExpires: undefined,
       refreshTokenValue: undefined,
     };

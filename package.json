@@ -1,10 +1,14 @@
 {
-  "author": "",
-  "browserslist": [
-    "> 1%",
-    "not ie 11",
-    "not op_mini all"
-  ],
+  "name": "latest-articl-frontent-dev",
+  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "lint:scss": "stylelint ./src/**/*.{vue,scss} --fix"
+  },
   "dependencies": {
     "@picocss/pico": "^1.5.2",
     "axios": "^0.27.2",
@@ -12,12 +16,8 @@
     "compression": "^1.7.4",
     "core-js": "^3.8.3",
     "express": "^4.18.1",
-    "feather-icons": "^4.29.0",
-    "format-package": "^7.0.0",
     "lodash": "^4.17.21",
-    "sass-rem": "^3.0.0",
     "serve-static": "^1.15.0",
-    "v3-infinite-loading": "^1.0.6",
     "vue": "^3.2.13",
     "vue-cookies": "^1.8.1",
     "vue-feather": "^2.0.0",
@@ -25,7 +25,6 @@
     "vuedraggable": "^4.1.0",
     "vuex": "^4.0.0"
   },
-  "description": "",
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.6",
@@ -36,92 +35,49 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint": "^8.18.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
-    "eslint-plugin-vue": "^8.0.3",
+    "eslint-plugin-vue": "^9.1.1",
     "eslint-plugin-vuejs-accessibility": "^1.2.0",
+    "postcss-html": "^1.4.1",
     "sass": "^1.52.2",
     "sass-loader": "^13.0.0",
-    "stylelint": "^14.9.1",
-    "stylelint-config-css-modules": "^4.1.0",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-recess-order": "^3.0.0",
     "stylelint-config-recommended-vue": "^1.4.0",
-    "stylelint-config-standard": "^26.0.0",
-    "stylelint-config-standard-scss": "^4.0.0",
-    "stylelint-scss": "^4.0.0"
-  },
-  "engines": {
-    "node": "16.x"
+    "stylelint-webpack-plugin": "^3.3.0"
   },
   "eslintConfig": {
+    "root": true,
     "env": {
-      "browser": true,
-      "es2021": true,
       "node": true
     },
     "extends": [
-      "eslint:recommended",
-      "plugin:vuejs-accessibility/recommended",
-      "plugin:vue/vue3-recommended",
+      "plugin:vue/vue3-essential",
       "@vue/airbnb"
     ],
-    "overrides": [
-      {
-        "files": [
-          "src/**/*.js",
-          "src/**/*.vue"
-        ]
-      }
-    ],
     "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2022,
-      "moduleNameMapper": {
-        "eslint/use-at-your-own-risk": "eslint/lib/unsupported-api.js"
-      },
-      "parser": "@babel/eslint-parser",
-      "sourceType": "module"
+      "parser": "@babel/eslint-parser"
     },
     "plugins": [
-      "vuejs-accessibility",
       "simple-import-sort",
+      "sort-keys-fix",
+      "vuejs-accessibility",
       "prefer-arrow",
       "vue"
     ],
-    "root": true,
     "rules": {
       "arrow-body-style": [
         "error",
         "always"
       ],
-      "block-spacing": "error",
-      "func-names": "off",
-      "max-len": "off",
+      "max-len": [
+        "error",
+        {
+          "code": 1000
+        }
+      ],
       "no-console": "off",
-      "no-debugger": "off",
-      "no-multiple-empty-lines": [
-        "error",
-        {
-          "max": 1,
-          "maxBOF": 0,
-          "maxEOF": 1
-        }
-      ],
-      "object-curly-newline": [
-        "error",
-        {
-          "ExportDeclaration": "always",
-          "ImportDeclaration": "never",
-          "ObjectExpression": "always",
-          "ObjectPattern": "always"
-        }
-      ],
       "padded-blocks": [
         "error",
         {
@@ -133,144 +89,51 @@
           "allowSingleLineBlocks": true
         }
       ],
-      "padding-line-between-statements": [
-        "error",
-        {
-          "blankLine": "always",
-          "next": "*",
-          "prev": "*"
-        },
-        {
-          "blankLine": "never",
-          "next": "const",
-          "prev": "const"
-        },
-        {
-          "blankLine": "never",
-          "next": "let",
-          "prev": "let"
-        },
-        {
-          "blankLine": "always",
-          "next": "expression",
-          "prev": "expression"
-        },
-        {
-          "blankLine": "any",
-          "next": "import",
-          "prev": "import"
-        },
-        {
-          "blankLine": "any",
-          "next": "cjs-import",
-          "prev": "cjs-import"
-        }
-      ],
-      "prefer-arrow-callback": "error",
-      "prefer-arrow/prefer-arrow-functions": [
-        "error",
-        {
-          "allowStandaloneDeclarations": false,
-          "classPropertiesAllowed": false,
-          "disallowPrototype": true,
-          "singleReturnOnly": false
-        }
-      ],
       "quotes": [
         "error",
         "double"
       ],
-      "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
-      "vars-on-top": "error",
-      "vue/camelcase": "warn",
-      "vue/max-attributes-per-line": [
-        "error",
-        {
-          "multiline": {
-            "max": 1
-          },
-          "singleline": {
-            "max": 1
-          }
-        }
-      ],
-      "vue/singleline-html-element-content-newline": "off",
-      "vuejs-accessibility/heading-has-content": "off",
-      "vuejs-accessibility/no-onchange": "off"
+      "simple-import-sort/exports": "error"
     }
   },
-  "license": "ISC",
-  "main": "index.js",
-  "name": "articl-frontent-dev",
-  "resolve": {
-    "extensions": [
-      "*",
-      ".js",
-      ".vue",
-      ".json"
-    ]
-  },
-  "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "postinstalldd": "npm run build",
-    "serve": "vue-cli-service serve",
-    "start": "node index.js"
-  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
   "sideEffects": [
     "**/*.css",
     "**/*.scss"
   ],
   "stylelint": {
     "extends": [
-      "stylelint-config-recommended-vue",
-      "stylelint-config-standard",
-      "stylelint-config-standard-scss",
-      "stylelint-config-recommended-vue/scss",
-      "stylelint-config-recess-order",
-      "stylelint-config-css-modules",
-      "stylelint-config-prettier"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "*.vue",
-          "**/*.vue"
-        ],
-        "rules": {
-          "indentation": 2,
-          "rule-empty-line-before": "always",
-          "block-closing-brace-newline-after": "always",
-          "block-closing-brace-newline-before": "always-multi-line",
-          "block-closing-brace-space-before": "always-single-line",
-          "block-opening-brace-newline-after": "always-multi-line",
-          "block-opening-brace-space-after": "always-single-line",
-          "color-no-invalid-hex": true,
-          "linebreaks": "unix",
-          "no-eol-whitespace": true,
-          "property-no-unknown": true,
-          "unit-no-unknown": true
-        }
-      }
-    ],
-    "plugins": [
-      "stylelint-scss"
+      "stylelint-config-recommended-vue"
     ],
     "rules": {
-      "indentation": 2,
-      "rule-empty-line-before": "always",
+      "selector-pseudo-element-no-unknown": [
+        true,
+        {
+          "ignorePseudoElements": [
+            "v-deep"
+          ]
+        }
+      ],
       "block-closing-brace-newline-after": "always",
       "block-closing-brace-newline-before": "always-multi-line",
       "block-closing-brace-space-before": "always-single-line",
       "block-opening-brace-newline-after": "always-multi-line",
       "block-opening-brace-space-after": "always-single-line",
       "color-no-invalid-hex": true,
+      "indentation": 2,
+      "rule-empty-line-before": "always",
       "linebreaks": "unix",
       "no-eol-whitespace": true,
       "property-no-unknown": true,
       "unit-no-unknown": true
-    }
-  },
-  "version": "1.0.0"
+    },
+    "syntax": "scss",
+    "customSyntax": "postcss-html"
+  }
 }

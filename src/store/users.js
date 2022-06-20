@@ -4,10 +4,10 @@ export default {
   state: () => {
 
     return {
-      user: undefined,
-      userId: undefined,
-      userFullName: undefined,
       isEmailVerified: undefined,
+      user: undefined,
+      userFullName: undefined,
+      userId: undefined,
     };
 
   },
@@ -28,14 +28,16 @@ export default {
     },
   },
   getters: {
+
+    isEmailVerified: (state) => {
+
+      return state.user.isEmailVerified;
+
+    },
+
     user: (state) => {
 
       return state.user;
-
-    },
-    userId: (state) => {
-
-      return state.user.id;
 
     },
 
@@ -45,10 +47,11 @@ export default {
 
     },
 
-    isEmailVerified: (state) => {
+    userId: (state) => {
 
-      return state.user.isEmailVerified;
+      return state.user.id;
 
     },
+
   },
 };

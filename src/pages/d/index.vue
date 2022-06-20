@@ -154,7 +154,7 @@ export default {
 
         this.trigger = false;
 
-        this.$nextTick(function () {
+        this.$nextTick(function nextTick() {
 
           // to trigger page change animation
 
@@ -383,4 +383,3 @@ pre {
   border-bottom: 1px solid var(--bg1);
 }
 </style>
-
