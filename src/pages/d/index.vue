@@ -375,7 +375,7 @@ export default {
 >
 pre {
   overflow: auto;
-   word-break: break-all;
+  word-break: break-all;
   white-space: pre-wrap;
 }
 

@@ -30,6 +30,6 @@ export default {
 
 <style scoped>
 li {
- height: 1rem;
+  height: 1rem;
 }
 </style>

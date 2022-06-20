@@ -144,8 +144,6 @@ export default {
     },
     async submitForm(id) {
 
-      console.log("submitting", id);
-
       try {
 
         this.resetFormErrors();

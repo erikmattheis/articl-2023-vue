@@ -159,14 +159,14 @@ html[data-theme="dark"] article {
 
 html[data-theme="dark"] #app > div > dialog > article > section > div.info,
 html[data-theme="dark"]
-  #app
-  > div
-  > dialog
-  > article
-  > section
-  > div.info
-  ul
-  li {
+#app
+> div
+> dialog
+> article
+> section
+> div.info
+ul
+li {
   color: black !important;
   background-color: #cfa;
 }

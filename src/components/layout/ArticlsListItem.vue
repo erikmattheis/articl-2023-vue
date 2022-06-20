@@ -108,28 +108,28 @@ export default {
 
 <style scoped>
 a {
-cursor:pointer;
+  cursor:pointer;
 }
 
 #app > main > article > div > div > small > ul > li > a {
-margin-top: 0.5rem;
+  margin-top: 0.5rem;
   margin-left: 0.5rem;
   color: red !important;
   cursor: pointer;
 }
 
 .handle-container {
-width: 1rem !important;
+  width: 1rem !important;
 }
 
 strong:not([class="not-strong"]) {
-padding: 0.2rem 0.1rem;
+  padding: 0.2rem 0.1rem;
   color: black;
   background-color: #749157;
 }
 
 li {
-width:100%;
+  width:100%;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap

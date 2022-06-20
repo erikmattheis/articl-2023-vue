@@ -29,7 +29,7 @@ export default {
 
 <style scoped>
 nav a {
-display: inline-block;
+  display: inline-block;
   padding: 0.75rem;
   color: #f391e3;
   text-decoration: none;
@@ -39,11 +39,11 @@ display: inline-block;
 nav a:active,
 nav a:hover,
 nav a.router-link-active {
-border: 1px solid #f391e3;
+  border: 1px solid #f391e3;
 }
 
 li {
-display: inline-block;
+  display: inline-block;
   margin: 0 0.5rem;
 }
 </style>

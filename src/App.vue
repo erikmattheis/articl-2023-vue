@@ -182,34 +182,35 @@ export default {
 @import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
 .fade-enter-active {
-transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
   transition-delay: 0.2s;
 }
 
 .fade-leave-active {
-transition: opacity 0.1s ease;
+  transition: opacity 0.1s ease;
 }
 
 .fade-leave-to,
 .fade-enter-from {
-opacity: 0;
+  opacity: 0;
 }
 
 @media (prefers-reduced-motion) {
-.fade-leave-to,
+
+  .fade-leave-to,
   .fade-enter-from {
-opacity: 1;
-}
+    opacity: 1;
+  }
 }
 
 :where(:root) {
-background-color:var(--bg0);
+  background-color:var(--bg0);
 }
 
 :where(:root),
 html,
 body{
-font-family: Poppins, Arial, sans-serif !important;
+  font-family: Poppins, Arial, sans-serif !important;
   font-size: 1rem;
   line-height: 1.6rem;
 
@@ -217,102 +218,105 @@ font-family: Poppins, Arial, sans-serif !important;
 }
 
 body {
-display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0;
 }
 
 body * {
-border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 ul {
-padding-left: 0;
+  padding-left: 0;
   list-style-type: none !important;
 }
 
 ul li {
-list-style-type: none !important;
+  list-style-type: none !important;
 }
 
 header article,
 footer article {
-background-color: var(--bg1);
+  background-color: var(--bg1);
 }
 
 header article {
-padding-top: 0;
+  padding-top: 0;
   padding-bottom: 0;
   margin-top: 0;
   margin-bottom: 0;
 }
 
 main article {
-margin-top: 0;
+  margin-top: 0;
   margin-bottom: 0;
   background-color: var(--bg2);
 }
 
 main form {
-margin-bottom: 0;
-}
-
-footer article {
-margin-top: 0;
   margin-bottom: 0;
 }
 
-input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
+footer article {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+input:not([type="checkbox"],
+[type="radio"],
+[type="range"],
+[type="file"]),
 select,
 textarea {
-padding: 0.4rem 0.6rem !important;
+  padding: 0.4rem 0.6rem !important;
 }
 
 input:not([type="checkbox"], [type="radio"], [type="range"]) {
-height: initial;
+  height: initial;
 }
 
 input[role="switch"],
 input[type="radio"] {
-border-radius: 1rem !important;
+  border-radius: 1rem !important;
 }
 
 .vertical-container {
-display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
 }
 
 #app {
-background-color: var(--bg2);
+  background-color: var(--bg2);
 }
 
 .vertical-container main {
-display: flex;
+  display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .vertical-container main article {
-flex-grow: 1;
+  flex-grow: 1;
 }
 
 .left-space {
-padding-left: 2rem;
+  padding-left: 2rem;
 }
 
 .right {
-float: right;
+  float: right;
 }
 
 .toggle-password {
-position: relative;
+  position: relative;
 }
 
 .toggle-password-mask {
-position: absolute;
+  position: absolute;
   top: 40%;
   right: 1rem;
   width: 2.2rem;
@@ -322,27 +326,26 @@ position: absolute;
 }
 
 .nav-tabs {
-column-gap: 0;
+  column-gap: 0;
 }
 
 .tab-content {
-width: 100%;
+  width: 100%;
 }
 
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
-display: inline-block;
+  display: inline-block;
   font-size: 1rem;
   vertical-align: middle;
   border-bottom: 1px solid transparent;
 }
 
+.articl-actions a,
 .note-actions a,
-.articl-actions a
-.nav-tabs li a
-{
-display: flex;
+.nav-tabs li a {
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 1.6rem;
@@ -353,28 +356,28 @@ display: flex;
 
 .nav-tabs li.active,
 .active {
-border-color: var(--bg0);
+  border-color: var(--bg0);
 }
 
 .line-detail {
-padding: 0 0.5rem;
+  padding: 0 0.5rem;
   background-color: var(--bg1);
 }
 
 .line-main {
-padding: 0 0.5rem;
+  padding: 0 0.5rem;
 }
 
 small {
-font-size: 0.7rem;
+  font-size: 0.7rem;
 }
 
 .ghost {
-border: 2px dashed red !important;
+  border: 2px dashed red !important;
 }
 
 .sr {
-display: inline-block;
+  display: inline-block;
   line-height: 0.5rem;
   text-indent: -10000px;
 }
@@ -384,7 +387,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-font-family: Poppins, Arial, sans-serif !important;
+  font-family: Poppins, Arial, sans-serif !important;
   font-size: 1rem;
   line-height: 1.6rem;
 

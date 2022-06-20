@@ -419,7 +419,7 @@ form input.another {
 }
 
 form input.another button {
-   position: absolute;
+  position: absolute;
   top: 0;
   right: 0;
   width: 4.4rem;

@@ -85,9 +85,8 @@ const refreshAuthLogic = async (failedRequest) => {
     });
 
 };
-const r = createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
-console.log("r", r);
+createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
 app.use(router);
 
@@ -96,7 +95,5 @@ app.use(VueCookies, {
 });
 
 app.use(store);
-
-export default app;
 
 app.mount("#app");

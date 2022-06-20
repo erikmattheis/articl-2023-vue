@@ -328,7 +328,7 @@ export default {
 <style lang="scss" scoped>
 select {
   overflow: scroll;
- }
+}
 
 .horizontal {
   display: inline-block;
@@ -343,7 +343,7 @@ select {
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
- }
+}
 
 /*
 * End nav tabs

@@ -60,7 +60,7 @@ export default {
 
       } finally {
 
-        this.buttonDisabled = false;
+        this.a = false;
 
       }
 

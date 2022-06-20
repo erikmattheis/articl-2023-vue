@@ -64,6 +64,7 @@
       "node": true
     },
     "extends": [
+      "eslint:recommended",
       "plugin:vuejs-accessibility/recommended",
       "plugin:vue/vue3-recommended",
       "@vue/airbnb"
@@ -99,6 +100,7 @@
         "error",
         "always"
       ],
+      "block-spacing": "error",
       "func-names": "off",
       "max-len": "off",
       "no-console": "off",
@@ -180,6 +182,7 @@
       ],
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
+      "vars-on-top": "error",
       "vue/camelcase": "warn",
       "vue/max-attributes-per-line": [
         "error",
@@ -236,12 +239,18 @@
           "**/*.vue"
         ],
         "rules": {
+          "indentation": 2,
+          "rule-empty-line-before": "always",
           "block-closing-brace-newline-after": "always",
           "block-closing-brace-newline-before": "always-multi-line",
           "block-closing-brace-space-before": "always-single-line",
           "block-opening-brace-newline-after": "always-multi-line",
           "block-opening-brace-space-after": "always-single-line",
-          "color-no-invalid-hex": true
+          "color-no-invalid-hex": true,
+          "linebreaks": "unix",
+          "no-eol-whitespace": true,
+          "property-no-unknown": true,
+          "unit-no-unknown": true
         }
       }
     ],
@@ -249,12 +258,18 @@
       "stylelint-scss"
     ],
     "rules": {
+      "indentation": 2,
+      "rule-empty-line-before": "always",
       "block-closing-brace-newline-after": "always",
       "block-closing-brace-newline-before": "always-multi-line",
       "block-closing-brace-space-before": "always-single-line",
       "block-opening-brace-newline-after": "always-multi-line",
       "block-opening-brace-space-after": "always-single-line",
-      "color-no-invalid-hex": true
+      "color-no-invalid-hex": true,
+      "linebreaks": "unix",
+      "no-eol-whitespace": true,
+      "property-no-unknown": true,
+      "unit-no-unknown": true
     }
   },
   "version": "1.0.0"
