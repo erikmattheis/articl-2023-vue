@@ -173,9 +173,11 @@ export default {
 
   },
   computed: {
+
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
     }),
+
   },
 
   beforeMount() {
@@ -284,8 +286,7 @@ export default {
 
 details[role=list],
 details summary,
-details[role=list] summary:not([role]):focus
-{
+details[role=list] summary:not([role]):focus {
   padding: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
@@ -311,10 +312,6 @@ li .grid {
 
 .a {
   fill: #039be5;
-}
-
-article nav {
-  overflow: auto;
 }
 
 .search-articls {
