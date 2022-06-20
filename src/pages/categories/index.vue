@@ -86,19 +86,19 @@ export default {
   data: () => {
 
     return {
-      id: "",
-      title: null,
-      description: null,
-      parentSlug: null,
-      oldSlug: null,
-      isLoading: true,
-      categories: [],
-      formAction: "",
       buttonDisabled: false,
-      errorMessage: "",
-      success: false,
-      result: null,
+      categories: [],
       chrs: 0,
+      description: null,
+      errorMessage: "",
+      formAction: "",
+      id: "",
+      isLoading: true,
+      oldSlug: null,
+      parentSlug: null,
+      result: null,
+      success: false,
+      title: null,
     };
 
   },
