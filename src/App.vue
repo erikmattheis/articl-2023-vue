@@ -21,14 +21,6 @@
 
 <script>
 /* VUE
-          @before-enter="onBeforeEnter"
-          @enter="onEnter"
-          @after-enter="onAfterEnter"
-          @enter-cancelled="onEnterCancelled"
-          @before-leave="onBeforeLeave"
-          @leave="onLeave"
-          @after-leave="onAfterLeave"
-          @leave-cancelled="onLeaveCancelled"
  * 1939,1200, 1,244, 1983, 1883 .js
  *  538, 3250, 3,623, 3,910, 5,475
  *
@@ -67,9 +59,8 @@ export default {
     };
 
   },
-  mounted: () => {
+  mounted() {
 
-    /*
     this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
 
     this.$store.dispatch("tokens/accessTokenExpires", this.$cookies.get("accessTokenExpires"));
@@ -77,8 +68,6 @@ export default {
     this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
 
     this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
-
-*/
 
   },
   created() {

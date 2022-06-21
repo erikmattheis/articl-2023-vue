@@ -137,19 +137,15 @@ export default {
 
         const result = await this.getMe();
 
-        if (result) {
+        this.nameFirst = result.nameFirst ? result.nameFirst : "";
 
-          this.nameFirst = result.nameFirst ? result.nameFirst : "";
+        this.nameLast = result.nameLast ? result.nameLast : "";
 
-          this.nameLast = result.nameLast ? result.nameLast : "";
+        this.email = result.email ? result.email : "";
 
-          this.email = result.email ? result.email : "";
+        this.institution = result.institution ? result.institution : "";
 
-          this.institution = result.institution ? result.institution : "";
-
-          this.education = result.education ? result.education : "";
-
-        }
+        this.education = result.education ? result.education : "";
 
       } catch (error) {
 

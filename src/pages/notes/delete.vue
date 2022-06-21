@@ -26,7 +26,7 @@ export default {
     };
 
   },
-  emots: ["edit-mode"],
+  emits: ["edit-mode"],
   mounted() {
 
     if (this.$route.params?.id) {

@@ -236,11 +236,12 @@ export default {
 
       try {
 
-        const refreshToken = this.$store.state.refreshTokenValue;
+        const refreshToken = this.$store.getters["tokens/refreshTokenValue"];
 
         if (refreshToken) {
 
-          await this.$http({
+          console.log("is refresh token");
+          const result = await this.$http({
             method: "POST",
             url: "/auth/logout",
             data: {
@@ -248,14 +249,16 @@ export default {
             },
           });
 
+          console.log("is refresh token", result);
           localStorage.clear();
 
           this.$store.dispatch("tokens/logout");
 
-          // this.$router.push('/');
+          this.$router.push("/");
 
         } else {
 
+          console.log("no refresh token");
           localStorage.clear();
 
           this.$store.dispatch("tokens/logout");

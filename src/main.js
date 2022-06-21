@@ -54,10 +54,31 @@ app.config.globalProperties.$http.interceptors.request.use(
   (error) => { return error; },
 );
 
-const refreshAuthLogic = async (failedRequest) => {
+const refreshAuthLogic = (failedRequest) => {
+
+  return axios.post({
+    method: "POST",
+    url: `${baseURL}/auth/refresh-tokens`,
+    data: {
+      refreshToken: getRefreshTokenValue(),
+    },
+    skipAuthRefresh: true,
+  })
+    .then((tokens) => {
+
+      setTokens(tokens.data);
+      return Promise.resolve(failedRequest);
+
+    });
+
+};
+
+/*
+async function refreshAuthLogic(failedRequest) {
 
   if (!getRefreshTokenValue() || failedRequest.isRetry) {
 
+    router.push({ name: "loginPage", query: { redirect: router.currentRoute.value.path } });
     return Promise.reject();
 
   }
@@ -72,6 +93,7 @@ const refreshAuthLogic = async (failedRequest) => {
   })
     .then((tokens) => {
 
+      console.log("i am right here", tokens);
       // eslint-disable-next-line no-param-reassign
       failedRequest.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
 
@@ -82,10 +104,16 @@ const refreshAuthLogic = async (failedRequest) => {
 
       return Promise.resolve();
 
+    })
+    .catch((error) => {
+
+      console.log("catching error here", error);
+      return Promise.reject(error);
+
     });
 
-};
-
+}
+*/
 createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
 app.use(router);
