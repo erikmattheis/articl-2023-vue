@@ -1,39 +1,46 @@
 <template>
-  <notee>
-    <h1>Delete Note{{ id }}</h1>
-    <p>Really delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
+  <article>
+    <h1>Delete Category</h1>
+    <p>Really delete "{{ title }}"?</p>
     <form>
       <button
         v-if="!!id"
-        @click="deleteNote()"
+        :aria-busy="buttonDisabled"
+        @click="deleteCategory()"
       >
         Delete
       </button>
     </form>
-  </notee>
+  </article>
 </template>
 
 <script>
 export default {
-  name: "DeleteNote",
-  props: {
-    fullText: {
-      type: String,
-      default: "",
-    },
-    id: {
-      type: String,
-      default: "",
-    },
+  name: "DeleteCategory",
+  components: {
   },
   data: () => {
+
+    return {
+      id: undefined,
+      title: "Nothing to delete",
+      buttonDisabled: false,
+    };
 
   },
   mounted() {
 
+    if (this.$route.params?.id) {
+
+      this.id = this.$route.params?.id;
+
+      this.title = this.$route.params?.title;
+
+    }
+
   },
   methods: {
-    async deleteNote() {
+    async deleteCategory() {
 
       try {
 
@@ -45,7 +52,7 @@ export default {
 
         this.$store.dispatch(
           "modals/setSuccessMessage",
-          `The note "${this.title}" has been permanently deleted.`,
+          `The category "${this.title}" has been permanently deleted.`,
         );
 
       } catch (error) {
@@ -63,7 +70,7 @@ export default {
 
       return this.$http({
         method: "DELETE",
-        url: "/notes",
+        url: "/categories",
         data: {
           id,
         },

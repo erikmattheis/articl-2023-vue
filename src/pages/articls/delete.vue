@@ -24,6 +24,7 @@ export default {
     return {
       id: undefined,
       title: "Nothing to delete",
+      buttonDisabled: false,
     };
 
   },

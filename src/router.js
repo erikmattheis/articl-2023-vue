@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import createArticlPage from "@/pages/articls/create.vue";
 import deleteArticlPage from "@/pages/articls/delete.vue";
 import searchArticls from "@/pages/articls/index.vue";
+import deleteCategoryPage from "@/pages/categories/delete.vue";
 import createCategoryPage from "@/pages/categories/index.vue";
 import categoryPage from "@/pages/d/index.vue";
 import forgotPassPage from "@/pages/forgot-pass.vue";
@@ -102,7 +103,7 @@ const router = createRouter({
     {
       name: "deleteCategory",
       path: "/articls",
-      component: createCategoryPage,
+      component: deleteCategoryPage,
       props: true,
     },
 
@@ -137,11 +138,6 @@ const router = createRouter({
       name: "deleteNote",
       path: "/notes/delete",
       component: deleteNote,
-
-      meta: {
-        id: true,
-        fullText: true,
-      },
 
       props: true,
     },
