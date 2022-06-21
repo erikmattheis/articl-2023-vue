@@ -3,7 +3,7 @@
     <article>
       <nav>
         <ul>
-          <li class="brand">isLoggedIn:{{isLoggedIn}}
+          <li class="brand">
             <router-link to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,9 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/"> Articl.net </router-link>
+            <router-link to="/">
+              Articl.net
+            </router-link>
           </li>
         </ul>
 

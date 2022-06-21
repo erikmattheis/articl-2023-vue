@@ -45,6 +45,18 @@
           </template>
         </draggable-items>
 
+        <div v-if="isLoggedIn">
+          <router-link
+            :to="{
+              name: 'createCategoryPage',
+              query: {parentSlug: $route.params.slug},
+            }"
+          >
+            <button>
+              New Category Here
+            </button>
+          </router-link>
+        </div>
         <ul class="nav-tabs">
           <li
             v-for="articlType in articlTypes"
@@ -78,6 +90,16 @@
               />
             </template>
           </draggable-items>
+          <li v-if="isLoggedIn">
+            <router-link
+              :to="{
+                name: 'createArticlPage',
+                query: {slug: $route.params.slug},
+              }"
+            >
+              New Articl Here
+            </router-link>
+          </li>
         </ul>
       </div>
 
