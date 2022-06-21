@@ -52,11 +52,15 @@
               query: {parentSlug: $route.params.slug},
             }"
           >
-            <button>
+            <a
+              href
+              role="button"
+            >
               New Category Here
-            </button>
+            </a>
           </router-link>
         </div>
+
         <ul class="nav-tabs">
           <li
             v-for="articlType in articlTypes"
@@ -90,17 +94,22 @@
               />
             </template>
           </draggable-items>
-          <li v-if="isLoggedIn">
-            <router-link
-              :to="{
-                name: 'createArticlPage',
-                query: {slug: $route.params.slug},
-              }"
+        </ul>
+        <div v-if="isLoggedIn">
+          <router-link
+            :to="{
+              name: 'createArticlPage',
+              query: {slug: $route.params.slug},
+            }"
+          >
+            <a
+              href
+              role="button"
             >
               New Articl Here
-            </router-link>
-          </li>
-        </ul>
+            </a>
+          </router-link>
+        </div>
       </div>
 
       <div
