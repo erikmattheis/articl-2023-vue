@@ -1,5 +1,5 @@
 <template>
-  <notee>
+  <article>
     <h1>Delete Note{{ id }}</h1>
     <p>Really delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
     <form>
@@ -10,7 +10,7 @@
         Delete
       </button>
     </form>
-  </notee>
+  </article>
 </template>
 
 <script>
