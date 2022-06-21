@@ -69,7 +69,7 @@ $bg-light1: darken($bg-light2, 10%
 );
 $bg-light0: darken($bg-light2, 20%);
 $bg-dark0: #15242a;
-$bg-dark1: lighten($bg-dark0, 5%);
+$bg-dark1:lighten($bg-dark0, 5%);
 $bg-dark2: lighten($bg-dark0, 10%);
 
 :root[data-theme="light"] {
@@ -77,6 +77,8 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --bg0: #{$bg-light0};
   --bg1: #{$bg-light1};
   --bg2: #{$bg-light2};
+  --dropdown-background-color: #{$bg-light1};
+  --form-element-background-color: #{$bg-light1};
  }
 
 
@@ -85,7 +87,9 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --bg0: #{$bg-dark0};
   --bg1: #{$bg-dark1};
   --bg2: #{$bg-dark2};
-  --card-box-shadow: 0 0.125rem 1rem rgb(255 255 255 / 6%), 0 0.125rem 2rem rgb(255 255 255 / 12%), 0 0 0 0.0625rem rgb(255 255 255 / 3.6%);
+  --dropdown-background-color: #{$bg-dark1};
+  --form-element-background-color: #{$bg-dark1};
+  --card-box-shadow: 0 0.0625rem 1rem rgb(255 255 255 / 3%), 0 0.625rem 2rem rgb(255 255 255 / 6%), 0 0 0 0.0375rem rgb(255 255 255 / 1.8%);
  }
 
 

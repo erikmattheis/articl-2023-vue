@@ -300,6 +300,7 @@ details[role=list] summary:not([role]):focus {
   padding: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
+  //background-color:#f00 !important;
 }
 
 details summary::after {
