@@ -168,6 +168,7 @@ export default {
 @import "./assets/placeholder";
 @import "~/node_modules/@picocss/pico/css/pico.css";
 
+@import "//fonts.googleapis.com/css2?family=Montserrat&display=swap";
 @import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
 .fade-enter-active {
@@ -198,10 +199,10 @@ export default {
 
 :where(:root),
 html,
-body{
-  font-family: Poppins, Arial, sans-serif !important;
+body {
+  font-family: "Poppins", Arial, sans-serif !important;
   font-size: 1rem;
-  line-height: 1.6rem;
+  line-height: 1.8rem;
 
   --primary-focus: transparent;
 }

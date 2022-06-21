@@ -205,6 +205,11 @@ export default {
       try {
 
         document.documentElement.style.setProperty(
+          "--font-size",
+          `${18 * size}px`,
+        );
+
+        document.documentElement.style.setProperty(
           "font-size",
           `${18 * size}px`,
         );
