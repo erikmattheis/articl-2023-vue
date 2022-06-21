@@ -9,6 +9,9 @@
     "lint": "vue-cli-service lint",
     "lint:scss": "stylelint ./src/**/*.{vue,scss} --fix"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@picocss/pico": "^1.5.2",
     "axios": "^0.27.2",
