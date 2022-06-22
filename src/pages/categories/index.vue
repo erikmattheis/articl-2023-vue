@@ -248,10 +248,11 @@ export default {
           if (id) {
 
             data.oldSlug = this.oldSlug;
+            console.log("data", data);
 
           }
 
-          const result = await this.$http({
+          await this.$http({
             method: verb,
             url: `/categories/${id}`,
             data,
@@ -259,7 +260,12 @@ export default {
 
           this.success = true;
 
-          this.result = result.data;
+          this.$store.dispatch("modals/setSuccessTitle", "Category ppdated.");
+
+          this.$store.dispatch(
+            "modals/setSuccessMessage",
+            "Your account information was successfully updated.",
+          );
 
         } else {
 

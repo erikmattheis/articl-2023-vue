@@ -1,7 +1,11 @@
 <template>
   <section>
-    <h3 v-if="!success"> {{ formAction }} note </h3>
-    <h1 v-else> Success </h1>
+    <h3 v-if="!success">
+      {{ formAction }} note
+    </h3>
+    <h1 v-else>
+      Success
+    </h1>
 
     <template v-if="!isLoading">
       <form v-if="!success">

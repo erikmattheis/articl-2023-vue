@@ -57,14 +57,14 @@
           <li v-else>
             <details role="list">
               <summary aria-haspopup="listbox">
-                <a>
+                <div role="link">
                   <span class="sr">User</span>
                   <vue-feather
                     size="2rem"
                     type="user"
                     aria-label="User"
                   />
-                </a>
+                </div>
               </summary>
 
               <ul role="listbox">
