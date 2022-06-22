@@ -57,6 +57,10 @@ export default {
       default: "",
       type: String,
     },
+    slug: {
+      default: "",
+      type: String,
+    },
   },
   emits: ["view-mode"],
   data: () => {
@@ -68,7 +72,6 @@ export default {
       formAction: undefined,
       isLoading: true,
       id: undefined,
-      slug: undefined,
     };
 
   },
@@ -103,13 +106,17 @@ export default {
 
         const result = await this.getNote(id);
 
-        Object.assign(this, result.data);
+        this.fullText = result.data.fullText;
 
-        this.isLoading = false;
+        this.status = result.data.status;
 
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.isLoading = false;
 
       }
 

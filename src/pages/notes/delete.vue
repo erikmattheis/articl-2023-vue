@@ -1,11 +1,11 @@
 <template>
   <article>
-    <h1>Delete Note{{ id }}</h1>
+    <h1>Delete Note{{ slug }}</h1>
     <p>Really delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
     <form>
       <button
         v-if="!!id"
-        @click="deleteNote()"
+        @click.prevent="deleteNote()"
       >
         Delete
       </button>
@@ -25,8 +25,14 @@ export default {
       type: String,
       default: "",
     },
+    slug: {
+      type: String,
+      default: "",
+    },
   },
   data: () => {
+
+    return {};
 
   },
   mounted() {
@@ -41,12 +47,7 @@ export default {
 
         await this.submitDelete(this.id);
 
-        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
-
-        this.$store.dispatch(
-          "modals/setSuccessMessage",
-          `The note "${this.title}" has been permanently deleted.`,
-        );
+        this.$router.push({ name: "categoryPage", params: { slug: this.slug } });
 
       } catch (error) {
 

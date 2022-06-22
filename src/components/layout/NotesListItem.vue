@@ -20,12 +20,15 @@
       <note-actions
         :id="note.id"
         :full-text="note.fullText"
+        :slug="note.slug"
         @edit-mode="isEditing = true"
       />
     </div>
   </template>
+
   <note-crud
     v-else
+    :slug="note.slug"
     :passed-id="note.id"
     @view-mode="getCurrentNote"
   />
@@ -71,8 +74,6 @@ export default {
   methods: {
     async getCurrentNote(id) {
 
-      console.log("well it is", id);
-
       try {
 
         this.isLoading = true;
@@ -84,8 +85,6 @@ export default {
         console.log("result.data", result.data);
 
         this.note = result.data;
-
-        Object.assign(this, result.data);
 
         this.isLoading = false;
 

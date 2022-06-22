@@ -12,7 +12,7 @@
       <a>Change status</a>
     </li>
     <li>
-      <router-link :to="{ name: 'deleteNote', params: { id, fullText } }">
+      <router-link :to="{ name: 'deleteNote', params: { id, fullText, slug } }">
         delete
       </router-link>
     </li>
@@ -28,6 +28,10 @@ export default {
       default: "",
     },
     fullText: {
+      type: String,
+      default: "",
+    },
+    slug: {
       type: String,
       default: "",
     },

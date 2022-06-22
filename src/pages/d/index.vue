@@ -117,7 +117,10 @@
         class="tab-content"
       >
         <notes-list :notes="notes" />
-        <note-crud :slug="slug" />
+        <note-crud
+          :slug="slug"
+          @view-mode="updateData"
+        />
       </div>
     </article>
 
@@ -159,7 +162,6 @@ export default {
       articls: [],
       articlTypes: [],
       articlTypeCurrent: "",
-      trigger: true,
     };
 
   },
@@ -182,16 +184,6 @@ export default {
     async updateData() {
 
       try {
-
-        this.trigger = false;
-
-        this.$nextTick(function nextTick() {
-
-          // to trigger page change animation
-
-          this.trigger = true;
-
-        });
 
         this.isLoading = true;
 

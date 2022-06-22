@@ -6,7 +6,7 @@
     <h1 v-else>
       Success
     </h1>
-
+    slug: {{ slug }}
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="fullText">Note <textarea
@@ -56,7 +56,6 @@
 <script>
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
-import { fetchData } from "@/services/fetchingService";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
@@ -87,7 +86,7 @@ export default {
 
     if (!this.id) {
 
-      this.slug = this.$route.query.slug;
+      this.slug = this.$route.params.slug;
 
       this.isLoading = false;
 
@@ -122,39 +121,6 @@ export default {
       }
 
     },
-    async getData() {
-
-      if (this.noteUrl) {
-
-        try {
-
-          this.buttonFetchDisabled = true;
-
-          const result = await fetchData(this.noteUrl);
-
-          if (result) {
-
-            Object.assign(this, result);
-
-          }
-
-        } catch (error) {
-
-          this.$store.dispatch("errors/setError", error);
-
-        } finally {
-
-          this.isLoading = false;
-
-        }
-
-      } else {
-
-        this.$store.dispatch("errors/setError", "Please enter a URL");
-
-      }
-
-    },
     resetFormErrors() {
 
       this.success = null;
@@ -170,21 +136,9 @@ export default {
 
       let passed = true;
 
-      if (this.title === "") {
+      if (this.fullText === "") {
 
-        this.errorMessage = "Please enter a title.";
-
-        passed = false;
-
-      } else if (this.authors === "") {
-
-        this.errorMessage = "Please enter author names.";
-
-        passed = false;
-
-      } else if (this.type === "") {
-
-        this.errorMessage = "Please enter a type.";
+        this.errorMessage = "Please enter some text.";
 
         passed = false;
 
@@ -214,17 +168,10 @@ export default {
             method: verb,
             url: `/notes/${id}`,
             data: {
-              abstract: this.abstract,
-              affiliation: this.affiliation,
-              noteUrl: this.noteUrl,
-              type: this.type,
               authors: this.authors,
+              fullText: this.fullText,
               slug: this.slug,
-              journal: this.journal,
-              month: this.month,
               status: this.status,
-              title: this.title,
-              year: this.year,
             },
           });
 

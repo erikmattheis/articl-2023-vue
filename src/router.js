@@ -37,6 +37,7 @@ const router = createRouter({
       name: "categoryPage",
       path: "/d/:slug",
       component: categoryPage,
+      props: true,
     },
 
     {
@@ -138,7 +139,6 @@ const router = createRouter({
       name: "deleteNote",
       path: "/notes/delete",
       component: deleteNote,
-
       props: true,
     },
 
