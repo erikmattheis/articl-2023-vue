@@ -1,5 +1,5 @@
 <template>
-  <ul class="articl-actions">
+  <ul class="articl-actions admin">
     <li>
       <router-link :to="{ name: 'editCategory', params: { passedId: id } }">
         edit

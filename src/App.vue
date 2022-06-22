@@ -277,6 +277,11 @@ input[type="radio"] {
   background-color: var(--bg2);
 }
 
+.admin {
+  border: 3px solid #00cc00;
+  background-color: #ffffff
+}
+
 .vertical-container main {
   display: flex;
   flex-direction: column;

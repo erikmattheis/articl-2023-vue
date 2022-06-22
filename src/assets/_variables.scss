@@ -81,6 +81,7 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --form-element-background-color: #{$bg-light1};
   --form-element-focus-color:  #{$bg-light1};
   --dropdown-hover-background-color: #{$bg-light1};
+  --card-box-shadow: none; 
  }
 
 
@@ -93,7 +94,7 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --form-element-background-color: #{$bg-dark1};
   --form-element-focus-color:  #{$bg-dark1};
   --dropdown-hover-background-color: #{$bg-dark1};
-  --card-box-shadow: 0 0.0625rem 1rem rgb(255 255 255 / 3%), 0 0.625rem 2rem rgb(255 255 255 / 6%), 0 0 0 0.0375rem rgb(255 255 255 / 1.8%);
+  --card-box-shadow: none; // 0 0.0625rem 1rem rgb(255 255 255 / 3%), 0 0.625rem 2rem rgb(255 255 255 / 6%), 0 0 0 0.0375rem rgb(255 255 255 / 1.8%);
  }
 
 
