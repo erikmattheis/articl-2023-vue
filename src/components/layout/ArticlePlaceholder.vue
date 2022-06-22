@@ -1,18 +1,48 @@
 <template>
   <article>
     <div class="box-placeholder">
-      <h2 class="text-p line">
+      <h2
+        class="text-p line"
+        :style="{ width: pickWidth(40,80) + '%' }"
+      >
         r&nbsp;
       </h2>
 
       <ul class="nav-tabs">
-        <li class="text-p line link">
+        <li
+          class="text-p line"
+          :style="{ width: pickWidth(80,100) + '%' }"
+        >
 &nbsp;
         </li>
-        <li class="text-p line">
+        <li
+          class="text-p"
+          :style="{ width: pickWidth(80,100) + '%' }"
+        >
 &nbsp;
         </li>
-        <li class="text-p">
+        <li
+          class="text-p"
+          :style="{ width: pickWidth(80,100) + '%' }"
+        >
+&nbsp;
+        </li>
+        <li
+          class="text-p"
+          :style="{ width: pickWidth(80,100) + '%' }"
+        >
+&nbsp;
+        </li>
+        <li
+          class="text-p"
+          :style="{ width: pickWidth(80,100) + '%' }"
+        >
+&nbsp;
+        </li>
+        <li
+          class="text-p"
+          :style="{ width: pickWidth(20,100) + '%' }"
+        >
 &nbsp;
         </li>
       </ul>
@@ -24,12 +54,9 @@
 export default {
   name: "ArticlPlaceholder",
   methods: {
-    pickClass: () => {
+    pickWidth: (min, max) => {
 
-      const max = 6;
-      const min = 2;
-
-      return `placeholder-col-${2 * Math.floor(Math.random() * (max - min + 1) + min)}`;
+      return Math.floor(Math.random() * (max - min + 1) + min);
 
     },
   },
@@ -39,7 +66,6 @@ export default {
 <style scoped>
 h2,
 li {
-  height: 1rem;
   text-indent:-999rem;
 }
 </style>

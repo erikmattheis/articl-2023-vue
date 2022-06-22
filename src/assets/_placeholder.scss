@@ -1,37 +1,22 @@
-
-
 .box-placeholder {
     .text-p {
         display: inline-block;
         min-width: 100px;
-
-
+        opacity: 0.1;
         &.link {
             background-color: var(--primary);
             opacity: .4;
+            width:100%;
         }
 
-        &.line {
-            width: 100%;
-        }
+    }
 
-        &.category {
-            width: 100px;
-        }
- }
-
-    h2.text-p {
-        opacity: 0.2;
- }
-
-    .image {
-        background-color: var(--bg1);
- }
  }
 
  .text-p {
     position: relative;
     overflow: hidden;
+    background-color: #ccc;
     &::before {
         position: absolute;
         top: 0;
@@ -42,7 +27,7 @@
         width: 500%;
         margin-left: -250%;
         background: linear-gradient(to right, rgba(20,20,20, 0) 46%, rgba(20,20,20, 0.35) 50%, rgba(20,20,20, 0) 54%) 50% 50%;
-        animation: phAnimation 0.5s linear infinite;
+        animation: phAnimation 1s linear infinite;
         content: " ";
         pointer-events: none;
     }
@@ -50,11 +35,11 @@
 
  @keyframes phAnimation {
      0% {
-         transform: translate3d(-30%, 0, 0);
+         transform: translate3d(-300px, 0, 0);
      }
 
      100% {
-         transform: translate3d(30%, 0, 0);
+         transform: translate3d(300px, 0, 0);
      }
  }
 

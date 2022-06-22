@@ -198,8 +198,6 @@ html,
 body {
   background-color:var(--bg0);
   font-family: "Poppins", Arial, sans-serif !important;
-  font-size: 1rem;
-  line-height: 1.8rem;
   --primary-focus: transparent;
 }
 
