@@ -42,7 +42,10 @@
           </li>
 
           <li v-if="!isLoggedIn">
-            <router-link to="/login">
+            <router-link
+              to="/login"
+            >
+              <span class="sr">User</span>
               <vue-feather
                 size="2rem"
                 type="user"
@@ -54,11 +57,14 @@
           <li v-else>
             <details role="list">
               <summary aria-haspopup="listbox">
-                <vue-feather
-                  size="2rem"
-                  type="user"
-                  aria-label="User"
-                />
+                <a>
+                  <span class="sr">User</span>
+                  <vue-feather
+                    size="2rem"
+                    type="user"
+                    aria-label="User"
+                  />
+                </a>
               </summary>
 
               <ul role="listbox">

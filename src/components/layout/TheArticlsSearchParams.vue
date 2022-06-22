@@ -136,67 +136,67 @@ export default {
 
         switch (arrName) {
 
-          case "statuses": {
+        case "statuses": {
 
-            this.$store.dispatch(
-              "articlsParams/statuses",
-              this.allStatuses.slice(),
-            );
+          this.$store.dispatch(
+            "articlsParams/statuses",
+            this.allStatuses.slice(),
+          );
 
-            break;
+          break;
 
-          }
+        }
 
-          case "types": {
+        case "types": {
 
-            this.$store.dispatch("articlsParams/types", this.allTypes.slice());
+          this.$store.dispatch("articlsParams/types", this.allTypes.slice());
 
-            break;
+          break;
 
-          }
+        }
 
-          case "text": {
+        case "text": {
 
-            this.$store.dispatch("articlsParams/text", "");
+          this.$store.dispatch("articlsParams/text", "");
 
-            break;
+          break;
 
-          }
+        }
 
-          case "title": {
+        case "title": {
 
-            this.$store.dispatch("articlsParams/title", "");
+          this.$store.dispatch("articlsParams/title", "");
 
-            break;
+          break;
 
-          }
+        }
 
-          case "journal": {
+        case "journal": {
 
-            this.$store.dispatch("articlsParams/journal", "");
+          this.$store.dispatch("articlsParams/journal", "");
 
-            break;
+          break;
 
-          }
+        }
 
-          case "authors": {
+        case "authors": {
 
-            this.$store.dispatch("articlsParams/authors", "");
+          this.$store.dispatch("articlsParams/authors", "");
 
-            break;
+          break;
 
-          }
+        }
 
-          case "year": {
+        case "year": {
 
-            this.$store.dispatch("articlsParams/year", this.yearsStart);
+          this.$store.dispatch("articlsParams/year", this.yearsStart);
 
-            break;
+          break;
 
-          }
+        }
 
-          default:
-            throw new Error("Unknown search parameter passed.");
+        default:
+          throw new Error("Unknown search parameter passed.");
 
         }
 

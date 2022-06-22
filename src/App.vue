@@ -193,17 +193,13 @@ export default {
   }
 }
 
-:where(:root) {
-  background-color:var(--bg0);
-}
-
 :where(:root),
 html,
 body {
+  background-color:var(--bg0);
   font-family: "Poppins", Arial, sans-serif !important;
   font-size: 1rem;
   line-height: 1.8rem;
-
   --primary-focus: transparent;
 }
 
@@ -370,18 +366,6 @@ small {
   display: inline-block;
   line-height: 0.5rem;
   text-indent: -10000px;
-}
-
-input:-webkit-autofill::first-line,
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  font-family: Poppins, Arial, sans-serif !important;
-  font-size: 1rem;
-  line-height: 1.6rem;
-
-  --primary-focus: transparent;
 }
 
 </style>

@@ -1,12 +1,20 @@
 <template>
   <article>
     <div class="box-placeholder">
-      <h2 class="text line">r&nbsp;</h2>
+      <h2 class="text line">
+        r&nbsp;
+      </h2>
 
       <ul class="nav-tabs">
-        <li class="text line link">&nbsp;</li>
-        <li class="text line">&nbsp;</li>
-        <li class="text">&nbsp;</li>
+        <li class="text line link">
+&nbsp;
+        </li>
+        <li class="text line">
+&nbsp;
+        </li>
+        <li class="text">
+&nbsp;
+        </li>
       </ul>
     </div>
   </article>
