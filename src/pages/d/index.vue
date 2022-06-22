@@ -1,131 +1,141 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
-    <article v-if="!isLoading">
-      <h2>{{ title }}</h2>
+  <article v-if="!isLoading">
+    <h2>{{ title }}</h2>
+
+    <router-link
+      :to="{'name':'notesTab'}"
+    >
+      notes
+    </router-link>
+    <router-link
+      :to="{'name':'categoriesTab'}"
+    >
+      categories
+    </router-link>
+    <router-view
+      v-slot="{ Component }"
+    >
+      <component :is="Component" />
+    </router-view>
+    <ul class="nav-tabs">
+      <li :class="{ active: activeTab === 0 }">
+        <a
+          href
+          @click.prevent="activeTab = 0"
+          @keyup.enter.prevent="activeTab = 0"
+        >
+          Sub-categories &amp; Articls</a>
+      </li>
+      <li :class="{ active: activeTab === 1 }">
+        <a
+          href
+          @click.prevent="activeTab = 1"
+          @keyup.enter.prevent="activeTab = 1"
+        >
+          Notes</a>
+      </li>
+    </ul>
+
+    <div
+      v-show="activeTab === 0"
+      class="tab-content"
+    >
+      <draggable-items
+        v-model="categories"
+        tag="ul"
+        item-key="id"
+        handle=".handle"
+        ghost-class="ghost"
+        @change="onUpdateOrderValues"
+      >
+        <template #item="{ element }">
+          <categories-list-item
+            :category="element"
+            class="list-item"
+          />
+        </template>
+      </draggable-items>
+
+      <div v-if="isLoggedIn">
+        <router-link
+          :to="{
+            name: 'createCategoryPage',
+            query: {parentSlug: $route.params.slug},
+          }"
+        >
+          <a
+            href
+            role="button"
+          >
+            New Category Here
+          </a>
+        </router-link>
+      </div>
 
       <ul class="nav-tabs">
-        <li :class="{ active: activeTab === 0 }">
+        <li
+          v-for="articlType in articlTypes"
+          :key="articlType"
+          :class="{ active: articlTypeCurrent === articlType }"
+        >
           <a
             href
-            @click.prevent="activeTab = 0"
-            @keyup.enter.prevent="activeTab = 0"
+            @click.prevent="articlTypeCurrent = articlType"
+            @keyup.enter.prevent="articlTypeCurrent = articlType"
           >
-            Sub-categories &amp; Articls</a>
-        </li>
-        <li :class="{ active: activeTab === 1 }">
-          <a
-            href
-            @click.prevent="activeTab = 1"
-            @keyup.enter.prevent="activeTab = 1"
-          >
-            Notes</a>
+            {{ articlType }}</a>
         </li>
       </ul>
 
-      <div
-        v-show="activeTab === 0"
-        class="tab-content"
-      >
+      <h3>{{ articlTypeCurrent }}</h3>
+
+      <ul v-if="articlTypeCurrent">
         <draggable-items
-          v-model="categories"
+          v-model="articls[articlTypeCurrent]"
           tag="ul"
           item-key="id"
           handle=".handle"
           ghost-class="ghost"
-          @change="onUpdateOrderValues"
+          @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
         >
           <template #item="{ element }">
-            <categories-list-item
-              :category="element"
-              class="list-item"
+            <articls-list-item
+              :articl="element"
+              :order="element.order"
             />
           </template>
         </draggable-items>
-
-        <div v-if="isLoggedIn">
-          <router-link
-            :to="{
-              name: 'createCategoryPage',
-              query: {parentSlug: $route.params.slug},
-            }"
+      </ul>
+      <div v-if="isLoggedIn">
+        <router-link
+          :to="{
+            name: 'createArticlPage',
+            query: {slug: $route.params.slug},
+          }"
+        >
+          <a
+            href
+            role="button"
           >
-            <a
-              href
-              role="button"
-            >
-              New Category Here
-            </a>
-          </router-link>
-        </div>
-
-        <ul class="nav-tabs">
-          <li
-            v-for="articlType in articlTypes"
-            :key="articlType"
-            :class="{ active: articlTypeCurrent === articlType }"
-          >
-            <a
-              href
-              @click.prevent="articlTypeCurrent = articlType"
-              @keyup.enter.prevent="articlTypeCurrent = articlType"
-            >
-              {{ articlType }}</a>
-          </li>
-        </ul>
-
-        <h3>{{ articlTypeCurrent }}</h3>
-
-        <ul v-if="articlTypeCurrent">
-          <draggable-items
-            v-model="articls[articlTypeCurrent]"
-            tag="ul"
-            item-key="id"
-            handle=".handle"
-            ghost-class="ghost"
-            @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
-          >
-            <template #item="{ element }">
-              <articls-list-item
-                :articl="element"
-                :order="element.order"
-              />
-            </template>
-          </draggable-items>
-        </ul>
-        <div v-if="isLoggedIn">
-          <router-link
-            :to="{
-              name: 'createArticlPage',
-              query: {slug: $route.params.slug},
-            }"
-          >
-            <a
-              href
-              role="button"
-            >
-              New Articl Here
-            </a>
-          </router-link>
-        </div>
+            New Articl Here
+          </a>
+        </router-link>
       </div>
+    </div>
 
-      <div
-        v-show="activeTab === 1"
-        class="tab-content"
-      >
-        <notes-list :notes="notes" />
-        <note-crud
-          :slug="slug"
-          @view-mode="updateData"
-        />
-      </div>
-    </article>
+    <div
+      v-show="activeTab === 1"
+      class="tab-content"
+    >
+      <notes-list :notes="notes" />
+      <note-crud
+        :slug="slug"
+        @view-mode="updateData"
+      />
+    </div>
+  </article>
 
-    <article-placeholder v-else />
-  </transition>
+  <article-placeholder v-else />
 </template>
 
 <script>

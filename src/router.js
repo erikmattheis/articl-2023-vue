@@ -1,5 +1,5 @@
+/* eslint-disable simple-import-sort/imports */
 import { createRouter, createWebHistory } from "vue-router";
-
 import createArticlPage from "@/pages/articls/create.vue";
 import deleteArticlPage from "@/pages/articls/delete.vue";
 import searchArticls from "@/pages/articls/index.vue";
@@ -15,6 +15,8 @@ import registerPage from "@/pages/register.vue";
 import resetPasswordPage from "@/pages/reset-password.vue";
 import usersPage from "@/pages/users/index.vue";
 import verifyEmailPage from "@/pages/verify-email.vue";
+import notesTab from "@/components/layout/NotesTab.vue";
+import categoriesTab from "@/components/layout/CategoriesTab.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -38,6 +40,16 @@ const router = createRouter({
       path: "/d/:slug",
       component: categoryPage,
       props: true,
+      children: [{
+        name: "notesTab",
+        path: "notes",
+        component: notesTab,
+      },
+      {
+        name: "categoriesTab",
+        path: "",
+        component: categoriesTab,
+      }],
     },
 
     {
