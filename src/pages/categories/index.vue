@@ -164,7 +164,7 @@ export default {
 
         Object.assign(this, result.data);
 
-        this.oldSlug = result.slug;
+        this.oldSlug = result.data.slug;
 
         this.isLoading = false;
 
