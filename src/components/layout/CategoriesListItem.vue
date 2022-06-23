@@ -3,7 +3,6 @@
     <div class="grid">
       <ul>
         <li>
-          XXX
           <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
             {{ category.title }}
           </router-link>

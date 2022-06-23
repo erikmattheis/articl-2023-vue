@@ -1,33 +1,36 @@
 <template>
-  <draggable-items
-    v-model="categories"
-    tag="ul"
-    item-key="id"
-    handle=".handle"
-    ghost-class="ghost"
-    @change="onUpdateOrderValues"
-  >
-    <template #item="{ element }">
-      <categories-list-item
-        :category="element"
-        class="list-item"
-      />
-    </template>
-  </draggable-items>
-  <div v-if="isLoggedIn">
-    <router-link
-      :to="{
-        name: 'createCategoryPage',
-        query: {parentSlug: $route.params.slug},
-      }"
+  <div class="gr">
+    categories:{{ categories }}
+    <draggable-items
+      v-model="categories"
+      tag="ul"
+      item-key="id"
+      handle=".handle"
+      ghost-class="ghost"
+      @change="onUpdateOrderValues"
     >
-      <a
-        href
-        role="button"
+      <template #item="{ element }">
+        <categories-list-item
+          :category="element"
+          class="list-item"
+        />
+      </template>
+    </draggable-items>
+    <div v-if="isLoggedIn">
+      <router-link
+        :to="{
+          name: 'createCategoryPage',
+          query: {parentSlug: $route.params.slug},
+        }"
       >
-        New Category Here
-      </a>
-    </router-link>
+        <a
+          href
+          role="button"
+        >
+          New Category Here
+        </a>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -43,29 +46,18 @@ export default {
     DraggableItems,
     CategoriesListItem,
   },
-  props: {
-    items: {
-      default: () => { return []; },
-      type: Array,
-    },
-  },
   data() {
 
     return {
-      categories: [],
+
     };
 
   },
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
+      categories: "categoryPages/categories",
     }),
-  },
-
-  mounted() {
-
-    this.categories = this.items;
-
   },
 
   methods: {

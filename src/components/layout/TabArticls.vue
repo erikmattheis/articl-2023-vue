@@ -1,52 +1,57 @@
 <template>
-  <ul class="nav-tabs">
-    <li
-      v-for="articlType in articlTypes"
-      :key="articlType"
-      :class="{ active: articlTypeCurrent === articlType }"
-    >
-      <a
-        href
-        @click.prevent="articlTypeCurrent = articlType"
-        @keyup.enter.prevent="articlTypeCurrent = articlType"
+  <div class="gr">
+    <ul class="nav-tabs">
+      <li
+        v-for="articlType in articlTypes"
+        :key="articlType"
+        :class="{ active: articlTypeCurrent === articlType }"
       >
-        {{ articlType }}</a>
-    </li>
-  </ul>
+        <a
+          href
+          @click.prevent="articlTypeCurrent = articlType"
+          @keyup.enter.prevent="articlTypeCurrent = articlType"
+        >
+          {{ articlType }}</a>
+      </li>
+    </ul>
 
-  <h3>{{ articlTypeCurrent }}</h3>
+    <h3>{{ articlTypeCurrent }}</h3>
+    articls[articlTypeCurrent].length {{ articls[articlTypeCurrent]?.length }}<br>
+    articlTypeCurrent:{{ articlTypeCurrent }}<br>
+    articls:{{ articls }}<br>
 
-  <ul v-if="articlTypeCurrent">
-    <draggable-items
-      v-model="articls[articlTypeCurrent]"
-      tag="ul"
-      item-key="id"
-      handle=".handle"
-      ghost-class="ghost"
-      @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
-    >
-      <template #item="{ element }">
-        <articls-list-item
-          :articl="element"
-          :order="element.order"
-        />
-      </template>
-    </draggable-items>
-  </ul>
-  <div v-if="isLoggedIn">
-    <router-link
-      :to="{
-        name: 'createArticlPage',
-        query: {slug: $route.params.slug},
-      }"
-    >
-      <a
-        href
-        role="button"
+    <ul v-if="articlTypeCurrent">
+      <draggable-items
+        v-model="articls"
+        tag="ul"
+        item-key="id"
+        handle=".handle"
+        ghost-class="ghost"
+        @change="onUpdateArticlsOrderValues($store.getters['categoryPages/articlTypeCurrent'])"
       >
-        New Articl Here
-      </a>
-    </router-link>
+        <template #item="{ element }">
+          <articls-list-item
+            :articl="element"
+            :order="element.order"
+          />
+        </template>
+      </draggable-items>
+    </ul>
+    <div v-if="isLoggedIn">
+      <router-link
+        :to="{
+          name: 'createArticlPage',
+          query: {slug: $route.params.slug},
+        }"
+      >
+        <a
+          href
+          role="button"
+        >
+          New Articl Here
+        </a>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -71,7 +76,6 @@ export default {
   data() {
 
     return {
-      articls: [],
       articlTypeCurrent: undefined,
     };
 
@@ -79,11 +83,12 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
+      articls: "categoryPages/articls",
+      articlTypes: "categoryPages/articlTypes",
     }),
   },
   mounted() {
 
-    this.articls = this.items;
     [this.articlTypeCurrent] = Object.keys(this.articls);
 
   },

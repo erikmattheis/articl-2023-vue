@@ -1,12 +1,26 @@
 <template>
-  <h2>Notes</h2>
-  notes.length: {{ notes.length }}
+  <div class="gr">
+    <h2>Notes</h2>
+    notes.length: {{ notes.length }}
+    <ul>
+      <li
+        v-for="note in notes || [] "
+        :key="note.fullText"
+      >
+        <notes-list-item :passed-note="note" />
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+import NotesListItem from "@/components/layout/NotesListItem.vue";
 
 export default {
   name: "TabNotes",
+  components: { NotesListItem },
   props: {
     items: {
       default: () => { return []; },
@@ -16,14 +30,14 @@ export default {
   data() {
 
     return {
-      notes: [],
+
     };
 
   },
-  mounted() {
-
-    this.notes = this.items;
-
+  computed: {
+    ...mapGetters({
+      notes: "categoryPages/notes",
+    }),
   },
 };
 

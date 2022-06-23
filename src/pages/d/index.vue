@@ -1,36 +1,57 @@
 <template>
   <article v-if="!isLoading">
     <h2>{{ title }}</h2>
-    there are {{ categories.length }}<br>
-    and {{ typeof articls }} articls <br>
-    and {{ notes.length }} notes<br>
+
     <ul class="nav-tabs">
-      <li :class="{ active: activeTab === 0 }">
-        <a
-          href
-        ><router-link
-          :to="{ 'name': 'TabCategories', params:{items:categories}}"
-        >
-          Sub-categories</router-link></a>
-      </li>
-      <li :class="{ active: activeTab === 0 }">
-        <a
-          href
-        ><router-link
-          :to="{ 'name': 'TabArticls', params:{items:articls}}"
-        >
-          Articls</router-link></a>
-      </li>
-      <li :class="{ active: activeTab === 2}">
-        <a
-          href
-        ><router-link
-          :to="{'name':'TabNotes',params:{items:notes}}"
-        >
-          Notes</router-link></a>
-      </li>
+      <router-link
+        v-slot="{ href, isExactActive }"
+        custom
+        :to="{ 'name': 'TabCategories' }"
+      >
+        <li :class="{'active':isExactActive}">
+          <a
+            href
+            @click.prevent="$router.push(href)"
+            @keyup.enter.prevent="$router.push(href)"
+          >
+            Sub-categories
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-slot="{ href, isExactActive }"
+        custom
+        :to="{ 'name': 'TabArticls'}"
+      >
+        <li :class="{'active':isExactActive}">
+          <a
+            href
+            @click.prevent="$router.push(href)"
+            @keyup.enter.prevent="$router.push(href)"
+          >
+            Articls
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-slot="{ href, isExactActive }"
+        custom
+        :to="{ 'name': 'TabNotes' }"
+      >
+        <li :class="{'active':isExactActive}">
+          <a
+            href
+            @click.prevent="$router.push(href)"
+            @keyup.enter.prevent="$router.push(href)"
+          >
+            Notes
+          </a>
+        </li>
+      </router-link>
     </ul>
-    <router-view :items="categories" />
+    <router-view />
   </article>
 
   <article-placeholder v-else />
@@ -52,20 +73,16 @@ export default {
 
     return {
       isLoading: true,
-      activeTab: 0,
       title: "",
       slug: "",
-      notes: [],
-      categories: [],
-      articls: [],
-      articlTypes: [],
-      articlTypeCurrent: "",
     };
 
   },
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
+      articls: "categoryPages/articls",
+      categories: "categoryPages/categories",
     }),
   },
   watch: {
@@ -85,11 +102,10 @@ export default {
 
         this.isLoading = true;
 
-        this.slug = this.$route.params.slug;
+        // this.slug = this.$route.params.slug;
 
         const results = await this.fetchData(this.$route.params.slug);
 
-        this.categories = results.categories;
         /*
         console.log("loaded this.categories", results.categories);
         console.log("loaded this.articls", results.articls);
@@ -97,14 +113,41 @@ export default {
         console.log("results.articlTypes", results.articlTypes);
         console.log("this.articls!!!!!", this.articls);
 */
-        console.log("this.items", this.items);
-        this.articlTypes = results.articlTypes;
+        console.log("results", results);
 
-        [this.articlTypeCurrent] = Object.keys(results.articls);
+        if (results.categories?.length) {
 
-        this.articls = results.articls;
+          this.$store.dispatch("categoryPages/categories", results.categories);
 
-        this.notes = results.notes?.results;
+        } else {
+
+          this.$store.dispatch("categoryPages/categories", []);
+
+        }
+
+        if (results.articls?.length) {
+
+          const articlTypes = Object.keys(results.articls.reduce((result, obj) => {
+
+            return Object.assign(result, obj);
+
+          }, {}));
+
+          this.$store.dispatch("categoryPages/articls", results.articls);
+          this.$store.dispatch("categoryPages/articlTypes", articlTypes);
+
+        } else {
+
+          this.$store.dispatch("categoryPages/articls", []);
+          this.$store.dispatch("categoryPages/articlTypes", []);
+
+        }
+
+        if (results.notes?.length) {
+
+          this.$store.dispatch("categoryPages/notes", results.notes);
+
+        }
 
         this.title = results.category[0]?.title;
 
@@ -115,11 +158,13 @@ export default {
           description,
         });
 
-        this.isLoading = false;
-
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        this.isLoading = false;
 
       }
 

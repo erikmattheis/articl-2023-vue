@@ -45,31 +45,18 @@ const router = createRouter({
         name: "TabCategories",
         path: "",
         component: TabCategories,
-        props: (route) => {
-
-          return { items: route.params.items };
-
-        },
       },
       {
         name: "TabNotes",
         path: "notes",
         component: TabNotes,
-        props: (route) => {
-
-          return { items: route.params.items };
-
-        },
+        props: true,
       },
       {
         name: "TabArticls",
         path: "articls/:type?",
         component: TabArticls,
-        props: (route) => {
-
-          return { items: route.params.items };
-
-        },
+        props: true,
       }],
     },
 
