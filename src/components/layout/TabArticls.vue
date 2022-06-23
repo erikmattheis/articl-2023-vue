@@ -1,0 +1,245 @@
+<template>
+  <ul class="nav-tabs">
+    <li
+      v-for="articlType in articlTypes"
+      :key="articlType"
+      :class="{ active: articlTypeCurrent === articlType }"
+    >
+      <a
+        href
+        @click.prevent="articlTypeCurrent = articlType"
+        @keyup.enter.prevent="articlTypeCurrent = articlType"
+      >
+        {{ articlType }}</a>
+    </li>
+  </ul>
+
+  <h3>{{ articlTypeCurrent }}</h3>
+
+  <ul v-if="articlTypeCurrent">
+    <draggable-items
+      v-model="articls[articlTypeCurrent]"
+      tag="ul"
+      item-key="id"
+      handle=".handle"
+      ghost-class="ghost"
+      @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
+    >
+      <template #item="{ element }">
+        <articls-list-item
+          :articl="element"
+          :order="element.order"
+        />
+      </template>
+    </draggable-items>
+  </ul>
+  <div v-if="isLoggedIn">
+    <router-link
+      :to="{
+        name: 'createArticlPage',
+        query: {slug: $route.params.slug},
+      }"
+    >
+      <a
+        href
+        role="button"
+      >
+        New Articl Here
+      </a>
+    </router-link>
+  </div>
+</template>
+
+<script>
+import DraggableItems from "vuedraggable";
+import { mapGetters } from "vuex";
+
+import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
+
+export default {
+  name: "TabArticls",
+  components: {
+    DraggableItems,
+    ArticlsListItem,
+  },
+  props: {
+    items: {
+      default: () => { return []; },
+      type: Array,
+    },
+  },
+  data() {
+
+    return {
+      articls: [],
+      articlTypeCurrent: undefined,
+    };
+
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "tokens/isLoggedIn",
+    }),
+  },
+  mounted() {
+
+    this.articls = this.items;
+    [this.articlTypeCurrent] = Object.keys(this.articls);
+
+  },
+  methods: {
+    updateOrderValues() {
+
+      try {
+
+        this.categories.forEach((obj, index) => {
+
+          const objRef = obj;
+
+          objRef.order = index;
+
+        });
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
+
+    },
+
+    async saveOrderValues() {
+
+      try {
+
+        const order = this.categories.map((obj) => {
+
+          return {
+            id: obj.id,
+            order: obj.order,
+          };
+
+        });
+
+        await this.saveOrder(order);
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
+
+    },
+
+    async saveOrder(order) {
+
+      this.isLoading = true;
+
+      const result = await this.$http({
+        method: "POST",
+        url: "/categories/order",
+        data: {
+          order,
+        },
+      });
+
+      this.isLoading = false;
+
+      return result.data;
+
+    },
+
+    onUpdateOrderValues() {
+
+      this.updateOrderValues();
+
+      this.saveOrderValues();
+
+    },
+
+    updateArticlsOrderValues(articlType) {
+
+      try {
+
+        this.articls[articlType].forEach((obj, index) => {
+
+          const objRef = obj;
+
+          objRef.order = index;
+
+        });
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
+
+    },
+
+    async saveArticlsOrderValues(articlType) {
+
+      try {
+
+        const order = this.articls[articlType].map((obj) => {
+
+          return {
+            id: obj.id,
+            order: obj.order,
+          };
+
+        });
+
+        await this.saveArticlsOrder(order);
+
+      } catch (error) {
+
+        this.$store.dispatch("errors/setError", error);
+
+      }
+
+    },
+
+    async saveArticlsOrder(order) {
+
+      this.isLoading = true;
+
+      const result = await this.$http({
+        method: "POST",
+        url: "/articls/order",
+        data: {
+          order,
+        },
+      });
+
+      this.isLoading = false;
+
+      return result.data;
+
+    },
+
+    onUpdateArticlsOrderValues(articlType) {
+
+      this.updateArticlsOrderValues(articlType);
+
+      this.saveArticlsOrderValues(articlType);
+
+    },
+  },
+};
+
+</script>
+
+<style scoped>
+
+li {
+  width:100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+a {
+  cursor: pointer;
+}
+</style>

@@ -1,138 +1,36 @@
 <template>
   <article v-if="!isLoading">
     <h2>{{ title }}</h2>
-
-    <router-link
-      :to="{'name':'notesTab'}"
-    >
-      notes
-    </router-link>
-    <router-link
-      :to="{'name':'categoriesTab'}"
-    >
-      categories
-    </router-link>
-    <router-view
-      v-slot="{ Component }"
-    >
-      <component :is="Component" />
-    </router-view>
+    there are {{ categories.length }}<br>
+    and {{ typeof articls }} articls <br>
+    and {{ notes.length }} notes<br>
     <ul class="nav-tabs">
       <li :class="{ active: activeTab === 0 }">
         <a
           href
-          @click.prevent="activeTab = 0"
-          @keyup.enter.prevent="activeTab = 0"
+        ><router-link
+          :to="{ 'name': 'TabCategories', params:{items:categories}}"
         >
-          Sub-categories &amp; Articls</a>
+          Sub-categories</router-link></a>
       </li>
-      <li :class="{ active: activeTab === 1 }">
+      <li :class="{ active: activeTab === 0 }">
         <a
           href
-          @click.prevent="activeTab = 1"
-          @keyup.enter.prevent="activeTab = 1"
+        ><router-link
+          :to="{ 'name': 'TabArticls', params:{items:articls}}"
         >
-          Notes</a>
+          Articls</router-link></a>
+      </li>
+      <li :class="{ active: activeTab === 2}">
+        <a
+          href
+        ><router-link
+          :to="{'name':'TabNotes',params:{items:notes}}"
+        >
+          Notes</router-link></a>
       </li>
     </ul>
-
-    <div
-      v-show="activeTab === 0"
-      class="tab-content"
-    >
-      <draggable-items
-        v-model="categories"
-        tag="ul"
-        item-key="id"
-        handle=".handle"
-        ghost-class="ghost"
-        @change="onUpdateOrderValues"
-      >
-        <template #item="{ element }">
-          <categories-list-item
-            :category="element"
-            class="list-item"
-          />
-        </template>
-      </draggable-items>
-
-      <div v-if="isLoggedIn">
-        <router-link
-          :to="{
-            name: 'createCategoryPage',
-            query: {parentSlug: $route.params.slug},
-          }"
-        >
-          <a
-            href
-            role="button"
-          >
-            New Category Here
-          </a>
-        </router-link>
-      </div>
-
-      <ul class="nav-tabs">
-        <li
-          v-for="articlType in articlTypes"
-          :key="articlType"
-          :class="{ active: articlTypeCurrent === articlType }"
-        >
-          <a
-            href
-            @click.prevent="articlTypeCurrent = articlType"
-            @keyup.enter.prevent="articlTypeCurrent = articlType"
-          >
-            {{ articlType }}</a>
-        </li>
-      </ul>
-
-      <h3>{{ articlTypeCurrent }}</h3>
-
-      <ul v-if="articlTypeCurrent">
-        <draggable-items
-          v-model="articls[articlTypeCurrent]"
-          tag="ul"
-          item-key="id"
-          handle=".handle"
-          ghost-class="ghost"
-          @change="onUpdateArticlsOrderValues(articlTypeCurrent)"
-        >
-          <template #item="{ element }">
-            <articls-list-item
-              :articl="element"
-              :order="element.order"
-            />
-          </template>
-        </draggable-items>
-      </ul>
-      <div v-if="isLoggedIn">
-        <router-link
-          :to="{
-            name: 'createArticlPage',
-            query: {slug: $route.params.slug},
-          }"
-        >
-          <a
-            href
-            role="button"
-          >
-            New Articl Here
-          </a>
-        </router-link>
-      </div>
-    </div>
-
-    <div
-      v-show="activeTab === 1"
-      class="tab-content"
-    >
-      <notes-list :notes="notes" />
-      <note-crud
-        :slug="slug"
-        @view-mode="updateData"
-      />
-    </div>
+    <router-view :items="categories" />
   </article>
 
   <article-placeholder v-else />
@@ -140,25 +38,15 @@
 
 <script>
 import { groupBy } from "lodash";
-import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
-import articlsListItem from "@/components/layout/ArticlsListItem.vue";
-import categoriesListItem from "@/components/layout/CategoriesListItem.vue";
-import NoteCrud from "@/components/layout/NoteCrud.vue";
-import NotesList from "@/components/layout/NotesList.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "CategoryPage",
   components: {
     ArticlePlaceholder,
-    NoteCrud,
-    DraggableItems,
-    categoriesListItem,
-    articlsListItem,
-    NotesList,
   },
   data: () => {
 
@@ -202,7 +90,14 @@ export default {
         const results = await this.fetchData(this.$route.params.slug);
 
         this.categories = results.categories;
-
+        /*
+        console.log("loaded this.categories", results.categories);
+        console.log("loaded this.articls", results.articls);
+        console.log("loaded this.notes", results.notes);
+        console.log("results.articlTypes", results.articlTypes);
+        console.log("this.articls!!!!!", this.articls);
+*/
+        console.log("this.items", this.items);
         this.articlTypes = results.articlTypes;
 
         [this.articlTypeCurrent] = Object.keys(results.articls);

@@ -103,8 +103,6 @@ export default {
     },
     onUpdateOrderValues() {
 
-      console.log("onUpdateOrderValues");
-
       this.updateOrderValues();
 
       this.saveOrderValues();

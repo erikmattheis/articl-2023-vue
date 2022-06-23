@@ -15,8 +15,9 @@ import registerPage from "@/pages/register.vue";
 import resetPasswordPage from "@/pages/reset-password.vue";
 import usersPage from "@/pages/users/index.vue";
 import verifyEmailPage from "@/pages/verify-email.vue";
-import notesTab from "@/components/layout/NotesTab.vue";
-import categoriesTab from "@/components/layout/CategoriesTab.vue";
+import TabCategories from "@/components/layout/TabCategories.vue";
+import TabNotes from "@/components/layout/TabNotes.vue";
+import TabArticls from "@/components/layout/TabArticls.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,14 +42,34 @@ const router = createRouter({
       component: categoryPage,
       props: true,
       children: [{
-        name: "notesTab",
-        path: "notes",
-        component: notesTab,
+        name: "TabCategories",
+        path: "",
+        component: TabCategories,
+        props: (route) => {
+
+          return { items: route.params.items };
+
+        },
       },
       {
-        name: "categoriesTab",
-        path: "",
-        component: categoriesTab,
+        name: "TabNotes",
+        path: "notes",
+        component: TabNotes,
+        props: (route) => {
+
+          return { items: route.params.items };
+
+        },
+      },
+      {
+        name: "TabArticls",
+        path: "articls/:type?",
+        component: TabArticls,
+        props: (route) => {
+
+          return { items: route.params.items };
+
+        },
       }],
     },
 
