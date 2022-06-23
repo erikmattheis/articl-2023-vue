@@ -1,5 +1,5 @@
 <template>
-  <ul class="note-actions">
+  <ul class="note-actions admin">
     <li>
       <a
         href="#"

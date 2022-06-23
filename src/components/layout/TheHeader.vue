@@ -253,8 +253,7 @@ export default {
 
         if (refreshToken) {
 
-          console.log("is refresh token");
-          const result = await this.$http({
+          await this.$http({
             method: "POST",
             url: "/auth/logout",
             data: {
@@ -262,7 +261,6 @@ export default {
             },
           });
 
-          console.log("is refresh token", result);
           localStorage.clear();
 
           this.$store.dispatch("tokens/logout");
@@ -306,7 +304,6 @@ details[role=list] summary:not([role]):focus {
   padding: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
-  //background-color:#f00 !important;
 }
 
 details summary::after {

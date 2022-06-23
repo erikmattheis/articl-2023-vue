@@ -1,6 +1,5 @@
 <template>
-  <div class="gr">
-    categories:{{ categories }}
+  <div>
     <draggable-items
       v-model="categories"
       tag="ul"
@@ -16,7 +15,10 @@
         />
       </template>
     </draggable-items>
-    <div v-if="isLoggedIn">
+    <div
+      v-if="isLoggedIn"
+      class="admin"
+    >
       <router-link
         :to="{
           name: 'createCategoryPage',

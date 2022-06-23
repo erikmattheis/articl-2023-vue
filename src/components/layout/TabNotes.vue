@@ -1,7 +1,6 @@
 <template>
   <div class="gr">
     <h2>Notes</h2>
-    notes.length: {{ notes.length }}
     <ul>
       <li
         v-for="note in notes || [] "

@@ -86,6 +86,7 @@
           params?.statuses?.length &&
             params?.statuses?.length !== allStatuses?.length
         "
+        class="admin"
       > Status is <span v-if="params?.statuses?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.statuses, "or") }}</strong>
         <a

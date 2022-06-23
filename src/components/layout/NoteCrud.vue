@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="admin">
     <template v-if="!isLoading">
       <form>
         <label for="fullText">Note

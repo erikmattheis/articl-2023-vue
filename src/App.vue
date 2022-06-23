@@ -371,8 +371,25 @@ small {
   text-indent: -10000px;
 }
 
-.gr {
+.admin {
   border:4px solid green;
+  padding: 1rem;
+  margin: 1rem;
+  display:inline-block;
+}
+
+.admin button,
+.admin a[role=button] {
+  border:1px solid green;
+  padding: 0.3rem;
+  background-color: #eeeeee;
+  color:darkgreen;
+}
+
+.articl-actions.admin {
+    border:1px solid green;
+  padding: 0.3rem;
+  margin: 0;
 }
 
 </style>

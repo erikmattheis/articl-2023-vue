@@ -1,5 +1,5 @@
 <template>
-  <div class="gr">
+  <div>
     <ul class="nav-tabs">
       <li
         v-for="articlType in articlTypes"
@@ -16,9 +16,6 @@
     </ul>
 
     <h3>{{ articlTypeCurrent }}</h3>
-    articls[articlTypeCurrent].length {{ articls[articlTypeCurrent]?.length }}<br>
-    articlTypeCurrent:{{ articlTypeCurrent }}<br>
-    articls:{{ articls }}<br>
 
     <ul v-if="articlTypeCurrent">
       <draggable-items
@@ -37,11 +34,14 @@
         </template>
       </draggable-items>
     </ul>
-    <div v-if="isLoggedIn">
+    <div
+      v-if="isLoggedIn"
+      class="admin"
+    >
       <router-link
         :to="{
           name: 'createArticlPage',
-          query: {slug: $route.params.slug},
+          query: { slug: $route.params.slug },
         }"
       >
         <a

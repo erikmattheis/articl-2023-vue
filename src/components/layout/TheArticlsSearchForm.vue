@@ -94,7 +94,7 @@
             </fieldset>
           </div>
           <div>
-            <fieldset>
+            <fieldset class="admin">
               <legend>Status</legend> <label
                 v-for="status in allStatuses"
                 :key="status"
