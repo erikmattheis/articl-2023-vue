@@ -31,6 +31,7 @@
         </a>
       </router-link>
     </div>
+    <router-view />
   </div>
 </template>
 
@@ -53,13 +54,18 @@ export default {
     };
 
   },
+
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
       categories: "categoryPages/categories",
     }),
   },
+  beforeMount() {
 
+    console.log("tab component mounted");
+
+  },
   methods: {
     updateOrderValues() {
 

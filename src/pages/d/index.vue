@@ -4,15 +4,15 @@
 
     <ul class="nav-tabs">
       <router-link
-        v-slot="{ href, isExactActive }"
+        v-slot="{ isExactActive, navigate }"
         custom
         :to="{ 'name': 'TabCategories' }"
       >
         <li :class="{'active':isExactActive}">
           <a
             href
-            @click.prevent="$router.push(href)"
-            @keyup.enter.prevent="$router.push(href)"
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
           >
             Sub-categories
           </a>
@@ -20,15 +20,15 @@
       </router-link>
 
       <router-link
-        v-slot="{ href, isExactActive }"
+        v-slot="{ isExactActive, navigate }"
         custom
         :to="{ 'name': 'TabArticls'}"
       >
         <li :class="{'active':isExactActive}">
           <a
             href
-            @click.prevent="$router.push(href)"
-            @keyup.enter.prevent="$router.push(href)"
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
           >
             Articls
           </a>
@@ -36,15 +36,15 @@
       </router-link>
 
       <router-link
-        v-slot="{ href, isExactActive }"
+        v-slot="{ isExactActive, navigate }"
         custom
         :to="{ 'name': 'TabNotes' }"
       >
         <li :class="{'active':isExactActive}">
           <a
             href
-            @click.prevent="$router.push(href)"
-            @keyup.enter.prevent="$router.push(href)"
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
           >
             Notes
           </a>
@@ -95,6 +95,11 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+
+    console.log("index mounted");
+
+  },
   methods: {
     async updateData() {
 
@@ -113,7 +118,7 @@ export default {
         console.log("results.articlTypes", results.articlTypes);
         console.log("this.articls!!!!!", this.articls);
 */
-        console.log("results", results);
+        console.log("results back from server", results);
 
         if (results.categories?.length) {
 

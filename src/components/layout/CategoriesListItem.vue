@@ -3,7 +3,7 @@
     <div class="grid">
       <ul>
         <li>
-          <router-link :to="{ name: 'categoryPage', params: { slug: category.slug } }">
+          <router-link :to="{ name: 'TabCategories', params: { slug: category.slug } }">
             {{ category.title }}
           </router-link>
         </li>
