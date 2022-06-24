@@ -19,12 +19,12 @@
 
     <ul v-if="articlTypeCurrent">
       <draggable-items
-        v-model="articls"
+        v-model="articls[articlTypeCurrent]"
         tag="ul"
         item-key="id"
         handle=".handle"
         ghost-class="ghost"
-        @change="onUpdateArticlsOrderValues($store.getters['categoryPages/articlTypeCurrent'])"
+        @change="onUpdateArticlsOrderValues()"
       >
         <template #item="{ element }">
           <articls-list-item
@@ -89,7 +89,7 @@ export default {
   },
   mounted() {
 
-    [this.articlTypeCurrent] = Object.keys(this.articls);
+    [this.articlTypeCurrent] = this.articlTypes;
 
   },
   methods: {
