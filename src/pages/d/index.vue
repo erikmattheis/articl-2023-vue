@@ -22,11 +22,11 @@
 
       <router-link
         v-if="articlTypes?.length"
-        v-slot="{ isExactActive, navigate }"
+        v-slot="{ isActive, navigate }"
         custom
         :to="{ 'name': 'TabArticls'}"
       >
-        <li :class="{'active':isExactActive}">
+        <li :class="{'active':isActive}">
           <a
             href
             @click.prevent="navigate()"
@@ -39,11 +39,11 @@
 
       <router-link
         v-if="notes?.length"
-        v-slot="{ isExactActive, navigate }"
+        v-slot="{ isActive, navigate }"
         custom
         :to="{ 'name': 'TabNotes' }"
       >
-        <li :class="{'active':isExactActive}">
+        <li :class="{'active':isActive}">
           <a
             href
             @click.prevent="navigate()"
@@ -56,7 +56,9 @@
     </ul>
     <router-view />
 
-    <category-page-admin-actions />
+    <category-page-admin-actions
+      v-if="isLoggedIn"
+    />
   </article>
 
   <article-placeholder v-else />

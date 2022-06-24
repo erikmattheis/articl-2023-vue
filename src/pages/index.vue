@@ -11,6 +11,10 @@
         </router-link>
       </li>
     </ul>
+    <category-page-admin-actions
+      v-if="isLoggedIn"
+      class="admin"
+    />
   </article>
   <article-placeholder v-else />
 </template>
@@ -19,12 +23,14 @@
 import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "HomePage",
   components: {
     ArticlePlaceholder,
+    CategoryPageAdminActions,
   },
   data: () => {
 

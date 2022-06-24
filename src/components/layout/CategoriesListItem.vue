@@ -8,12 +8,13 @@
           </router-link>
         </li>
       </ul>
-
-      <category-actions
-        v-if="isLoggedIn"
-        :id="category.id"
-        :title="category.title"
-      />
+      <div>
+        <category-actions
+          v-if="isLoggedIn"
+          :id="category.id"
+          :title="category.title"
+        />
+      </div>
     </div>
   </li>
 </template>

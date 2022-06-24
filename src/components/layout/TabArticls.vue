@@ -34,24 +34,11 @@
         </template>
       </draggable-items>
     </ul>
-    <div
+
+    <category-page-admin-actions
       v-if="isLoggedIn"
       class="admin"
-    >
-      <router-link
-        :to="{
-          name: 'createArticlPage',
-          query: { slug: $route.params.slug },
-        }"
-      >
-        <a
-          href
-          role="button"
-        >
-          New Articl Here
-        </a>
-      </router-link>
-    </div>
+    />
   </div>
 </template>
 

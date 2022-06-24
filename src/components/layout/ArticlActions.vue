@@ -1,7 +1,10 @@
 <template>
   <ul class="articl-actions admin">
     <li>
-      <router-link :to="{ name: 'editArticl', params: { passedId: id } }">
+      <router-link
+        :to="{ name: 'editArticl', params: { passedId: id } }"
+        role="link"
+      >
         edit
       </router-link>
     </li>
@@ -9,7 +12,10 @@
       <a>Change status</a>
     </li>
     <li>
-      <router-link :to="{ name: 'deleteArticl', params: { id, title } }">
+      <router-link
+        :to="{ name: 'deleteArticl', params: { id, title } }"
+        role="link"
+      >
         delete
       </router-link>
     </li>

@@ -118,10 +118,6 @@ a {
   cursor: pointer;
 }
 
-.handle-container {
-  width: 1rem !important;
-}
-
 strong:not([class="not-strong"]) {
   padding: 0.2rem 0.1rem;
   color: black;
