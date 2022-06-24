@@ -176,8 +176,9 @@ export default {
   background-color: #ffffff;
   border: 4px solid green;
   display: inline-block;
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0;
+  padding: 0;
+
 }
 
 .admin button,
@@ -185,7 +186,9 @@ export default {
   background-color: #eeeeee;
   border: 1px solid green;
   color: darkgreen;
-  padding: .3rem;
+  margin: 0.2rem;
+  padding: 0.3rem;
+    font-size: 0.7rem;
 }
 
 .articl-actions a,
@@ -198,6 +201,7 @@ export default {
   padding: 0 .5rem;
   text-decoration: none;
   transition: background-color .3s;
+  margin:0;
 }
 
 .articl-actions.admin {
@@ -222,6 +226,10 @@ export default {
 
 .ghost {
   border: 2px dashed red !important;
+}
+
+.handle {
+  padding: 0 0.5zrem;
 }
 
 .left-space {
@@ -380,7 +388,6 @@ ul li {
 }
 
 @media prefers-reduced-motion {
-
   .fade-leave-to,
   .fade-enter-from {
     opacity: 1;
