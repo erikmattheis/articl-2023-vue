@@ -2,9 +2,7 @@
   <div class="vertical-container">
     <the-header />
     <main>
-      <router-view
-        v-slot="{ Component }"
-      >
+      <router-view v-slot="{ Component }">
         <transition
           name="fade"
           mode="out-in"
@@ -167,17 +165,54 @@ export default {
 @import "./assets/variables";
 @import "./assets/placeholder";
 @import "~/node_modules/@picocss/pico/css/pico.css";
-
 @import "//fonts.googleapis.com/css2?family=Montserrat&display=swap";
 @import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
+#app {
+  background-color: var(--bg2);
+}
+
+.admin {
+  background-color: #ffffff;
+  border: 4px solid green;
+  display: inline-block;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.admin button,
+.admin a[role=button] {
+  background-color: #eeeeee;
+  border: 1px solid green;
+  color: darkgreen;
+  padding: .3rem;
+}
+
+.articl-actions a,
+.note-actions a,
+.nav-tabs li a {
+  align-items: center;
+  display: flex;
+  height: 1.6rem;
+  justify-content: center;
+  padding: 0 .5rem;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.articl-actions.admin {
+  border: 1px solid green;
+  margin: 0;
+  padding: .3rem;
+}
+
 .fade-enter-active {
-  transition: opacity 0.2s ease;
-  transition-delay: 0.2s;
+  transition: opacity .2s ease;
+  transition-delay: .2s;
 }
 
 .fade-leave-active {
-  transition: opacity 0.1s ease;
+  transition: opacity .1s ease;
 }
 
 .fade-leave-to,
@@ -185,85 +220,72 @@ export default {
   opacity: 0;
 }
 
-@media (prefers-reduced-motion) {
-
-  .fade-leave-to,
-  .fade-enter-from {
-    opacity: 1;
-  }
+.ghost {
+  border: 2px dashed red !important;
 }
 
-:where(:root),
-html,
-body {
-  background-color:var(--bg0);
-  font-family: "Poppins", Arial, sans-serif !important;
-  --primary-focus: transparent;
+.left-space {
+  padding-left: 2rem;
 }
 
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0;
-}
-
-body * {
-  border-radius: 0 !important;
-}
-
-ul {
-  padding-left: 0;
-  list-style-type: none !important;
-}
-
-ul li {
-  list-style-type: none !important;
-}
-
-header article,
-footer article {
+.line-detail {
   background-color: var(--bg1);
+  padding: 0 .5rem;
 }
 
-header article {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0;
-  margin-bottom: 0;
+.line-main {
+  padding: 0 .5rem;
 }
 
-main article {
-  margin-top: 0;
-  margin-bottom: 0;
-  background-color: var(--bg2);
+.nav-tabs {
+  column-gap: 0;
 }
 
-main form {
-  margin-bottom: 0;
+li.listitem:hover,
+button:hover {
+  backdrop-filter:brightness(200%);
 }
 
-footer article {
-  margin-top: 0;
-  margin-bottom: 0;
+.nav-tabs li,
+.note-actions li,
+.articl-actions li {
+  border-bottom: 1px solid transparent;
+  display: inline-block;
+  font-size: 1rem;
+  vertical-align: middle;
 }
 
-input:not([type="checkbox"],
-[type="radio"],
-[type="range"],
-[type="file"]),
-select,
-textarea {
-  padding: 0.4rem 0.6rem !important;
+.nav-tabs li.active,
+.active {
+  border-color: var(--bg0);
 }
 
-input:not([type="checkbox"], [type="radio"], [type="range"]) {
-  height: initial;
+.right {
+  float: right;
 }
 
-input[role="switch"],
-input[type="radio"] {
-  border-radius: 1rem !important;
+.sr {
+  display: inline-block;
+  line-height: .5rem;
+  text-indent: -10000px;
+}
+
+.tab-content {
+  width: 100%;
+}
+
+.toggle-password {
+  position: relative;
+}
+
+.toggle-password-mask {
+  cursor: pointer;
+  height: 2.2rem;
+  position: absolute;
+  right: 1rem;
+  top: 40%;
+  transform: translateY(-40%);
+  width: 2.2rem;
 }
 
 .vertical-container {
@@ -271,15 +293,6 @@ input[type="radio"] {
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-}
-
-#app {
-  background-color: var(--bg2);
-}
-
-.admin {
-  border: 3px solid #00cc00;
-  background-color: #ffffff
 }
 
 .vertical-container main {
@@ -292,104 +305,85 @@ input[type="radio"] {
   flex-grow: 1;
 }
 
-.left-space {
-  padding-left: 2rem;
+:where(:root),
+html,
+body {
+  --primary-focus: transparent;
+  background-color: var(--bg0);
+  font-family: Poppins, Arial, sans-serif !important;
 }
 
-.right {
-  float: right;
-}
-
-.toggle-password {
-  position: relative;
-}
-
-.toggle-password-mask {
-  position: absolute;
-  top: 40%;
-  right: 1rem;
-  width: 2.2rem;
-  height: 2.2rem;
-  cursor: pointer;
-  transform: translateY(-40%);
-}
-
-.nav-tabs {
-  column-gap: 0;
-}
-
-.tab-content {
-  width: 100%;
-}
-
-.nav-tabs li,
-.note-actions li,
-.articl-actions li {
-  display: inline-block;
-  font-size: 1rem;
-  vertical-align: middle;
-  border-bottom: 1px solid transparent;
-}
-
-.articl-actions a,
-.note-actions a,
-.nav-tabs li a {
-  display: flex;
+body {
   align-items: center;
+  border-radius: 0;
+  display: flex;
   justify-content: center;
-  height: 1.6rem;
-  padding: 0 0.5rem;
-  text-decoration: none;
-  transition: background-color 0.3s;
 }
 
-.nav-tabs li.active,
-.active {
-  border-color: var(--bg0);
+body * {
+  border-radius: 0 !important;
 }
 
-.line-detail {
-  padding: 0 0.5rem;
+footer article {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+header article {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+header article,
+footer article {
   background-color: var(--bg1);
 }
 
-.line-main {
-  padding: 0 0.5rem;
+input:not([type="checkbox"], [type="radio"], [type="range"]) {
+  height: initial;
+}
+
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
+select,
+textarea {
+  padding: .4rem .6rem !important;
+}
+
+input[role="switch"],
+input[type="radio"] {
+  border-radius: 1rem !important;
+}
+
+main article {
+  background-color: var(--bg2);
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+main form {
+  margin-bottom: 0;
 }
 
 small {
-  font-size: 0.7rem;
+  font-size: .7rem;
 }
 
-.ghost {
-  border: 2px dashed red !important;
+ul {
+  list-style-type: none !important;
+  padding-left: 0;
 }
 
-.sr {
-  display: inline-block;
-  line-height: 0.5rem;
-  text-indent: -10000px;
+ul li {
+  list-style-type: none !important;
 }
 
-.admin {
-  border:4px solid green;
-  padding: 1rem;
-  margin: 1rem;
-  display:inline-block;
-}
+@media prefers-reduced-motion {
 
-.admin button,
-.admin a[role=button] {
-  border:1px solid green;
-  padding: 0.3rem;
-  background-color: #eeeeee;
-  color:darkgreen;
+  .fade-leave-to,
+  .fade-enter-from {
+    opacity: 1;
+  }
 }
-
-.articl-actions.admin {
-    border:1px solid green;
-  padding: 0.3rem;
-  margin: 0;
-}
-
 </style>

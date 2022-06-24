@@ -4,6 +4,7 @@
 
     <ul class="nav-tabs">
       <router-link
+        v-if="categories?.length"
         v-slot="{ isExactActive, navigate }"
         custom
         :to="{ 'name': 'TabCategories' }"
@@ -20,6 +21,7 @@
       </router-link>
 
       <router-link
+        v-if="articlTypes?.length"
         v-slot="{ isExactActive, navigate }"
         custom
         :to="{ 'name': 'TabArticls'}"
@@ -36,6 +38,7 @@
       </router-link>
 
       <router-link
+        v-if="notes?.length"
         v-slot="{ isExactActive, navigate }"
         custom
         :to="{ 'name': 'TabNotes' }"
@@ -52,6 +55,8 @@
       </router-link>
     </ul>
     <router-view />
+
+    <category-page-admin-actions />
   </article>
 
   <article-placeholder v-else />
@@ -62,12 +67,14 @@ import { groupBy } from "lodash";
 import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "CategoryPage",
   components: {
     ArticlePlaceholder,
+    CategoryPageAdminActions,
   },
   data: () => {
 
@@ -82,7 +89,9 @@ export default {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
       articls: "categoryPages/articls",
+      articlTypes: "categoryPages/articlTypes",
       categories: "categoryPages/categories",
+      notes: "categoryPages/notes",
     }),
   },
   watch: {
@@ -95,11 +104,6 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
-
-    console.log("index mounted");
-
-  },
   methods: {
     async updateData() {
 
@@ -111,15 +115,6 @@ export default {
 
         const results = await this.fetchData(this.$route.params.slug);
 
-        /*
-        console.log("loaded this.categories", results.categories);
-        console.log("loaded this.articls", results.articls);
-        console.log("loaded this.notes", results.notes);
-        console.log("results.articlTypes", results.articlTypes);
-        console.log("this.articls!!!!!", this.articls);
-*/
-        console.log("results back from server", results);
-
         if (results.categories?.length) {
 
           this.$store.dispatch("categoryPages/categories", results.categories);
@@ -130,16 +125,12 @@ export default {
 
         }
 
-        if (results.articls?.length) {
+        if (results.articls) {
 
-          const articlTypes = Object.keys(results.articls.reduce((result, obj) => {
-
-            return Object.assign(result, obj);
-
-          }, {}));
+          console.log("results.articls", results.articls);
 
           this.$store.dispatch("categoryPages/articls", results.articls);
-          this.$store.dispatch("categoryPages/articlTypes", articlTypes);
+          this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
 
         } else {
 

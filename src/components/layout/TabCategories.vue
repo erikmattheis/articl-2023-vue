@@ -15,24 +15,7 @@
         />
       </template>
     </draggable-items>
-    <div
-      v-if="isLoggedIn"
-      class="admin"
-    >
-      <router-link
-        :to="{
-          name: 'createCategoryPage',
-          query: {parentSlug: $route.params.slug},
-        }"
-      >
-        <a
-          href
-          role="button"
-        >
-          New Category Here
-        </a>
-      </router-link>
-    </div>
+
     <router-view />
   </div>
 </template>

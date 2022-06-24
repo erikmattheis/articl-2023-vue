@@ -15,7 +15,6 @@ export default {
   mutations: {
     SET_CATEGORIES: (state, payload) => {
 
-      console.log("setting categories", payload);
       state.categories = payload;
 
     },
@@ -62,7 +61,6 @@ export default {
 
     categories: (state) => {
 
-      console.log("getting categories", state.categories);
       return state.categories;
 
     },

@@ -10,16 +10,6 @@
           {{ category.title }}
         </router-link>
       </li>
-      <li v-if="isLoggedIn">
-        <router-link :to="{ name: 'createCategoryPage', query: { parentSlug: '0' } }">
-          New Category Here
-        </router-link>
-      </li>
-      <li v-if="isLoggedIn">
-        <router-link :to="{ name: 'createArticlPage', query: { slug: '0' } }">
-          New Articl Here
-        </router-link>
-      </li>
     </ul>
   </article>
   <article-placeholder v-else />
