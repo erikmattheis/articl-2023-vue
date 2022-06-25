@@ -22,18 +22,19 @@
         @blur="removeItems"
         @keyup="update"
       >
+
+      <ul>
+        <li
+          v-for="(item, $index) in items"
+          :key="$index"
+          :class="activeClass($index)"
+          @mousedown="hit"
+          @mousemove="setActive($index)"
+        >
+          <span v-text="item" />
+        </li>
+      </ul>
     </label>
-    <ul v-show="hasItems">
-      <li
-        v-for="(item, $index) in items"
-        :key="$index"
-        :class="activeClass($index)"
-        @mousedown="hit"
-        @mousemove="setActive($index)"
-      >
-        <span v-text="item" />
-      </li>
-    </ul>
   </div>
 </template>
 <script>
@@ -266,6 +267,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+input {
+  margin-bottom: 0 !important;
+}
+
 ul {
   position: absolute;
   z-index: 1;
@@ -280,7 +285,7 @@ li {
 label {
   position: relative;
   display: block;
-  margin-top: 0;
+  margin-top: var(--spacing);
 }
 
 label .icon {
@@ -298,4 +303,5 @@ label .icon {
 label> :where(input, select, textarea) {
   margin-top: 0;
 }
+
 </style>

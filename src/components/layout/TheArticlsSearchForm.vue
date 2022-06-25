@@ -79,7 +79,8 @@
         <div class="grid">
           <div>
             <fieldset>
-              <legend>Type</legend> <label
+              <legend>Type</legend>
+              <label
                 v-for="articlType in allTypes"
                 :key="articlType"
                 :for="articlType"
@@ -93,22 +94,25 @@
                 >{{ articlType }}</label>
             </fieldset>
           </div>
-          <div>
-            <fieldset class="admin">
-              <legend>Status</legend> <label
-                v-for="status in allStatuses"
-                :key="status"
-                :for="status"
-              >
-                <input
-                  :id="status"
-                  v-model="statuses"
-                  type="checkbox"
-                  :value="status"
-                  checked="checked"
-                >{{ status }}</label>
-            </fieldset>
-          </div>
+
+          <fieldset
+            v-if="isLoggedIn"
+            class="admin"
+          >
+            <legend>Status</legend> <label
+              v-for="status in allStatuses"
+              :key="status"
+              :for="status"
+            >
+              <input
+                :id="status"
+                v-model="statuses"
+                type="checkbox"
+                :value="status"
+                checked="checked"
+              >{{ status }}</label>
+          </fieldset>
+
         </div>
       </label>
     </div>
@@ -145,6 +149,7 @@ export default {
     },
     ...mapGetters({
       years: "articlsParams/years",
+      isLoggedIn: "tokens/isLoggedIn",
     }),
     text: {
       get() {
@@ -343,6 +348,11 @@ select {
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.admin {
+    margin: 0.2rem;
+  padding: 0 0.8rem;
 }
 
 /*

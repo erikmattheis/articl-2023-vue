@@ -59,7 +59,6 @@ export default {
     params: {
       handler(newValue) {
 
-        console.log("params", newValue);
         this.updateValues(newValue);
 
       },
