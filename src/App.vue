@@ -20,7 +20,7 @@
 <script>
 /* VUE
  * 1939,1200, 1,244, 1983, 1883 .js
- *  538, 3250, 3,623, 3,910, 5,475
+ *  538, 3250, 3,623, 3,910, 5,475 .vue
  *
 
  *
@@ -198,10 +198,14 @@ export default {
   display: flex;
   height: 1.6rem;
   justify-content: center;
-  padding: 0 .5rem;
+  padding: 0 1rem;
   text-decoration: none;
   transition: background-color .3s;
   margin:0;
+}
+
+.nav-tabs li a:first-child {
+  padding-left: 0;
 }
 
 .articl-actions.admin {
