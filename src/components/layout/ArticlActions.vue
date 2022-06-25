@@ -1,35 +1,33 @@
 <template>
-  <ul class="articl-actions admin">
-    <li>
-      <router-link
-        :to="{ name: 'editArticl', params: { passedId: id } }"
-        role="link"
-      >
-        edit
-      </router-link>
-    </li>
-    <li>
-      <a>Change status</a>
-    </li>
-    <li>
-      <router-link
-        :to="{ name: 'deleteArticl', params: { id, title } }"
-        role="link"
-      >
-        delete
-      </router-link>
-    </li>
-    <li class="handle">
-      <a href="#"><div class="sr">Reorder articl</div>
-        <vue-feather
-          alt="reorder articl"
-          size="1rem"
-          type="move"
-          aria-label="move"
-        />
-      </a>
-    </li>
-  </ul>
+  <router-link
+    :to="{ name: 'editArticl', params: { passedId: id } }"
+    role="button"
+  >
+    edit
+  </router-link>
+
+  <a role="button">Change status</a>
+
+  <router-link
+    :to="{ name: 'deleteArticl', params: { id, title } }"
+    role="button"
+  >
+    delete
+  </router-link>
+
+  <span class="handle">
+    <a
+      href="#"
+      role="button"
+    ><div class="sr">Reorder articl</div>
+      <vue-feather
+        alt="reorder articl"
+        size="1rem"
+        type="move"
+        aria-label="move"
+      />
+    </a>
+  </span>
 </template>
 
 <script>

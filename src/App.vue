@@ -187,8 +187,8 @@ export default {
   border: 1px solid green;
   color: darkgreen;
   margin: 0.2rem;
-  padding: 0.3rem;
-    font-size: 0.7rem;
+  padding: 0 0.8rem;
+  font-size: 0.7rem;
 }
 
 .articl-actions a,
@@ -229,7 +229,7 @@ export default {
 }
 
 .handle {
-  padding: 0 0.5zrem;
+  padding: 0 !important;
 }
 
 .left-space {
@@ -238,11 +238,11 @@ export default {
 
 .line-detail {
   background-color: var(--bg1);
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 
 .line-main {
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 
 .nav-tabs {

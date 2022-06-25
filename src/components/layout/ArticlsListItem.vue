@@ -53,7 +53,10 @@
           </small>
         </li>
       </ul>
-      <div v-if="isLoggedIn">
+      <div
+        v-if="isLoggedIn"
+        class="admin"
+      >
         <articl-actions
           :id="articl.id"
           :title="articl.title"

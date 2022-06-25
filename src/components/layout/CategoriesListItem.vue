@@ -1,5 +1,5 @@
 <template>
-  <li class="listitem">
+  <li class="listitem ">
     <div class="grid">
       <ul>
         <li>
@@ -26,9 +26,11 @@ import CategoryActions from "@/components/layout/CategoryActions.vue";
 
 export default {
   name: "CategoriesListItem",
+
   components: {
     CategoryActions,
   },
+
   props: {
     category: {
       type: Object,
@@ -41,6 +43,7 @@ export default {
       isLoggedIn: "tokens/isLoggedIn",
     }),
   },
+
   methods: {
 
   },

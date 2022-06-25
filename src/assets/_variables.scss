@@ -72,6 +72,7 @@ $bg-dark0: #15242a;
 $bg-dark1:lighten($bg-dark0, 5%);
 $bg-dark2: lighten($bg-dark0, 10%);
 
+
 :root[data-theme="light"] {
   --font-family: "Poppins", Arial, sans-serif !important;
   --bg0: #{$bg-light0};
@@ -81,7 +82,15 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --form-element-background-color: #{$bg-light1};
   --form-element-focus-color:  #{$bg-light1};
   --dropdown-hover-background-color: #{$bg-light1};
-  --card-box-shadow: none; 
+  --card-box-shadow: none;
+  
+  --color: #002B3D;
+  --h1-color: #002B3D;
+  --h2-color: #002B3D;
+  --h3-color: #002B3D;
+  --h4-color: #002B3D;
+  --h5-color: #002B3D;
+  --h6-color: #002B3D;
  }
 
 
@@ -95,7 +104,14 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --form-element-focus-color:  #{$bg-dark1};
   --dropdown-hover-background-color: #{$bg-dark1};
   --card-box-shadow: none; // 0 0.0625rem 1rem rgb(255 255 255 / 3%), 0 0.625rem 2rem rgb(255 255 255 / 6%), 0 0 0 0.0375rem rgb(255 255 255 / 1.8%);
- }
+  --color: #e0eff5;
+  --h1-color: #e0eff5;
+  --h2-color: #e0eff5;
+  --h3-color: #e0eff5;
+  --h4-color: #e0eff5;
+  --h5-color: #e0eff5;
+  --h6-color: #e0eff5;
+}
 
 
 
