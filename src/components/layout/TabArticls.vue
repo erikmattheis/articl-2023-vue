@@ -221,17 +221,3 @@ export default {
 };
 
 </script>
-
-<style scoped>
-
-li {
-  width:100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap
-}
-
-a {
-  cursor: pointer;
-}
-</style>
