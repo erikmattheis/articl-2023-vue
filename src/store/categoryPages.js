@@ -8,6 +8,7 @@ export default {
       articlTypes: [],
       categories: [],
       notes: [],
+      treeLevel: undefined,
       breadcrumbs: [],
     };
 
@@ -91,6 +92,12 @@ export default {
     notes: (state) => {
 
       return state.notes;
+
+    },
+
+    treeLevel: (state) => {
+
+      return state.breadcrumbs.length - 1;
 
     },
 

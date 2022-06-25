@@ -150,7 +150,7 @@ export default {
 
           setTokens(result.data.tokens);
 
-          const theme = result?.data?.user?.theme !== "dark" ? "light" : "dark";
+          const theme = result.data.user?.theme !== "dark" ? "light" : "dark";
 
           this.$cookies.set(
             "data-theme",

@@ -1,9 +1,10 @@
 <template>
-  <li class="listitem ">
+  <li class="listitem">
     <div class="grid">
+      TabName:{{ TabName }}
       <ul>
         <li>
-          <router-link :to="{ name: 'TabCategories', params: { slug: category.slug } }">
+          <router-link :to="{ name: tabName, params: { slug: category.slug } }">
             {{ category.title }}
           </router-link>
         </li>
@@ -30,12 +31,28 @@ export default {
   components: {
     AdminActionsCategory,
   },
-
   props: {
     category: {
       type: Object,
       default: undefined,
     },
+    treeLevel: {
+      type: Number,
+      default: 0,
+    },
+    tabName: {
+      type: String,
+      default: "",
+    },
+
+  },
+
+  data() {
+
+    return {
+      TabName: "",
+    };
+
   },
 
   computed: {

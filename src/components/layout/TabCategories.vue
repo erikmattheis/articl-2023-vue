@@ -12,6 +12,8 @@
         <categories-list-item
           :category="element"
           class="list-item"
+          :tree-level="treeLevel"
+          :tab-name="TabName"
         />
       </template>
     </draggable-items>
@@ -32,10 +34,11 @@ export default {
     DraggableItems,
     CategoriesListItem,
   },
+
   data() {
 
     return {
-
+      TabName: "",
     };
 
   },
@@ -43,11 +46,12 @@ export default {
   computed: {
     ...mapGetters({
       categories: "categoryPages/categories",
+      treeLevel: "categoryPages/treeLevel",
     }),
   },
-  beforeMount() {
+  mounted() {
 
-    console.log("tab component mounted");
+    this.TabName = this.treeLevel > 2 ? "TabCategories" : "TabArticls";
 
   },
   methods: {

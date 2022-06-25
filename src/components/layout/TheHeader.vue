@@ -269,7 +269,6 @@ export default {
 
         } else {
 
-          console.log("no refresh token");
           localStorage.clear();
 
           this.$store.dispatch("tokens/logout");

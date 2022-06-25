@@ -56,7 +56,6 @@ const router = createRouter({
         name: "TabArticls",
         path: "articls/:type?",
         component: TabArticls,
-        props: true,
       }],
     },
 

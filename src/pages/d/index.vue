@@ -6,12 +6,12 @@
 
     <ul class="nav-tabs">
       <router-link
-        v-if="categories?.length"
+        v-if="treeLevel < 3"
         v-slot="{ isExactActive, navigate }"
         custom
-        :to="{ 'name': 'TabCategories' }"
+        :to="{ name: 'TabCategories' }"
       >
-        <li :class="{'active':isExactActive}">
+        <li :class="{ active:isExactActive}">
           <a
             href
             @click.prevent="navigate()"
@@ -23,10 +23,10 @@
       </router-link>
 
       <router-link
-        v-if="articlTypes?.length"
+        v-if="treeLevel > 2"
         v-slot="{ isActive, navigate }"
         custom
-        :to="{ 'name': 'TabArticls'}"
+        :to="{ name: 'TabArticls'}"
       >
         <li :class="{'active':isActive}">
           <a
@@ -40,7 +40,7 @@
       </router-link>
 
       <router-link
-        v-if="notes?.length"
+        v-if="treeLevel > 2"
         v-slot="{ isActive, navigate }"
         custom
         :to="{ 'name': 'TabNotes' }"
