@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  name: "ArticlPlaceholder",
+  name: "LoadingPlaceholder",
   methods: {
     pickWidth: (min, max) => {
 

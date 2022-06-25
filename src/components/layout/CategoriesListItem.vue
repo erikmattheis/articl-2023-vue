@@ -9,7 +9,7 @@
         </li>
       </ul>
       <div>
-        <category-actions
+        <admin-actions-category
           v-if="isLoggedIn"
           :id="category.id"
           :title="category.title"
@@ -22,13 +22,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import CategoryActions from "@/components/layout/CategoryActions.vue";
+import AdminActionsCategory from "@/components/layout/AdminActionsCategory.vue";
 
 export default {
   name: "CategoriesListItem",
 
   components: {
-    CategoryActions,
+    AdminActionsCategory,
   },
 
   props: {

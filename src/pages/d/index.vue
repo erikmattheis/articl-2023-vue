@@ -58,28 +58,28 @@
     </ul>
     <router-view />
 
-    <category-page-admin-actions
+    <admin-actions-category-page
       v-if="isLoggedIn"
     />
   </article>
 
-  <article-placeholder v-else />
+  <loading-placeholder v-else />
 </template>
 
 <script>
 import { groupBy } from "lodash";
 import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
-import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
+import AdminActionsCategoryPage from "@/components/layout/AdminActionsCategoryPage.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "CategoryPage",
   components: {
-    ArticlePlaceholder,
-    CategoryPageAdminActions,
+    LoadingPlaceholder,
+    AdminActionsCategoryPage,
     TheBreadcrumbs,
   },
   data: () => {
@@ -94,6 +94,7 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
+      treeLevel: "categoryPages/treeLevel",
       articls: "categoryPages/articls",
       articlTypes: "categoryPages/articlTypes",
       categories: "categoryPages/categories",

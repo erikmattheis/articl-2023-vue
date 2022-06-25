@@ -17,7 +17,7 @@
       </li>
     </ul>
     <div v-if="isLoggedIn">
-      <note-actions
+      <admin-actions-note
         :id="note.id"
         :full-text="note.fullText"
         :slug="note.slug"
@@ -37,13 +37,14 @@
 <script>
 import { mapGetters } from "vuex";
 
-import NoteActions from "@/components/layout/NoteActions.vue";
+import AdminActionsNote from "@/components/layout/AdminActionsNote.vue";
 import NoteCrud from "@/components/layout/NoteCrud.vue";
 
 export default {
   name: "NoteListItem",
   components: {
-    NoteActions, NoteCrud,
+    AdminActionsNote,
+    NoteCrud,
   },
   props: {
     passedNote: {

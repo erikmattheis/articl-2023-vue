@@ -37,7 +37,7 @@
       name="fade"
       mode="out-in"
     >
-      <article-placeholder v-if="isLoading" />
+      <loading-placeholder v-if="isLoading" />
     </transition>
   </section>
 </template>
@@ -45,12 +45,12 @@
 <script>
 import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 
 export default {
   name: "NoteCrudComponent",
   components: {
-    ArticlePlaceholder,
+    LoadingPlaceholder,
   },
   props: {
     passedId: {

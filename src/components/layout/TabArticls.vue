@@ -35,7 +35,7 @@
       </draggable-items>
     </ul>
 
-    <category-page-admin-actions
+    <admin-actions-category-page
       v-if="isLoggedIn"
       class="admin"
     />
@@ -46,15 +46,15 @@
 import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
+import AdminActionsCategoryPage from "@/components/layout/AdminActionsCategoryPage.vue";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
-import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
 
 export default {
   name: "TabArticls",
   components: {
     DraggableItems,
     ArticlsListItem,
-    CategoryPageAdminActions,
+    AdminActionsCategoryPage,
   },
   props: {
     items: {

@@ -48,20 +48,20 @@
       name="fade"
       mode="out-in"
     >
-      <article-placeholder v-if="isLoading" />
+      <loading-placeholder v-if="isLoading" />
     </transition>
   </section>
 </template>
 
 <script>
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "EditNoteComponent",
   components: {
-    ArticlePlaceholder,
+    LoadingPlaceholder,
     cardNotification,
   },
   props: {

@@ -60,7 +60,7 @@
       name="fade"
       mode="out-in"
     >
-      <article-placeholder v-if="isLoading" />
+      <loading-placeholder v-if="isLoading" />
     </transition>
   </article>
 </template>
@@ -68,14 +68,14 @@
 <script>
 import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import CardNotification from "@/components/ui/CardNotification.vue";
 
 export default {
   name: "CreateCategoryPage",
   components: {
     CardNotification,
-    ArticlePlaceholder,
+    LoadingPlaceholder,
   },
   props: {
     passedId: {

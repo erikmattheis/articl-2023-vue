@@ -173,13 +173,13 @@
       name="fade"
       mode="out-in"
     >
-      <article-placeholder v-if="isLoading" />
+      <loading-placeholder v-if="isLoading" />
     </transition>
   </article>
 </template>
 
 <script>
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
 import { fetchData } from "@/services/fetchingService";
@@ -188,7 +188,7 @@ import { setTitleAndDescription } from "@/services/htmlMetaService";
 export default {
   name: "EditArticlPage",
   components: {
-    ArticlePlaceholder,
+    LoadingPlaceholder,
     cardNotification,
     inputTypeahead,
   },

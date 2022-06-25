@@ -22,7 +22,7 @@
       name="fade"
       mode="out-in"
     >
-      <article-placeholder v-if="isLoading" />
+      <loading-placeholder v-if="isLoading" />
     </transition>
   </div>
 </template>
@@ -32,14 +32,14 @@ import { isEqual } from "lodash";
 import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 
 export default {
   name: "ArticlsList",
   components: {
     DraggableItems,
-    ArticlePlaceholder,
+    LoadingPlaceholder,
     ArticlsListItem,
   },
   data: () => {

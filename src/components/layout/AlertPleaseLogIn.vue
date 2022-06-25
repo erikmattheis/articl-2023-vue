@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  name: "PleaseLogInAlert",
+  name: "AlertPleaseLogIn",
 };
 </script>

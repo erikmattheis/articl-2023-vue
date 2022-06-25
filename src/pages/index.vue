@@ -11,26 +11,26 @@
         </router-link>
       </li>
     </ul>
-    <category-page-admin-actions
+    <admin-actions-category-page
       v-if="isLoggedIn"
       class="admin"
     />
   </article>
-  <article-placeholder v-else />
+  <loading-placeholder v-else />
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
-import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
+import AdminActionsCategoryPage from "@/components/layout/AdminActionsCategoryPage.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "HomePage",
   components: {
-    ArticlePlaceholder,
-    CategoryPageAdminActions,
+    LoadingPlaceholder,
+    AdminActionsCategoryPage,
   },
   data: () => {
 

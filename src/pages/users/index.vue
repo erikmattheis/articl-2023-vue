@@ -83,21 +83,21 @@
         name="fade"
         mode="out-in"
       >
-        <article-placeholder v-if="isLoading" />
+        <loading-placeholder v-if="isLoading" />
       </transition>
     </form>
   </article>
 </template>
 
 <script>
-import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
+import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "UsersPage",
   components: {
-    ArticlePlaceholder,
+    LoadingPlaceholder,
   },
   data: () => {
 
