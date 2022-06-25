@@ -31,14 +31,14 @@
       class="active tab-content"
     >
       <input-typeahead
-        src="/articls/journal"
+        src="/articls/values/journal"
         :input-value="journal"
         label-value="Journal"
         query="journal"
         @typeahead-updated="onJournalChange"
       />
       <input-typeahead
-        src="/articls/authors"
+        src="/articls/values/authors"
         :input-value="authors"
         label-value="Authors"
         query="authors"

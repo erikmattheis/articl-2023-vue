@@ -30,6 +30,7 @@
 <script>
 import { isEqual } from "lodash";
 import DraggableItems from "vuedraggable";
+import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
@@ -49,10 +50,16 @@ export default {
     };
 
   },
+  computed: {
+    ...mapGetters({
+      params: "articlsParams/params",
+    }),
+  },
   watch: {
     params: {
       handler(newValue) {
 
+        console.log("params", newValue);
         this.updateValues(newValue);
 
       },

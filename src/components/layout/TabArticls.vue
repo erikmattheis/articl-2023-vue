@@ -24,7 +24,7 @@
         item-key="id"
         handle=".handle"
         ghost-class="ghost"
-        @change="onUpdateArticlsOrderValues()"
+        @change="onUpdateArticlsOrderValues"
       >
         <template #item="{ element }">
           <articls-list-item
@@ -47,12 +47,14 @@ import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
+import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
 
 export default {
   name: "TabArticls",
   components: {
     DraggableItems,
     ArticlsListItem,
+    CategoryPageAdminActions,
   },
   props: {
     items: {
@@ -80,74 +82,6 @@ export default {
 
   },
   methods: {
-    updateOrderValues() {
-
-      try {
-
-        this.categories.forEach((obj, index) => {
-
-          const objRef = obj;
-
-          objRef.order = index;
-
-        });
-
-      } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
-      }
-
-    },
-
-    async saveOrderValues() {
-
-      try {
-
-        const order = this.categories.map((obj) => {
-
-          return {
-            id: obj.id,
-            order: obj.order,
-          };
-
-        });
-
-        await this.saveOrder(order);
-
-      } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
-      }
-
-    },
-
-    async saveOrder(order) {
-
-      this.isLoading = true;
-
-      const result = await this.$http({
-        method: "POST",
-        url: "/categories/order",
-        data: {
-          order,
-        },
-      });
-
-      this.isLoading = false;
-
-      return result.data;
-
-    },
-
-    onUpdateOrderValues() {
-
-      this.updateOrderValues();
-
-      this.saveOrderValues();
-
-    },
 
     updateArticlsOrderValues(articlType) {
 
@@ -210,11 +144,11 @@ export default {
 
     },
 
-    onUpdateArticlsOrderValues(articlType) {
+    onUpdateArticlsOrderValues() {
 
-      this.updateArticlsOrderValues(articlType);
+      this.updateArticlsOrderValues(this.articlTypeCurrent);
 
-      this.saveArticlsOrderValues(articlType);
+      this.saveArticlsOrderValues(this.articlTypeCurrent);
 
     },
   },

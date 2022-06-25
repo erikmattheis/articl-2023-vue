@@ -249,11 +249,6 @@ export default {
   column-gap: 0;
 }
 
-li.listitem:hover,
-button:hover {
-  backdrop-filter:brightness(200%);
-}
-
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
