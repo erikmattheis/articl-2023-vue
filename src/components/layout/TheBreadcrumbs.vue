@@ -1,15 +1,14 @@
 <template>
   <nav>
     <ul>
-      <li>
-        <router-link to="/"> Home </router-link>
-      </li>
       <li
-        v-for="crumb in breadcrumbs"
-        :key="crumb.slug"
+        v-for="breadcrumb in breadcrumbs"
+        :key="breadcrumb"
       >
-        <router-link :to="`/d/${crumb.slug}`">
-          {{ crumb.name }}
+        <router-link
+          :to="{ name: 'categoryPage', query: { slug : breadcrumb.slug } }"
+        >
+          {{ breadcrumb.title }}
         </router-link>
       </li>
     </ul>
@@ -17,12 +16,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  props: {
-    breadcrumbs: {
-      type: Array,
-      default: () => { return []; },
-    },
+  name: "TheBreadcrumbs",
+  computed: {
+    ...mapGetters({
+      breadcrumbs: "categoryPages/breadcrumbs",
+    }),
   },
 };
 </script>

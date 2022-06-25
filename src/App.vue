@@ -211,8 +211,8 @@ export default {
 }
 
 .fade-enter-active {
-  transition: opacity .2s ease;
-  transition-delay: .2s;
+  transition: opacity .1s ease;
+  transition-delay: .1s;
 }
 
 .fade-leave-active {

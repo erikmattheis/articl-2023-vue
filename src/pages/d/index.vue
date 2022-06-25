@@ -1,5 +1,7 @@
 <template>
   <article v-if="!isLoading">
+    <the-breadcrumbs />
+
     <h2>{{ title }}</h2>
 
     <ul class="nav-tabs">
@@ -70,6 +72,7 @@ import { mapGetters } from "vuex";
 
 import ArticlePlaceholder from "@/components/layout/ArticlePlaceholder.vue";
 import CategoryPageAdminActions from "@/components/layout/CategoryPageAdminActions.vue";
+import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
@@ -77,6 +80,7 @@ export default {
   components: {
     ArticlePlaceholder,
     CategoryPageAdminActions,
+    TheBreadcrumbs,
   },
   data: () => {
 
@@ -124,6 +128,16 @@ export default {
         } else {
 
           this.$store.dispatch("categoryPages/categories", []);
+
+        }
+
+        if (results.breadcrumbs?.length) {
+
+          this.$store.dispatch("categoryPages/breadcrumbs", results.breadcrumbs);
+
+        } else {
+
+          this.$store.dispatch("categoryPages/breadcrumbs", []);
 
         }
 
@@ -176,6 +190,7 @@ export default {
       });
 
       return {
+        breadcrumbs: result.data.breadcrumbs,
         categories: result.data.categories,
         category: result.data.category,
         articlTypes: result.data.articls?.length

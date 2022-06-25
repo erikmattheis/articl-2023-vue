@@ -8,6 +8,7 @@ export default {
       articlTypes: [],
       categories: [],
       notes: [],
+      breadcrumbs: [],
     };
 
   },
@@ -33,6 +34,11 @@ export default {
       state.notes = payload;
 
     },
+    SET_BREADCRUMBS: (state, payload) => {
+
+      state.breadcrumbs = payload;
+
+    },
   },
 
   actions: {
@@ -54,6 +60,11 @@ export default {
     notes: (context, payload) => {
 
       context.commit("SET_NOTES", payload);
+
+    },
+    breadcrumbs: (context, payload) => {
+
+      context.commit("SET_BREADCRUMBS", payload);
 
     },
   },
@@ -80,6 +91,12 @@ export default {
     notes: (state) => {
 
       return state.notes;
+
+    },
+
+    breadcrumbs: (state) => {
+
+      return state.breadcrumbs;
 
     },
 
