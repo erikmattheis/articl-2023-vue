@@ -1,7 +1,6 @@
 <template>
   <li class="listitem">
     <div class="grid">
-      TabName:{{ TabName }}
       <ul>
         <li>
           <router-link :to="{ name: tabName, params: { slug: category.slug } }">

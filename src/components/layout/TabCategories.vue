@@ -51,7 +51,7 @@ export default {
   },
   mounted() {
 
-    this.TabName = this.treeLevel > 2 ? "TabCategories" : "TabArticls";
+    this.TabName = this.treeLevel > 0 ? "TabArticls" : "TabCategories";
 
   },
   methods: {

@@ -6,24 +6,7 @@
 
     <ul class="nav-tabs">
       <router-link
-        v-if="treeLevel < 3"
-        v-slot="{ isExactActive, navigate }"
-        custom
-        :to="{ name: 'TabCategories' }"
-      >
-        <li :class="{ active:isExactActive}">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Sub-categories
-          </a>
-        </li>
-      </router-link>
-
-      <router-link
-        v-if="treeLevel > 2"
+        v-if="treeLevel > 1"
         v-slot="{ isActive, navigate }"
         custom
         :to="{ name: 'TabArticls'}"
@@ -40,7 +23,7 @@
       </router-link>
 
       <router-link
-        v-if="treeLevel > 2"
+        v-if="treeLevel > 1"
         v-slot="{ isActive, navigate }"
         custom
         :to="{ 'name': 'TabNotes' }"
@@ -52,6 +35,28 @@
             @keyup.enter.prevent="navigate()"
           >
             Notes
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-if="treeLevel > 1"
+        :to="{ 'name': 'TabBlogs' }"
+      >
+        <li class="disabled">
+          <a>
+            Blogs
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-if="treeLevel > 1"
+        :to="{ 'name': 'TabQuestionsAnswers' }"
+      >
+        <li class="disabled">
+          <a>
+            Q&amp;A
           </a>
         </li>
       </router-link>
@@ -231,5 +236,10 @@ pre {
 
 .list-item {
   border-bottom: 1px solid var(--bg1);
+}
+
+.disabled {
+  background-color: var(--form-element-disabled-background-color);
+  color: var(--form-element-disabled-color);
 }
 </style>

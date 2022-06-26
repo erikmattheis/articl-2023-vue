@@ -18,6 +18,8 @@ import verifyEmailPage from "@/pages/verify-email.vue";
 import TabCategories from "@/components/layout/TabCategories.vue";
 import TabNotes from "@/components/layout/TabNotes.vue";
 import TabArticls from "@/components/layout/TabArticls.vue";
+import TabBlogs from "@/components/layout/TabBlogs.vue";
+import TabQuestionsAnswers from "@/components/layout/TabQuestionsAnswers.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -53,10 +55,21 @@ const router = createRouter({
         props: true,
       },
       {
+        name: "TabBlogs",
+        path: "blogs",
+        component: TabBlogs,
+      },
+      {
+        name: "TabQuestionsAnswers",
+        path: "qa",
+        component: TabQuestionsAnswers,
+      },
+      {
         name: "TabArticls",
         path: "articls/:type?",
         component: TabArticls,
       }],
+
     },
 
     {
