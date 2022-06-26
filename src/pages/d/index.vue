@@ -4,9 +4,12 @@
 
     <h2>{{ title }}</h2>
 
-    <ul class="nav-tabs">
+    <ul
+      v-if="treeLevel > 1"
+      class="nav-tabs"
+    >
       <router-link
-        v-if="treeLevel > 1"
+
         v-slot="{ isActive, navigate }"
         custom
         :to="{ name: 'TabArticls'}"
@@ -23,7 +26,6 @@
       </router-link>
 
       <router-link
-        v-if="treeLevel > 1"
         v-slot="{ isActive, navigate }"
         custom
         :to="{ 'name': 'TabNotes' }"
@@ -40,7 +42,6 @@
       </router-link>
 
       <router-link
-        v-if="treeLevel > 1"
         :to="{ 'name': 'TabBlogs' }"
       >
         <li class="disabled">
@@ -51,7 +52,6 @@
       </router-link>
 
       <router-link
-        v-if="treeLevel > 1"
         :to="{ 'name': 'TabQuestionsAnswers' }"
       >
         <li class="disabled">
@@ -241,5 +241,9 @@ pre {
 .disabled {
   background-color: var(--form-element-disabled-background-color);
   color: var(--form-element-disabled-color);
+}
+
+.disabled a {
+  padding: 0 0.5rem !important;
 }
 </style>

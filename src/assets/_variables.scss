@@ -76,6 +76,10 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --font-family: "Poppins", Arial, sans-serif !important;
   --card-box-shadow: none;
   --block-spacing-horizontal: 1rem;
+  h2 {
+    --typography-spacing-vertical: 1rem;
+  }
+ 
 }
 
 
