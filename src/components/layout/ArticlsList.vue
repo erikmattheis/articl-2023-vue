@@ -33,7 +33,7 @@ import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 
 export default {
   name: "ArticlsList",

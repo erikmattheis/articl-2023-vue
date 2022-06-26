@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: "AdminActionsCategoryPage",
+  name: "CategoryActionsPage",
 
 };
 </script>

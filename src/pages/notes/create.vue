@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 
 export default {
   name: "EditNoteComponent",

@@ -68,8 +68,8 @@
 <script>
 import { mapGetters } from "vuex";
 
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import CardNotification from "@/components/ui/CardNotification.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 
 export default {
   name: "CreateCategoryPage",

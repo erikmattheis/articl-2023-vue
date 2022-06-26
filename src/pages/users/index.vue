@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";
 

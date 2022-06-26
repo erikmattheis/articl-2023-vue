@@ -45,7 +45,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 
 export default {
   name: "NoteCrudComponent",

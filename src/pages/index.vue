@@ -11,7 +11,7 @@
         </router-link>
       </li>
     </ul>
-    <admin-actions-category-page
+    <category-actions
       v-if="isLoggedIn"
       class="admin"
     />
@@ -22,15 +22,15 @@
 <script>
 import { mapGetters } from "vuex";
 
-import AdminActionsCategoryPage from "@/components/layout/AdminActionsCategoryPage.vue";
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
+import CategoryActions from "@/components/layout/CategoryActions.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "HomePage",
   components: {
     LoadingPlaceholder,
-    AdminActionsCategoryPage,
+    CategoryActions,
   },
   data: () => {
 

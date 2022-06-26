@@ -179,9 +179,9 @@
 </template>
 
 <script>
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
 import cardNotification from "@/components/ui/CardNotification.vue";
 import inputTypeahead from "@/components/ui/InputTypeahead.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { fetchData } from "@/services/fetchingService";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 

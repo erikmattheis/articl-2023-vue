@@ -22,13 +22,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import AdminActionsCategory from "@/components/layout/AdminActionsCategory.vue";
+import CategoryActions from "@/components/layout/CategoryActions.vue";
 
 export default {
   name: "CategoriesListItem",
 
   components: {
-    AdminActionsCategory,
+    CategoryActions,
   },
   props: {
     category: {

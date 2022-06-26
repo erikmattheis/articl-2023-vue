@@ -43,20 +43,32 @@
       </router-link>
 
       <router-link
+        v-slot="{ isActive, navigate }"
+        custom
         :to="{ 'name': 'TabBlogs' }"
       >
-        <li class="disabled">
-          <a>
+        <li :class="{'active':isActive}">
+          <a
+            href
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
+          >
             Blogs
           </a>
         </li>
       </router-link>
 
       <router-link
+        v-slot="{ isActive, navigate }"
+        custom
         :to="{ 'name': 'TabQuestionsAnswers' }"
       >
-        <li class="disabled">
-          <a>
+        <li :class="{'active':isActive}">
+          <a
+            href
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
+          >
             Q&amp;A
           </a>
         </li>
@@ -64,7 +76,7 @@
     </ul>
     <router-view />
 
-    <admin-actions-category-page
+    <category-actions
       v-if="isLoggedIn"
     />
   </article>
@@ -76,16 +88,16 @@
 import { groupBy } from "lodash";
 import { mapGetters } from "vuex";
 
-import AdminActionsCategoryPage from "@/components/layout/AdminActionsCategoryPage.vue";
-import LoadingPlaceholder from "@/components/layout/LoadingPlaceholder.vue";
+import CategoryActions from "@/components/layout/CategoryActions.vue";
 import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "CategoryPage",
   components: {
     LoadingPlaceholder,
-    AdminActionsCategoryPage,
+    CategoryActions,
     TheBreadcrumbs,
   },
   data: () => {
