@@ -377,6 +377,11 @@ small {
   font-size: .7rem;
 }
 
+small .small-caps {
+  opacity: 0.6;
+  font-variant: small-caps;
+}
+
 ul {
   list-style-type: none !important;
   padding-left: 0;

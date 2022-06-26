@@ -68,15 +68,17 @@ $bg-light2: #d5f3ff;
 $bg-light1: darken($bg-light2, 10%
 );
 $bg-light0: darken($bg-light2, 20%);
+$bg-light3: lighten($bg-light0, 20%);
 $bg-dark0: #15242a;
 $bg-dark1:lighten($bg-dark0, 5%);
 $bg-dark2: lighten($bg-dark0, 10%);
+$bg-dark3: lighten($bg-dark0, 20%);
 
 :root {
   --font-family: "Poppins", Arial, sans-serif !important;
   --card-box-shadow: none;
   --block-spacing-horizontal: 1rem;
-  h2 {
+  h2, h3 {
     --typography-spacing-vertical: 1rem;
   }
  
@@ -87,6 +89,7 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --bg0: #{$bg-light0};
   --bg1: #{$bg-light1};
   --bg2: #{$bg-light2};
+  --bg3: #{$bg-light3};
   --dropdown-background-color: #{$bg-light1};
   --form-element-background-color: #{$bg-light1};
   --form-element-focus-color:  #{$bg-light1};
@@ -106,6 +109,7 @@ $bg-dark2: lighten($bg-dark0, 10%);
   --bg0: #{$bg-dark0};
   --bg1: #{$bg-dark1};
   --bg2: #{$bg-dark2};
+  --bg3: #{$bg-dark3};
   --dropdown-background-color: #{$bg-dark1};
   --form-element-background-color: #{$bg-dark1};
   --form-element-focus-color:  #{$bg-dark1};

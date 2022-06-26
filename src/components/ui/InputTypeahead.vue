@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <template v-if="query">
     <label :for="query">
       <template v-if="labelValue">{{ labelValue }}</template>
       <vue-feather
@@ -35,7 +35,7 @@
         </li>
       </ul>
     </label>
-  </div>
+  </template>
 </template>
 <script>
 import { debounce } from "lodash";

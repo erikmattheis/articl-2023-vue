@@ -1,5 +1,6 @@
 <template>
   <div>
+    <small class="small-caps">Types of Articl</small>
     <ul class="nav-tabs">
       <li
         v-for="articlType in articlTypes"

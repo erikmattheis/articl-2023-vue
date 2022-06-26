@@ -2,6 +2,7 @@
   <article v-if="!isLoading">
     <the-breadcrumbs />
 
+    <small class="small-caps">Category</small>
     <h2>{{ title }}</h2>
 
     <ul

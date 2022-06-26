@@ -7,7 +7,7 @@
       >
         <router-link
           v-if="index !== breadcrumbs.length - 1"
-          :to="{ name: index < 4 ? 'TabCategories':'TabArticls', params: { slug : breadcrumb.slug } }"
+          :to="{ name: index < 2 ? 'TabCategories':'TabArticls', params: { slug : breadcrumb.slug } }"
         >
           {{ breadcrumb.title }} &gt;
         </router-link>

@@ -414,14 +414,7 @@ export default {
 </script>
 
 <style scoped>
-form input.another {
-  padding-right: 4.6 rem;
-}
-
-form input.another button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 4.4rem;
+button {
+  margin-top: var(--typography-spacing-vertical);
 }
 </style>
