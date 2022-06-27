@@ -9,7 +9,7 @@
         </li>
       </ul>
       <div>
-        <directory-admin-actions
+        <category-actions
           v-if="isLoggedIn"
           :id="category.id"
           :title="category.title"
@@ -22,13 +22,13 @@
 <script>
 import { mapGetters } from "vuex";
 
-import DirectoryAdminActions from "@/components/layout/DirectoryAdminActions.vue";
+import CategoryActions from "@/components/layout/CategoryActions.vue";
 
 export default {
   name: "CategoriesListItem",
 
   components: {
-    DirectoryAdminActions,
+    CategoryActions,
   },
   props: {
     category: {

@@ -1,24 +1,60 @@
 <template>
-  <div class="admin">
+  <div class="admin grid">
     <router-link
-      :to="{ name: 'createCategoryPage', query: { parentSlug: $route.params.slug ? $route.params.slug : '0' } }"
+      :to="{ name: 'editCategory', params: { passedId: id } }"
       role="button"
     >
-      New Category Here
+      edit
     </router-link>
 
     <router-link
-      :to="{ name: 'createArticlPage', query: { slug: $route.params.slug ? $route.params.slug : '0' } }"
+      :to="{ name: 'deleteCategory', params: { id, title } }"
       role="button"
     >
-      New Articl Here
+      delete
     </router-link>
+
+    <a
+      class="handle"
+      href="#"
+    ><div class="sr">Reorder category</div>
+      <vue-feather
+        alt="reorder category"
+        size="1rem"
+        type="move"
+        aria-label="move"
+      />
+    </a>
   </div>
 </template>
 
 <script>
-export default {
-  name: "CategoryActionsPage",
+import VueFeather from "vue-feather";
 
+export default {
+  name: "CategoryActions",
+  components: {
+    VueFeather,
+  },
+  props: {
+    id: {
+      type: String,
+      default: "",
+    },
+    title: {
+      type: String,
+      default: "",
+    },
+  },
+  data: () => {
+
+    return {
+      expanded: false,
+    };
+
+  },
+  computed: {
+
+  },
 };
 </script>

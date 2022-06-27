@@ -76,7 +76,7 @@
     </ul>
     <router-view />
 
-    <directory-admin-actions
+    <directory-actions
       v-if="isLoggedIn"
     />
   </article>
@@ -88,7 +88,7 @@
 import { groupBy } from "lodash";
 import { mapGetters } from "vuex";
 
-import DirectoryAdminActions from "@/components/layout/DirectoryAdminActions.vue";
+import DirectoryActions from "@/components/layout/DirectoryActions.vue";
 import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
@@ -97,7 +97,7 @@ export default {
   name: "CategoryPage",
   components: {
     LoadingPlaceholder,
-    DirectoryAdminActions,
+    DirectoryActions,
     TheBreadcrumbs,
   },
   data: () => {

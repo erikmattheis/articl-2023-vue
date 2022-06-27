@@ -35,6 +35,18 @@
           >
         </label>
 
+        <label
+          v-if="doi"
+          for="doi"
+        >DOI
+          <input
+            id="doi"
+            v-model="doi"
+            name="doi"
+            autocomplete="off"
+          >
+        </label>
+
         <label for="authors">Authors
           <input
             id="authors"
@@ -204,8 +216,10 @@ export default {
       abstract: "",
       affiliation: "",
       id: "",
+      doi: "",
       articlUrl: "",
-      authors: "",
+      authorsOrig: "",
+      authors: [],
       buttonDisabled: false,
       buttonFetchDisabled: false,
       slug: this.$route.query.slug,
@@ -277,6 +291,8 @@ export default {
           this.buttonFetchDisabled = true;
 
           const result = await fetchData(this.articlUrl);
+
+          console.log("doi", result.doi);
 
           if (result) {
 

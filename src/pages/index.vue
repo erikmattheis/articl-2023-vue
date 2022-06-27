@@ -22,7 +22,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-import DirectoryAdminActions from "@/components/layout/DirectoryAdminActions.vue";
+import CategoryActions from "@/components/layout/CategoryActions.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
@@ -30,7 +30,7 @@ export default {
   name: "HomePage",
   components: {
     LoadingPlaceholder,
-    DirectoryAdminActions,
+    CategoryActions,
   },
   data: () => {
 

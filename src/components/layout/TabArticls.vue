@@ -35,11 +35,6 @@
         </template>
       </draggable-items>
     </ul>
-
-    <category-actions
-      v-if="isLoggedIn"
-      class="admin"
-    />
   </div>
 </template>
 
@@ -48,14 +43,12 @@ import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
-import DirectoryAdminActions from "@/components/layout/DirectoryAdminActions.vue";
 
 export default {
   name: "TabArticls",
   components: {
     DraggableItems,
     ArticlsListItem,
-    DirectoryAdminActions,
   },
   props: {
     items: {
