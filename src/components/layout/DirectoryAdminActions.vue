@@ -32,7 +32,7 @@
 import VueFeather from "vue-feather";
 
 export default {
-  name: "CategoryActions",
+  name: "DirectoryAdminActions",
   components: {
     VueFeather,
   },

@@ -196,11 +196,9 @@ export default {
 
     document.documentElement.setAttribute("data-theme", this.theme);
 
-    if (this.$cookies.isKey("--font-size")) {
+    if (this.$cookies.isKey("font-size")) {
 
-      this.setTextSize(this.$cookies.get("--font-size"));
-
-      // this.originalFontSize = parseInt(getComputedStyle(document.body).getPropertyValue("--font-size"), 10);
+      this.setTextSize(this.$cookies.get("font-size"));
 
     }
 
@@ -220,7 +218,7 @@ export default {
           `${18 * size}px`,
         );
 
-        this.$cookies.set("--font-size", size);
+        this.$cookies.set("font-size", size);
 
       } catch (error) {
 
@@ -261,23 +259,19 @@ export default {
             },
           });
 
-          localStorage.clear();
-
-          this.$store.dispatch("tokens/logout");
-
           this.$router.push("/");
-
-        } else {
-
-          localStorage.clear();
-
-          this.$store.dispatch("tokens/logout");
 
         }
 
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);
+
+      } finally {
+
+        localStorage.clear();
+
+        this.$store.dispatch("tokens/logout");
 
       }
 

@@ -48,14 +48,14 @@ import DraggableItems from "vuedraggable";
 import { mapGetters } from "vuex";
 
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
-import CategoryActions from "@/components/layout/CategoryActions.vue";
+import DirectoryAdminActions from "@/components/layout/DirectoryAdminActions.vue";
 
 export default {
   name: "TabArticls",
   components: {
     DraggableItems,
     ArticlsListItem,
-    CategoryActions,
+    DirectoryAdminActions,
   },
   props: {
     items: {

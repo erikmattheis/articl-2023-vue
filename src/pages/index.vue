@@ -11,7 +11,7 @@
         </router-link>
       </li>
     </ul>
-    <category-actions
+    <directory-admin-actions
       v-if="isLoggedIn"
       class="admin"
     />
@@ -22,7 +22,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-import CategoryActions from "@/components/layout/CategoryActions.vue";
+import DirectoryAdminActions from "@/components/layout/DirectoryAdminActions.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
@@ -30,7 +30,7 @@ export default {
   name: "HomePage",
   components: {
     LoadingPlaceholder,
-    CategoryActions,
+    DirectoryAdminActions,
   },
   data: () => {
 
