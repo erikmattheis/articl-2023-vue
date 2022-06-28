@@ -1,70 +1,7 @@
 import store from "@/store";
 
 const errorAction = "errors/setError";
-const copyToClipboard = (index) => {
 
-  let finalSelector = "";
-
-  switch (index) {
-
-    case 1:
-      finalSelector = "title";
-
-      break;
-
-    case 2:
-      finalSelector = "authors";
-
-      break;
-
-    case 3:
-      finalSelector = "affiliation";
-
-      break;
-
-    case 4:
-      finalSelector = "journal";
-
-      break;
-
-    case 5:
-      finalSelector = "year";
-
-      break;
-
-    case 6:
-      finalSelector = "month";
-
-      break;
-
-    case 7:
-      finalSelector = "abstract";
-
-      break;
-
-    default:
-      break;
-
-  }
-
-  // getting text from and ID
-  const copyText = document.getElementById(String(finalSelector)).innerHTML;
-  // creating textarea of html
-  const input = document.createElement("textarea");
-
-  // adding p tag text to textarea
-  input.value = copyText;
-
-  document.body.append(input);
-
-  input.select();
-
-  document.execCommand("Copy");
-
-  // removing textarea after copy
-  input.remove();
-
-};
 // Parse the ID from the URL
 const getId = (url) => {
 
@@ -124,9 +61,9 @@ const extractAuthorsPubMed = (element) => {
 
   let authors = "";
 
-  authors += element.querySelector("LastName") ? `${element.querySelector("LastName").textContent} ` : "";
+  authors += element.querySelector("LastName") ? element.querySelector("LastName").textContent : "";
 
-  authors += element.querySelector("ForeName") ? `${element.querySelector("ForeName").textContent},` : "<br><br>";
+  authors += element.querySelector("ForeName") ? element.querySelector("ForeName").textContent : "<br><br>";
 
   return authors;
 
@@ -134,16 +71,16 @@ const extractAuthorsPubMed = (element) => {
 
 const extractAuthorsObjectsPubMed = (element) => {
 
-  if (!element.querySelector("LastName").textContent) {
+  if (!element.querySelector("LastName")?.textContent) {
 
     return {};
 
   }
-
+  const affl = document.querySelectorAll("Affiliation")?.textContent;
   return {
-    nameFirst: element.querySelector("ForeName") ? element.querySelector("ForeName") : "",
-    nameLast: element.querySelector("LastName"),
-    affilliations: [...document.querySelectorAll("Affiliation")],
+    nameFirst: element.querySelector("ForeName") ? element.querySelector("ForeName")?.textContent : "",
+    nameLast: element.querySelector("LastName")?.textContent,
+    affilliations: affl ? [...affl] : [],
   };
 
 };
@@ -176,8 +113,6 @@ const api = async (surl) => {
       authorsPMC.forEach((element) => {
 
         result.authorsOrig += extractAuthorsPMC(element);
-
-        result.authors.push(extractAuthorsObjectsPubMed(element));
 
       });
 
@@ -219,8 +154,9 @@ const api = async (surl) => {
 
       authorsPubMed.forEach((element) => {
 
-        result.authorsextractAuthorsObjectsPubMed(element);
-        result.authors += extractAuthorsPubMed(element);
+        console.log("result.authors", result.authors);
+        result.authors.push(extractAuthorsObjectsPubMed(element));
+        result.authorsOrig += extractAuthorsPubMed(element);
 
       });
 
@@ -419,5 +355,5 @@ const fetchData = async (url) => {
 };
 
 export {
-  copyToClipboard, fetchData, generateJSON,
+  fetchData, generateJSON,
 };

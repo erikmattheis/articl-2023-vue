@@ -11,7 +11,7 @@
         </router-link>
       </li>
     </ul>
-    <directory-admin-actions
+    <category-actions
       v-if="isLoggedIn"
       class="admin"
     />

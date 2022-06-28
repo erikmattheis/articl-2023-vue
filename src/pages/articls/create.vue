@@ -47,21 +47,42 @@
           >
         </label>
 
-        <label for="authors">Authors
-          <input
-            id="authors"
-            v-model="authors"
-            name="authors"
-            autocomplete="off"
-          ></label>
-
-        <label for="affiliation">Affiliation
-          <input
-            id="affiliation"
-            v-model="affiliation"
-            name="affiliation"
-            autocomplete="off"
-          ></label>
+        <fieldset
+          v-for="(author, index) in authors"
+          :key="author.id"
+        >
+          <div class="grid">
+            <label
+              for="`nameFirst${index}`"
+            >First name
+              <input
+                :id="`nameFirst${index}`"
+                v-model="author.nameFirst"
+                :name="`nameFirst${index}`"
+                autocomplete="off"
+              ></label>
+            <label
+              for="`nameLast${index}`"
+            >Last name
+              <input
+                :id="`nameLast${index}`"
+                v-model="author.nameLast"
+                :name="`nameLast${index}`"
+                autocomplete="off"
+              ></label>
+          </div>
+          <label
+            v-for="(affiliation, affilIndex) in author.affilliations"
+            :key="affiliation"
+            for="affiliation"
+          >Affiliation
+            <input
+              id="`affiliation${index}`"
+              v-model="affiliations[affilIndex]"
+              name="`affiliation${index}`"
+              autocomplete="off"
+            ></label>
+        </fieldset>
 
         <label for="journal">Journal
           <input
@@ -214,7 +235,7 @@ export default {
 
     return {
       abstract: "",
-      affiliation: "",
+      affiliations: "",
       id: "",
       doi: "",
       articlUrl: "",
@@ -237,7 +258,8 @@ export default {
   },
   mounted() {
 
-    this.id = this.passedId;
+    console.log("p", this.passedId);
+    this.id = this.passedId ? this.passedId : "";
 
     this.formAction = this.id ? "Edit" : "Create";
 
@@ -346,7 +368,7 @@ export default {
 
       } else if (this.type === "") {
 
-        this.errorMessage = "Please enter a type.";
+        this.errorMessage = "Please choose a type.";
 
         passed = false;
 
@@ -363,6 +385,11 @@ export default {
     },
     async submitForm(id) {
 
+      console.log("p", id);
+      console.log("/articls/$id}", `/articls/${id}`);
+      const v = `/articls/${id}`;
+      console.log("v", v);
+
       try {
 
         this.resetFormErrors();
@@ -374,7 +401,7 @@ export default {
           const verb = id ? "PUT" : "POST";
           const result = await this.$http({
             method: verb,
-            url: `/articls/${id}`,
+            url: v,
             data: {
               abstract: this.abstract,
               affiliation: this.affiliation,
@@ -420,6 +447,7 @@ export default {
       });
 
     },
+
     onTypeaheadHit(e) {
 
       this.slug = e.value;

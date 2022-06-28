@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.6",
     "@volar-plugins/prettier": "^1.1.4",
     "@vue/cli-plugin-babel": "^5.0.4",
     "@vue/cli-plugin-eslint": "^5.0.4",
@@ -61,7 +60,7 @@
       "@vue/airbnb"
     ],
     "parserOptions": {
-      "parser": "@babel/eslint-parser"
+      "ecmaVersion": 2020
     },
     "plugins": [
       "simple-import-sort",
@@ -75,10 +74,7 @@
         "error",
         "always"
       ],
-      "indent": [
-        "error",
-        2
-      ],
+      "indent": "off",
       "max-len": [
         "error",
         {
