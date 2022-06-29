@@ -248,7 +248,6 @@ export default {
           if (id) {
 
             data.oldSlug = this.oldSlug;
-            console.log("data", data);
 
           }
 

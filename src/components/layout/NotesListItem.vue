@@ -83,8 +83,6 @@ export default {
 
         const result = await this.getNote(id);
 
-        console.log("result.data", result.data);
-
         this.note = result.data;
 
         this.isLoading = false;

@@ -162,8 +162,6 @@ export default {
 
         if (results.articls) {
 
-          console.log("results.articls", results.articls);
-
           this.$store.dispatch("categoryPages/articls", results.articls);
           this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
 

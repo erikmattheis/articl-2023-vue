@@ -17,7 +17,7 @@
             }}</strong>{{ highlightedSubstring(articl.title, params.title, "suffix") }}</a>
 
           <p
-            v-if="doi"
+            v-if="articl.doi"
             class="doi"
           >
             <svg

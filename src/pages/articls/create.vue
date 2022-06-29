@@ -71,15 +71,17 @@
                 autocomplete="off"
               ></label>
           </div>
+
           <label
             v-for="(affiliation, affilIndex) in author.affilliations"
             :key="affiliation"
-            for="affiliation"
+            for="`affiliation${affilIndex}`"
           >Affiliation
+
             <input
-              id="`affiliation${index}`"
-              v-model="affiliations[affilIndex]"
-              name="`affiliation${index}`"
+              id="`affiliation${affilIndex}`"
+              v-model="author.affilliations[affilIndex]"
+              name="`affiliation${affilIndex}`"
               autocomplete="off"
             ></label>
         </fieldset>
@@ -315,6 +317,13 @@ export default {
           const result = await fetchData(this.articlUrl);
 
           console.log("doi", result.doi);
+          const author = result.authors[0];
+
+console.log("author.id", author.id);
+
+          console.log("author", author);
+
+          console.log("author", author);
 
           if (result) {
 
@@ -385,10 +394,7 @@ export default {
     },
     async submitForm(id) {
 
-      console.log("p", id);
-      console.log("/articls/$id}", `/articls/${id}`);
-      const v = `/articls/${id}`;
-      console.log("v", v);
+      const url = `/articls/${id}`;
 
       try {
 
@@ -401,7 +407,7 @@ export default {
           const verb = id ? "PUT" : "POST";
           const result = await this.$http({
             method: verb,
-            url: v,
+            url,
             data: {
               abstract: this.abstract,
               affiliation: this.affiliation,

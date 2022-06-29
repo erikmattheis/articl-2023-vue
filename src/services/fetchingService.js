@@ -76,11 +76,14 @@ const extractAuthorsObjectsPubMed = (element) => {
     return {};
 
   }
-  const affl = document.querySelectorAll("Affiliation")?.textContent;
+
+  let affl = element.querySelectorAll("Affiliation");
+  affl = [...affl];
+
   return {
     nameFirst: element.querySelector("ForeName") ? element.querySelector("ForeName")?.textContent : "",
     nameLast: element.querySelector("LastName")?.textContent,
-    affilliations: affl ? [...affl] : [],
+    affilliations: affl.map((ele) => { return ele.textContent; }),
   };
 
 };
@@ -154,7 +157,6 @@ const api = async (surl) => {
 
       authorsPubMed.forEach((element) => {
 
-        console.log("result.authors", result.authors);
         result.authors.push(extractAuthorsObjectsPubMed(element));
         result.authorsOrig += extractAuthorsPubMed(element);
 
