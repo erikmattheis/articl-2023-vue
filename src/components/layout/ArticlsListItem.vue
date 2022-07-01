@@ -16,13 +16,9 @@
               highlightedSubstring(articl.title, params.title, "term")
             }}</strong>{{ highlightedSubstring(articl.title, params.title, "suffix") }}</a>
         </h3>
-
-        <h3 v-if="articl.titleExcerpt">
-          {{ articl.titleExcerpt }}
-        </h3>
       </li>
-      <li>
-        <a :href="articl.url">
+      <li v-if="articl.titleExcerpt">
+        <a :href="articl.articlUrl">
           {{ highlightedSubstring(articl.titleExcerpt,params.title,"prefix")
           }}<strong
             :class="{
@@ -33,20 +29,6 @@
           }}</strong>{{
             highlightedSubstring(articl.titleExcerpt,params.title,"suffix")
           }}</a>
-      </li>
-      <li
-        v-if="articl.authors"
-      >
-        <small>
-          {{ highlightedSubstring(articl.authors, params.authors,"prefix")
-          }}<strong
-            :class="{
-              'not-strong': noCaseIndexOf(articl.authors, params.authors) === -1,
-            }"
-          >{{
-            highlightedSubstring(articl.authors, params.authors,"term")
-          }}</strong>{{ highlightedSubstring(articl.authors, params.authors,"suffix") }}
-        </small>
       </li>
 
       <li v-if="articl.journal">
@@ -213,16 +195,16 @@ strong:not([class="not-strong"]) {
 
 li {
   width:100%;
-  overflow: hidden;
-  text-overflow:ellipsis;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   line-height: 1rem;
 }
-
+/*
 li:nth-child(even){
     background-color: var(--bg1);
 }
-
+*/
 svg {
 
   a{ fill:#fcb425; }
@@ -231,5 +213,10 @@ svg {
 
   .c{ fill:#fff; }
 }
-
+.grid {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.tools {
+  width: max-content;
+}
 </style>
