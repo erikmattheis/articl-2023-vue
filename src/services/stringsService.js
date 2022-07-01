@@ -1,3 +1,5 @@
+const isNumber = (n) => { return !Number.isNaN(parseFloat(n)) && !Number.isNaN(n - 0); };
+
 const noCaseIndexOf = (str, subString) => {
 
   if (!str || !subString) {
@@ -62,6 +64,7 @@ const toListWithOptionalConjuction = (array, conj = "") => {
 
 export {
   highlightedSubstring,
+  isNumber,
   noCaseIndexOf,
   toListWithOptionalConjuction,
 };
