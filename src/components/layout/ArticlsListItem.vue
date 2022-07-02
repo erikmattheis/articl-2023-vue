@@ -7,39 +7,21 @@
             :href="articl.articlUrl"
             target="_blank"
           >
-            {{ highlightedSubstring(articl.title, params.title,"prefix")
-            }}<strong
-              :class="{
-                'not-strong': noCaseIndexOf(articl.title, params.title) === -1,
-              }"
-            >{{
-              highlightedSubstring(articl.title, params.title, "term")
-            }}</strong>{{ highlightedSubstring(articl.title, params.title, "suffix") }}</a>
+            {{ articl.title }}
+          </a>
         </h3>
       </li>
       <li v-if="articl.titleExcerpt">
         <a :href="articl.articlUrl">
-          {{ highlightedSubstring(articl.titleExcerpt,params.title,"prefix")
-          }}<strong
-            :class="{
-              'not-strong': noCaseIndexOf(articl.titleExcerpt,params.title) === -1,
-            }"
-          >{{
-            highlightedSubstring(articl.titleExcerpt,params.title,"term")
-          }}</strong>{{
-            highlightedSubstring(articl.titleExcerpt,params.title,"suffix")
-          }}</a>
+          {{ articl.titleExcerpt }}
+        </a>
       </li>
 
       <li v-if="articl.journal">
-        <strong
-          :class="{
-            'not-strong': noCaseIndexOf(articl.journal, params.journal) === -1,
-          }"
-        >{{ articl.journal }}</strong>
+        {{ articl.journal }}
       </li>
-      <li v-if="articl.yearComparison && Number(articl.year)!==yearsStart">
-        {{ articl.yearComparison }} {{ articl.year }}
+      <li v-if="articl.year">
+        {{ articl.year }}
       </li>
 
       <li v-if="articl.authorsOrig">
