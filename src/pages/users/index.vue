@@ -149,6 +149,8 @@ export default {
 
         this.theme = result.theme !== "dark" ? "light" : "dark";
 
+        this.fontSize = result.fontSize ? result.fontSize : "";
+
       } catch (error) {
 
         this.$store.dispatch("errors/setError", error);

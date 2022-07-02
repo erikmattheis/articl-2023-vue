@@ -133,7 +133,7 @@ export default {
 
 li {
   width:100%;
-  overflow: hidden;
+  overflow-x: hidden;
   text-overflow:ellipsis;
   white-space: nowrap
 }

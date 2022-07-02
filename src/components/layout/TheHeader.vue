@@ -176,7 +176,7 @@ export default {
   data: () => {
 
     return {
-      theme: "light",
+      theme: "",
     };
 
   },
@@ -204,21 +204,24 @@ export default {
 
   },
   methods: {
-    setTextSize(size) {
+    async toggleTheme() {
 
       try {
 
-        document.documentElement.style.setProperty(
-          "--font-size",
-          `${18 * size}px`,
-        );
+        this.theme = this.theme === "light" ? "dark" : "light";
 
-        document.documentElement.style.setProperty(
-          "font-size",
-          `${18 * size}px`,
-        );
+        document.documentElement.setAttribute("data-theme", this.theme);
 
-        this.$cookies.set("font-size", size);
+        this.$cookies.set("data-theme", this.theme);
+
+        await this.$http({
+          method: "PATCH",
+          url: "/users/me",
+          data: {
+            theme: this.theme,
+            fontSize: this.fontSize,
+          },
+        });
 
       } catch (error) {
 
@@ -276,15 +279,17 @@ export default {
       }
 
     },
-    toggleTheme() {
+    setTextSize(size) {
 
-      this.theme = this.theme === "light" ? "dark" : "light";
+      document.documentElement.style.setProperty(
+        "--font-size",
+        `${18 * size}px`,
+      );
 
-      document.documentElement.setAttribute("data-theme", this.theme);
-
-      this.$cookies.set("data-theme", this.theme);
+      this.$cookies.set("--font-size", size);
 
     },
+
   },
 };
 </script>

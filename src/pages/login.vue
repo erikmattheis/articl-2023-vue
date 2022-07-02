@@ -162,6 +162,13 @@ export default {
             theme,
           );
 
+          const fontSize = result.data.user?.fontSize !== 16 ? result.data.user?.fontSize : 16;
+
+          this.$cookies.set(
+            "font-size",
+            fontSize,
+          );
+
           if (
             this.$route.query.redirect
           && this.$route.query.redirect !== "/login"

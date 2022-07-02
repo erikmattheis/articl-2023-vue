@@ -114,6 +114,7 @@
     >
       <articl-actions
         :id="articl.id"
+        class="tools"
         :title="articl.title"
       />
     </div>
@@ -214,7 +215,7 @@ svg {
   .c{ fill:#fff; }
 }
 .grid {
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto auto;
 }
 .tools {
   width: max-content;

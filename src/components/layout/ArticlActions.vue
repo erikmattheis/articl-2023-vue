@@ -57,3 +57,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.grid {
+  white-space:nowrap;
+}
+
+.grid a {
+  display:inline-block;
+
+}
+</style>
