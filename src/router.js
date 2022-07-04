@@ -30,33 +30,6 @@ const router = createRouter({
       name: "homePage",
       path: "/",
       component: homePage,
-      props: true,
-      children: [{
-        name: "TabCategories",
-        path: "",
-        component: TabCategories,
-      },
-      {
-        name: "TabNotes",
-        path: "notes",
-        component: TabNotes,
-        props: true,
-      },
-      {
-        name: "TabBlogs",
-        path: "blogs",
-        component: TabBlogs,
-      },
-      {
-        name: "TabQuestionsAnswers",
-        path: "qa",
-        component: TabQuestionsAnswers,
-      },
-      {
-        name: "TabArticls",
-        path: "articls/:type?",
-        component: TabArticls,
-      }],
     },
 
     {

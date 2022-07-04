@@ -1,82 +1,9 @@
 <template>
   <article v-if="!isLoading">
-    isLoading:{{ isLoading }}<br>
-
-    <the-breadcrumbs />
-
     <small class="small-caps">Category</small>
-
     <h2>{{ title }}</h2>
 
-    <ul
-      class="nav-tabs"
-    >
-      <router-link
-
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ name: 'TabArticls'}"
-      >
-        <li :class="{'active':isActive}">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Articls
-          </a>
-        </li>
-      </router-link>
-
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ 'name': 'TabNotes' }"
-      >
-        <li :class="{'active':isActive}">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Notes
-          </a>
-        </li>
-      </router-link>
-
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ 'name': 'TabBlogs' }"
-      >
-        <li :class="{'active':isActive}">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Blogs
-          </a>
-        </li>
-      </router-link>
-
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ 'name': 'TabQuestionsAnswers' }"
-      >
-        <li :class="{'active':isActive}">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Q&amp;A
-          </a>
-        </li>
-      </router-link>
-    </ul>
-    <router-view />
+    <tab-categories />
 
     <directory-actions
       v-if="isLoggedIn"
@@ -87,11 +14,10 @@
 </template>
 
 <script>
-import { groupBy } from "lodash";
 import { mapGetters } from "vuex";
 
 import DirectoryActions from "@/components/layout/DirectoryActions.vue";
-import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
+import TabCategories from "@/components/layout/TabCategories.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
@@ -99,15 +25,14 @@ export default {
   name: "CategoryPage",
   components: {
     LoadingPlaceholder,
+    TabCategories,
     DirectoryActions,
-    TheBreadcrumbs,
   },
   data() {
 
     return {
       isLoading: true,
       title: "",
-      slug: "0",
     };
 
   },
@@ -121,10 +46,15 @@ export default {
       notes: "categoryPages/notes",
     }),
   },
-  created() {
+  watch: {
+    "$route.params.slug": {
+      handler() {
 
-    this.updateData();
+        this.updateData();
 
+      },
+      immediate: true,
+    },
   },
   methods: {
     async updateData() {
@@ -133,7 +63,7 @@ export default {
 
         this.isLoading = true;
 
-        const results = await this.fetchData("0");
+        const results = await this.fetchData();
 
         if (results.categories?.length) {
 
@@ -145,8 +75,27 @@ export default {
 
         }
 
-        this.$store.dispatch("categoryPages/articls", []);
-        this.$store.dispatch("categoryPages/articlTypes", []);
+        if (results.breadcrumbs?.length) {
+
+          this.$store.dispatch("categoryPages/breadcrumbs", results.breadcrumbs);
+
+        } else {
+
+          this.$store.dispatch("categoryPages/breadcrumbs", []);
+
+        }
+
+        if (results.articls) {
+
+          this.$store.dispatch("categoryPages/articls", results.articls);
+          this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
+
+        } else {
+
+          this.$store.dispatch("categoryPages/articls", []);
+          this.$store.dispatch("categoryPages/articlTypes", []);
+
+        }
 
         if (results.notes?.length) {
 
@@ -175,33 +124,16 @@ export default {
 
     },
 
-    async fetchData(slug) {
+    async fetchData() {
 
       const result = await this.$http({
         method: "GET",
-        url: `/d/${slug || ""}`,
+        url: "/d/0",
       });
 
       return {
-        breadcrumbs: result.data.breadcrumbs,
         categories: result.data.categories,
         category: result.data.category,
-        articlTypes: result.data.articls?.length
-          ? [
-            ...new Set(
-              result.data.articls.map((item) => {
-
-                return item.type;
-
-              }),
-            ),
-          ]
-          : [],
-        articls: groupBy(result.data.articls, (articl) => {
-
-          return articl.type;
-
-        }),
         notes: result.data.notes,
       };
 
