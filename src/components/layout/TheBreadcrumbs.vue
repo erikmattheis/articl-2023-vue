@@ -1,6 +1,13 @@
 <template>
   <nav>
     <ul>
+      <li>
+        <router-link
+          :to="{ name: 'homePage'}"
+        >
+          Home &gt;
+        </router-link>
+      </li>
       <li
         v-for="(breadcrumb, index) in breadcrumbs"
         :key="breadcrumb"

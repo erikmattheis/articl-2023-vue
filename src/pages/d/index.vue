@@ -10,7 +10,6 @@
       class="nav-tabs"
     >
       <router-link
-
         v-slot="{ isActive, navigate }"
         custom
         :to="{ name: 'TabArticls'}"
@@ -100,7 +99,7 @@ export default {
     DirectoryActions,
     TheBreadcrumbs,
   },
-  data: () => {
+  data() {
 
     return {
       isLoading: true,

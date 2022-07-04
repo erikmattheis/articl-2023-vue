@@ -1,80 +1,167 @@
 <template>
   <article v-if="!isLoading">
+    isLoading:{{ isLoading }}<br>
+
+    <the-breadcrumbs />
+
+    <small class="small-caps">Category</small>
+
     <h2>{{ title }}</h2>
-    <ul>
-      <li
-        v-for=" category in categories || []"
-        :key="category.slug"
+
+    <ul
+      class="nav-tabs"
+    >
+      <router-link
+
+        v-slot="{ isActive, navigate }"
+        custom
+        :to="{ name: 'TabArticls'}"
       >
-        <router-link :to="{ name: 'TabCategories', params: { slug: category.slug } }">
-          {{ category.title }}
-        </router-link>
-      </li>
+        <li :class="{'active':isActive}">
+          <a
+            href
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
+          >
+            Articls
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-slot="{ isActive, navigate }"
+        custom
+        :to="{ 'name': 'TabNotes' }"
+      >
+        <li :class="{'active':isActive}">
+          <a
+            href
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
+          >
+            Notes
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-slot="{ isActive, navigate }"
+        custom
+        :to="{ 'name': 'TabBlogs' }"
+      >
+        <li :class="{'active':isActive}">
+          <a
+            href
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
+          >
+            Blogs
+          </a>
+        </li>
+      </router-link>
+
+      <router-link
+        v-slot="{ isActive, navigate }"
+        custom
+        :to="{ 'name': 'TabQuestionsAnswers' }"
+      >
+        <li :class="{'active':isActive}">
+          <a
+            href
+            @click.prevent="navigate()"
+            @keyup.enter.prevent="navigate()"
+          >
+            Q&amp;A
+          </a>
+        </li>
+      </router-link>
     </ul>
-    <category-actions
+    <router-view />
+
+    <directory-actions
       v-if="isLoggedIn"
-      class="admin"
     />
   </article>
+
   <loading-placeholder v-else />
 </template>
 
 <script>
+import { groupBy } from "lodash";
 import { mapGetters } from "vuex";
 
-import CategoryActions from "@/components/layout/CategoryActions.vue";
+import DirectoryActions from "@/components/layout/DirectoryActions.vue";
+import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
-  name: "HomePage",
+  name: "CategoryPage",
   components: {
     LoadingPlaceholder,
-    CategoryActions,
+    DirectoryActions,
+    TheBreadcrumbs,
   },
-  data: () => {
+  data() {
 
     return {
       isLoading: true,
-      slug: null,
       title: "",
-      categories: [],
+      slug: "0",
     };
 
   },
   computed: {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
+      treeLevel: "categoryPages/treeLevel",
+      articls: "categoryPages/articls",
+      articlTypes: "categoryPages/articlTypes",
+      categories: "categoryPages/categories",
+      notes: "categoryPages/notes",
     }),
   },
-
   created() {
 
-    this.categories = this.fetchData("0");
+    this.updateData();
 
   },
   methods: {
-    async fetchData(slug) {
+    async updateData() {
 
       try {
 
         this.isLoading = true;
 
-        const result = await this.getCategoryPageBySlug(slug);
-        const {
-          title,
-        } = result.data.category[0];
-        const {
-          description,
-        } = result.data.category[0];
+        const results = await this.fetchData("0");
 
-        this.title = title;
+        if (results.categories?.length) {
+
+          this.$store.dispatch("categoryPages/categories", results.categories);
+
+        } else {
+
+          this.$store.dispatch("categoryPages/categories", []);
+
+        }
+
+        this.$store.dispatch("categoryPages/articls", []);
+        this.$store.dispatch("categoryPages/articlTypes", []);
+
+        if (results.notes?.length) {
+
+          this.$store.dispatch("categoryPages/notes", results.notes);
+
+        }
+
+        this.title = results.category[0]?.title;
+
+        const description = results.category[0]?.description;
 
         setTitleAndDescription({
-          title, description,
+          title: this.title,
+          description,
         });
-
-        this.categories = result.data.categories;
 
       } catch (error) {
 
@@ -87,23 +174,63 @@ export default {
       }
 
     },
-    getCategoryPageBySlug(slug) {
 
-      return this.$http({
+    async fetchData(slug) {
 
+      const result = await this.$http({
         method: "GET",
         url: `/d/${slug || ""}`,
-
       });
 
+      return {
+        breadcrumbs: result.data.breadcrumbs,
+        categories: result.data.categories,
+        category: result.data.category,
+        articlTypes: result.data.articls?.length
+          ? [
+            ...new Set(
+              result.data.articls.map((item) => {
+
+                return item.type;
+
+              }),
+            ),
+          ]
+          : [],
+        articls: groupBy(result.data.articls, (articl) => {
+
+          return articl.type;
+
+        }),
+        notes: result.data.notes,
+      };
+
     },
+
   },
 };
 </script>
 
-<style scoped>
-p {
-  padding:0;
-  margin: 0;
+<style
+  lang="scss"
+  scoped
+>
+pre {
+  overflow: auto;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.list-item {
+  border-bottom: 1px solid var(--bg1);
+}
+
+.disabled {
+  background-color: var(--form-element-disabled-background-color);
+  color: var(--form-element-disabled-color);
+}
+
+.disabled a {
+  padding: 0 0.5rem !important;
 }
 </style>

@@ -48,7 +48,7 @@ export default {
       default: "",
     },
   },
-  data: () => {
+  data() {
 
     return {
       expanded: false,
