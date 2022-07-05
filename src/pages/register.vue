@@ -59,7 +59,7 @@
           />
         </div>
       </label>
-      <label for="password2">Confirm password2
+      <label for="password2">Confirm password
         <div class="toggle-password">
           <input
             v-if="showPassword2"
@@ -202,7 +202,7 @@ export default {
 
           this.buttonDisabled = true;
 
-          const result = this.$http({
+          const result = await this.$http({
             method: "POST",
             url: "/auth/register",
             data: {
@@ -227,6 +227,7 @@ export default {
 
       } catch (error) {
 
+console.log("error here");
         this.$store.dispatch("errors/setError", error);
 
       } finally {
