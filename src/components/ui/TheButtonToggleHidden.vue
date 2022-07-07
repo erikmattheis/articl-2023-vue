@@ -2,6 +2,7 @@
   <div>
     <template v-if="show">
       <a
+        href="#"
         @click.prevent="
           $emit('show');
           show = !show;
@@ -49,6 +50,7 @@
     </template>
     <template v-if="!show">
       <a
+        href="#"
         @click.prevent="
           $emit('show');
           show = !show;

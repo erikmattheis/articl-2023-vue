@@ -87,7 +87,7 @@
                     <div>
                       <a
                         class="less-margin"
-                        href
+                        href="#"
                         @click.prevent="setTextSize(0.8)"
                         @keyup.enter="setTextSize(0.8)"
                       >
@@ -103,7 +103,7 @@
                     <div>
                       <a
                         class="less-margin"
-                        href
+                        href="#"
                         @click.prevent="setTextSize(1)"
                         @keyup.enter="setTextSize(1)"
                       >
@@ -118,7 +118,7 @@
                     <div>
                       <a
                         class="less-margin"
-                        href
+                        href="#"
                         @click.prevent="setTextSize(1.2)"
                         @keyup.enter="setTextSize(1.2)"
                       >
