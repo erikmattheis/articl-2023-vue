@@ -19,10 +19,9 @@
       href="#"
     ><div class="sr">Reorder category</div>
       <vue-feather
-        alt="reorder category"
         size="1rem"
         type="move"
-        aria-label="move"
+        aria-label="Drag to reorder"
       />
     </a>
   </div>

@@ -36,6 +36,7 @@
               <vue-feather
                 size="2rem"
                 type="search"
+                role="searchbox"
                 aria-label="Search"
               />
             </router-link>
@@ -95,7 +96,6 @@
                           size="0.6rem"
                           type="type"
                           aria-label="Small text"
-                          alt="Small text"
                         /><span class="sr">Small text</span>
                       </a>
                     </div>

@@ -10,6 +10,7 @@
           <vue-feather
             size="1.2rem"
             type="x-square"
+            aria-label="Reset"
           /><span class="sr">Reset search value to empty</span>
         </a>
       </li>
@@ -22,12 +23,14 @@
           <vue-feather
             size="1.2rem"
             type="x-square"
+            aria-label="Reset"
           /><span class="sr">Reset title value to empty</span>
         </a>
       </li>
       <li v-if="params.journal"> Journal is <strong>{{ params.journal }}</strong>
         <a
           href
+          aria-label="Reset"
           @click.prevent="resetValue('journal')"
           @keyup.enter="resetValue('journal')"
         >
@@ -46,6 +49,7 @@
           <vue-feather
             size="1.2rem"
             type="x-square"
+            aria-label="Reset"
           /><span class="sr">Reset authors value to empty</span>
         </a>
       </li>
@@ -60,6 +64,7 @@
           <vue-feather
             size="1.2rem"
             type="x-square"
+            aria-label="Reset"
           ><span class="sr">Reset year value to {{ yearsStart }}</span>
           </vue-feather>
         </a>
@@ -78,6 +83,7 @@
           <vue-feather
             size="1.2rem"
             type="x-square"
+            aria-label="Reset"
           /><span class="sr">Reset type value to all types</span>
         </a>
       </li>
@@ -91,12 +97,14 @@
         <strong>{{ toListWithOptionalConjuction(params.statuses, "or") }}</strong>
         <a
           href
+
           @click.prevent="resetValue('statuses')"
           @keyup.enter="resetValue('statuses')"
         >
           <vue-feather
             size="1.2rem"
             type="x-square"
+            aria-label="Reset"
           ><span class="sr">Reset statuses value to all statuses</span>
           </vue-feather>
         </a>

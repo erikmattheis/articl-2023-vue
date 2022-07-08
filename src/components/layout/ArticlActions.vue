@@ -21,10 +21,9 @@
       role="button"
     ><div class="sr">Reorder articl</div>
       <vue-feather
-        alt="reorder articl"
         size="1rem"
         type="move"
-        aria-label="move"
+        aria-label="Drag to reorder"
       />
     </a>
   </span>

@@ -28,6 +28,7 @@
             <vue-feather
               size="3rem"
               type="check"
+              aria-label="Check mark"
             />
           </div>
           <div class="info">

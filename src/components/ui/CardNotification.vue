@@ -7,6 +7,7 @@
       <vue-feather
         size="60"
         type="check"
+        aria-label="Check mark"
       />
     </div>
     <div class="info">
