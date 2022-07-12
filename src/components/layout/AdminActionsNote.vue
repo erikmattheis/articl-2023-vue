@@ -9,7 +9,7 @@
       </a>
     </li>
     <li>
-      <a>Change status</a>
+      <a href="#">Change status</a>
     </li>
     <li>
       <router-link :to="{ name: 'deleteNote', params: { id, fullText, slug } }">
@@ -19,23 +19,22 @@
   </ul>
 </template>
 
-<script>
-export default {
-  name: "NoteActions",
-  props: {
-    id: {
-      type: String,
-      default: "",
-    },
-    fullText: {
-      type: String,
-      default: "",
-    },
-    slug: {
-      type: String,
-      default: "",
-    },
+<script setup>
+import { defineEmit, defineProps, reactive } from "vue";
+
+const props = defineProps({
+  id: {
+    type: String,
+    default: "",
   },
-  emits: ["edit-mode"],
-};
+  fullText: {
+    type: String,
+    default: "",
+  },
+  slug: {
+    type: String,
+    default: "",
+  },
+});
+
 </script>

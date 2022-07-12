@@ -56,8 +56,7 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-recommended",
-      "@vue/airbnb"
+      "plugin:vue/vue3-recommended"
     ],
     "parserOptions": {
       "ecmaVersion": 2020
