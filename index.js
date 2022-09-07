@@ -1,4 +1,3 @@
-/* eslint-disable import/newline-after-import */
 const express = require("express");
 const compression = require("compression");
 const serveStatic = require("serve-static");
