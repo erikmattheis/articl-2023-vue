@@ -15,7 +15,7 @@ const app = createApp(App);
 
 let baseURL;
 let secure = true;
-console.log("window.location.hostname", window.location.hostname);
+
 if (window.location.hostname === "192.168.1.130" || window.location.hostname === "localhost") {
 
   baseURL = "http://localhost:5000/v1";
