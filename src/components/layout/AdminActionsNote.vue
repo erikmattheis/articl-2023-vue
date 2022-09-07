@@ -20,9 +20,9 @@
 </template>
 
 <script setup>
-import { defineEmit, defineProps, reactive } from "vue";
 
-const props = defineProps({
+
+defineProps({
   id: {
     type: String,
     default: "",
@@ -36,5 +36,7 @@ const props = defineProps({
     default: "",
   },
 });
+
+defineEmits(["edit-mode"]);
 
 </script>
