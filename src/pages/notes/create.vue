@@ -23,7 +23,6 @@
         >
           <option value="Published"> Published </option>
           <option value="Draft"> Draft </option>
-          <option value="Pending"> Pending </option>
           <option value="Trash"> Trash </option>
         </select>
         </label>
@@ -55,8 +54,8 @@
 
 <script>
 import cardNotification from "@/components/ui/CardNotification.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "EditNoteComponent",

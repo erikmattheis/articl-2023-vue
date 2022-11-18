@@ -3,7 +3,7 @@ export default {
   state: () => {
 
     return {
-      allStatuses: ["Published", "Draft", "Pending", "Trash"],
+      allStatuses: ["Published", "Draft", "Trash"],
       allTypes: [
         "Review (OA)",
         "Review (PA)",

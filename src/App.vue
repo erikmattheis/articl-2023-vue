@@ -178,7 +178,6 @@ export default {
   display: inline-block;
   margin: 0;
   padding: 0;
-
 }
 
 .admin button,

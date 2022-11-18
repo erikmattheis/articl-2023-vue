@@ -171,9 +171,6 @@
             <option value="Draft">
               Draft
             </option>
-            <option value="Pending">
-              Pending
-            </option>
             <option value="Trash">
               Trash
             </option>
