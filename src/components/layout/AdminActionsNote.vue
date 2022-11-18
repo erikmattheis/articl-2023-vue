@@ -9,9 +9,6 @@
       </a>
     </li>
     <li>
-      <a href="#">Change status</a>
-    </li>
-    <li>
       <router-link :to="{ name: 'deleteNote', params: { id, fullText, slug } }">
         delete
       </router-link>

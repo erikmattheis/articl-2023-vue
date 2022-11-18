@@ -159,23 +159,6 @@
             </optgroup>
           </select></label>
 
-        <label for="status">Status
-          <select
-            id="status"
-            v-model="status"
-            name="status"
-          >
-            <option value="Published">
-              Published
-            </option>
-            <option value="Draft">
-              Draft
-            </option>
-            <option value="Trash">
-              Trash
-            </option>
-          </select></label>
-
         <input-typeahead
           src="/categories/titles"
           query="category"
@@ -247,7 +230,6 @@ export default {
       isLoading: true,
       journal: "",
       month: "",
-      status: "Published",
       success: false,
       title: "",
       type: "Review (OA)",
@@ -257,7 +239,6 @@ export default {
   },
   mounted() {
 
-    console.log("p", this.passedId);
     this.id = this.passedId ? this.passedId : "";
 
     this.formAction = this.id ? "Edit" : "Create";
@@ -313,14 +294,7 @@ export default {
 
           const result = await fetchData(this.articlUrl);
 
-          console.log("doi", result.doi);
           const author = result.authors[0];
-
-console.log("author.id", author.id);
-
-          console.log("author", author);
-
-          console.log("author", author);
 
           if (result) {
 
@@ -378,12 +352,6 @@ console.log("author.id", author.id);
 
         passed = false;
 
-      } else if (this.status === "") {
-
-        this.errorMessage = "Please choose a status.";
-
-        passed = false;
-
       }
 
       return passed;
@@ -414,7 +382,7 @@ console.log("author.id", author.id);
               slug: this.slug,
               journal: this.journal,
               month: this.month,
-              status: this.status,
+              status: "Published",
               title: this.title,
               year: this.year,
             },

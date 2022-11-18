@@ -137,12 +137,6 @@ export default {
 
         passed = false;
 
-      } else if (this.status === "") {
-
-        this.errorMessage = "Please choose a status.";
-
-        passed = false;
-
       }
 
       return passed;

@@ -1,16 +1,12 @@
 <template>
   <router-link
     :to="{ name: 'editArticl', params: { passedId: id } }"
-    role="button"
   >
     edit
   </router-link>
 
-  <a role="button">Change status</a>
-
   <router-link
     :to="{ name: 'deleteArticl', params: { id, title } }"
-    role="button"
   >
     delete
   </router-link>
@@ -18,7 +14,6 @@
   <span class="handle">
     <a
       href="#"
-      role="button"
     ><div class="sr">Reorder articl</div>
       <vue-feather
         size="1rem"

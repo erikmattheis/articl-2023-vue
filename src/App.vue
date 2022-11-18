@@ -172,22 +172,9 @@ export default {
   background-color: var(--bg2);
 }
 
-.admin {
-  background-color: #ffffff;
-  border: 4px solid green;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-}
-
 .admin button,
-.admin a[role=button] {
-  background-color: #eeeeee;
-  border: 1px solid green;
+.admin a {
   color: darkgreen;
-  margin: 0.2rem;
-  padding: 0 0.8rem;
-  font-size: 0.7rem;
 }
 
 .articl-actions a,
@@ -195,12 +182,9 @@ export default {
 .nav-tabs li a {
   align-items: center;
   display: flex;
-  height: 1.6rem;
   justify-content: center;
   padding: 0 1rem;
   text-decoration: none;
-  transition: background-color .3s;
-  margin:0;
 }
 
 .nav-tabs li a:first-child {
@@ -208,7 +192,6 @@ export default {
 }
 
 .articl-actions.admin {
-  border: 1px solid green;
   margin: 0;
   padding: .3rem;
 }

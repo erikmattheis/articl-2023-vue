@@ -10,6 +10,16 @@
             {{ articl.title }}
           </a>
         </h3>
+        <div
+          v-if="isLoggedIn"
+          class="admin articl-actions"
+        >
+          <articl-actions
+            :id="articl.id"
+            class="tools"
+            :title="articl.title"
+          />
+        </div>
       </li>
       <li v-if="articl.titleExcerpt">
         <a :href="articl.articlUrl">
@@ -83,23 +93,7 @@
       <li v-if="articl.source">
         {{ articl.source }}
       </li>
-      <li
-        v-if="isLoggedIn && articl.status"
-        class="admin"
-      >
-        {{ articl.status }}
-      </li>
     </ul>
-    <div
-      v-if="isLoggedIn"
-      class="admin"
-    >
-      <articl-actions
-        :id="articl.id"
-        class="tools"
-        :title="articl.title"
-      />
-    </div>
   </div>
 </template>
 
@@ -198,8 +192,5 @@ svg {
 }
 .grid {
   grid-template-columns: auto auto;
-}
-.tools {
-  width: max-content;
 }
 </style>

@@ -2,14 +2,12 @@
   <div class="admin grid">
     <router-link
       :to="{ name: 'editCategory', params: { passedId: id } }"
-      role="button"
     >
       edit
     </router-link>
 
     <router-link
       :to="{ name: 'deleteCategory', params: { id, title } }"
-      role="button"
     >
       delete
     </router-link>
