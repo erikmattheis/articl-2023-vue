@@ -218,7 +218,7 @@ export default {
 
         this.parentIdInvalid = true;
 
-        this.errorMessage = "Please eselect a parent category.";
+        this.errorMessage = "Please select a parent category.";
 
         passed = false;
 

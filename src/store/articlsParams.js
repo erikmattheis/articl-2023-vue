@@ -10,7 +10,6 @@ export default {
         "Research (OA)",
         "Research (PA)",
         "Images",
-        "Non-medical journal articles",
         "Presentations",
         "Videos",
         "Web",

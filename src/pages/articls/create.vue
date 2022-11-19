@@ -141,9 +141,6 @@
               <option value="Web">
                 Web
               </option>
-              <option value="on-medical journal articles">
-                Non-medical journal articles
-              </option>
               <option value="Images">
                 Images
               </option>
