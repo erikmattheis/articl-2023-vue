@@ -66,7 +66,6 @@ export default {
 
     return {
       fullText: "",
-      status: "Published",
       buttonDisabled: false,
       formAction: undefined,
       isLoading: true,

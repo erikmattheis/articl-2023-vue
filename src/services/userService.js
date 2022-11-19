@@ -3,7 +3,7 @@ const charCounts = (val) => {
   return {
     numUpper: val.length - val.replace(/[A-Z]/g, "").length,
     numLower: val.length - val.replace(/[a-z]/g, "").length,
-    numDigit: val.length - val.replace(/resource/g, "").length,
+    numDigit: val.length - val.replace(/d/g, "").length,
     numSpecial: val.length - val.replace(/\W|_/g, "").length,
   };
 

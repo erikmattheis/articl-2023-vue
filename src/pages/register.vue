@@ -94,8 +94,7 @@
     </form>
     <card-notification
       v-else
-      success-message="Please check
-    your email to verify your email address"
+      success-message="Please check your email to verify your email address"
     />
   </article>
 </template>
@@ -227,7 +226,6 @@ export default {
 
       } catch (error) {
 
-console.log("error here");
         this.$store.dispatch("errors/setError", error);
 
       } finally {
