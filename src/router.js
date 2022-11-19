@@ -5,7 +5,7 @@ import deleteArticlPage from "@/pages/articls/delete.vue";
 import searchArticls from "@/pages/articls/index.vue";
 import deleteCategoryPage from "@/pages/categories/delete.vue";
 import createCategoryPage from "@/pages/categories/index.vue";
-import categoryPage from "@/pages/d/index.vue";
+import categoryPage from "@/pages/resource/index.vue";
 import forgotPassPage from "@/pages/forgot-pass.vue";
 import homePage from "@/pages/index.vue";
 import loginPage from "@/pages/login.vue";
@@ -40,7 +40,7 @@ const router = createRouter({
 
     {
       name: "categoryPage",
-      path: "/d/:slug",
+      path: "/resource/:slug",
       component: categoryPage,
       props: true,
       children: [{

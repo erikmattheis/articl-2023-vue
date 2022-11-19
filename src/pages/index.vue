@@ -128,7 +128,7 @@ export default {
 
       const result = await this.$http({
         method: "GET",
-        url: "/d/0",
+        url: "/resource/0",
       });
 
       return {

@@ -202,7 +202,7 @@ export default {
 
       const result = await this.$http({
         method: "GET",
-        url: `/d/${slug || ""}`,
+        url: `/resource/${slug || ""}`,
       });
 
       return {
