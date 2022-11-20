@@ -3,7 +3,6 @@ export default {
   state: () => {
 
     return {
-      allStatuses: ["Published", "Draft", "Trash"],
       allTypes: [
         "Review (OA)",
         "Review (PA)",
@@ -20,7 +19,6 @@ export default {
       journal: "",
       paramsCurrent: {
       },
-      statuses: [],
       title: "",
       types: [],
       year: 1944,
@@ -44,11 +42,6 @@ export default {
     SET_JOURNAL: (state, payload) => {
 
       state.journal = payload;
-
-    },
-    SET_STATUSES: (state, payload) => {
-
-      state.statuses = payload;
 
     },
     SET_TYPES: (state, payload) => {
@@ -86,11 +79,6 @@ export default {
     journal: (context, payload) => {
 
       context.commit("SET_JOURNAL", payload);
-
-    },
-    statuses: (context, payload) => {
-
-      context.commit("SET_STATUSES", payload.slice());
 
     },
     title: (context, payload) => {
@@ -131,8 +119,6 @@ export default {
 
       commit("SET_JOURNAL", _);
 
-      commit("SET_STATUSES", []);
-
       commit("SET_TITLE", _);
 
       commit("SET_TYPES", []);
@@ -154,11 +140,6 @@ export default {
       return state.title;
 
     },
-    allStatuses: (state) => {
-
-      return state.allStatuses;
-
-    },
     allTypes: (state) => {
 
       return state.allTypes;
@@ -178,11 +159,6 @@ export default {
     paramsCurrent: (state) => {
 
       return state.paramsCurrent;
-
-    },
-    statuses: (state) => {
-
-      return state.statuses;
 
     },
     types: (state) => {
@@ -239,10 +215,6 @@ export default {
         ...(state.types
           && state.types.length !== state.allTypes.length && {
           types: state.types,
-        }),
-        ...(state.statuses?.length
-          && state.statuses?.length !== state.allStatuses?.length && {
-          statuses: state.statuses,
         }),
         ...(state.page && Number(state.page) !== 1 && {
           page: state.page,

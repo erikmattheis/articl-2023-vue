@@ -379,7 +379,6 @@ export default {
               slug: this.slug,
               journal: this.journal,
               month: this.month,
-              status: "Published",
               title: this.title,
               year: this.year,
             },

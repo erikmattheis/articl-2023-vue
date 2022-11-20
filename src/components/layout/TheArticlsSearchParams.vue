@@ -87,28 +87,6 @@
           /><span class="sr">Reset type value to all types</span>
         </a>
       </li>
-      <li
-        v-if="
-          params?.statuses?.length &&
-            params?.statuses?.length !== allStatuses?.length
-        "
-        class="admin"
-      > Status is <span v-if="params?.statuses?.length > 1">one of </span>
-        <strong>{{ toListWithOptionalConjuction(params.statuses, "or") }}</strong>
-        <a
-          href
-
-          @click.prevent="resetValue('statuses')"
-          @keyup.enter="resetValue('statuses')"
-        >
-          <vue-feather
-            size="1.2rem"
-            type="x-square"
-            aria-label="Reset"
-          ><span class="sr">Reset statuses value to all statuses</span>
-          </vue-feather>
-        </a>
-      </li>
     </ul>
   </small>
 </template>
@@ -134,7 +112,6 @@ export default {
     ...mapGetters({
       params: "articlsParams/params",
       allTypes: "articlsParams/allTypes",
-      allStatuses: "articlsParams/allStatuses",
       yearsStart: "articlsParams/yearsStart",
     }),
   },
@@ -144,17 +121,6 @@ export default {
       try {
 
         switch (arrName) {
-
-        case "statuses": {
-
-          this.$store.dispatch(
-            "articlsParams/statuses",
-            this.allStatuses.slice(),
-          );
-
-          break;
-
-        }
 
         case "types": {
 

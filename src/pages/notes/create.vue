@@ -16,16 +16,6 @@
           autocomplete="off"
         />
         </label>
-        <label for="status">Status <select
-          id="status"
-          v-model="status"
-          name="status"
-        >
-          <option value="Published"> Published </option>
-          <option value="Draft"> Draft </option>
-          <option value="Trash"> Trash </option>
-        </select>
-        </label>
         <button
           type="button"
           :aria-busy="buttonDisabled"
@@ -73,7 +63,6 @@ export default {
 
     return {
       fullText: "",
-      status: "Published",
     };
 
   },
@@ -164,7 +153,6 @@ export default {
               authors: this.authors,
               fullText: this.fullText,
               slug: this.slug,
-              status: this.status,
             },
           });
 

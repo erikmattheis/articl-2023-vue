@@ -123,7 +123,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      allStatuses: "articlsParams/allStatuses",
       params: "articlsParams/params",
       isLoggedIn: "tokens/isLoggedIn",
     }),

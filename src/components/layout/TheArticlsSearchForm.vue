@@ -95,24 +95,6 @@
             </fieldset>
           </div>
 
-          <fieldset
-            v-if="isLoggedIn"
-            class="admin"
-          >
-            <legend>Status</legend> <label
-              v-for="status in allStatuses"
-              :key="status"
-              :for="status"
-            >
-              <input
-                :id="status"
-                v-model="statuses"
-                type="checkbox"
-                :value="status"
-                checked="checked"
-              >{{ status }}</label>
-          </fieldset>
-
         </div>
       </label>
     </div>
@@ -134,7 +116,6 @@ export default {
 
     return {
       activeTab: 0,
-      allStatuses: this.$store.state.articlsParams.allStatuses,
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
@@ -241,18 +222,6 @@ export default {
 
       },
     },
-    statuses: {
-      get() {
-
-        return this.$store.state.articlsParams.statuses;
-
-      },
-      set(value) {
-
-        this.$store.dispatch("articlsParams/statuses", value);
-
-      },
-    },
   },
   watch: {
     yearComparison: {
@@ -264,11 +233,6 @@ export default {
     },
   },
   created() {
-
-    this.$store.dispatch(
-      "articlsParams/statuses",
-      this.$store.state.articlsParams.allStatuses,
-    );
 
     this.$store.dispatch(
       "articlsParams/types",
@@ -291,8 +255,6 @@ export default {
     this.$store.dispatch("articlsParams/yearComparison", undefined);
 
     this.$store.dispatch("articlsParams/types", []);
-
-    this.$store.dispatch("articlsParams/statuses", []);
 
   },
   methods: {
