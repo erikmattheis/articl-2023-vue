@@ -11,7 +11,7 @@
         <input
           id="email"
           v-model="email"
-          type="text"
+          type="email"
           name="email"
           autocomplete="email"
         ></label>
