@@ -7,6 +7,28 @@
       Account created
     </h1>
     <form v-if="!success">
+      <fieldset class="grid">
+        <div>
+          <label for="nameFirst">First Name
+            <input
+              id="nameFirst"
+              v-model="nameFirst"
+              type="text"
+              name="nameFirst"
+              autocomplete="given-name"
+            ></label>
+        </div>
+        <div>
+          <label for="nameLast">Last Name
+            <input
+              id="nameLast"
+              v-model="nameLast"
+              type="text"
+              name="nameLast"
+              autocomplete="family-name"
+            ></label>
+        </div>
+      </fieldset>
       <label for="email">Email
         <input
           id="email"
@@ -82,22 +104,6 @@
             @show="showPassword2 = !showPassword2"
           />
         </div>
-      </label>
-      <label for="position">Current position
-        <select
-          id="position"
-          v-model="position"
-          name="position"
-        >
-          <option
-            disabled
-            value=""
-          >Please select one</option>
-          <option value="Student">Student</option>
-          <option value="Resident">Resident</option>
-          <option value="Physician">Physician</option>
-          <option value="Allied Healthcare Profession">Allied Healthcare Profession</option>
-        </select>
       </label>
 
       <label for="position">Current position
@@ -942,7 +948,6 @@ export default {
       passwordComplexity: 0,
       nameFirst: "",
       nameLast: "",
-      formAction: "Create",
       position:"",
       city: "",
       state: "",
@@ -1018,6 +1023,30 @@ export default {
 
         passed = false;
 
+      } else if (this.institution === "") {
+
+        this.errorMessage = "Please enter your institution.";
+
+        passed = false;
+
+      } else if (this.city === "") {
+
+      this.errorMessage = "Please enter your city.";
+
+      passed = false;
+
+      } else if (this.state=== "") {
+
+      this.errorMessage = "Please enter your state or provence.";
+
+      passed = false;
+
+      } else if (this.country=== "") {
+
+        this.errorMessage = "Please select your country.";
+
+        passed = false;
+
       }
 
       return passed;
@@ -1040,6 +1069,13 @@ export default {
             data: {
               password: this.password,
               email: this.email,
+              nameFirst: this.nameFirst,
+              nameLast: this.nameLast,
+              position: this.position,
+              institution: this.institution,
+              city: this.city,
+              state: this.state,
+              country: this.country,
             },
           });
 

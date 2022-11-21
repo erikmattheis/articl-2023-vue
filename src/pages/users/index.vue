@@ -1008,8 +1008,11 @@ export default {
               nameFirst: this.nameFirst,
               nameLast: this.nameLast,
               email: this.email,
+              position: this.position,
               institution: this.institution,
-              theme: this.theme,
+              city: this.city,
+              state: this.state,
+              country: this.country,
             },
           });
 
