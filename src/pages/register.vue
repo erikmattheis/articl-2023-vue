@@ -1109,11 +1109,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-
-.success {
-  background-color: honeydew;
-  border: 8px solid green;
-}
-</style>

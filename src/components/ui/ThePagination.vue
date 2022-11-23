@@ -212,11 +212,6 @@ export default {
       text-decoration: none;
     }
 
-    a.disabled {
-      color: #ccc;
-      cursor: default;
-    }
-
     .active {
       padding: 3px 8px;
       font-weight: bold;

@@ -165,7 +165,6 @@ export default {
 @import "./assets/variables";
 @import "./assets/placeholder";
 @import "~/node_modules/@picocss/pico/css/pico.css";
-@import "//fonts.googleapis.com/css2?family=Montserrat&display=swap";
 @import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
 #app {

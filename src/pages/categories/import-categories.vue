@@ -58,9 +58,4 @@ export default {
 *[readonly] {
   cursor: not-allowed;
 }
-
-.success {
-  background-color: honeydew;
-  border: 8px solid green;
-}
 </style>

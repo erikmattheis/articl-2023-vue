@@ -243,17 +243,4 @@ pre {
   word-break: break-all;
   white-space: pre-wrap;
 }
-
-.list-item {
-  border-bottom: 1px solid var(--bg1);
-}
-
-.disabled {
-  background-color: var(--form-element-disabled-background-color);
-  color: var(--form-element-disabled-color);
-}
-
-.disabled a {
-  padding: 0 0.5rem !important;
-}
 </style>
