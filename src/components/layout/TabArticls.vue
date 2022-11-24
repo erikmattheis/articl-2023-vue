@@ -15,9 +15,13 @@
       </li>
     </ul>
 
-    <h3>{{ articlTypeCurrent }}</h3>
+    
 
-    <ul v-if="articlTypeCurrent">
+    <ul
+      v-if="articlTypeCurrent"
+      class="nav-content"
+    >
+      <li><h3>{{ articlTypeCurrent }}</h3></li>
       <draggable-items
         v-model="articls[articlTypeCurrent]"
         tag="ul"

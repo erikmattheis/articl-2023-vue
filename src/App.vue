@@ -169,13 +169,20 @@ export default {
 
 @import "//fonts.googleapis.com/css2?family=Tangerine&display=swap";
 
-#app {
-  background-color: var(--bg2);
-}
-
 .admin button,
 .admin a {
   color: darkgreen;
+}
+
+.articl-actions,
+.note-actions,
+.nav-tabs {
+  margin-bottom: 0;
+  column-gap: 0;
+}
+
+.nav-tabs li {
+  margin-bottom: 0;
 }
 
 .articl-actions a,
@@ -190,6 +197,10 @@ export default {
 
 .nav-tabs li a:first-child {
   padding-left: 0;
+}
+
+.nav-content {
+  border: 1px solid black;
 }
 
 .articl-actions.admin {
@@ -232,10 +243,6 @@ export default {
   padding: 0 0.5rem;
 }
 
-.nav-tabs {
-  column-gap: 0;
-}
-
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
@@ -257,7 +264,12 @@ export default {
 
 .nav-tabs li.active,
 .active {
-  border-bottom-color: transparent;
+  border-bottom-color: var(--background-color);
+}
+
+.nav-tabs {
+  position:relative;
+  top: 1px;
 }
 
 .right {
