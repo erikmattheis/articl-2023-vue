@@ -163,8 +163,9 @@ export default {
 
 <style lang="scss">
 @import "./assets/variables";
-@import "./assets/placeholder";
-@import "~/node_modules/@picocss/pico/css/pico.css";
+@import "~/node_modules/@picocss/pico/scss/pico.scss";
+@import "./assets/maxwidth";
+
 @import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
 
 #app {
@@ -296,9 +297,8 @@ export default {
 :where(:root),
 html,
 body {
-  --primary-focus: transparent;
+
   background-color: var(--bg0);
-  font-family: Poppins, Arial, sans-serif !important;
 }
 
 body {

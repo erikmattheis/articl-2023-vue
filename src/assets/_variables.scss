@@ -1,6 +1,10 @@
 
 $enable-grid: false !default;
 
+$primary-hue: 2 !default;
+$grey-hue: 40 !default;
+rey-hue
+
 :root {
   --font-family: "Poppins", Arial, sans-serif !important;
   --card-box-shadow: none;
@@ -9,24 +13,3 @@ $enable-grid: false !default;
     --typography-spacing-vertical: 1rem;
   }
 }
-
-@media (min-width: map-get($breakpoints, "xs")) {
-  #app,
-  .max-container-width {
-    width: 96%;
- }
- }
-
-@media (min-width: map-get($breakpoints, "lg")) {
-  #app,
-  .max-container-width {
-    max-width: map-get($viewports, "lg");
- }
- }
-
-@media (min-width: map-get($breakpoints, "xl")) {
-  #app,
-  .max-container-width {
-    width: map-get($viewports, "lg");
- }
- }
