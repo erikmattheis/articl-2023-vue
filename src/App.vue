@@ -165,8 +165,9 @@ export default {
 @import "./assets/variables";
 @import "~/node_modules/@picocss/pico/scss/pico.scss";
 @import "./assets/maxwidth";
+@import "./assets/styles-override";
 
-@import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
+@import "//fonts.googleapis.com/css2?family=Tangerine&display=swap";
 
 #app {
   background-color: var(--bg2);
@@ -238,15 +239,25 @@ export default {
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
-  border-bottom: 1px solid transparent;
+  border-width: 1px;
+  border-right-width: 0;
+  border-style: solid;
+  border-color: var(--border-color);
   display: inline-block;
   font-size: 1rem;
+  padding: 0.5rem;
   vertical-align: middle;
+}
+
+.nav-tabs li:last-child,
+.note-actions li:last-child,
+.articl-actions li:last-child {
+  border-right-width: 1px;
 }
 
 .nav-tabs li.active,
 .active {
-  border-color: var(--bg0);
+  border-bottom-color: transparent;
 }
 
 .right {
@@ -356,11 +367,6 @@ main form {
 
 small {
   font-size: .7rem;
-}
-
-small .small-caps {
-  opacity: 0.6;
-  font-variant: small-caps;
 }
 
 ul {

@@ -312,11 +312,6 @@ select {
   margin-bottom: 0;
 }
 
-.admin {
-    margin: 0.2rem;
-  padding: 0 0.8rem;
-}
-
 /*
 * End nav tabs
 */

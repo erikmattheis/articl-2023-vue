@@ -101,7 +101,6 @@ export default {
   left: 0;
   z-index: 1000;
   display: flex;
-  background-color: var(--bg0);
 }
 
 .modal {
@@ -166,14 +165,6 @@ dialog article ul li {
   white-space: pre-wrap;
 }
 
-html[data-theme="dark"] .modal-container {
-  background-color: var(--bg0);
-}
-
-html[data-theme="dark"] .modal {
-  background-color: var(--bg0);
-}
-
 html[data-theme="dark"] article {
   background-color: var(--bg1);
 }
@@ -188,7 +179,7 @@ html[data-theme="dark"]
 > div.info
 ul
 li {
-  color: var(--bg0) !important;
+  color: var(--contrast) !important;
 }
 
 small {

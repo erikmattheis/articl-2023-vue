@@ -147,10 +147,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.outline {
-  border: 1px solid var(--bg0);
-  margin-bottom: var(--spacing);
-}
 
 a {
   cursor:pointer;
