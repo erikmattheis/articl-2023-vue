@@ -323,7 +323,7 @@ li .grid {
 }
 
 .a {
-  fill: #039be5;
+  fill: var(--primary);
 }
 
 .search-articls {

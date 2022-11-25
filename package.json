@@ -14,7 +14,6 @@
     "node": "16.x"
   },
   "dependencies": {
-    "@picocss/pico": "^1.5.5",
     "axios": "^0.27.2",
     "axios-auth-refresh": "^3.3.3",
     "compression": "^1.7.4",
@@ -31,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
+    "@picocss/pico": "^1.5.6",
     "@volar-plugins/prettier": "^1.1.4",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.8",

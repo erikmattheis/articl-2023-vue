@@ -1,15 +1,29 @@
+<articl-articl data="articl" class="articl-tab-content-hidden ng-isolate-scope">
+<div class="articl-spacing">
+  <span class="articl-smaller-text text-muted">
+      <span ng-bind-html="data.authors" class="ng-binding">Felipe VC, Graziano L, Barbosa PNVP, Bitencourt AGV</span>
+      <!-- ngIf: ::(data.directory_link_resource_type[0].name === 'Web') -->
+  </span>
+
+  <!-- ngIf: ::(data.directory_link_type.name === 'Conferences') -->
+  <!-- ngIf: ::data.journal --><div class="articl-smaller-text text-muted ng-scope" ng-if="::data.journal">
+      <span ng-bind-html="data.journal" class="ng-binding">Radiologia brasileira</span><!-- ngIf: data.journal && (data.month || data.year) --><span ng-if="data.journal &amp;&amp; (data.month || data.year)" class="ng-scope">, </span><!-- end ngIf: data.journal && (data.month || data.year) --><!-- ngIf: ::(data.journal && data.month && data.year) --><span ng-if="::(data.journal &amp;&amp; data.month &amp;&amp; data.year)" ng-bind-html="::data['month-name']" class="ng-binding ng-scope">November</span><!-- end ngIf: ::(data.journal && data.month && data.year) --><!-- ngIf: ::(data.journal && data.month && data.year) --><span ng-if="::(data.journal &amp;&amp; data.month &amp;&amp; data.year)" class="ng-scope">, </span><!-- end ngIf: ::(data.journal && data.month && data.year) --><!-- ngIf: ::data.year --><span ng-if="::data.year" ng-bind-html="::data.year" class="ng-binding ng-scope">2020</span><!-- end ngIf: ::data.year -->
+  </div><!-- end ngIf: ::data.journal -->
+</div>
+</articl-articl>
+
+
 <template>
-  <div class="grid articl-card">
+  <div class="grid">
     <ul>
-      <li>
-        <h3>
-          <a
-            :href="articl.articlUrl"
-            target="_blank"
-          >
-            {{ articl.title }}
-          </a>
-        </h3>
+      <li class="title">
+        <a
+          :href="articl.articlUrl"
+          target="_blank"
+        >
+          {{ articl.title }}
+        </a>
+
         <div
           v-if="isLoggedIn"
           class="admin articl-actions"
@@ -21,31 +35,7 @@
           />
         </div>
       </li>
-      <li v-if="articl.titleExcerpt">
-        <a :href="articl.articlUrl">
-          {{ articl.titleExcerpt }}
-        </a>
-      </li>
 
-      <li v-if="articl.journal">
-        {{ articl.journal }}
-      </li>
-      <li v-if="articl.year">
-        {{ articl.year }}
-      </li>
-
-      <li v-if="articl.authorsOrig">
-        <small>
-          {{ highlightedSubstring(articl.authorsOrig, params.authors,"prefix")
-          }}<strong
-            :class="{
-              'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
-            }"
-          >{{
-            highlightedSubstring(articl.authorsOrig, params.authors,"term")
-          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors,"suffix") }}
-        </small>
-      </li>
       <template
         v-for="author in articl.authors"
         :key="author.nameLast"
@@ -64,6 +54,24 @@
           </li>
         </template>
       </template>
+
+      <li v-if="articl.journal">
+        {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span>
+      </li>
+
+      <li v-if="articl.authorsOrig">
+        <small>
+          {{ highlightedSubstring(articl.authorsOrig, params.authors,"prefix")
+          }}<strong
+            :class="{
+              'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
+            }"
+          >{{
+            highlightedSubstring(articl.authorsOrig, params.authors,"term")
+          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors,"suffix") }}
+        </small>
+      </li>
+      
 
       <li v-if="articl.abstract">
         {{ articl.abstract }}
@@ -148,6 +156,10 @@ export default {
 
 <style scoped lang="scss">
 
+li:not(.title) {
+  font-size: 0.875rem;
+}
+
 a {
   cursor:pointer;
 }
@@ -165,6 +177,15 @@ strong:not([class="not-strong"]) {
   background-color: #749157;
 }
 
+.grid ul li {
+  margin-bottom: 0;
+}
+
+.grid ul li:last-child {
+  margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+}
+
+/*
 li {
   width:100%;
   overflow-x: hidden;
@@ -172,20 +193,15 @@ li {
   white-space: nowrap;
   line-height: 1rem;
 }
-/*
+
 li:nth-child(even){
     background-color: var(--bg1);
 }
 */
-svg {
 
-  a{ fill:#fcb425; }
-
-  .b{ fill:#231f20; }
-
-  .c{ fill:#fff; }
-}
 .grid {
   grid-template-columns: auto auto;
+  border-bottom: 1px solid var(--muted-color);
+  border-bottom-style: solid;
 }
 </style>

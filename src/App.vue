@@ -153,8 +153,6 @@ export default {
 
       const result = performance.now() - this.start;
 
-      console.log(`${result} leaveCancelled`);
-
     },
   },
 };
@@ -164,43 +162,14 @@ export default {
 <style lang="scss">
 @import "./assets/variables";
 @import "~/node_modules/@picocss/pico/scss/pico.scss";
-@import "./assets/maxwidth";
-@import "./assets/styles-override";
+@import "./assets/maxwidth.scss";
+@import "./assets/styles-override.scss";
 
-@import "//fonts.googleapis.com/css2?family=Tangerine&display=swap";
+@import "//fonts.googleapis.com/css2?family=Open+Sans&display=swap";
 
 .admin button,
 .admin a {
   color: darkgreen;
-}
-
-.articl-actions,
-.note-actions,
-.nav-tabs {
-  margin-bottom: 0;
-  column-gap: 0;
-}
-
-.nav-tabs li {
-  margin-bottom: 0;
-}
-
-.articl-actions a,
-.note-actions a,
-.nav-tabs li a {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  padding: 0 1rem;
-  text-decoration: none;
-}
-
-.nav-tabs li a:first-child {
-  padding-left: 0;
-}
-
-.nav-content {
-  border: 1px solid black;
 }
 
 .articl-actions.admin {
@@ -243,17 +212,32 @@ export default {
   padding: 0 0.5rem;
 }
 
+.nav-tabs li.active,
+.active {
+  border-bottom-color: var($grey-700);
+}
+
+.nav-tabs {
+  position:relative;
+  top: 1px;
+  margin-bottom: 0;
+  column-gap: 0;
+}
+
+
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
   border-width: 1px;
   border-right-width: 0;
   border-style: solid;
-  border-color: var(--border-color);
+  border-color: var($grey-700);
   display: inline-block;
   font-size: 1rem;
   padding: 0.5rem;
   vertical-align: middle;
+  margin-bottom: 0;
+  column-gap: 0;
 }
 
 .nav-tabs li:last-child,
@@ -262,14 +246,28 @@ export default {
   border-right-width: 1px;
 }
 
-.nav-tabs li.active,
-.active {
-  border-bottom-color: var(--background-color);
+
+.articl-actions a,
+.note-actions a,
+.nav-tabs li a {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  text-decoration: none;
 }
 
-.nav-tabs {
-  position:relative;
-  top: 1px;
+.nav-tabs li a:first-child {
+  padding-left: 0;
+}
+
+.nav-content {
+  border: 1px solid var($grey-300);
+  padding: var(--spacing)
+}
+
+.nav-tabs li {
+  margin-bottom: 0;
 }
 
 .right {
