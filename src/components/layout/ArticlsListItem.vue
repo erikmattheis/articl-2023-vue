@@ -1,20 +1,5 @@
-<articl-articl data="articl" class="articl-tab-content-hidden ng-isolate-scope">
-<div class="articl-spacing">
-  <span class="articl-smaller-text text-muted">
-      <span ng-bind-html="data.authors" class="ng-binding">Felipe VC, Graziano L, Barbosa PNVP, Bitencourt AGV</span>
-      <!-- ngIf: ::(data.directory_link_resource_type[0].name === 'Web') -->
-  </span>
-
-  <!-- ngIf: ::(data.directory_link_type.name === 'Conferences') -->
-  <!-- ngIf: ::data.journal --><div class="articl-smaller-text text-muted ng-scope" ng-if="::data.journal">
-      <span ng-bind-html="data.journal" class="ng-binding">Radiologia brasileira</span><!-- ngIf: data.journal && (data.month || data.year) --><span ng-if="data.journal &amp;&amp; (data.month || data.year)" class="ng-scope">, </span><!-- end ngIf: data.journal && (data.month || data.year) --><!-- ngIf: ::(data.journal && data.month && data.year) --><span ng-if="::(data.journal &amp;&amp; data.month &amp;&amp; data.year)" ng-bind-html="::data['month-name']" class="ng-binding ng-scope">November</span><!-- end ngIf: ::(data.journal && data.month && data.year) --><!-- ngIf: ::(data.journal && data.month && data.year) --><span ng-if="::(data.journal &amp;&amp; data.month &amp;&amp; data.year)" class="ng-scope">, </span><!-- end ngIf: ::(data.journal && data.month && data.year) --><!-- ngIf: ::data.year --><span ng-if="::data.year" ng-bind-html="::data.year" class="ng-binding ng-scope">2020</span><!-- end ngIf: ::data.year -->
-  </div><!-- end ngIf: ::data.journal -->
-</div>
-</articl-articl>
-
-
 <template>
-  <div class="grid">
+  <div class="articl">
     <ul>
       <li class="title">
         <a
@@ -35,26 +20,32 @@
           />
         </div>
       </li>
-
-      <template
-        v-for="author in articl.authors"
-        :key="author.nameLast"
-      >
-        <li v-if="author.nameFirst || author.nameLast">
-          {{ author.nameFirst }} {{ author.nameLast }}
-        </li>
-        <template
-          v-if="author?.affilliations.length"
-        >
+      <li>
+        <ul>
           <li
-            v-for="affilliation in author.affilliations"
-            :key="affilliation"
+            v-for="author in articl.authors"
+            :key="author.nameLast"
+            class="grid"
           >
-            {{ affilliation }}
+            <details v-if="author.affilliations.length">
+              <summary>
+                {{ author.nameFirst }} {{ author.nameLast }}
+              </summary>
+              <ul>
+                <li
+                  v-for="affilliation in author.affilliations"
+                  :key="affilliation"
+                >
+                  {{ affilliation }}
+                </li>
+              </ul>
+            </details>
+            <div v-else>
+              {{ author.nameFirst }} {{ author.nameLast }}
+            </div>
           </li>
-        </template>
-      </template>
-
+        </ul>
+      </li>
       <li v-if="articl.journal">
         {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span>
       </li>
@@ -156,6 +147,11 @@ export default {
 
 <style scoped lang="scss">
 
+.articl {
+  border-bottom: 1px solid var(--muted-color);
+  margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+}
+
 li:not(.title) {
   font-size: 0.875rem;
 }
@@ -177,13 +173,30 @@ strong:not([class="not-strong"]) {
   background-color: #749157;
 }
 
-.grid ul li {
+.grid > ul li {
+  width: 100%;
   margin-bottom: 0;
 }
 
-.grid ul li:last-child {
-  margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+
+
+/*
+details summary .grid small::after {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  -webkit-margin-start: calc(var(--spacing, 1rem) * 0.5);
+  margin-inline-start: calc(var(--spacing, 1rem) * 0.5);
+  float: right;
+  transform: rotate(-90deg);
+  background-image: var(--icon-chevron);
+  background-position: right center;
+  background-size: 1rem auto;
+  background-repeat: no-repeat;
+  content: "";
+  transition: transform var(--transition);
 }
+*/
 
 /*
 li {
@@ -198,10 +211,7 @@ li:nth-child(even){
     background-color: var(--bg1);
 }
 */
+/*
 
-.grid {
-  grid-template-columns: auto auto;
-  border-bottom: 1px solid var(--muted-color);
-  border-bottom-style: solid;
-}
+*/
 </style>
