@@ -216,16 +216,21 @@ export default {
   margin: var(--nav-element-spacing-vertical) var(--nav-element-spacing-vertical);
 }
 
+.nav-tabs-inner-margin {
+  margin: 0 var(--nav-element-spacing-vertical);
+}
+
 .nav-tabs li.active,
 .active {
-  border-bottom-color: var($grey-700);
+  border: 1px solid $grey-300;
+  border-bottom: 1px solid var(--background-color);
 }
 
 .nav-tabs {
-  position:relative;
-  top: 1px;
   margin-bottom: 0;
   column-gap: 0;
+  position: relative;
+  z-index: 10;
 }
 
 
@@ -235,7 +240,8 @@ export default {
   border-width: 1px;
   border-right-width: 0;
   border-style: solid;
-  border-color: var($grey-700);
+  border-color: $grey-300;
+  border: 1px solid transparent;
   display: inline-block;
   font-size: 1rem;
   padding: 0.5rem;
@@ -249,7 +255,6 @@ export default {
 .articl-actions li:last-child {
   border-right-width: 1px;
 }
-
 
 .articl-actions a,
 .note-actions a,
@@ -266,7 +271,10 @@ export default {
 }
 
 .nav-content {
-  border: 1px solid var($grey-300);
+  position:relative;
+  top: -1px;
+  z-index:0;
+  border: 1px solid $grey-300;
   padding: var(--spacing)
 }
 
@@ -318,19 +326,10 @@ export default {
 :where(:root),
 html,
 body {
-
-  background-color: var(--bg0);
-}
-
-body {
   align-items: center;
   border-radius: 0;
   display: flex;
   justify-content: center;
-}
-
-body * {
-  border-radius: 0 !important;
 }
 
 footer article {

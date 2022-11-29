@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav-tabs nav-tabs-margin">
+    <ul class="nav-tabs nav-tabs-inner-margin">
       <li
         v-for="articlType in articlTypes"
         :key="articlType"

@@ -73,10 +73,13 @@
         </li>
       </router-link>
     </ul>
-    <router-view />
+    <router-view
+      class="nav-content"
+    />
 
     <directory-actions
-      v-if="isLoggedIn"
+      v-if="
+        isLoggedIn"
     />
   </article>
 
