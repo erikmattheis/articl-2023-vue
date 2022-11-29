@@ -213,7 +213,7 @@ export default {
 }
 
 .nav-tabs-margin {
-  margin: var(--typography-spacing-vertical) var(--typography-spacing-horizontal)
+  margin: var(--nav-element-spacing-vertical) var(--nav-element-spacing-vertical);
 }
 
 .nav-tabs li.active,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="nav-tabs">
+    <ul class="nav-tabs nav-tabs-margin">
       <li
         v-for="articlType in articlTypes"
         :key="articlType"
@@ -14,8 +14,6 @@
           {{ articlType }}</a>
       </li>
     </ul>
-
-    
 
     <ul
       v-if="articlTypeCurrent"
