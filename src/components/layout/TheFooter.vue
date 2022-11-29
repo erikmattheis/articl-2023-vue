@@ -15,7 +15,7 @@ export default {
     };
 
   },
-  beforeMount() {
+  created() {
 
     this.year = new Date().getFullYear();
 

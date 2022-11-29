@@ -11,7 +11,7 @@
     >
       <template #item="{ element }">
         <li>
-          <articls-list-item
+          <articls-list-item 
             :articl="element"
             order="0"
           />

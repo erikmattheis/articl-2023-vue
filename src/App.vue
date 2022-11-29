@@ -212,6 +212,10 @@ export default {
   padding: 0 0.5rem;
 }
 
+.nav-tabs-margin {
+  margin: var(--typography-spacing-vertical) var(--typography-spacing-horizontal)
+}
+
 .nav-tabs li.active,
 .active {
   border-bottom-color: var($grey-700);
@@ -264,10 +268,6 @@ export default {
 .nav-content {
   border: 1px solid var($grey-300);
   padding: var(--spacing)
-}
-
-.nav-tabs li {
-  margin-bottom: 0;
 }
 
 .right {

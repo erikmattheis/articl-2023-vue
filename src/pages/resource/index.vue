@@ -135,8 +135,6 @@ export default {
 
         this.isLoading = true;
 
-        // this.slug = this.$route.params.slug;
-
         const results = await this.fetchData(this.$route.params.slug);
 
         if (results.categories?.length) {
@@ -233,14 +231,3 @@ export default {
   },
 };
 </script>
-
-<style
-  lang="scss"
-  scoped
->
-pre {
-  overflow: auto;
-  word-break: break-all;
-  white-space: pre-wrap;
-}
-</style>

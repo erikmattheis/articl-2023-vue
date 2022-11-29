@@ -27,10 +27,9 @@
             :key="author.nameLast"
             class="grid"
           >
+            {{ author.nameFirst }} {{ author.nameLast }}
             <details v-if="author.affilliations.length">
-              <summary>
-                {{ author.nameFirst }} {{ author.nameLast }}
-              </summary>
+              <summary />
               <ul>
                 <li
                   v-for="affilliation in author.affilliations"
@@ -149,7 +148,7 @@ export default {
 
 .articl {
   border-bottom: 1px solid var(--muted-color);
-  margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+  margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
 }
 
 li:not(.title) {

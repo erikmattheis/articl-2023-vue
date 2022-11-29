@@ -188,7 +188,7 @@ export default {
 
   },
 
-  beforeMount() {
+  created() {
 
     const theme = this.$cookies.get("data-theme");
 
