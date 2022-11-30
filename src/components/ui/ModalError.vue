@@ -156,7 +156,6 @@ dialog article button:hover {
 }
 
 dialog article header h2 {
-  margin-bottom: 0;
   color: #fff;
 }
 

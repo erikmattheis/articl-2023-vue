@@ -1,5 +1,5 @@
 <template>
-  <div class="gr">
+  <div class="tab-content">
     <h2>Notes</h2>
     <ul>
       <li

@@ -233,7 +233,6 @@ export default {
   z-index: 10;
 }
 
-
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
@@ -243,8 +242,7 @@ export default {
   border-color: $grey-300;
   border: 1px solid transparent;
   display: inline-block;
-  font-size: 1rem;
-  padding: 0.5rem;
+  padding: var(--nav-element-spacing-horizontal);
   vertical-align: middle;
   margin-bottom: 0;
   column-gap: 0;
@@ -264,10 +262,6 @@ export default {
   justify-content: center;
   padding: 0 1rem;
   text-decoration: none;
-}
-
-.nav-tabs li a:first-child {
-  padding-left: 0;
 }
 
 .nav-content {
@@ -344,11 +338,6 @@ header article {
   padding-top: 0;
 }
 
-header article,
-footer article {
-  background-color: var(--bg1);
-}
-
 input:not([type="checkbox"], [type="radio"], [type="range"]) {
   height: initial;
 }
@@ -370,12 +359,13 @@ main article {
   margin-top: 0;
 }
 
+article h2,
 main form {
   margin-bottom: 0;
 }
 
 small {
-  font-size: .7rem;
+  font-size: 0.7rem;
 }
 
 ul {
