@@ -142,7 +142,7 @@ const router = createRouter({
 
     {
       name: "editArticl",
-      path: "/articls/create",
+      path: "/articls/edit/:id",
       component: createArticlPage,
       props: true,
     },

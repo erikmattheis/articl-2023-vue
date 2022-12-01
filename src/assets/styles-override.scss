@@ -9,11 +9,11 @@
   --button-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --button-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --primary-focus: transparent;
+  --primary-nav-background: $grey-200;
 
-
-    --line-height: 1.5;
-    --font-weight: 400;
-    --font-size: 29px;
+  --line-height: 1.5;
+  --font-weight: 400;
+  --font-size: 29px;
   
     // Responsive typography
     @if $enable-responsive-typography {

@@ -1,21 +1,15 @@
 <template>
-  <li class="listitem nav">
-    <div class="grid">
-      <ul>
-        <li role="link">
-          <router-link
-            :to="{ name: tabName, params: { slug: category.slug } }"
-          >
-            {{ category.title }}
-          </router-link>
-        </li>
-      </ul>
-      <category-actions
-        v-if="isLoggedIn"
-        :id="category.id"
-        :title="category.title"
-      />
-    </div>
+  <li>
+    <router-link
+      :to="{ name: tabName, params: { slug: category.slug } }"
+    >
+      {{ category.title }}
+    </router-link>
+    <category-actions
+      v-if="isLoggedIn"
+      :id="category.id"
+      :title="category.title"
+    />
   </li>
 </template>
 
@@ -71,17 +65,15 @@ export default {
 
 li {
   width:100%;
-  overflow-x: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
+  padding: 
 
   a {
     cursor: pointer;
   }
-  
-  a:hover {
-    background-color: $grey-300;
-  }
+}
+
+li:hover {
+  background-color: var(--primary-nav-background);
 }
 
 

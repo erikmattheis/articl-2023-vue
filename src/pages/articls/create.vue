@@ -6,7 +6,7 @@
     <h1 v-else>
       Success
     </h1>
-
+    id: {{ id }}
     <template v-if="!isLoading">
       <form v-if="!success">
         <template v-if="!id">
@@ -204,18 +204,19 @@ export default {
     cardNotification,
     inputTypeahead,
   },
+  /*
   props: {
-    passedId: {
+    id: {
       default: "",
       type: String,
     },
   },
+  */
   data() {
 
     return {
       abstract: "",
       affiliations: "",
-      id: "",
       doi: "",
       articlUrl: "",
       authorsOrig: "",
