@@ -24,6 +24,11 @@
       }
 
     @if $enable-responsive-typography {
+      @if map-get($breakpoints, "xs") {
+        @media (min-width: map-get($breakpoints, "xs")) {
+          --font-size: calc(0.7 * --font-size)px;
+        }
+      }
       @if map-get($breakpoints, "sm") {
         @media (min-width: map-get($breakpoints, "sm")) {
           --font-size: calc(0.7 * --font-size)px;

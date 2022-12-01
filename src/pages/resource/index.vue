@@ -72,6 +72,7 @@
         </li>
       </router-link>
     </ul>
+    
     <router-view
       class="nav-content"
     />

@@ -1,22 +1,22 @@
 <template>
-  <nav>
+  <nav aria-label="breadcrumb">
     <ul>
       <li>
         <router-link
           :to="{ name: 'homePage'}"
         >
-          Home &gt;
+          Home
         </router-link>
       </li>
       <li
-        v-for="(breadcrumb, index) in breadcrumbs"
+        v-for="(breadcrumb, index) in breadcrumbs" 
         :key="breadcrumb"
       >
         <router-link
           v-if="index !== breadcrumbs.length - 1"
           :to="{ name: index < 2 ? 'TabCategories':'TabArticls', params: { slug : breadcrumb.slug } }"
         >
-          {{ breadcrumb.title }} &gt;
+          {{ breadcrumb.title }}
         </router-link>
         <span v-else> {{ breadcrumb.title }}</span>
       </li>

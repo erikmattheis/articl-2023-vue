@@ -2,19 +2,19 @@
   <li class="listitem">
     <div class="grid">
       <ul>
-        <li>
-          <router-link :to="{ name: tabName, params: { slug: category.slug } }">
+        <li role="link">
+          <router-link
+            :to="{ name: tabName, params: { slug: category.slug } }"
+          >
             {{ category.title }}
           </router-link>
         </li>
       </ul>
-      <div>
-        <category-actions
-          v-if="isLoggedIn"
-          :id="category.id"
-          :title="category.title"
-        />
-      </div>
+      <category-actions
+        v-if="isLoggedIn"
+        :id="category.id"
+        :title="category.title"
+      />
     </div>
   </li>
 </template>
