@@ -1,5 +1,5 @@
 <template>
-  <li class="listitem">
+  <li class="listitem nav">
     <div class="grid">
       <ul>
         <li role="link">
@@ -67,16 +67,22 @@ export default {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 li {
   width:100%;
   overflow-x: hidden;
   text-overflow:ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
+
+  a {
+    cursor: pointer;
+  }
+  
+  a:hover {
+    background-color: $grey-300;
+  }
 }
 
-a {
-  cursor: pointer;
-}
+
 </style>
