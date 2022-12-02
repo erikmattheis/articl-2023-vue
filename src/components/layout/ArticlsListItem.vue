@@ -24,7 +24,7 @@
       <li>
         <details>
           <summary>{{ authorsList }}</summary>
-          
+
           <ul>
             <li
               v-for="author in articl.authors"
@@ -65,19 +65,19 @@
 
       <li v-if="articl.authorsOrig">
         <small>
-          {{ highlightedSubstring(articl.authorsOrig, params.authors,"prefix")
+          {{ highlightedSubstring(articl.authorsOrig, params.authors, "prefix")
           }}<strong
             :class="{
               'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
             }"
           >{{
-            highlightedSubstring(articl.authorsOrig, params.authors,"term")
-          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors,"suffix") }}
+            highlightedSubstring(articl.authorsOrig, params.authors, "term")
+          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
         </small>
       </li>
-      
 
-      
+
+
       <li v-if="articl.thumbnailImage">
         <img
           :src="articl.thumbnailImage"
@@ -140,26 +140,42 @@ export default {
     },
     linkMessage() {
 
-      return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace("www.","")}`;
+      try {
+
+        return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace("www.", "")}`;
+
+      }
+      catch {
+
+        return "Malformed url";
+
+      }
+
 
     },
     authorsList() {
 
-      const list = this.articl.authors.map(authors => {return `${authors.nameFirst} ${authors.nameLast}`});
-      return list.join(", ")
+      if (this.articl?.authors?.map) {
 
-}
+        const list = this.articl.authors.map(author => { return `${author.nameFirst} ${author.nameLast}` });
+        return list.join(", ")
+
+      }
+      return [];
+
+    },
   },
   methods: {
     highlightedSubstring,
     noCaseIndexOf,
-  },
-};
+  }
+
+}
+
 
 </script>
 
 <style scoped lang="scss">
-
 .articl {
   border-bottom: 1px solid $grey-100;
   margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
@@ -170,7 +186,7 @@ li:not(.title) {
 }
 
 a {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 #app > main > article > div > div > small > ul > li > a {
