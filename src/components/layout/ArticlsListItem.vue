@@ -3,6 +3,7 @@
     <ul>
       <li class="title">
         <a
+          :data-tooltip="linkMessage"
           :href="articl.articlUrl"
           target="_blank"
         >
@@ -135,6 +136,11 @@ export default {
       return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.articl.month - 1];
 
     },
+    linkMessage() {
+
+      return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace("www.","")}`;
+
+},
   },
   methods: {
     highlightedSubstring,
@@ -147,7 +153,7 @@ export default {
 <style scoped lang="scss">
 
 .articl {
-  border-bottom: 1px solid var(--muted-color);
+  border-bottom: 1px solid $grey-100;
   margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
 }
 
