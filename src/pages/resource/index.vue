@@ -1,7 +1,6 @@
 <template>
   <article
     v-if="!isLoading"
-    :class="{ 'nav-content': treeLevel > 1 }"
   >
     <the-breadcrumbs />
 
@@ -76,7 +75,7 @@
       </router-link>
     </ul>
 
-    <router-view />
+    <router-view :class="{ 'nav-content': treeLevel > 1 }" />
 
     <directory-actions
       v-if="
