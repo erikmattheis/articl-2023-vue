@@ -353,14 +353,15 @@ input[type="radio"] {
   border-radius: 1rem !important;
 }
 
-main article {
+:root main article {
   margin-bottom: 0;
   margin-top: 0;
+  padding-top: 0;
 }
 
 article h2,
 main form {
-  margin-bottom: 0;
+  margin-bottom: var(--block-spacing-vertical);
 }
 
 small {
