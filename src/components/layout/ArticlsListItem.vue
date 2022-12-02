@@ -22,16 +22,18 @@
         </div>
       </li>
       <li>
-        <ul>
-          <li
-            v-for="author in articl.authors"
-            :key="author.nameLast"
-            class="grid"
-          >
-            {{ author.nameFirst }} {{ author.nameLast }}
-            <details v-if="author.affilliations.length">
-              <summary />
-              <ul>
+        <details>
+          <summary>{{ authorsList }}</summary>
+          
+          <ul>
+            <li
+              v-for="author in articl.authors"
+              :key="author.nameLast"
+              class="grid"
+            >
+              {{ author.nameFirst }} {{ author.nameLast }}
+
+              <ul v-if="author.affilliations.length">
                 <li
                   v-for="affilliation in author.affilliations"
                   :key="affilliation"
@@ -39,16 +41,27 @@
                   {{ affilliation }}
                 </li>
               </ul>
-            </details>
-            <div v-else>
-              {{ author.nameFirst }} {{ author.nameLast }}
-            </div>
-          </li>
-        </ul>
+            </li>
+            <li v-if="articl.source">
+              {{ articl.source }}
+            </li>
+            <li v-if="articl.abstract">
+              ABSTRACT: {{ articl.abstract }}
+            </li>
+            <li v-if="articl.fullText">
+              FULL TEXT: {{ articl.fullText }}
+            </li>
+          </ul>
+        </details>
       </li>
       <li v-if="articl.journal">
-        {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span>
+        {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
+          :data-tooltip="linkMessage"
+          :href="articl.articlUrl"
+          target="_blank"
+        >{{ articl.articlUrl }}</a>
       </li>
+
 
       <li v-if="articl.authorsOrig">
         <small>
@@ -64,12 +77,7 @@
       </li>
       
 
-      <li v-if="articl.abstract">
-        {{ articl.abstract }}
-      </li>
-      <li v-if="articl.fullText">
-        {{ articl.fullText }}
-      </li>
+      
       <li v-if="articl.thumbnailImage">
         <img
           :src="articl.thumbnailImage"
@@ -85,12 +93,6 @@
       </li>
       <li v-if="articl.imageCaption">
         {{ articl.imageCaption }}
-      </li>
-      <li v-if="articl.institution">
-        {{ articl.institution }}
-      </li>
-      <li v-if="articl.source">
-        {{ articl.source }}
       </li>
     </ul>
   </div>
@@ -140,7 +142,13 @@ export default {
 
       return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace("www.","")}`;
 
-},
+    },
+    authorsList() {
+
+      const list = this.articl.authors.map(authors => {return `${authors.nameFirst} ${authors.nameLast}`});
+      return list.join(", ")
+
+}
   },
   methods: {
     highlightedSubstring,
