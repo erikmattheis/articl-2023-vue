@@ -222,7 +222,7 @@ export default {
 
 .nav-tabs li.active,
 .active {
-  border: 1px solid $grey-300;
+  border: 1px solid $grey-100;
   border-bottom: 1px solid var(--background-color);
 }
 
@@ -239,7 +239,7 @@ export default {
   border-width: 1px;
   border-right-width: 0;
   border-style: solid;
-  border-color: $grey-300;
+  border-color: $grey-100;
   border: 1px solid transparent;
   display: inline-block;
   padding: var(--nav-element-spacing-horizontal);
@@ -268,7 +268,7 @@ export default {
   position:relative;
   top: -1px;
   z-index:0;
-  border: 1px solid $grey-300;
+  border: 1px solid $grey-100;
   padding: var(--spacing)
 }
 
@@ -326,12 +326,12 @@ body {
   justify-content: center;
 }
 
-footer article {
+:root footer article {
   margin-bottom: 0;
   margin-top: 0;
 }
 
-header article {
+:root header article {
   margin-bottom: 0;
   margin-top: 0;
   padding-bottom: 0;
@@ -354,7 +354,6 @@ input[type="radio"] {
 }
 
 main article {
-  background-color: var(--bg2);
   margin-bottom: 0;
   margin-top: 0;
 }
