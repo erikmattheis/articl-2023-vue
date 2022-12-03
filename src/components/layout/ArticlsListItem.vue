@@ -21,39 +21,46 @@
           />
         </div>
       </li>
+
       <li>
-        <details>
-          <summary>{{ authorsList }}</summary>
+        <div
+          v-if="!showAuthorDetails"
+        >
+          {{ authorsList }}. <a @click="showAuthorDetails = true">Show affiliations</a>
+        </div>
+        <ul
+          v-if="showAuthorDetails"
+          @click="showAuthorDetails = false"
+        >
+          <li><a @click="showAuthorDetails = false">Hide affiliations</a></li>
+          <li
+            v-for="author in articl.authors"
+            :key="author.nameLast"
+            class="grid"
+          >
+            {{ author.nameFirst }} {{ author.nameLast }}
 
-          <ul>
-            <li
-              v-for="author in articl.authors"
-              :key="author.nameLast"
-              class="grid"
-            >
-              {{ author.nameFirst }} {{ author.nameLast }}
-
-              <ul v-if="author.affilliations.length">
-                <li
-                  v-for="affilliation in author.affilliations"
-                  :key="affilliation"
-                >
-                  {{ affilliation }}
-                </li>
-              </ul>
-            </li>
-            <li v-if="articl.source">
-              {{ articl.source }}
-            </li>
-            <li v-if="articl.abstract">
-              ABSTRACT: {{ articl.abstract }}
-            </li>
-            <li v-if="articl.fullText">
-              FULL TEXT: {{ articl.fullText }}
-            </li>
-          </ul>
-        </details>
+            <ul v-if="author.affilliations.length">
+              <li
+                v-for="affilliation in author.affilliations"
+                :key="affilliation"
+              >
+                {{ affilliation }}
+              </li>
+            </ul>
+          </li>
+          <li v-if="articl.source">
+            {{ articl.source }}
+          </li>
+          <li v-if="articl.abstract">
+            ABSTRACT: {{ articl.abstract }}
+          </li>
+          <li v-if="articl.fullText">
+            FULL TEXT: {{ articl.fullText }}
+          </li>
+        </ul>
       </li>
+
       <li v-if="articl.journal">
         {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
           :data-tooltip="linkMessage"
@@ -61,7 +68,6 @@
           target="_blank"
         >{{ articl.articlUrl }}</a>
       </li>
-
 
       <li v-if="articl.authorsOrig">
         <small>
@@ -75,8 +81,6 @@
           }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
         </small>
       </li>
-
-
 
       <li v-if="articl.thumbnailImage">
         <img
@@ -118,7 +122,7 @@ export default {
   data: () => {
 
     return {
-
+      showAuthorDetails: false
     };
 
   },
@@ -145,6 +149,7 @@ export default {
         return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace("www.", "")}`;
 
       }
+
       catch {
 
         return "Malformed url";
@@ -171,7 +176,6 @@ export default {
   }
 
 }
-
 
 </script>
 
@@ -206,8 +210,6 @@ strong:not([class="not-strong"]) {
   width: 100%;
   margin-bottom: 0;
 }
-
-
 
 /*
 details summary .grid small::after {
