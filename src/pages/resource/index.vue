@@ -215,15 +215,15 @@ export default {
             ...new Set(
               result.data.articls.map((item) => {
 
-                return item.type;
+                return item?.type;
 
               }),
             ),
           ]
           : [],
         articls: groupBy(result.data.articls, (articl) => {
-
-          return articl.type;
+          
+          return articl?.type;
 
         }),
         notes: result.data.notes,

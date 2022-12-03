@@ -211,6 +211,8 @@ details {
   border-bottom: 0;
 }
 
+summary,
+details,
 li:not(.title) {
   font-size: 0.875rem;
 }
