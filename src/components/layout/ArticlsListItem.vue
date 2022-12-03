@@ -26,39 +26,31 @@
         <div
           v-if="!showAuthorDetails"
         >
-          {{ authorsList }}. <a @click="showAuthorDetails = true">Show affiliations</a>
-        </div>
-        <ul
-          v-if="showAuthorDetails"
-          @click="showAuthorDetails = false"
-        >
-          <li><a @click="showAuthorDetails = false">Hide affiliations</a></li>
-          <li
-            v-for="author in articl.authors"
-            :key="author.nameLast"
-            class="grid"
-          >
-            {{ author.nameFirst }} {{ author.nameLast }}
-
-            <ul v-if="author.affilliations.length">
+          <p class="authors-list">
+            {{ authorsList }}
+          </p>
+          <details>
+            <summary>Affiliations</summary>
+            <ul>
               <li
-                v-for="affilliation in author.affilliations"
-                :key="affilliation"
+                v-for="author in articl.authors"
+                :key="author.nameLast"
+                class="grid"
               >
-                {{ affilliation }}
+                {{ author.nameFirst }} {{ author.nameLast }}
+
+                <ul v-if="author.affilliations.length">
+                  <li
+                    v-for="affilliation in author.affilliations"
+                    :key="affilliation"
+                  >
+                    {{ affilliation }}
+                  </li>
+                </ul>
               </li>
             </ul>
-          </li>
-          <li v-if="articl.source">
-            {{ articl.source }}
-          </li>
-          <li v-if="articl.abstract">
-            ABSTRACT: {{ articl.abstract }}
-          </li>
-          <li v-if="articl.fullText">
-            FULL TEXT: {{ articl.fullText }}
-          </li>
-        </ul>
+          </details>
+        </div>
       </li>
 
       <li v-if="articl.journal">
@@ -82,12 +74,35 @@
         </small>
       </li>
 
+      <li v-if="articl.source">
+        {{ articl.source }}
+      </li>
+
+      <li v-if="articl.abstract">
+        <details>
+          <summary>Abstract</summary>
+          <div>
+            {{ articl.abstract }}
+          </div>
+        </details>
+      </li>
+      
+      <li v-if="articl.fullText">
+        <details>
+          <summary>FUull text</summary>
+          <div>
+            {{ articl.fullText }}
+          </div>
+        </details>
+      </li>
+
       <li v-if="articl.thumbnailImage">
         <img
           :src="articl.thumbnailImage"
           :alt="articl.title"
         >
       </li>
+
       <li v-if="articl.url">
         <img
           :src="articl.url"
@@ -95,6 +110,7 @@
         ><br>
         {{ articl.url }}
       </li>
+      
       <li v-if="articl.imageCaption">
         {{ articl.imageCaption }}
       </li>
@@ -122,7 +138,7 @@ export default {
   data: () => {
 
     return {
-      showAuthorDetails: false
+
     };
 
   },
@@ -180,9 +196,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .articl {
   border-bottom: 1px solid $grey-100;
   margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
+}
+
+.authors-list {
+  margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+}
+
+details {
+  margin-bottom: calc(vsr(--typography-spacing-vertical) * 0.25);
+  border-bottom: 0;
 }
 
 li:not(.title) {
@@ -212,7 +238,7 @@ strong:not([class="not-strong"]) {
 }
 
 /*
-details summary .grid small::after {
+summary details .grid small::after {
   display: block;
   width: 1rem;
   height: 1rem;

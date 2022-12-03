@@ -377,6 +377,14 @@ ul li {
   list-style-type: none !important;
 }
 
+details summary { 
+  cursor: pointer;
+}
+
+details summary > * {
+  display: inline;
+}
+
 @media prefers-reduced-motion {
   .fade-leave-to,
   .fade-enter-from {
