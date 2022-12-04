@@ -26,66 +26,47 @@
 
         <div class="toggle-password">
           <input
-            v-if="showPassword"
+            v-if="!passwordType"
             id="password"
             v-model="password"
-            type="text"
-            name="password"
-            autocomplete="new-password"
-          >
-          <input
-            v-if="!showPassword"
-            id="password2"
-            v-model="password"
-            type="password"
-            name="password2"
+            :type="passwordType"
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="showPassword = !showPassword"
+            @show="passwordType === 'text'"
           />
         </div>
       </label>
-      <label for="password3">Confirm new password
+      <label for="password2">Confirm new password
         <div class="toggle-password">
           <input
-            v-if="showPassword2"
-            id="password3"
+            v-if="passwordType"
+            id="password2"
             v-model="password2"
-            type="text"
-            name="passwor32"
-            autocomplete="new-password"
-          >
-          <input
-            v-if="!showPassword2"
-            id="password4"
-            v-model="password2"
-            type="password"
-            name="password4"
+            :type="password2Type"
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="showPassword2 = !showPassword2"
+            @show="password2Type !== 'text'"
           />
         </div>
+        <button
+          id="reset"
+          type="submit"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()"
+        >
+          <span v-if="!buttonDisabled">Reset Password</span>
+        </button>
+        <p
+          v-if="result"
+          class="invalid"
+        >
+          {{ result }}
+        </p>
       </label>
-
-      <button
-        id="reset"
-        type="submit"
-        :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
-        <span v-if="!buttonDisabled">Reset Password</span>
-      </button>
-      <p
-        v-if="result"
-        class="invalid"
-      >
-        {{ result }}
-      </p>
     </form>
   </article>
 </template>
@@ -106,8 +87,8 @@ export default {
       email: null,
       password: null,
       password2: null,
-      showPassword: false,
-      showPassword2: false,
+      passwordType: "password",
+      password2Type: "password",
       buttonDisabled: false,
       passwordComplexity: 0,
       errorMessage: "",
