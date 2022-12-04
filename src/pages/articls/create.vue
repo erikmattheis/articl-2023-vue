@@ -237,8 +237,6 @@ export default {
   },
   mounted() {
 
-    this.id = this.passedId ? this.passedId : "";
-
     this.formAction = this.id ? "Edit" : "Create";
 
     if (!this.id) {

@@ -23,34 +23,32 @@
       </li>
 
       <li>
-        <div
-          v-if="!showAuthorDetails"
-        >
-          <p class="authors-list">
-            {{ authorsList }}
-          </p>
-          <details>
-            <summary>Affiliations</summary>
-            <ul>
-              <li
-                v-for="author in articl.authors"
-                :key="author.nameLast"
-                class="grid"
-              >
-                {{ author.nameFirst }} {{ author.nameLast }}
+        <p class="authors-list">
+          {{ authorsList }}
+        </p>
+        <details>
+          <summary>
+            Affiliations
+          </summary>
+          <ul>
+            <li
+              v-for="author in articl.authors"
+              :key="author.nameLast"
+              class="grid"
+            >
+              {{ author.nameFirst }} {{ author.nameLast }}
 
-                <ul v-if="author.affilliations.length">
-                  <li
-                    v-for="affilliation in author.affilliations"
-                    :key="affilliation"
-                  >
-                    {{ affilliation }}
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </details>
-        </div>
+              <ul v-if="author.affilliations.length">
+                <li
+                  v-for="affilliation in author.affilliations"
+                  :key="affilliation"
+                >
+                  {{ affilliation }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </details>
       </li>
 
       <li v-if="articl.journal">

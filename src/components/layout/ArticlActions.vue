@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'editArticl', params: { passedId: id } }"
+    :to="{ name: 'editArticl', params: { id } }"
   >
     edit
   </router-link>

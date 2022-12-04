@@ -39,16 +39,6 @@ export default {
   components: {
     LoadingPlaceholder,
   },
-  props: {
-    passedId: {
-      default: "",
-      type: String,
-    },
-    slug: {
-      default: "",
-      type: String,
-    },
-  },
   emits: ["view-mode"],
   data: () => {
 
@@ -67,8 +57,6 @@ export default {
     }),
   },
   mounted() {
-
-    this.id = this.passedId;
 
     this.formAction = this.id ? "Edit" : "Create";
 

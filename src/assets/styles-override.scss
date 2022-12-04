@@ -57,6 +57,7 @@
 
 details summary { 
   cursor: pointer;
+  color: $primary-500 !important;
 }
 
 details summary > * {

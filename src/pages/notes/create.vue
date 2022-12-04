@@ -53,12 +53,6 @@ export default {
     LoadingPlaceholder,
     cardNotification,
   },
-  props: {
-    passedId: {
-      default: "",
-      type: String,
-    },
-  },
   data: () => {
 
     return {
@@ -67,8 +61,6 @@ export default {
 
   },
   mounted() {
-
-    this.id = this.passedId;
 
     this.formAction = this.id ? "Edit" : "Create";
 

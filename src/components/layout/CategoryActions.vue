@@ -1,7 +1,7 @@
 <template>
   <div class="admin grid">
     <router-link
-      :to="{ name: 'editCategory', params: { passedId: id } }"
+      :to="{ name: 'editCategory', params: { id } }"
     >
       edit
     </router-link>

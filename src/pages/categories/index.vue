@@ -77,12 +77,6 @@ export default {
     CardNotification,
     LoadingPlaceholder,
   },
-  props: {
-    passedId: {
-      default: "",
-      type: String,
-    },
-  },
   data: () => {
 
     return {
@@ -134,8 +128,6 @@ export default {
   mounted() {
 
     this.parentSlug = this.$route.query.parentSlug;
-
-    this.id = this.passedId;
 
     this.formAction = this.id ? "Edit" : "Create";
 
