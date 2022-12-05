@@ -3,10 +3,8 @@
     <h1>Reset password</h1>
     <form ng-if="!result">
       <input
-        id="username"
         type="hidden"
         name="username"
-        value=""
         autocomplete="username"
       >
 
@@ -23,10 +21,8 @@
         >
           Please use 8 or more characters.
         </small>
-
         <div class="toggle-password">
           <input
-            v-if="!passwordType"
             id="password"
             v-model="password"
             :type="passwordType"
@@ -34,14 +30,13 @@
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="passwordType === 'text'"
+            @show="passwordType === 'text' ? 'password' : 'text'"
           />
         </div>
       </label>
       <label for="password2">Confirm new password
         <div class="toggle-password">
           <input
-            v-if="passwordType"
             id="password2"
             v-model="password2"
             :type="password2Type"
@@ -49,24 +44,24 @@
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="password2Type !== 'text'"
+            @show="password2Type === 'text' ? 'password' : 'text'"
           />
         </div>
-        <button
-          id="reset"
-          type="submit"
-          :aria-busy="buttonDisabled"
-          @click.prevent="submitForm()"
-        >
-          <span v-if="!buttonDisabled">Reset Password</span>
-        </button>
-        <p
-          v-if="result"
-          class="invalid"
-        >
-          {{ result }}
-        </p>
       </label>
+      <button
+        id="reset"
+        type="submit"
+        :aria-busy="buttonDisabled"
+        @click.prevent="submitForm()"
+      >
+        <span v-if="!buttonDisabled">Reset Password</span>
+      </button>
+      <p
+        v-if="result"
+        class="invalid"
+      >
+        {{ result }}
+      </p>
     </form>
   </article>
 </template>

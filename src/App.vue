@@ -290,14 +290,18 @@ export default {
   position: relative;
 }
 
+    
 .toggle-password-mask {
   cursor: pointer;
+  vertical-align: middle;
+  //padding: calc(var(--form-element-spacing-horizontal) * 0.5);
   height: 2.2rem;
   position: absolute;
+  top: calc(var(--form-element-spacing-vertical) * 0.5);
   right: 1rem;
-  top: 40%;
-  transform: translateY(-40%);
   width: 2.2rem;
+  top:50%;
+  transform:translateY(-50%);
 }
 
 .vertical-container {
@@ -345,7 +349,7 @@ input:not([type="checkbox"], [type="radio"], [type="range"]) {
 input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
 select,
 textarea {
-  padding: .4rem .6rem !important;
+  padding: calc(var(--form-element-spacing-vertical) * 0.5) calc(var(--form-element-spacing-horizontal) * 0.5);
 }
 
 input[role="switch"],

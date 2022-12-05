@@ -13,32 +13,22 @@
           id="email"
           v-model="email"
           type="text"
-          name="email"
           autocomplete="email"
         ></label>
 
-      <label for="password">Password<div class="toggle-password">
-        <input
-          v-if="showPassword"
-          id="password"
-          v-model="password"
-          type="text"
-          name="password"
-          autocomplete="current-password"
-        >
-        <input
-          v-if="!showPassword"
-          id="password"
-          v-model="password"
-          type="password"
-          name="password"
-          autocomplete="current-password"
-        >
-        <the-button-toggle-hidden
-          class="toggle-password-mask"
-          @show="showPassword = !showPassword"
-        />
-      </div></label>
+      <label for="password">Password
+        <div class="toggle-password">
+          <input
+            id="password"
+            v-model="password"
+            type="passwordType"
+            autocomplete="current-password"
+          >
+          <the-button-toggle-hidden
+            class="toggle-password-mask"
+            @click="passwordType = 'text'"
+          />
+        </div></label>
       <button
         id="Login"
         type="submit"
