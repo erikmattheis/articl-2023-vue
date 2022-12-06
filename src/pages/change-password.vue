@@ -7,7 +7,11 @@
         name="username"
         autocomplete="username"
       >
-
+      <input
+        type="text"
+        name="email"
+        autocomplete="email"
+      >
       <label for="password">New password
         <small
           v-if="passwordComplexity < 3"

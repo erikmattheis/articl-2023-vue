@@ -12,7 +12,7 @@ import loginPage from "@/pages/login.vue";
 import deleteNote from "@/pages/notes/delete.vue";
 import notFound from "@/pages/NotFound.vue";
 import registerPage from "@/pages/register.vue";
-import resetPasswordPage from "@/pages/reset-password.vue";
+import resetPasswordPage from "@/pages/change-password.vue";
 import usersPage from "@/pages/users/index.vue";
 import verifyEmailPage from "@/pages/verify-email.vue";
 import TabCategories from "@/components/layout/TabCategories.vue";
@@ -104,7 +104,7 @@ const router = createRouter({
 
     {
       name: "resetPasswordPage",
-      path: "/reset-password",
+      path: "/change-password",
       component: resetPasswordPage,
     },
 
