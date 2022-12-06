@@ -100,7 +100,7 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
-  display: flex;
+
 }
 
 .modal {
@@ -156,6 +156,7 @@ dialog article button:hover {
 }
 
 dialog article header h2 {
+  margin-bottom: 0;
   color: #fff;
 }
 

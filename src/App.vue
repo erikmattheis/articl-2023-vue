@@ -289,7 +289,6 @@ export default {
 .toggle-password {
   position: relative;
 }
-
     
 .toggle-password-mask {
   cursor: pointer;
