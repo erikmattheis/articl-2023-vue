@@ -38,7 +38,7 @@
             name="email"
             autocomplete="email"
           ></label>
-        <label for="position">Current position
+        <label for="position">Current position {{ position }}
           <select
             id="position"
             v-model="position"
@@ -837,30 +837,30 @@
               Zimbabwe
             </option>
           </select>
-          <input
-            id="username"
-            v-model="username"
-            type="hidden"
-            name="username"
-          >
-          <button
-            id="Update"
-            type="submit"
-            :aria-busy="buttonDisabled"
-            @click.prevent="submitForm()"
-          >
-            <span v-if="!buttonDisabled">Update Account</span>
-          </button>
-          <router-link to="/reset-password">
-            Reset pass
-          </router-link>
-          <router-link
-            to="/logout"
-            class="right"
-          >
-            Log out
-          </router-link>
         </label>
+        <input
+          id="username"
+          v-model="username"
+          type="hidden"
+          name="username"
+        >
+        <button
+          id="Update"
+          type="submit"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()"
+        >
+          <span v-if="!buttonDisabled">Update Account</span>
+        </button>
+        <router-link to="/reset-password">
+          Reset pass
+        </router-link>
+        <router-link
+          to="/logout"
+          class="right"
+        >
+          Log out
+        </router-link>
       </template>
       <transition
         name="fade"

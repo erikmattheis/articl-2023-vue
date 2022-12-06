@@ -52,6 +52,7 @@ const router = createRouter({
         name: "TabNotes",
         path: "notes",
         component: TabNotes,
+        props: true,
       },
       {
         name: "TabBlogs",
@@ -109,7 +110,7 @@ const router = createRouter({
 
     {
       name: "usersPage",
-      path: "/users/:id",
+      path: "/users/:slug",
       component: usersPage,
     },
 
@@ -123,12 +124,11 @@ const router = createRouter({
       name: "createCategoryPage",
       path: "/categories/:slug?",
       component: createCategoryPage,
-      props: true,
     },
 
     {
       name: "editCategory",
-      path: "/categories/:slug",
+      path: "/categories",
       component: createCategoryPage,
       props: true,
     },
@@ -137,11 +137,12 @@ const router = createRouter({
       name: "deleteCategory",
       path: "/articls",
       component: deleteCategoryPage,
+      props: true,
     },
 
     {
       name: "editArticl",
-      path: "/articls/edit/:id",
+      path: "/articls/create",
       component: createArticlPage,
       props: true,
     },
@@ -150,22 +151,27 @@ const router = createRouter({
       name: "createArticlPage",
       path: "/articls/create",
       component: createArticlPage,
+      props: true,
     },
 
     {
       name: "deleteArticl",
       path: "/articls/delete",
       component: deleteArticlPage,
+
       meta: {
         id: true,
         title: true,
       },
+
+      props: true,
     },
 
     {
       name: "deleteNote",
       path: "/notes/delete",
       component: deleteNote,
+      props: true,
     },
 
     {

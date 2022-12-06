@@ -41,7 +41,6 @@
         id="username"
         type="hidden"
         name="username"
-        value=""
         autocomplete="username"
       >
       <label for="password">Password
@@ -60,48 +59,30 @@
 
         <div class="toggle-password">
           <input
-            v-if="showPassword"
             id="password"
             v-model="password"
-            type="text"
-            name="password"
-            autocomplete="new-password"
-          >
-          <input
-            v-if="!showPassword"
-            id="password"
-            v-model="password"
-            type="password"
+            :type="passwordType"
             name="password"
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="showPassword = !showPassword"
+            @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
           />
         </div>
       </label>
       <label for="password2">Confirm password
         <div class="toggle-password">
           <input
-            v-if="showPassword2"
-            id="password2"
+            id="password"
             v-model="password2"
-            type="text"
-            name="password2"
-            autocomplete="new-password"
-          >
-          <input
-            v-if="!showPassword2"
-            id="password2"
-            v-model="password2"
-            type="password"
+            :type="password2Type"
             name="password2"
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="showPassword2 = !showPassword2"
+            @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
           />
         </div>
       </label>
@@ -941,8 +922,8 @@ export default {
       email: null,
       password: null,
       password2: null,
-      showPassword: false,
-      showPassword2: false,
+      passwordType: "password",
+      password2Type: "password",
       buttonDisabled: false,
       passwordMismatch: false,
       passwordComplexity: 0,

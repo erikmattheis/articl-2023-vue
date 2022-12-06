@@ -30,8 +30,9 @@
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="passwordType === 'text' ? 'password' : 'text'"
+            @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
           />
+          
         </div>
       </label>
       <label for="password2">Confirm new password
@@ -44,7 +45,7 @@
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="password2Type === 'text' ? 'password' : 'text'"
+            @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
           />
         </div>
       </label>

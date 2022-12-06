@@ -3,7 +3,6 @@
     <h1>Log in</h1>
     <form>
       <input
-        id="username"
         type="hidden"
         name="username"
         autocomplete="username"
@@ -12,6 +11,7 @@
         <input
           id="email"
           v-model="email"
+          name="email"
           type="text"
           autocomplete="email"
         ></label>
@@ -21,12 +21,12 @@
           <input
             id="password"
             v-model="password"
-            type="passwordType"
+            name="password"
+            :type="passwordType"
             autocomplete="current-password"
-          >
-          <the-button-toggle-hidden
+          ><the-button-toggle-hidden
             class="toggle-password-mask"
-            @click="passwordType = 'text'"
+            @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
           />
         </div></label>
       <button
@@ -70,6 +70,7 @@ export default {
       passwordInvalid: null,
       showPassword: false,
       buttonDisabled: false,
+      passwordType: "password",
     };
 
   },

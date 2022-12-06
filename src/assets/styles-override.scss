@@ -56,6 +56,10 @@
   }
 }
 
+details {
+  padding-bottom: 0;
+}
+
 details summary { 
   cursor: pointer;
   color: $primary-500 !important;

@@ -262,6 +262,7 @@ export default {
   justify-content: center;
   padding: 0 1rem;
   text-decoration: none;
+  background-color: transparent;
 }
 
 .nav-content {
