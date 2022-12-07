@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ul>
     <draggable-items
       v-if="!isLoading"
       v-model="articls"
@@ -18,13 +18,19 @@
         </li>
       </template>
     </draggable-items>
-    <transition
-      name="fade"
-      mode="out-in"
+    <li
+      v-if="(articls.length === 0)"
     >
-      <loading-placeholder v-if="isLoading" />
-    </transition>
-  </div>
+      No entries yet.
+    </li>
+  </ul>
+  articls: {{ articls }}
+  <transition
+    name="fade"
+    mode="out-in"
+  >
+    <loading-placeholder v-if="isLoading" />
+  </transition>
 </template>
 
 <script>

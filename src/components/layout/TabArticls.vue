@@ -19,7 +19,6 @@
       v-if="articlTypeCurrent"
       class="nav-content"
     >
-      <li><h3>{{ articlTypeCurrent }}</h3></li>
       <draggable-items
         v-model="articls[articlTypeCurrent]"
         tag="ul"
@@ -35,7 +34,10 @@
           />
         </template>
       </draggable-items>
-    </ul>
+    </ul>No entries yet.
+    <div v-if="(articls[articlTypeCurrent]?.length === 0)">
+      No entries yet.
+    </div>
   </div>
 </template>
 

@@ -17,7 +17,7 @@
       </li>
     </ul>
     <div
-      v-show="activeTab === 0"
+      v-show="(activeTab === 0)"
       class="active tab-content"
     >
       <label for="title">Title <input
