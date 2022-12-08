@@ -154,7 +154,7 @@ export default {
           );
 
           const fontSize = result.data.user?.fontSize !== 16 ? result.data.user?.fontSize : 16;
-          
+
           this.$cookies.set(
             "font-size",
             fontSize,

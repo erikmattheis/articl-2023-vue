@@ -1,22 +1,21 @@
+
 <template>
   <article>
     <h1>Forgot password</h1>
-    <form v-if="!result">
+    <form>
+      <input
+        type="hidden"
+        name="username"
+        autocomplete="username"
+      >
       <label for="email">Email
         <input
           id="email"
           v-model="email"
-          type="email"
           name="email"
+          type="text"
           autocomplete="email"
         ></label>
-      <input
-        id="username"
-        type="hidden"
-        name="username"
-        value=""
-        autocomplete="username"
-      >
       <button
         id="reset"
         type="submit"

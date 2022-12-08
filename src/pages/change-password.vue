@@ -3,18 +3,11 @@
     <h1>Reset password</h1>
     <form ng-if="!result">
       <input
-        v-model="email"
-        type="hidden"
+        hidden
+        type="text"
         name="username"
+        autofill="email"
       >
-      <label for="email">Email
-        <input
-          id="email"
-          type="text"
-          name="email"
-          autocomplete="email"
-        >
-      </label>
       <label for="password">New password
         <small
           v-if="passwordComplexity < 3"
@@ -115,44 +108,8 @@ export default {
       title: "Reset Password",
     });
 
-    change-password-get-email
-
   },
   methods: {
-    async fetchData() {
-
-try {
-
-  this.isLoading = true;
-
-  const result = await this.getEmail();
-
-  this.email = result.email ? result.email : "";
-
-} catch (error) {
-
-  this.$store.dispatch("errors/setError", error);
-
-} finally {
-
-  this.isLoading = false;
-
-}
-
-},
-
-    async getEmail() {
-
-    
-
-const result = await this.$http({
-  method: "GET",
-  url: "/users/me",
-});
-
-return result.data;
-
-},
     checkForm() {
 
       let passed = true;
@@ -197,7 +154,7 @@ return result.data;
 
           await this.$http({
             method: "POST",
-            url: "/auth/reset-password",
+            url: "/auth/change-password",
             params: {
               token,
             },
