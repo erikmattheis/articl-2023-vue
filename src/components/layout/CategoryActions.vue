@@ -1,13 +1,13 @@
 <template>
   <div class="admin grid">
     <router-link
-      :to="{ name: 'editCategory', params: { id } }"
+      :to="{ name: 'editCategory'}"
     >
       edit
     </router-link>
 
     <router-link
-      :to="{ name: 'deleteCategory', params: { id, title } }"
+      :to="{ name: 'deleteCategory'}"
     >
       delete
     </router-link>

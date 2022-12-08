@@ -19,24 +19,25 @@ export default {
   name: "DeleteArticl",
   components: {
   },
+  props: {
+    id: {
+      default: () => { return ""; },
+      type: String,
+    },
+    title: {
+      default: () => { return ""; },
+      type: String,
+    },
+  },
   data: () => {
 
     return {
-      id: undefined,
-      title: "Nothing to delete",
       buttonDisabled: false,
     };
 
   },
   mounted() {
 
-    if (this.$route.params?.id) {
-
-      this.id = this.$route.params?.id;
-
-      this.title = this.$route.params?.title;
-
-    }
 
   },
   methods: {

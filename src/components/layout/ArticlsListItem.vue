@@ -16,7 +16,6 @@
         >
           <articl-actions
             :id="articl.id"
-            class="tools"
             :title="articl.title"
           />
         </div>

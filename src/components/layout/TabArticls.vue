@@ -58,6 +58,14 @@ export default {
       default: () => { return []; },
       type: Array,
     },
+    type: {
+      default: () => { return ""; },
+      type: String,
+    },
+    slug: {
+      default: () => { return ""; },
+      type: String,
+    }
   },
   data() {
 

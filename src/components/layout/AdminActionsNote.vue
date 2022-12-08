@@ -9,7 +9,7 @@
       </a>
     </li>
     <li>
-      <router-link :to="{ name: 'deleteNote', params: { id, fullText, slug } }">
+      <router-link :to="{ name: 'deleteNote' }">
         delete
       </router-link>
     </li>

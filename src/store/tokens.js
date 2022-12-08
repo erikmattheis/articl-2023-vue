@@ -58,7 +58,7 @@ export default {
   actions: {
     logout: (context) => {
 
-      console.log("log out");
+
       context.commit("SET_ACCESS_TOKEN_EXPIRES", "");
 
       context.commit("SET_ACCESS_TOKEN_VALUE", "");

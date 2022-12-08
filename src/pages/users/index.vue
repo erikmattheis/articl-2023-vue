@@ -1,5 +1,6 @@
 <template>
   <article>
+    <!--
     <h1 v-if="!success">
       Articl.net User: {{ nameFirst }} {{ nameLast }}
     </h1>
@@ -838,12 +839,7 @@
             </option>
           </select>
         </label>
-        <input
-          id="username"
-          v-model="username"
-          type="hidden"
-          name="username"
-        >
+
         <button
           id="Update"
           type="submit"
@@ -868,19 +864,26 @@
       >
         <loading-placeholder v-if="isLoading" />
       </transition>
-    </form>
+      </form>
+    -->
   </article>
 </template>
 
 <script>
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+//import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "UsersPage",
   components: {
-    LoadingPlaceholder,
+    //LoadingPlaceholder,
+  },
+  props: {
+    id: {
+      default: () => { return ""; },
+      type: String,
+    },
   },
   data: () => {
 

@@ -144,7 +144,9 @@ export default {
   },
   params: {
     slug: String,
+    
   },
+
   methods: {
     async getCurrentCategory(id) {
 

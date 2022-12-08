@@ -204,14 +204,14 @@ export default {
     cardNotification,
     inputTypeahead,
   },
-  /*
+
   props: {
     id: {
       default: "",
       type: String,
     },
   },
-  */
+
   data() {
 
     return {

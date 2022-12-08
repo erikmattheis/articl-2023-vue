@@ -42,7 +42,6 @@ const router = createRouter({
       name: "categoryPage",
       path: "/resource/:slug",
       component: categoryPage,
-      props: true,
       children: [{
         name: "TabCategories",
         path: "",
@@ -110,7 +109,7 @@ const router = createRouter({
 
     {
       name: "usersPage",
-      path: "/users/:slug",
+      path: "/users/:id",
       component: usersPage,
     },
 
@@ -128,44 +127,38 @@ const router = createRouter({
 
     {
       name: "editCategory",
-      path: "/categories",
-      component: createCategoryPage,
-      props: true,
+      path: "/categories/:slug?",
+      component: createCategoryPage
     },
 
     {
       name: "deleteCategory",
-      path: "/articls",
+      path: "/categories/delete/:slug?",
       component: deleteCategoryPage,
-      props: true,
     },
 
     {
       name: "editArticl",
-      path: "/articls/create",
+      path: "/articls/create/:id",
       component: createArticlPage,
-      props: true,
     },
 
     {
       name: "createArticlPage",
       path: "/articls/create",
       component: createArticlPage,
-      props: true,
     },
 
     {
       name: "deleteArticl",
-      path: "/articls/delete",
-      component: deleteArticlPage,
-      props: ["id"],
+      path: "/articls/delete/:id/:title",
+      component: deleteArticlPage
     },
 
     {
       name: "deleteNote",
       path: "/notes/delete",
       component: deleteNote,
-      props: true,
     },
 
     {
