@@ -1,12 +1,13 @@
 <template>
   <article>
     <h1>Reset password</h1>
-    <form ng-if="!result">
+    <form>
       <input
+        id="username"
         hidden
         type="text"
         name="username"
-        autofill="email"
+        autocomplete="email"
       >
       <label for="password">New password
         <small
@@ -114,16 +115,16 @@ export default {
 
       let passed = true;
 
-      if (this.validateEmail(this.email)) {
-
-        this.errorMessage = "Please enter a valid email.";
-
-        passed = false;
-
-      } else if (this.password && this.password.length < 8) {
+      if (this.password?.length < 8) {
 
         this.errorMessage = "Passwords are at least eight characters.";
+        passed = false;
 
+      }
+
+      else if (this.password !== this.password2) {
+
+        this.errorMessage = "Passwords do not mach.";
         passed = false;
 
       }
@@ -151,7 +152,7 @@ export default {
         if (this.checkForm() === true) {
 
           this.buttonDisabled = true;
-
+          console.log("before request");
           await this.$http({
             method: "POST",
             url: "/auth/change-password",
@@ -162,7 +163,7 @@ export default {
               password: this.password,
             },
           });
-
+          console.log("after request");
           this.$store.dispatch("modals/setSuccessTitle", "Password updated");
 
           this.$store.dispatch(

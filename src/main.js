@@ -1,7 +1,7 @@
 import "core-js/actual/array/group-by";
 
 import axios from "axios";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
+//import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { createApp } from "vue";
 import VueCookies from "vue-cookies";
 
@@ -13,7 +13,7 @@ import store from "./store/index";
 
 const app = createApp(App);
 
-let baseURL;
+let baseURL = "";
 let secure = true;
 
 if (window.location.hostname === "192.168.1.130" || window.location.hostname === "localhost") {
@@ -36,6 +36,7 @@ app.config.globalProperties.$http = axios.create({
   baseURL,
 });
 
+
 app.config.globalProperties.$http.interceptors.request.use(
   (request) => {
 
@@ -54,6 +55,7 @@ app.config.globalProperties.$http.interceptors.request.use(
   (error) => { return error; },
 );
 
+/*
 const refreshAuthLogic = (failedRequest) => {
 
   return axios.post({
@@ -114,7 +116,7 @@ async function refreshAuthLogic(failedRequest) {
 
 }
 */
-createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
+//createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
 
 app.use(router);
 
