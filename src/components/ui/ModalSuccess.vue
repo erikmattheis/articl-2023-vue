@@ -34,7 +34,7 @@
           <div class="info">
             <ul>
               <li v-if="successMessage">
-                {{ successMessage }}
+                <small>{{ successMessage }}</small>
               </li>
             </ul>
           </div>
@@ -79,13 +79,11 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
-  display: flex;
 }
 
 .modal {
   width: 90%;
   margin: auto;
-  background-color: white;
   border: 0.2rem;
 }
 
@@ -111,7 +109,7 @@ section div {
 }
 
 #app > div > dialog > article > section > div.info {
-  min-width: calc(100% - 6rem);
+  max-width: calc(100% - 6rem);
   min-height: 6rem;
   padding: 1rem;
   color: #0071001a;
@@ -168,5 +166,10 @@ ul
 li {
   color: black !important;
   background-color: #cfa;
+}
+
+small {
+  display: inline-block;
+  line-height: 1;
 }
 </style>

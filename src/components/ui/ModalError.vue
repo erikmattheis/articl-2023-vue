@@ -5,6 +5,11 @@
     @click.prevent="close()"
     @keyup.enter="close()"
   >
+    <div
+      open
+      class="backdrop"
+      @click.stop
+    />
     <dialog
       open
       class="modal"
@@ -94,29 +99,28 @@ export default {
 
 <style scoped lang="scss">
 .modal-container {
-  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 1000;
-
 }
 
 .modal {
   width: 90%;
   margin: auto;
-  background-color: var(--bg1);
   border: 0.2rem;
 }
 
 article {
   max-width: 100%;
+
 }
 
 section {
-  overflow: auto;
+  overflow: visible;
   white-space: nowrap;
+
 }
 
 section div {
@@ -132,7 +136,7 @@ section div {
 }
 
 #app > div > dialog > article > section > div.info {
-  min-width: calc(100% - 6rem);
+  max-width: calc(100% - 6rem);
   min-height: 6rem;
   padding: 1rem;
   color: #dd2c00;
@@ -145,8 +149,9 @@ dialog article button {
   background-color: #dd2c00;
 }
 
-.close {
-  cursor: pointer;
+dialog article header a,
+#app > div > dialog > article > header > a {
+  color: #cfa;
 }
 
 dialog article header,
@@ -163,10 +168,6 @@ dialog article header h2 {
 dialog article ul li {
   word-break: break-all;
   white-space: pre-wrap;
-}
-
-html[data-theme="dark"] article {
-  background-color: var(--bg1);
 }
 
 html[data-theme="dark"] #app > div > dialog > article > section > div.info,
