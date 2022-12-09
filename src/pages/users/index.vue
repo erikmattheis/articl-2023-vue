@@ -880,15 +880,13 @@
 </template>
 
 <script>
-//import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "UsersPage",
-  components: {
-    //LoadingPlaceholder,
-  },
+
   props: {
     id: {
       default: () => { return ""; },
@@ -982,17 +980,14 @@ export default {
     },
     resetFormErrors() {
 
-      console.log("resetFormErrors");
       this.success = null;
 
       this.result = null;
 
-      //this.errorMessage = "";
-
     },
     checkForm() {
 
-      // this.resetFormErrors();
+      this.resetFormErrors();
 
       let passed = true;
 
@@ -1000,7 +995,6 @@ export default {
 
       if (!this.validateEmail(this.email)) {
 
-        console.log("Please enter a valid email.");
         errorMessages.push("Please enter a valid email.");
 
         passed = false;
@@ -1008,7 +1002,6 @@ export default {
       }
       if (!this.nameFirst || !this.nameLast) {
 
-        console.log("Please enter both your fist and last names.");
         errorMessages.push("Please enter both your fist and last names.");
 
         passed = false;
@@ -1016,16 +1009,12 @@ export default {
       }
       if (!this.education) {
 
-        console.log("Please enter your education.");
-        errorMessages.push("Please enter both your education.");
-        console.log("errorMessages", errorMessages);
+        errorMessages.push("Please enter your education.");
         passed = false;
-        console.log("passed", passed);
 
       }
       if (!this.institution) {
 
-        console.log("Please enter your instatution.");
         errorMessages.push("Please enter your institution.");
 
         passed = false;
@@ -1033,7 +1022,6 @@ export default {
       }
       if (!this.city) {
 
-        console.log("Please enter your city.");
         errorMessages.push("Please enter your city.");
 
         passed = false;
@@ -1041,38 +1029,20 @@ export default {
 }
       if (!this.country) {
 
-        console.log("Please enter your country.");
         errorMessages.push("Please enter your country.");
 
         passed = false;
         
       
       }
-        console.log("errorMessages are", errorMessages.length);
         
       if (!passed) {
 
-console.log("did not pass")
         this.errorMessage = errorMessages.join(",");
-        console.log("wtf", errorMessages);
-      
 
 
     }
-      /*
-            formAction: "Create",
-            email: null,
-            position:"",
-            city: "",
-            state: "",
-            country: "",
-            institution: null,
-            buttonDisabled: false,
-            isLoading: true,
-            errorMessage: "",
-            success: false,
-            result: null,
-      */
+
       return passed;
 
     },
@@ -1081,11 +1051,10 @@ console.log("did not pass")
 
       try {
 
-        //this.resetFormErrors();
+        this.resetFormErrors();
 
         if (this.checkForm() === true) {
 
-console.log("checkForm is true")
           this.buttonDisabled = true;
 
           const result = await this.$http({
@@ -1120,7 +1089,6 @@ console.log("checkForm is true")
 
         } else {
 
-          console.log("checkForm not true", this.errorMessage);
 
           this.$store.dispatch(
             "errors/setError",

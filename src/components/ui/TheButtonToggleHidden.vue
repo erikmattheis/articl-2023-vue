@@ -9,6 +9,12 @@
         "
         @keypress.esc="focus()"
       >
+        <vue-feather
+          size="1.2rem"
+          type="eye-off"
+          aria-label="Hide password"
+        />
+      <!--
         <svg
           version="1.1"
           viewBox="0 0 700 700"
@@ -210,6 +216,7 @@
             />
           </g>
         </svg>
+      -->
       </a>
     </template>
     <template v-if="!show">
@@ -221,6 +228,12 @@
         "
         @keypress.esc="focus()"
       >
+        <vue-feather
+          size="1.2rem"
+          type="eye"
+          aria-label="Show password"
+        />
+      <!---
         <svg
           version="1.1"
           viewBox="0 0 700 700"
@@ -423,14 +436,19 @@
             />
           </g>
         </svg>
-
+      -->
       </a>
     </template>
   </div>
 </template>
 
 <script>
+import VueFeather from "vue-feather";
+
 export default {
+  components: {
+    VueFeather
+  },
   emits: ["show"],
   data: () => {
 
