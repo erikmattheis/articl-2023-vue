@@ -1,6 +1,5 @@
 <template>
   <article>
-    <!--
     <h1 v-if="!success">
       Articl.net User: {{ nameFirst }} {{ nameLast }}
     </h1>
@@ -39,7 +38,15 @@
             name="email"
             autocomplete="email"
           ></label>
-        <label for="position">Current position {{ position }}
+        <label for="education">Education
+          <input
+            id="education"
+            v-model="education"
+            type="text"
+            name="education"
+            autocomplete="education"
+          ></label>
+        <label for="position">Current position
           <select
             id="position"
             v-model="position"
@@ -69,6 +76,7 @@
             v-model="city"
             type="text"
             name="city"
+            autocomplete="address-level2"
           ></label>
         <label for="state">State/Provence
           <input
@@ -76,12 +84,14 @@
             v-model="state"
             type="text"
             name="state"
+            autocomplete="address-level1"
           ></label>
         <label for="country">Country
           <select
             id="country"
             v-model="country"
             name="country"
+            autocomplete="country-name"
           >
             <option
               disabled
@@ -839,7 +849,6 @@
             </option>
           </select>
         </label>
-
         <button
           id="Update"
           type="submit"
@@ -858,14 +867,15 @@
           Log out
         </router-link>
       </template>
+      <!--
       <transition
         name="fade"
         mode="out-in"
       >
         <loading-placeholder v-if="isLoading" />
       </transition>
-      </form>
-    -->
+      -->
+    </form>
   </article>
 </template>
 
@@ -892,7 +902,8 @@ export default {
       nameLast: "",
       formAction: "Create",
       email: null,
-      position:"",
+      education: null,
+      position: "",
       city: "",
       state: "",
       country: "",
@@ -930,6 +941,8 @@ export default {
         this.nameLast = result.nameLast ? result.nameLast : "";
 
         this.email = result.email ? result.email : "";
+
+        this.education = result.education ? result.education : "";
 
         this.position = result.position ? result.position : "";
 
@@ -969,27 +982,97 @@ export default {
     },
     resetFormErrors() {
 
+      console.log("resetFormErrors");
       this.success = null;
 
       this.result = null;
 
-      this.errorMessage = "";
+      //this.errorMessage = "";
 
     },
     checkForm() {
 
-      this.resetFormErrors();
+      // this.resetFormErrors();
 
       let passed = true;
 
+      let errorMessages = [];
+
       if (!this.validateEmail(this.email)) {
 
-        this.errorMessage = "Please enter a valid email.";
+        console.log("Please enter a valid email.");
+        errorMessages.push("Please enter a valid email.");
 
         passed = false;
 
       }
+      if (!this.nameFirst || !this.nameLast) {
 
+        console.log("Please enter both your fist and last names.");
+        errorMessages.push("Please enter both your fist and last names.");
+
+        passed = false;
+
+      }
+      if (!this.education) {
+
+        console.log("Please enter your education.");
+        errorMessages.push("Please enter both your education.");
+        console.log("errorMessages", errorMessages);
+        passed = false;
+        console.log("passed", passed);
+
+      }
+      if (!this.institution) {
+
+        console.log("Please enter your instatution.");
+        errorMessages.push("Please enter your institution.");
+
+        passed = false;
+
+      }
+      if (!this.city) {
+
+        console.log("Please enter your city.");
+        errorMessages.push("Please enter your city.");
+
+        passed = false;
+      
+}
+      if (!this.country) {
+
+        console.log("Please enter your country.");
+        errorMessages.push("Please enter your country.");
+
+        passed = false;
+        
+      
+      }
+        console.log("errorMessages are", errorMessages.length);
+        
+      if (!passed) {
+
+console.log("did not pass")
+        this.errorMessage = errorMessages.join(",");
+        console.log("wtf", errorMessages);
+      
+
+
+    }
+      /*
+            formAction: "Create",
+            email: null,
+            position:"",
+            city: "",
+            state: "",
+            country: "",
+            institution: null,
+            buttonDisabled: false,
+            isLoading: true,
+            errorMessage: "",
+            success: false,
+            result: null,
+      */
       return passed;
 
     },
@@ -998,10 +1081,11 @@ export default {
 
       try {
 
-        this.resetFormErrors();
+        //this.resetFormErrors();
 
         if (this.checkForm() === true) {
 
+console.log("checkForm is true")
           this.buttonDisabled = true;
 
           const result = await this.$http({
@@ -1035,6 +1119,8 @@ export default {
           }
 
         } else {
+
+          console.log("checkForm not true", this.errorMessage);
 
           this.$store.dispatch(
             "errors/setError",
