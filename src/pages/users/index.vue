@@ -86,8 +86,11 @@
             name="state"
             autocomplete="address-level1"
           ></label>
-        <label for="country">Country
-          <select-countries />
+        <label for="country">Country: {{ country }}
+          <select-countries
+            v-model:country="country"
+            @set-country="changeCountry"
+          />
         </label>
         <button
           id="Update"
@@ -120,13 +123,15 @@
 </template>
 
 <script>
+import selectCountries from "@/components/ui/SelectCountries.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { selectCountries } from "@/services/userService";
 import { validateEmail } from "@/services/userService";
 
 export default {
   name: "UsersPage",
-
+  components: {
+    selectCountries
+  },
   props: {
     id: {
       default: () => { return ""; },
@@ -139,7 +144,7 @@ export default {
       nameFirst: "",
       nameLast: "",
       formAction: "Create",
-      email: null,
+      email: "null",
       education: null,
       position: "",
       city: "",
@@ -166,6 +171,11 @@ export default {
 
   },
   methods: {
+    changeCountry(country) {
+
+      this.country = country;
+    
+},
     async fetchData() {
 
       try {
@@ -304,6 +314,7 @@ export default {
               nameFirst: this.nameFirst,
               nameLast: this.nameLast,
               email: this.email,
+              education: this.education,
               position: this.position,
               institution: this.institution,
               city: this.city,

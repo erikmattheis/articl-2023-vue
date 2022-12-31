@@ -4,12 +4,13 @@
     v-model="country"
     name="country"
     autocomplete="country-name"
-  >
+    @update:country="country = $event"
+  > 
     <option
-      disabled
       value=""
+      selected
     >
-      Please select one
+      Choose one
     </option>
     <option value="US">
       United States
@@ -765,38 +766,24 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
-
 export default {
   props: {
-    country: {
+    /*
+      country: {
       type: String,
       default: "",
     },
+    */
   },
-  computed: {
-    localcountry: {
-      get() {
+  emits: ["setCountry"],
+  data() {
 
-        return this.modelValue
-      
+    return {
+      country: ""
+    }
+  
 },
-      set(newValue) {
 
-        this.$emit("update:country", newValue)
-      
-},
-    },
-
-    methods: {
-      close() {
-
-        this.$store.dispatch("modals/clearSuccess");
-
-      },
-    },
-  },
 }
 
 </script>
