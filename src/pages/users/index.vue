@@ -38,14 +38,7 @@
             name="email"
             autocomplete="email"
           ></label>
-        <label for="education">Education
-          <input
-            id="education"
-            v-model="education"
-            type="text"
-            name="education"
-            autocomplete="education"
-          ></label>
+
         <label for="position">Current position
           <select
             id="position"
@@ -62,6 +55,14 @@
             <option value="Allied Healthcare Profession">Allied Healthcare Profession</option>
           </select>
         </label>
+        <label for="education">Education
+          <input
+            id="education"
+            v-model="education"
+            type="text"
+            name="education"
+            autocomplete="education"
+          ></label>
         <label for="institution">Institution
           <input
             id="institution"
@@ -88,7 +89,7 @@
           ></label>
         <label for="country">Country: {{ country }}
           <select-countries
-            v-model:country="country"
+            v-model="country"
             @set-country="changeCountry"
           />
         </label>
@@ -144,13 +145,13 @@ export default {
       nameFirst: "",
       nameLast: "",
       formAction: "Create",
-      email: "null",
-      education: null,
+      email: "",
+      education: "",
       position: "",
       city: "",
       state: "",
       country: "",
-      institution: null,
+      institution: "",
       buttonDisabled: false,
       isLoading: true,
       errorMessage: "",
@@ -257,12 +258,6 @@ export default {
         passed = false;
 
       }
-      if (!this.education) {
-
-        errorMessages.push("Please enter your education.");
-        passed = false;
-
-      }
       if (!this.institution) {
 
         errorMessages.push("Please enter your institution.");
@@ -316,6 +311,7 @@ export default {
               email: this.email,
               education: this.education,
               position: this.position,
+              education: this.education,
               institution: this.institution,
               city: this.city,
               state: this.state,

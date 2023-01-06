@@ -103,6 +103,14 @@
           <option value="Allied Healthcare Profession">Allied Healthcare Profession</option>
         </select>
       </label>
+      <label for="education">Education
+        <input
+          id="education"
+          v-model="education"
+          type="text"
+          name="education"
+          autocomplete="education"
+        ></label>
       <label for="institution">Institution
         <input
           id="institution"
@@ -933,7 +941,8 @@ export default {
       city: "",
       state: "",
       country: "",
-      institution: null,
+      education: "",
+      institution: "",
       isLoading: true,
       errorMessage: "",
       success: false,
@@ -1053,6 +1062,7 @@ export default {
               nameFirst: this.nameFirst,
               nameLast: this.nameLast,
               position: this.position,
+              education: this.education,
               institution: this.institution,
               city: this.city,
               state: this.state,
