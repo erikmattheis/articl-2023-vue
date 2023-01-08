@@ -8,6 +8,16 @@
     </h1>
     <form>
       <template v-if="!isLoading">
+        <label for="username">User Name
+          <input
+            id="username"
+            v-model="username"
+            type="text"
+            name="username"
+            autocomplete="username"
+            @keyup="removeUsernameWhiteSpace"
+          ></label>
+
         <fieldset class="grid">
           <div>
             <label for="nameFirst">First Name
@@ -131,7 +141,7 @@
             name="state"
             autocomplete="address-level1"
           ></label>
-        <label for="country">Country: {{ country }}
+        <label for="country">
           <select-countries
             v-model="country"
             @change-country="changeCountry"
@@ -180,6 +190,7 @@ export default {
   data: () => {
 
     return {
+      username: "",
       password: "",
       password2: "",
       passwordType: "password",
@@ -235,7 +246,6 @@ export default {
   methods: {
     changeCountry(country) {
 
-console.log("change country parent", country)
       this.country = country;
     
 },
@@ -246,6 +256,8 @@ console.log("change country parent", country)
         this.isLoading = true;
 
         const result = await this.getMe();
+
+        this.username = result.username ? result.username : "";
 
         this.nameFirst = result.nameFirst ? result.nameFirst : "";
 
@@ -270,7 +282,6 @@ console.log("change country parent", country)
         this.fontSize = result.fontSize ? result.fontSize : "";
 
       } catch (error) {
-
 
         this.$store.dispatch("errors/setError", error);
 
@@ -306,6 +317,13 @@ console.log("change country parent", country)
       let passed = true;
 
       let errorMessages = [];
+
+      if (!this.username.length) {
+
+        errorMessages.push("Please enter a valid email.");
+        passed = false;
+
+      }
 
       if (!this.validateEmail(this.email)) {
 
@@ -418,6 +436,11 @@ console.log("change country parent", country)
       }
 
     },
+    removeUsernameWhiteSpace(event) {
+
+      this.username = this.username.replace(/\s/g, "");
+    
+},
     scoreChars,
     validateEmail,
   },

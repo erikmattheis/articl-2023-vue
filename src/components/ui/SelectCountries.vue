@@ -1,6 +1,5 @@
 <template>
   <div>
-    Country: {{ modelValue }}
     <select
       :value="modelValue"
       autocomplete="country-name"
@@ -768,10 +767,6 @@
 <script>
 export default {
   props: {
-      country: {
-      type: String,
-      default: "",
-    },
     modelValue: {
       type: String,
       default: "",
@@ -780,11 +775,11 @@ export default {
   emits: ["change-country"],
   methods: {
   
-  changeCountry($event) {
+    changeCountry($event) {
 
-      this.$emit("change-country", $event.target.value);
-      
-  }
+        this.$emit("change-country", $event.target.value);
+        
+    }
     
   }
 
