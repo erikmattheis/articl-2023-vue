@@ -1,13 +1,13 @@
 <template>
   <div>
+    Country: {{ modelValue }}
     <select
-      :value="country"
+      :value="modelValue"
       autocomplete="country-name"
       @change="changeCountry"
     >
       <option
         value=""
-        selected
       >
         Choose one 
       </option>
@@ -772,15 +772,19 @@ export default {
       type: String,
       default: "",
     },
+    modelValue: {
+      type: String,
+      default: "",
+    },
   },
   emits: ["change-country"],
   methods: {
   
   changeCountry($event) {
 
-    this.$emit("change-country", $event.target.value);
-    
-}
+      this.$emit("change-country", $event.target.value);
+      
+  }
     
   }
 
