@@ -91,15 +91,9 @@ export default {
 
       let passed = true;
 
-      if (!validateEmail.validateEmail(this.email)) {
+      if (!this.username || this.username.length < 3) {
 
-        this.errorMessage = "Please enter a valid email.";
-
-        passed = false;
-
-      } else if (this.password && this.password.length < 8) {
-
-        this.errorMessage = "Passwords are at least eight characters.";
+        this.errorMessage = "User names must be three or more characters.";
 
         passed = false;
 
@@ -122,7 +116,7 @@ export default {
             url: "/auth/login",
             data: {
               password: this.password,
-              email: this.email,
+              username: this.username,
             },
           });
 

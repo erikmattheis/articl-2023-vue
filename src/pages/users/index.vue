@@ -318,9 +318,9 @@ export default {
 
       let errorMessages = [];
 
-      if (!this.username.length) {
+      if (this.username.length < 3) {
 
-        errorMessages.push("Please enter a valid email.");
+        errorMessages.push("User names must be three or more characters");
         passed = false;
 
       }
@@ -387,6 +387,7 @@ export default {
             method: "PATCH",
             url: "/users/me",
             data: {
+              username: this.username,
               nameFirst: this.nameFirst,
               nameLast: this.nameLast,
               email: this.email,

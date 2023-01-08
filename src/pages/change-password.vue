@@ -2,13 +2,6 @@
   <article>
     <h1>Reset password</h1>
     <form>
-      <input
-        id="username"
-        hidden
-        type="text"
-        name="username"
-        autocomplete="email"
-      >
       <label for="password">New password
         <small
           v-if="passwordComplexity < 3"
