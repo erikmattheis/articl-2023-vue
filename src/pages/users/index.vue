@@ -1,10 +1,10 @@
 <template>
   <article>
-    <h1 v-if="!success">
+    <h1 v-if="formAction === 'Edit'">
       Articl.net User: {{ nameFirst }} {{ nameLast }}
     </h1>
     <h1 v-else>
-      Account Updated
+      Create Account
     </h1>
     <form>
       <template v-if="!isLoading">
@@ -38,6 +38,50 @@
             name="email"
             autocomplete="email"
           ></label>
+
+        <label for="password">Password
+          <small
+            v-if="passwordComplexity < 3"
+            class="left-space"
+          >
+            Use upper- and lowercase, numerical and special characters.
+          </small>
+          <small
+            v-else-if="password.length < 8"
+            class="left-space"
+          >
+            Please use 8 or more characters.
+          </small>
+
+          <div class="toggle-password">
+            <input
+              id="password"
+              v-model="password"
+              :type="passwordType"
+              name="password"
+              autocomplete="new-password"
+            >
+            <the-button-toggle-hidden
+              class="toggle-password-mask"
+              @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
+            />
+          </div>
+        </label>
+        <label for="password2">Confirm password
+          <div class="toggle-password">
+            <input
+              id="password2"
+              v-model="password2"
+              :type="password2Type"
+              name="password2"
+              autocomplete="new-password"
+            >
+            <the-button-toggle-hidden
+              class="toggle-password-mask"
+              @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
+            />
+          </div>
+        </label>
 
         <label for="position">Current position
           <select
@@ -90,7 +134,7 @@
         <label for="country">Country: {{ country }}
           <select-countries
             v-model="country"
-            @set-country="changeCountry"
+            @change-country="changeCountry"
           />
         </label>
         <button
@@ -111,27 +155,21 @@
           Log out
         </router-link>
       </template>
-      <!--
-      <transition
-        name="fade"
-        mode="out-in"
-      >
-        <loading-placeholder v-if="isLoading" />
-      </transition>
-      -->
     </form>
   </article>
 </template>
 
 <script>
 import selectCountries from "@/components/ui/SelectCountries.vue";
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { validateEmail } from "@/services/userService";
+import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
   name: "UsersPage",
   components: {
-    selectCountries
+    selectCountries,
+    theButtonToggleHidden
   },
   props: {
     id: {
@@ -142,6 +180,11 @@ export default {
   data: () => {
 
     return {
+      password: "",
+      password2: "",
+      passwordType: "password",
+      password2Type: "password",
+      passwordComplexity: 0,
       nameFirst: "",
       nameLast: "",
       formAction: "Create",
@@ -156,16 +199,34 @@ export default {
       isLoading: true,
       errorMessage: "",
       success: false,
-      result: null,
+      result: "",
     };
 
   },
+  watch: {
+    password: {
+      handler(val) {
+
+        this.passwordComplexity = this.scoreChars(val);
+
+      },
+    },
+  },
   mounted() {
 
-    this.fetchData();
+    if (this.id) {
 
-    this.formAction = this.id ? "Edit" : "Create";
+      this.formAction = "Edit";
+      
+      this.fetchData();
+    
+    }
+    else {
 
+      this.isLoading = false;
+
+}
+    
     setTitleAndDescription({
       title: this.formAction,
     });
@@ -174,6 +235,7 @@ export default {
   methods: {
     changeCountry(country) {
 
+console.log("change country parent", country)
       this.country = country;
     
 },
@@ -208,6 +270,7 @@ export default {
         this.fontSize = result.fontSize ? result.fontSize : "";
 
       } catch (error) {
+
 
         this.$store.dispatch("errors/setError", error);
 
@@ -355,6 +418,7 @@ export default {
       }
 
     },
+    scoreChars,
     validateEmail,
   },
 };

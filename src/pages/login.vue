@@ -42,7 +42,7 @@
       Forgot pass
     </router-link>
     <router-link
-      to="/register"
+      to="/users"
       class="right"
     >
       Create account

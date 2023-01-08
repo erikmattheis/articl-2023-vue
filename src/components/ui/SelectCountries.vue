@@ -3,7 +3,7 @@
     <select
       :value="country"
       autocomplete="country-name"
-      @input="$emit('update:country', $event.target.value)"
+      @change="changeCountry"
     >
       <option
         value=""
@@ -768,21 +768,21 @@
 <script>
 export default {
   props: {
- 
       country: {
       type: String,
       default: "",
     },
-
   },
-  emits: ["update:country"],
-  data() {
-
-    return {
-     // country: ""
-    }
+  emits: ["change-country"],
+  methods: {
   
-},
+  changeCountry($event) {
+
+    this.$emit("change-country", $event.target.value);
+    
+}
+    
+  }
 
 }
 
