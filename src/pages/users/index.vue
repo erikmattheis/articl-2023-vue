@@ -386,20 +386,6 @@ export default {
         if (this.checkForm() === true) {
 
           this.buttonDisabled = true;
-
-          console.log({
-            username: this.username,
-            password: this.password,
-            nameFirst: this.nameFirst,
-            nameLast: this.nameLast,
-            email: this.email,
-            education: this.education,
-            position: this.position,
-            education: this.education,
-            institution: this.institution,
-            city: this.city,
-            country: this.country,
-          });
           const result = await this.$http({
             method: this.method,
             url: "/auth/register",
@@ -424,12 +410,25 @@ export default {
 
             this.result = result.data;
 
+            if (this.method === "POST")
+
+              this.$store.dispatch("modals/setSuccessTitle", "User Created");
+
+              this.$store.dispatch(
+                "modals/setSuccessMessage",
+                `Please click on the link in the verification email that was sent to ${this.email}.`,
+              );
+
+          }
+          else {
+
             this.$store.dispatch("modals/setSuccessTitle", "User Updated");
 
             this.$store.dispatch(
               "modals/setSuccessMessage",
               "Your account information was successfully updated.",
             );
+          
 
           }
 
