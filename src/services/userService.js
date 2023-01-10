@@ -25,6 +25,7 @@ const scoreChars = (val) => {
   return a + b + c + d;
 
 };
+
 const validateEmail = (email) => {
 
   if (!email) {

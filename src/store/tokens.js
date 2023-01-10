@@ -139,10 +139,11 @@ export default {
     isLoggedIn: (state) => {
 
       /*
-      console.log("isLoggedIn", state.accessTokenExpires > state.now * 1000);
-      console.log("accessTokenExpires", state.accessTokenExpires);
-      console.log("now", state.now);
-*/
+            console.log("isLoggedIn", state.accessTokenExpires > state.now * 1000);
+            console.log("accessTokenExpires", state.accessTokenExpires);
+            console.log("now", state.now);
+      */
+
       return state.accessTokenExpires > state.now * 1000;
 
     },

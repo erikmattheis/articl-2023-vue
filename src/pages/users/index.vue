@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1 v-if="method === 'GET'">
+    <h1 v-if="method === 'PATCH'">
       Articl.net User: {{ nameFirst }} {{ nameLast }}
     </h1>
     <h1 v-else>
@@ -8,16 +8,6 @@
     </h1>
     <form>
       <template v-if="!isLoading">
-        <label for="username">User Name
-          <input 
-            id="username"
-            v-model="username"
-            type="text"
-            name="username"
-            autocomplete="username"
-            @keyup="removeUsernameWhiteSpace"
-          ></label>
-
         <fieldset class="grid">
           <div>
             <label for="nameFirst">First Name
@@ -27,6 +17,7 @@
                 type="text"
                 name="nameFirst"
                 autocomplete="given-name"
+                @keyup="concateUsername"
               ></label>
           </div>
           <div>
@@ -40,6 +31,17 @@
               ></label>
           </div>
         </fieldset>
+
+        <label for="username">User Name
+          <input 
+            id="username"
+            v-model="username"
+            type="text"
+            name="username"
+            autocomplete="username"
+            @keyup="removeUsernameWhiteSpace"
+          ></label>
+
         <label for="email">Email
           <input
             id="email"
@@ -133,14 +135,6 @@
             name="city"
             autocomplete="address-level2"
           ></label>
-        <label for="state">State/Provence
-          <input
-            id="state"
-            v-model="state"
-            type="text"
-            name="state"
-            autocomplete="address-level1"
-          ></label>
         <label for="country">
           <select-countries
             v-model="country"
@@ -171,6 +165,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import selectCountries from "@/components/ui/SelectCountries.vue";
 import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
@@ -187,7 +183,8 @@ export default {
       default: () => { return ""; },
       type: String,
     },
-  },
+  }, 
+
   data: () => {
 
     return {
@@ -200,20 +197,27 @@ export default {
       nameFirst: "",
       nameLast: "",
       email: "",
-      education: "",
       position: "",
       city: "",
-      state: "",
       country: "",
+      education: "",
       institution: "",
       method: "PATCH",
+      formActionUrl: "/users/me",
       buttonDisabled: false,
       isLoading: true,
       errorMessage: "",
-      success: false,
       result: "",
     };
 
+  },
+
+  computed: {
+  
+
+  ...mapGetters({
+      isLoggedIn: "tokens/isLoggedIn",
+  }),
   },
   watch: {
     password: {
@@ -226,7 +230,7 @@ export default {
   },
   mounted() {
 
-    if (this.id) {
+    if (this.isLoggedIn) {
 
       this.method = "GET";
       
@@ -239,6 +243,8 @@ export default {
 
       this.method = "POST";
 
+      this.formActionUrl = "/auth/register"
+
       this.isLoading = false;
 
 }
@@ -249,6 +255,11 @@ export default {
 
   },
   methods: {
+    concateUsername() {
+
+      this.username = this.nameFirst + this.nameLast
+    
+},
     changeCountry(country) {
 
       this.country = country;
@@ -309,8 +320,6 @@ export default {
 
     },
     resetFormErrors() {
-
-      this.success = null;
 
       this.result = null;
 
@@ -386,9 +395,10 @@ export default {
         if (this.checkForm() === true) {
 
           this.buttonDisabled = true;
+
           const result = await this.$http({
             method: this.method,
-            url: "/auth/register",
+            url: this.formActionUrl,
             data: {
               username: this.username,
               password: this.password,
@@ -405,8 +415,6 @@ export default {
           });
 
           if (result.data) {
-
-            this.success = true;
 
             this.result = result.data;
 
