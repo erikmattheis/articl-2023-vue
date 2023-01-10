@@ -257,7 +257,7 @@ export default {
 
           this.$store.dispatch(
             "modals/setSuccessMessage",
-            "Your account information was successfully updated.",
+            "The category was successfully updated.",
           );
 
         } else {
