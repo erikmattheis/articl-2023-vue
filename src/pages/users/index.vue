@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1 v-if="formAction === 'Edit'">
+    <h1 v-if="method === 'GET'">
       Articl.net User: {{ nameFirst }} {{ nameLast }}
     </h1>
     <h1 v-else>
@@ -9,7 +9,7 @@
     <form>
       <template v-if="!isLoading">
         <label for="username">User Name
-          <input
+          <input 
             id="username"
             v-model="username"
             type="text"
@@ -153,7 +153,8 @@
           :aria-busy="buttonDisabled"
           @click.prevent="submitForm()"
         >
-          <span v-if="!buttonDisabled">Update Account</span>
+          <span v-if="!buttonDisabled && method ==='PATCH'">Update Account</span>
+          <span v-else-if="!buttonDisabled">Create Account</span>
         </button>
         <router-link to="/change-password">
           Change password
@@ -198,7 +199,6 @@ export default {
       passwordComplexity: 0,
       nameFirst: "",
       nameLast: "",
-      formAction: "Create",
       email: "",
       education: "",
       position: "",
@@ -206,6 +206,7 @@ export default {
       state: "",
       country: "",
       institution: "",
+      method: "PATCH",
       buttonDisabled: false,
       isLoading: true,
       errorMessage: "",
@@ -219,27 +220,31 @@ export default {
       handler(val) {
 
         this.passwordComplexity = this.scoreChars(val);
-
-      },
+      
+  },
     },
   },
   mounted() {
 
     if (this.id) {
 
-      this.formAction = "Edit";
+      this.method = "GET";
       
       this.fetchData();
+
+      this.method = "PATCH";
     
     }
     else {
+
+      this.method = "POST";
 
       this.isLoading = false;
 
 }
     
     setTitleAndDescription({
-      title: this.formAction,
+      title: "Articl.net User",
     });
 
   },
@@ -358,9 +363,8 @@ export default {
         errorMessages.push("Please enter your country.");
 
         passed = false;
-        
       
-      }
+}
         
       if (!passed) {
 
@@ -383,11 +387,25 @@ export default {
 
           this.buttonDisabled = true;
 
+          console.log({
+            username: this.username,
+            password: this.password,
+            nameFirst: this.nameFirst,
+            nameLast: this.nameLast,
+            email: this.email,
+            education: this.education,
+            position: this.position,
+            education: this.education,
+            institution: this.institution,
+            city: this.city,
+            country: this.country,
+          });
           const result = await this.$http({
-            method: "PATCH",
-            url: "/users/me",
+            method: this.method,
+            url: "/auth/register",
             data: {
               username: this.username,
+              password: this.password,
               nameFirst: this.nameFirst,
               nameLast: this.nameLast,
               email: this.email,
@@ -396,7 +414,6 @@ export default {
               education: this.education,
               institution: this.institution,
               city: this.city,
-              state: this.state,
               country: this.country,
             },
           });
@@ -417,7 +434,6 @@ export default {
           }
 
         } else {
-
 
           this.$store.dispatch(
             "errors/setError",

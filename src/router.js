@@ -11,7 +11,7 @@ import homePage from "@/pages/index.vue";
 import loginPage from "@/pages/login.vue";
 import deleteNote from "@/pages/notes/delete.vue";
 import notFound from "@/pages/NotFound.vue";
-import registerPage from "@/pages/register.vue";
+
 import resetPasswordPage from "@/pages/change-password.vue";
 import usersPage from "@/pages/users/index.vue";
 import verifyEmailPage from "@/pages/verify-email.vue";
@@ -69,12 +69,6 @@ const router = createRouter({
         component: TabArticls,
       }],
 
-    },
-
-    {
-      name: "registerPage",
-      path: "/register",
-      component: registerPage,
     },
 
     {

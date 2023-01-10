@@ -2,18 +2,13 @@
   <article>
     <h1>Log in</h1>
     <form>
-      <input
-        type="hidden"
-        name="username"
-        autocomplete="username"
-      >
-      <label for="email">Email
+      <label for="username">User Name
         <input
-          id="email"
-          v-model="email"
-          name="email"
+          id="username"
+          v-model="username"
+          name="username"
           type="text"
-          autocomplete="email"
+          autocomplete="username"
         ></label>
 
       <label for="password">Password
@@ -64,8 +59,8 @@ export default {
   data: () => {
 
     return {
-      email: null,
-      emailInvalid: null,
+      username: null,
+      usernameInvalid: null,
       password: null,
       passwordInvalid: null,
       showPassword: false,
