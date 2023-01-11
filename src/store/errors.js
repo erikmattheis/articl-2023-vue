@@ -9,11 +9,19 @@ export default {
       errorFileName: undefined,
       errorLineNumber: undefined,
       errorStack: undefined,
+      successTitle: undefined,
+      successMessage: undefined,
+      okFunction: undefined,
     };
 
   },
 
   mutations: {
+    SET_OK_FUNCTION: (state, payload) => {
+
+      state.okFunction = payload;
+
+    },
     SET_SUCCESS_MESSAGE: (state, payload) => {
 
       state.successMessage = payload;
@@ -60,6 +68,11 @@ export default {
       let errorLineNumber = "";
       let errorStack = "";
 
+      if (!payload.okFunction) {
+
+        context.commit("SET_OK_FUNCTION", function () { });
+
+      }
       if (payload?.response?.data?.message) {
 
         errorMessage = payload.response.data.message;

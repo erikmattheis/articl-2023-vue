@@ -1,26 +1,14 @@
 <template>
   <article>
-    <h1>Reset password</h1>
+    <h1>Reset newPassword</h1>
     <form>
-      <label for="password">New password
-        <small
-          v-if="passwordComplexity < 3"
-          class="lighter left-space"
-        >
-          Use upper- and lowercase, numerical and special characters.
-        </small>
-        <small
-          v-else-if="password.length < 8"
-          class="lighter left-space"
-        >
-          Please use 8 or more characters.
-        </small>
+      <label for="password">Current password
         <div class="toggle-password">
           <input
             id="password"
             v-model="password"
             :type="passwordType"
-            autocomplete="new-password"
+            autocomplete="current-password"
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
@@ -28,17 +16,43 @@
           />
         </div>
       </label>
-      <label for="password2">Confirm new password
+      <label for="newPassword">New password
+        <small
+          v-if="passwordComplexity < 3"
+          class="lighter left-space"
+        >
+          Use upper- and lowercase, numerical and special characters.
+        </small>
+        <small
+          v-else-if="newPassword.length < 8"
+          class="lighter left-space"
+        >
+          Please use 8 or more characters.
+        </small>
         <div class="toggle-password">
           <input
-            id="password2"
-            v-model="password2"
-            :type="password2Type"
+            id="newPassword"
+            v-model="newPassword"
+            :type="newPasswordType"
             autocomplete="new-password"
           >
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
+            @show="newPasswordType = newPasswordType === 'text' ? 'password' : 'text'"
+          />
+        </div>
+      </label>
+      <label for="newPassword2">Confirm new new password
+        <div class="toggle-password">
+          <input
+            id="newPassword2"
+            v-model="newPassword2"
+            :type="newPassword2Type"
+            autocomplete="new-password"
+          >
+          <the-button-toggle-hidden
+            class="toggle-password-mask"
+            @show="newPassword2Type = newPassword2Type === 'text' ? 'password' : 'text'"
           />
         </div>
       </label>
@@ -48,7 +62,7 @@
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()"
       >
-        <span v-if="!buttonDisabled">Reset Password</span>
+        <span v-if="!buttonDisabled">Change Password</span>
       </button>
       <p
         v-if="result"
@@ -63,6 +77,7 @@
 <script>
 import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { getAccessTokenValue } from "@/services/tokensService";
 import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
@@ -73,11 +88,12 @@ export default {
   data: () => {
 
     return {
-      email: null,
       password: null,
-      password2: null,
+      newPassword: null,
+      newPassword2: null,
       passwordType: "password",
-      password2Type: "password",
+      newPasswordType: "password",
+      newPassword2Type: "password",
       buttonDisabled: false,
       passwordComplexity: 0,
       errorMessage: "",
@@ -88,7 +104,7 @@ export default {
 
   },
   watch: {
-    password: {
+    newPassword: {
       handler(val) {
 
         this.passwordComplexity = this.scoreChars(val);
@@ -108,14 +124,14 @@ export default {
 
       let passed = true;
 
-      if (this.password?.length < 8) {
+      if (this.newPassword?.length < 8) {
 
         this.errorMessage = "Passwords are at least eight characters.";
         passed = false;
 
       }
 
-      else if (this.password !== this.password2) {
+      else if (this.newPassword !== this.newPassword2) {
 
         this.errorMessage = "Passwords do not mach.";
         passed = false;
@@ -138,25 +154,20 @@ export default {
 
       try {
 
-        const {
-          token,
-        } = this.$route.query;
-
         if (this.checkForm() === true) {
 
+          const token = getAccessTokenValue();
           this.buttonDisabled = true;
-          console.log("before request");
+     
           await this.$http({
             method: "POST",
             url: "/auth/change-password",
-            params: {
-              token,
-            },
             data: {
               password: this.password,
+              newPassword: this.newPassword,
             },
           });
-          console.log("after request");
+
           this.$store.dispatch("modals/setSuccessTitle", "Password updated");
 
           this.$store.dispatch(

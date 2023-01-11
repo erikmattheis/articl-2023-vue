@@ -12,6 +12,7 @@
     >
       <article class="max-container-width">
         <header>
+          generic
           <vue-feather
             size="20"
             type="x-square"

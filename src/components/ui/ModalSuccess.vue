@@ -59,6 +59,7 @@ export default {
     ...mapGetters({
       successTitle: "modals/successTitle",
       successMessage: "modals/successMessage",
+      okFunction: "modals/okFunction",
     }),
   },
   methods: {
