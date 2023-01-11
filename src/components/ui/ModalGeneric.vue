@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="errorTitle"
+    v-if="errorTitle || successTitle"
     class="modal-container"
     @click.prevent="close()"
     @keyup.enter="close()"
@@ -79,6 +79,8 @@ export default {
       errorLineNumber: "errors/errorLineNumber",
       errorFileName: "errors/errorFileName",
       errorStack: "errors/errorStack",
+      successTitle: "errors/errorTitle",
+      successMessage: "errors/errorMessage",
     }),
   },
   methods: {

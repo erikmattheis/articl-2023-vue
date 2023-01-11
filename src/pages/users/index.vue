@@ -1,13 +1,72 @@
 <template>
   <article>
     <h1 v-if="method === 'PATCH'">
-      Articl.net User: {{ nameFirst }} {{ nameLast }}
+      Articl.net User: {{ nameFirst }} {{ nameLast }}<br>
+      successTitle: {{ successTitle }}<br>
     </h1>
     <h1 v-else>
       Create Account
     </h1>
     <form>
       <template v-if="!isLoading">
+        <teplate v-if="method === 'POST'">
+          <label for="username">User Name
+            <input
+              id="username"
+              v-model="username"
+              type="text"
+              name="username"
+              autocomplete="username"
+              @keyup="removeUsernameWhiteSpace"
+            ></label>
+
+          <label for="password">Password
+            <small
+              v-if="passwordComplexity < 3"
+              class="left-space"
+            >
+              Use upper- and lowercase, numerical and special characters.
+            </small>
+            <small
+              v-else-if="password.length < 8"
+              class="left-space"
+            >
+              Please use 8 or more characters.
+            </small>
+
+            <div class="toggle-password">
+              <input
+                id="password"
+                v-model="password"
+                :type="passwordType"
+                name="password"
+                autocomplete="new-password"
+              >
+              <the-button-toggle-hidden
+                class="toggle-password-mask"
+                @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
+              />
+            </div>
+          </label>
+          <label for="password2">Confirm password
+            <div class="toggle-password">
+              <input
+                id="password2"
+                v-model="password2"
+                :type="password2Type"
+                name="password2"
+                autocomplete="new-password"
+              >
+              <the-button-toggle-hidden
+                class="toggle-password-mask"
+                @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
+              />
+            </div>
+          </label>
+        </teplate>
+        <p v-else>
+          Username: {{ username }}
+        </p>
         <fieldset class="grid">
           <div>
             <label for="nameFirst">First Name
@@ -17,7 +76,6 @@
                 type="text"
                 name="nameFirst"
                 autocomplete="given-name"
-                @keyup="concateUsername"
               ></label>
           </div>
           <div>
@@ -32,16 +90,6 @@
           </div>
         </fieldset>
 
-        <label for="username">User Name
-          <input 
-            id="username"
-            v-model="username"
-            type="text"
-            name="username"
-            autocomplete="username"
-            @keyup="removeUsernameWhiteSpace"
-          ></label>
-
         <label for="email">Email
           <input
             id="email"
@@ -50,50 +98,6 @@
             name="email"
             autocomplete="email"
           ></label>
-
-        <label for="password">Password
-          <small
-            v-if="passwordComplexity < 3"
-            class="left-space"
-          >
-            Use upper- and lowercase, numerical and special characters.
-          </small>
-          <small
-            v-else-if="password.length < 8"
-            class="left-space"
-          >
-            Please use 8 or more characters.
-          </small>
-
-          <div class="toggle-password">
-            <input
-              id="password"
-              v-model="password"
-              :type="passwordType"
-              name="password"
-              autocomplete="new-password"
-            >
-            <the-button-toggle-hidden
-              class="toggle-password-mask"
-              @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
-            />
-          </div>
-        </label>
-        <label for="password2">Confirm password
-          <div class="toggle-password">
-            <input
-              id="password2"
-              v-model="password2"
-              :type="password2Type"
-              name="password2"
-              autocomplete="new-password"
-            >
-            <the-button-toggle-hidden
-              class="toggle-password-mask"
-              @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
-            />
-          </div>
-        </label>
 
         <label for="position">Current position
           <select
@@ -111,7 +115,7 @@
             <option value="Allied Healthcare Profession">Allied Healthcare Profession</option>
           </select>
         </label>
-        <label for="education">Education
+        <label for="education">School
           <input
             id="education"
             v-model="education"
@@ -135,7 +139,7 @@
             name="city"
             autocomplete="address-level2"
           ></label>
-        <label for="country">
+        <label for="country">Country
           <select-countries
             v-model="country"
             @change-country="changeCountry"
@@ -145,9 +149,10 @@
           id="Update"
           type="submit"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm()"
+          :disabled="buttonDisabled"
+          @click.prevent="submitForm"
         >
-          <span v-if="!buttonDisabled && method ==='PATCH'">Update Account</span>
+          <span v-if="!buttonDisabled && method === 'PATCH'">Update Account</span>
           <span v-else-if="!buttonDisabled">Create Account</span>
         </button>
         <router-link to="/change-password">
@@ -183,7 +188,7 @@ export default {
       default: () => { return ""; },
       type: String,
     },
-  }, 
+  },
 
   data: () => {
 
@@ -213,19 +218,25 @@ export default {
   },
 
   computed: {
-  
-
-  ...mapGetters({
+    ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn",
-  }),
+      errorTitle: "errors/errorTitle",
+      errorMessage: "errors/errorMessage",
+      errorDetail: "errors/errorDetail",
+      errorLineNumber: "errors/errorLineNumber",
+      errorFileName: "errors/errorFileName",
+      errorStack: "errors/errorStack",
+      successTitle: "errors/errorTitle",
+      successMessage: "errors/errorMessage",
+    }),
   },
   watch: {
     password: {
       handler(val) {
 
         this.passwordComplexity = this.scoreChars(val);
-      
-  },
+
+      },
     },
   },
   mounted() {
@@ -233,11 +244,11 @@ export default {
     if (this.isLoggedIn) {
 
       this.method = "GET";
-      
+
       this.fetchData();
 
       this.method = "PATCH";
-    
+
     }
     else {
 
@@ -247,24 +258,25 @@ export default {
 
       this.isLoading = false;
 
-}
-    
+    }
+
     setTitleAndDescription({
       title: "Articl.net User",
     });
 
   },
+
   methods: {
     concateUsername() {
 
       this.username = this.nameFirst + this.nameLast
-    
-},
+
+    },
     changeCountry(country) {
 
       this.country = country;
-    
-},
+
+    },
     async fetchData() {
 
       try {
@@ -326,8 +338,6 @@ export default {
     },
     checkForm() {
 
-      this.resetFormErrors();
-
       let passed = true;
 
       let errorMessages = [];
@@ -365,22 +375,22 @@ export default {
         errorMessages.push("Please enter your city.");
 
         passed = false;
-      
-}
+
+      }
       if (!this.country) {
 
         errorMessages.push("Please enter your country.");
 
         passed = false;
-      
-}
-        
+
+      }
+
       if (!passed) {
 
         this.errorMessage = errorMessages.join(",");
+        this.$store.dispatch("errors/setError", this.errorMessage);
 
-
-    }
+      }
 
       return passed;
 
@@ -393,6 +403,8 @@ export default {
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
+
+          console.log("form passes setting button disabled");
 
           this.buttonDisabled = true;
 
@@ -414,11 +426,15 @@ export default {
             },
           });
 
+          console.log("just  ", this.method);
+
           if (result.data) {
+
+            console.log("got result");
 
             this.result = result.data;
 
-            if (this.method === "POST")
+            if (this.method === "POST") {
 
               this.$store.dispatch("modals/setSuccessTitle", "User Created");
 
@@ -427,29 +443,32 @@ export default {
                 `Please click on the link in the verification email that was sent to ${this.email}.`,
               );
 
-          }
-          else {
+            }
+            else {
 
-            this.$store.dispatch("modals/setSuccessTitle", "User Updated");
+              this.$store.dispatch("modals/setSuccessTitle", "User Updated");
+
+              this.$store.dispatch(
+                "modals/setSuccessMessage",
+                "Your account information was successfully updated.",
+              );
+
+            }
+
+
+          } else {
 
             this.$store.dispatch(
-              "modals/setSuccessMessage",
-              "Your account information was successfully updated.",
+              "errors/setError",
+              "Unknown response.",
             );
-          
 
           }
-
-        } else {
-
-          this.$store.dispatch(
-            "errors/setError",
-            this.errorMessage,
-          );
 
         }
 
-      } catch (error) {
+      }
+      catch (error) {
 
         this.$store.dispatch("errors/setError", error);
 
@@ -463,8 +482,8 @@ export default {
     removeUsernameWhiteSpace(event) {
 
       this.username = this.username.replace(/\s/g, "");
-    
-},
+
+    },
     scoreChars,
     validateEmail,
   },
