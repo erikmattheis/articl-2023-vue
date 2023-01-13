@@ -21,14 +21,14 @@ export default {
     };
 
   },
-  mounted() {
+  async mounted() {
 
     try {
 
-      this.submitForm();
+      await this.submitForm();
 
       setTitleAndDescription({
-        title: "Forgot Password",
+        title: "Email Verification",
       });
 
     } catch (error) {
