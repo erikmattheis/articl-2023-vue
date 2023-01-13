@@ -2,14 +2,13 @@
   <article>
     <h1 v-if="method === 'PATCH'">
       Articl.net User: {{ nameFirst }} {{ nameLast }}<br>
-      successTitle: {{ successTitle }}<br>
     </h1>
     <h1 v-else>
       Create Account
     </h1>
     <form>
       <template v-if="!isLoading">
-        <teplate v-if="method === 'POST'">
+        <template v-if="method === 'POST'">
           <label for="username">User Name
             <input
               id="username"
@@ -17,6 +16,8 @@
               type="text"
               name="username"
               autocomplete="username"
+              :aria-invalid="checkUsername"
+              @change="checkUsername"
               @keyup="removeUsernameWhiteSpace"
             ></label>
 
@@ -39,8 +40,10 @@
                 id="password"
                 v-model="password"
                 :type="passwordType"
+                :aria-invalid="checkPassword"
                 name="password"
                 autocomplete="new-password"
+                @keyup="checkPassword"
               >
               <the-button-toggle-hidden
                 class="toggle-password-mask"
@@ -55,7 +58,9 @@
                 v-model="password2"
                 :type="password2Type"
                 name="password2"
+                :aria-invalid="password2Invalid"
                 autocomplete="new-password"
+                @keyup="checkPassword2"
               >
               <the-button-toggle-hidden
                 class="toggle-password-mask"
@@ -63,7 +68,7 @@
               />
             </div>
           </label>
-        </teplate>
+        </template>
         <p v-else>
           Username: {{ username }}
         </p>
@@ -75,7 +80,9 @@
                 v-model="nameFirst"
                 type="text"
                 name="nameFirst"
+                :aria-invalid="checkNameFirst"
                 autocomplete="given-name"
+                @keyup="checkNameFirst"
               ></label>
           </div>
           <div>
@@ -85,7 +92,9 @@
                 v-model="nameLast"
                 type="text"
                 name="nameLast"
+                :aria-invalid="nameLastInvalid"
                 autocomplete="family-name"
+                @keyup="checkNameLast"
               ></label>
           </div>
         </fieldset>
@@ -96,7 +105,9 @@
             v-model="email"
             type="text"
             name="email"
+            :aria-invalid="emailInvalid"
             autocomplete="email"
+            @keyup="checkEmail"
           ></label>
 
         <label for="position">Current position
@@ -104,6 +115,8 @@
             id="position"
             v-model="position"
             name="position"
+            :aria-invalid="positionInvalid"
+            @change="checkPosition"
           >
             <option
               disabled
@@ -121,7 +134,9 @@
             v-model="education"
             type="text"
             name="education"
+            :aria-invalid="educationInvalid"
             autocomplete="education"
+            @keyup="checkEducation"
           ></label>
         <label for="institution">Institution
           <input
@@ -129,7 +144,9 @@
             v-model="institution"
             type="text"
             name="institution"
+            :aria-invalid="institutionInvalid"
             autocomplete="organization"
+            @keyup="checkInstitution"
           ></label>
         <label for="city">City
           <input
@@ -137,11 +154,14 @@
             v-model="city"
             type="text"
             name="city"
+            :aria-invalid="cityInvalid"
             autocomplete="address-level2"
+            @keyup="checkCity"
           ></label>
         <label for="country">Country
           <select-countries
             v-model="country"
+            :aria-invalid="countryInvalid"
             @change-country="changeCountry"
           />
         </label>
@@ -194,19 +214,30 @@ export default {
 
     return {
       username: "",
+      usernameInvalid: false,
       password: "",
-      password2: "",
       passwordType: "password",
+      passwordInvalid: "",
+      password2: "",
+      password2Invalid: "",
       password2Type: "password",
       passwordComplexity: 0,
       nameFirst: "",
+      nameFirstInvalid: false,
       nameLast: "",
+      nameLastInvalid: false,
       email: "",
+      emailInvalid: false,
       position: "",
+      positionInvalid: false,
       city: "",
+      cityInvalid: false,
       country: "",
+      countryInvalid: false,
       education: "",
+      educationInvalid: false,
       institution: "",
+      institutionInvalid: false,
       method: "PATCH",
       formActionUrl: "/users/me",
       buttonDisabled: false,
@@ -219,16 +250,9 @@ export default {
 
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-      errorTitle: "errors/errorTitle",
-      errorMessage: "errors/errorMessage",
-      errorDetail: "errors/errorDetail",
-      errorLineNumber: "errors/errorLineNumber",
-      errorFileName: "errors/errorFileName",
-      errorStack: "errors/errorStack",
-      successTitle: "errors/errorTitle",
-      successMessage: "errors/errorMessage",
+      isLoggedIn: "tokens/isLoggedIn"
     }),
+    checkUsername: (val) => {return val.length > 3},
   },
   watch: {
     password: {
@@ -274,6 +298,7 @@ export default {
     },
     changeCountry(country) {
 
+      this.checkCountry()
       this.country = country;
 
     },
@@ -336,54 +361,71 @@ export default {
       this.result = null;
 
     },
+
+    checkPassword(e) {
+
+      return this.scoreChars(e.target.value) > 3;
+    
+    },
+    checkNameFirst(e) {
+
+      return e.target.value.length;
+
+    },
+
+/*
+if (!this.validateEmail(this.email)) {
+
+this.emailInvalid = true;
+errorMessages.push("Please enter a valid email.");
+passed = false;
+
+}
+if (!this.nameFirst) {
+
+this.nameFirstInvalid = true;
+errorMessages.push("Please enter both your fist and last names.");
+passed = false;
+
+}
+if (!this.nameLast) {
+
+this.nameLastInvalid = true;
+errorMessages.push("Please enter both your fist and last names.");
+passed = false;
+
+}
+if (!this.institution) {
+
+this.institutionInvalid = true;
+errorMessages.push("Please enter your institution.");
+passed = false;
+
+}
+if (!this.city) {
+
+this.cityInvalid = true;
+errorMessages.push("Please enter your city.");
+passed = false;
+
+}
+if (!this.country) {
+
+this.countryInvalid = true;
+errorMessages.push("Please enter your country.");
+passed = false;
+  {
+  
+ }
+}
+*/
     checkForm() {
 
       let passed = true;
 
       let errorMessages = [];
 
-      if (this.username.length < 3) {
-
-        errorMessages.push("User names must be three or more characters");
-        passed = false;
-
-      }
-
-      if (!this.validateEmail(this.email)) {
-
-        errorMessages.push("Please enter a valid email.");
-
-        passed = false;
-
-      }
-      if (!this.nameFirst || !this.nameLast) {
-
-        errorMessages.push("Please enter both your fist and last names.");
-
-        passed = false;
-
-      }
-      if (!this.institution) {
-
-        errorMessages.push("Please enter your institution.");
-
-        passed = false;
-
-      }
-      if (!this.city) {
-
-        errorMessages.push("Please enter your city.");
-
-        passed = false;
-
-      }
-      if (!this.country) {
-
-        errorMessages.push("Please enter your country.");
-
-        passed = false;
-
-      }
+      
 
       if (!passed) {
 
