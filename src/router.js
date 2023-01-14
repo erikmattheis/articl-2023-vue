@@ -1,4 +1,4 @@
-/* eslint-disable simple-import-sort/imports */
+
 import { createRouter, createWebHistory } from "vue-router";
 import createArticlPage from "@/pages/articls/create.vue";
 import deleteArticlPage from "@/pages/articls/delete.vue";

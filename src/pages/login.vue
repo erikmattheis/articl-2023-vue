@@ -47,7 +47,6 @@
 
 <script>
 import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import validateEmail from "@/services/emailValidationService";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
 import { setTokens } from "@/services/tokensService";
 

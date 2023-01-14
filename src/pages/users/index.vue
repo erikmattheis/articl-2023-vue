@@ -9,15 +9,14 @@
     <form>
       <template v-if="!isLoading">
         <template v-if="method === 'POST'">
-          <label for="username">User Name
+          <label for="username">User Name {{ usernameInvalid }}
             <input
               id="username"
               v-model="username"
               type="text"
               name="username"
               autocomplete="username"
-              :aria-invalid="checkUsername"
-              @change="checkUsername"
+              :aria-invalid="usernameInvalid"
               @keyup="removeUsernameWhiteSpace"
             ></label>
 
@@ -214,7 +213,6 @@ export default {
 
     return {
       username: "",
-      usernameInvalid: false,
       password: "",
       passwordType: "password",
       passwordInvalid: "",
@@ -252,7 +250,6 @@ export default {
     ...mapGetters({
       isLoggedIn: "tokens/isLoggedIn"
     }),
-    checkUsername: (val) => {return val.length > 3},
   },
   watch: {
     password: {
@@ -372,13 +369,17 @@ export default {
       return e.target.value.length;
 
     },
+    checkNameLast(e) {
 
+return e.target.value.length;
+
+},
 /*
+
 if (!this.validateEmail(this.email)) {
 
 this.emailInvalid = true;
-errorMessages.push("Please enter a valid email.");
-passed = false;
+
 
 }
 if (!this.nameFirst) {
@@ -461,7 +462,6 @@ passed = false;
               email: this.email,
               education: this.education,
               position: this.position,
-              education: this.education,
               institution: this.institution,
               city: this.city,
               country: this.country,
@@ -521,7 +521,7 @@ passed = false;
       }
 
     },
-    removeUsernameWhiteSpace(event) {
+    removeUsernameWhiteSpace() {
 
       this.username = this.username.replace(/\s/g, "");
 

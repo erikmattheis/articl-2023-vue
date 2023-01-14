@@ -290,8 +290,6 @@ export default {
 
           const result = await fetchData(this.articlUrl);
 
-          const author = result.authors[0];
-
           if (result) {
 
             Object.assign(this, result);

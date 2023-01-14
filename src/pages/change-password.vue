@@ -77,7 +77,6 @@
 <script>
 import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { getAccessTokenValue } from "@/services/tokensService";
 import { scoreChars, validateEmail } from "@/services/userService";
 
 export default {
@@ -156,7 +155,6 @@ export default {
 
         if (this.checkForm() === true) {
 
-          const token = getAccessTokenValue();
           this.buttonDisabled = true;
      
           await this.$http({

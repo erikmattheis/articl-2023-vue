@@ -5,7 +5,7 @@ import axios from "axios";
 import { createApp } from "vue";
 import VueCookies from "vue-cookies";
 
-import { getAccessTokenValue, getRefreshTokenValue, setTokens } from "@/services/tokensService";
+import { getAccessTokenValue } from "@/services/tokensService";
 
 import App from "./App.vue";
 import router from "./router";
