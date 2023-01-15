@@ -1,32 +1,64 @@
 <template>
   <ul class="nav-tabs">
-    <router-link v-slot="{ isActive, navigate }" custom :to="{ name: 'TabArticls'}">
+    <router-link
+      v-slot="{ isActive, navigate }"
+      custom
+      :to="{ name: 'TabArticls'}"
+    >
       <li :class="{ 'active': isActive }">
-        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
+        <a
+          href
+          @click.prevent="navigate()"
+          @keyup.enter.prevent="navigate()"
+        >
           Articls
         </a>
       </li>
     </router-link>
 
-    <router-link v-slot="{ isActive, navigate }" custom :to="{ 'name': 'TabNotes' }">
+    <router-link
+      v-slot="{ isActive, navigate }"
+      custom
+      :to="{ 'name': 'TabNotes' }"
+    >
       <li :class="{ 'active': isActive }">
-        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
+        <a
+          href
+          @click.prevent="navigate()"
+          @keyup.enter.prevent="navigate()"
+        >
           Notes
         </a>
       </li>
     </router-link>
 
-    <router-link v-slot="{ isActive, navigate }" custom :to="{ 'name': 'TabBlogs' }">
+    <router-link
+      v-slot="{ isActive, navigate }"
+      custom
+      :to="{ 'name': 'TabBlogs' }"
+    >
       <li :class="{ 'active': isActive }">
-        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
+        <a
+          href
+          @click.prevent="navigate()"
+          @keyup.enter.prevent="navigate()"
+        >
           Blogs
         </a>
       </li>
     </router-link>
 
-    <router-link v-slot="{ isActive, navigate }" custom :to="{ 'name': 'TabQuestionsAnswers' }">
+    <router-link
+      v-slot="{ isActive, navigate }"
+      custom
+      :to="{ 'name': 'TabQuestionsAnswers' }"
+    >
       <li :class="{ 'active': isActive }">
-        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
+        <a
+          href
+          @click.prevent="navigate()"
+          @keyup.enter.prevent="navigate()"
+        >
           Q&amp;A
         </a>
       </li>

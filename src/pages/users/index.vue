@@ -163,10 +163,10 @@
 
         <select-countries
           id="country"
-            v-model="country"
-            :aria-invalid="countryInvalid"
-            @change-country="changeCountry"
-          />
+          v-model="country"
+          :aria-invalid="countryInvalid"
+          @change-country="changeCountry"
+        />
 
         <button
           id="Update"
