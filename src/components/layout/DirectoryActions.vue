@@ -18,6 +18,6 @@
 
 <script>
 export default {
-  name: "DirectoryActions",
+  name: 'DirectoryActions',
 };
 </script>

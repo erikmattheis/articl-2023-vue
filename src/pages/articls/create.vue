@@ -191,14 +191,14 @@
 </template>
 
 <script>
-import cardNotification from "@/components/ui/CardNotification.vue";
-import inputTypeahead from "@/components/ui/InputTypeahead.vue";
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
-import { fetchData } from "@/services/fetchingService";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
+import cardNotification from '@/components/ui/CardNotification.vue';
+import inputTypeahead from '@/components/ui/InputTypeahead.vue';
+import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import { fetchData } from '@/services/fetchingService';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  name: "EditArticlPage",
+  name: 'EditArticlPage',
   components: {
     LoadingPlaceholder,
     cardNotification,
@@ -207,40 +207,36 @@ export default {
 
   props: {
     id: {
-      default: "",
+      default: '',
       type: String,
     },
   },
 
   data() {
-
     return {
-      abstract: "",
-      affiliations: "",
-      doi: "",
-      articlUrl: "",
-      authorsOrig: "",
+      abstract: '',
+      affiliations: '',
+      doi: '',
+      articlUrl: '',
+      authorsOrig: '',
       authors: [],
       buttonDisabled: false,
       buttonFetchDisabled: false,
       slug: this.$route.query.slug,
-      formAction: "",
+      formAction: '',
       isLoading: true,
-      journal: "",
-      month: "",
+      journal: '',
+      month: '',
       success: false,
-      title: "",
-      type: "Review (OA)",
-      year: "",
+      title: '',
+      type: 'Review (OA)',
+      year: '',
     };
-
   },
   mounted() {
-
-    this.formAction = this.id ? "Edit" : "Create";
+    this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
-
       this.slug = this.$route.query.slug;
 
       this.onTypeaheadHit({
@@ -248,23 +244,17 @@ export default {
       });
 
       this.isLoading = false;
-
     } else {
-
       this.getCurrentArticl(this.id);
-
     }
 
     setTitleAndDescription({
       title: this.formAction,
     });
-
   },
   methods: {
     async getCurrentArticl(id) {
-
       try {
-
         this.isLoading = true;
 
         const result = await this.getArticl(id);
@@ -272,98 +262,67 @@ export default {
         Object.assign(this, result.data);
 
         this.isLoading = false;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
     async getData() {
-
       if (this.articlUrl) {
-
         try {
-
           this.buttonFetchDisabled = true;
 
           const result = await fetchData(this.articlUrl);
 
           if (result) {
-
             Object.assign(this, result);
-
           }
-
         } catch (error) {
-
-          this.$store.dispatch("errors/setError", error);
-
+          this.$store.dispatch('errors/setError', error);
         } finally {
-
           this.buttonFetchDisabled = false;
-
         }
-
       } else {
-
-        this.$store.dispatch("errors/setError", "Please enter a URL");
-
+        this.$store.dispatch('errors/setError', 'Please enter a URL');
       }
-
     },
     resetFormErrors() {
-
       this.success = null;
 
       this.result = null;
 
-      this.errorMessage = "";
-
+      this.errorMessage = '';
     },
     checkForm() {
-
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.title === "") {
-
-        this.errorMessage = "Please enter a title.";
-
-        passed = false;
-
-      } else if (this.authors === "") {
-
-        this.errorMessage = "Please enter author names.";
+      if (this.title === '') {
+        this.errorMessage = 'Please enter a title.';
 
         passed = false;
-
-      } else if (this.type === "") {
-
-        this.errorMessage = "Please choose a type.";
+      } else if (this.authors === '') {
+        this.errorMessage = 'Please enter author names.';
 
         passed = false;
+      } else if (this.type === '') {
+        this.errorMessage = 'Please choose a type.';
 
+        passed = false;
       }
 
       return passed;
-
     },
     async submitForm(id) {
-
       const url = `/articls/${id}`;
 
       try {
-
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-
           this.buttonDisabled = true;
 
-          const verb = id ? "PUT" : "POST";
+          const verb = id ? 'PUT' : 'POST';
           const result = await this.$http({
             method: verb,
             url,
@@ -384,38 +343,25 @@ export default {
           this.success = true;
 
           Object.assign(this, result.data);
-
         } else {
-
-          this.$store.dispatch("errors/setError", this.errorMessage);
-
+          this.$store.dispatch('errors/setError', this.errorMessage);
         }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
 
     async getArticl(id) {
-
       return this.$http({
-        method: "GET",
+        method: 'GET',
         url: `/articls/${id}`,
       });
-
     },
 
     onTypeaheadHit(e) {
-
       this.slug = e.value;
-
     },
   },
 };

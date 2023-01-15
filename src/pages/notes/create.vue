@@ -6,7 +6,6 @@
     <h1 v-else>
       Success
     </h1>
-    slug: {{ slug }}
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="fullText">Note <textarea
@@ -43,49 +42,37 @@
 </template>
 
 <script>
-import cardNotification from "@/components/ui/CardNotification.vue";
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
+import cardNotification from '@/components/ui/CardNotification.vue';
+import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  name: "EditNoteComponent",
+  name: 'EditNoteComponent',
   components: {
     LoadingPlaceholder,
     cardNotification,
   },
-  data: () => {
-
-    return {
-      fullText: "",
-    };
-
-  },
+  data: () => ({
+    fullText: '',
+  }),
   mounted() {
-
-    this.formAction = this.id ? "Edit" : "Create";
+    this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
-
       this.slug = this.$route.params.slug;
 
       this.isLoading = false;
-
     } else {
-
       this.getCurrentNote(this.id);
-
     }
 
     setTitleAndDescription({
       title: this.formAction,
     });
-
   },
   methods: {
     async getCurrentNote(id) {
-
       try {
-
         this.isLoading = true;
 
         const result = await this.getNote(id);
@@ -93,51 +80,38 @@ export default {
         Object.assign(this, result.data);
 
         this.isLoading = false;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
     resetFormErrors() {
-
       this.success = null;
 
       this.result = null;
 
-      this.errorMessage = "";
-
+      this.errorMessage = '';
     },
     checkForm() {
-
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.fullText === "") {
-
-        this.errorMessage = "Please enter some text.";
+      if (this.fullText === '') {
+        this.errorMessage = 'Please enter some text.';
 
         passed = false;
-
       }
 
       return passed;
-
     },
     async submitForm(id) {
-
       try {
-
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-
           this.buttonDisabled = true;
 
-          const verb = id ? "PUT" : "POST";
+          const verb = id ? 'PUT' : 'POST';
           const result = await this.$http({
             method: verb,
             url: `/notes/${id}`,
@@ -151,32 +125,21 @@ export default {
           this.success = true;
 
           Object.assign(this, result.data);
-
         } else {
-
-          this.$store.dispatch("errors/setError", this.errorMessage);
-
+          this.$store.dispatch('errors/setError', this.errorMessage);
         }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
 
     async getNote(id) {
-
       return this.$http({
-        method: "GET",
+        method: 'GET',
         url: `/notes/${id}`,
       });
-
     },
   },
 };

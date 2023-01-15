@@ -16,67 +16,52 @@
 
 <script>
 export default {
-  name: "DeleteArticl",
+  name: 'DeleteArticl',
   components: {
   },
   props: {
     id: {
-      default: () => { return ""; },
+      default: () => '',
       type: String,
     },
     title: {
-      default: () => { return ""; },
+      default: () => '',
       type: String,
     },
   },
-  data: () => {
-
-    return {
-      buttonDisabled: false,
-    };
-
-  },
+  data: () => ({
+    buttonDisabled: false,
+  }),
   mounted() {
-
 
   },
   methods: {
     async deleteArticl() {
-
       try {
-
         this.buttonDisabled = true;
 
         await this.submitDelete(this.id);
 
-        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
+        this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
 
         this.$store.dispatch(
-          "modals/setSuccessMessage",
+          'modals/setSuccessMessage',
           `The articl "${this.title}" has been permanently deleted.`,
         );
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
     async submitDelete(id) {
-
       return this.$http({
-        method: "DELETE",
-        url: "/articls",
+        method: 'DELETE',
+        url: '/articls',
         data: {
           id,
         },
       });
-
     },
   },
 };

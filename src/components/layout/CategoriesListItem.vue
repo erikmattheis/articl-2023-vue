@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import CategoryActions from "@/components/layout/CategoryActions.vue";
+import CategoryActions from '@/components/layout/CategoryActions.vue';
 
 export default {
-  name: "CategoriesListItem",
+  name: 'CategoriesListItem',
 
   components: {
     CategoryActions,
@@ -35,22 +35,20 @@ export default {
     },
     tabName: {
       type: String,
-      default: "",
+      default: '',
     },
 
   },
 
   data() {
-
     return {
-      TabName: "",
+      TabName: '',
     };
-
   },
 
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
   },
 
@@ -65,7 +63,7 @@ export default {
 
 li {
   width:100%;
-  padding: 
+  padding:
 
   a {
     cursor: pointer;
@@ -75,6 +73,5 @@ li {
 li:hover {
   background-color: var(--primary-nav-background);
 }
-
 
 </style>

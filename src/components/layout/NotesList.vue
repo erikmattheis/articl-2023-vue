@@ -10,33 +10,29 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import NotesListItem from "@/components/layout/NotesListItem.vue";
+import NotesListItem from '@/components/layout/NotesListItem.vue';
 
 export default {
-  name: "NoteList",
+  name: 'NoteList',
   components: {
     NotesListItem,
   },
   props: {
     notes: {
       type: Array,
-      default: () => { return []; },
+      default: () => [],
     },
   },
-  data: () => {
-
-    return {
-      isLoading: true,
-      isEditing: false,
-      editMode: false,
-    };
-
-  },
+  data: () => ({
+    isLoading: true,
+    isEditing: false,
+    editMode: false,
+  }),
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
   },
 

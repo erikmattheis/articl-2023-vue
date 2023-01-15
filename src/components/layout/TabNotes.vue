@@ -13,29 +13,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import NotesListItem from "@/components/layout/NotesListItem.vue";
+import NotesListItem from '@/components/layout/NotesListItem.vue';
 
 export default {
-  name: "TabNotes",
+  name: 'TabNotes',
   components: { NotesListItem },
   props: {
     items: {
-      default: () => { return []; },
+      default: () => [],
       type: Array,
     },
   },
   data() {
-
     return {
 
     };
-
   },
   computed: {
     ...mapGetters({
-      notes: "categoryPages/notes",
+      notes: 'categoryPages/notes',
     }),
   },
 };

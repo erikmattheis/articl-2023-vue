@@ -18,6 +18,7 @@
               autocomplete="username"
               :aria-invalid="usernameInvalid"
               @keyup="removeUsernameWhiteSpace"
+              @change="checkUsername"
             ></label>
 
           <label for="password">Password
@@ -120,7 +121,9 @@
             <option
               disabled
               value=""
-            >Please select one</option>
+            >
+              Please select one
+            </option>
             <option value="Student">Student</option>
             <option value="Resident">Resident</option>
             <option value="Physician">Physician</option>
@@ -157,13 +160,14 @@
             autocomplete="address-level2"
             @keyup="checkCity"
           ></label>
-        <label for="country">Country
-          <select-countries
+
+        <select-countries
+          id="country"
             v-model="country"
             :aria-invalid="countryInvalid"
             @change-country="changeCountry"
           />
-        </label>
+
         <button
           id="Update"
           type="submit"
@@ -189,265 +193,220 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import selectCountries from "@/components/ui/SelectCountries.vue";
-import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { scoreChars, validateEmail } from "@/services/userService";
+import selectCountries from '@/components/ui/SelectCountries.vue';
+import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { scoreChars, validateEmail } from '@/services/userService';
 
 export default {
-  name: "UsersPage",
+  name: 'UsersPage',
   components: {
     selectCountries,
-    theButtonToggleHidden
+    theButtonToggleHidden,
   },
   props: {
     id: {
-      default: () => { return ""; },
+      default: () => '',
       type: String,
     },
   },
 
-  data: () => {
-
-    return {
-      username: "",
-      password: "",
-      passwordType: "password",
-      passwordInvalid: "",
-      password2: "",
-      password2Invalid: "",
-      password2Type: "password",
-      passwordComplexity: 0,
-      nameFirst: "",
-      nameFirstInvalid: false,
-      nameLast: "",
-      nameLastInvalid: false,
-      email: "",
-      emailInvalid: false,
-      position: "",
-      positionInvalid: false,
-      city: "",
-      cityInvalid: false,
-      country: "",
-      countryInvalid: false,
-      education: "",
-      educationInvalid: false,
-      institution: "",
-      institutionInvalid: false,
-      method: "PATCH",
-      formActionUrl: "/users/me",
-      buttonDisabled: false,
-      isLoading: true,
-      errorMessage: "",
-      result: "",
-    };
-
-  },
+  data: () => ({
+    username: '',
+    password: '',
+    passwordType: 'password',
+    passwordInvalid: '',
+    password2: '',
+    password2Type: 'password',
+    password2Invalid: '',
+    passwordComplexity: 0,
+    nameFirst: '',
+    nameFirstInvalid: false,
+    nameLast: '',
+    nameLastInvalid: false,
+    email: '',
+    emailInvalid: false,
+    position: '',
+    positionInvalid: false,
+    education: '',
+    educationInvalid: false,
+    institution: '',
+    institutionInvalid: false,
+    city: '',
+    cityInvalid: false,
+    country: '',
+    countryInvalid: false,
+    method: 'PATCH',
+    formActionUrl: '/users/me',
+    buttonDisabled: false,
+    isLoading: true,
+    errorMessage: '',
+    result: '',
+  }),
 
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn"
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
   },
   watch: {
     password: {
       handler(val) {
-
         this.passwordComplexity = this.scoreChars(val);
-
       },
     },
   },
   mounted() {
-
     if (this.isLoggedIn) {
-
-      this.method = "GET";
+      this.method = 'GET';
 
       this.fetchData();
 
-      this.method = "PATCH";
+      this.method = 'PATCH';
+    } else {
+      this.method = 'POST';
 
-    }
-    else {
-
-      this.method = "POST";
-
-      this.formActionUrl = "/auth/register"
+      this.formActionUrl = '/auth/register';
 
       this.isLoading = false;
-
     }
 
     setTitleAndDescription({
-      title: "Articl.net User",
+      title: 'Articl.net User',
     });
-
   },
 
   methods: {
-    concateUsername() {
-
-      this.username = this.nameFirst + this.nameLast
-
-    },
-    changeCountry(country) {
-
-      this.checkCountry()
-      this.country = country;
-
-    },
     async fetchData() {
-
       try {
-
         this.isLoading = true;
 
         const result = await this.getMe();
 
-        this.username = result.username ? result.username : "";
+        this.username = result.username ? result.username : '';
 
-        this.nameFirst = result.nameFirst ? result.nameFirst : "";
+        this.nameFirst = result.nameFirst ? result.nameFirst : '';
 
-        this.nameLast = result.nameLast ? result.nameLast : "";
+        this.nameLast = result.nameLast ? result.nameLast : '';
 
-        this.email = result.email ? result.email : "";
+        this.email = result.email ? result.email : '';
 
-        this.education = result.education ? result.education : "";
+        this.education = result.education ? result.education : '';
 
-        this.position = result.position ? result.position : "";
+        this.position = result.position ? result.position : '';
 
-        this.institution = result.institution ? result.institution : "";
+        this.institution = result.institution ? result.institution : '';
 
-        this.city = result.city ? result.city : "";
+        this.city = result.city ? result.city : '';
 
-        this.state = result.state ? result.state : "";
+        this.state = result.state ? result.state : '';
 
-        this.country = result.country ? result.country : "";
+        this.country = result.country ? result.country : '';
 
-        this.theme = result.theme !== "dark" ? "light" : "dark";
+        this.theme = result.theme !== 'dark' ? 'light' : 'dark';
 
-        this.fontSize = result.fontSize ? result.fontSize : "";
-
+        this.fontSize = result.fontSize ? result.fontSize : '';
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.isLoading = false;
-
       }
-
     },
 
     async getMe() {
-
       const result = await this.$http({
-        method: "GET",
-        url: "/users/me",
+        method: 'GET',
+        url: '/users/me',
       });
 
       return result.data;
-
     },
     resetFormErrors() {
-
       this.result = null;
-
     },
 
-    checkPassword(e) {
+    checkUsername(e) {
+      return e.target.value.length > 2;
+    },
 
+    changeCountry(country) {
+      this.checkCountry();
+      this.country = country;
+    },
+    checkPassword(e) {
       return this.scoreChars(e.target.value) > 3;
-    
+    },
+    checkPassword2(e) {
+      return e.target.value === this.password;
     },
     checkNameFirst(e) {
-
       return e.target.value.length;
-
     },
     checkNameLast(e) {
+      return e.target.value.length;
+    },
+    checkEmail(e) {
+      return this.validateEmail(e.target.value);
+    },
+    /*
 
-return e.target.value.length;
+        this.nameFirstInvalid = true;
+        errorMessages.push("Please enter both your fist and last names.");
+        passed = false;
 
-},
-/*
+      }
+    if(!this.nameLast) {
 
-if (!this.validateEmail(this.email)) {
+      this.nameLastInvalid = true;
+      errorMessages.push("Please enter both your fist and last names.");
+      passed = false;
 
-this.emailInvalid = true;
+    }
+    if (!this.institution) {
 
+      this.institutionInvalid = true;
+      errorMessages.push("Please enter your institution.");
+      passed = false;
 
-}
-if (!this.nameFirst) {
+    }
+    if (!this.city) {
 
-this.nameFirstInvalid = true;
-errorMessages.push("Please enter both your fist and last names.");
-passed = false;
+      this.cityInvalid = true;
+      errorMessages.push("Please enter your city.");
+      passed = false;
 
-}
-if (!this.nameLast) {
+    }
+    if (!this.country) {
 
-this.nameLastInvalid = true;
-errorMessages.push("Please enter both your fist and last names.");
-passed = false;
+      this.countryInvalid = true;
+      errorMessages.push("Please enter your country.");
+      passed = false;
+      {
 
-}
-if (!this.institution) {
-
-this.institutionInvalid = true;
-errorMessages.push("Please enter your institution.");
-passed = false;
-
-}
-if (!this.city) {
-
-this.cityInvalid = true;
-errorMessages.push("Please enter your city.");
-passed = false;
-
-}
-if (!this.country) {
-
-this.countryInvalid = true;
-errorMessages.push("Please enter your country.");
-passed = false;
-  {
-  
- }
-}
-*/
+      }
+    }
+        */
     checkForm() {
+      const passed = true;
 
-      let passed = true;
-
-      let errorMessages = [];
-
-      
+      const errorMessages = [];
 
       if (!passed) {
-
-        this.errorMessage = errorMessages.join(",");
-        this.$store.dispatch("errors/setError", this.errorMessage);
-
+        this.errorMessage = errorMessages.join(',');
+        this.$store.dispatch('errors/setError', this.errorMessage);
       }
 
       return passed;
-
     },
 
     async submitForm() {
-
       try {
-
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-
-          console.log("form passes setting button disabled");
+          console.log('form passes setting button disabled');
 
           this.buttonDisabled = true;
 
@@ -468,64 +427,33 @@ passed = false;
             },
           });
 
-          console.log("just  ", this.method);
+          console.log('just  ', this.method);
 
           if (result.data) {
-
-            console.log("got result");
+            console.log('got result');
 
             this.result = result.data;
 
-            if (this.method === "POST") {
+            if (this.method === 'POST') {
+              this.$store.dispatch('modals/setSuccessTitle', 'User Created');
 
-              this.$store.dispatch("modals/setSuccessTitle", "User Created");
+              this.$store.dispatch('modals/setSuccessMessage', `Please click on the link in the verification email that was sent to ${this.email}.`);
+            } else {
+              this.$store.dispatch('modals/setSuccessTitle', 'User Updated');
 
-              this.$store.dispatch(
-                "modals/setSuccessMessage",
-                `Please click on the link in the verification email that was sent to ${this.email}.`,
-              );
-
+              this.$store.dispatch('modals/setSuccessMessage', 'Your account information was successfully updated.');
             }
-            else {
-
-              this.$store.dispatch("modals/setSuccessTitle", "User Updated");
-
-              this.$store.dispatch(
-                "modals/setSuccessMessage",
-                "Your account information was successfully updated.",
-              );
-
-            }
-
-
           } else {
-
-            this.$store.dispatch(
-              "errors/setError",
-              "Unknown response.",
-            );
-
+            this.$store.dispatch('errors/setError', 'Unknown response.');
           }
-
         }
-
-      }
-      catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
-    removeUsernameWhiteSpace() {
 
-      this.username = this.username.replace(/\s/g, "");
-
-    },
     scoreChars,
     validateEmail,
   },
@@ -533,7 +461,7 @@ passed = false;
 </script>
 
 <style scoped>
-nav ul {
-  display: block;
-}
+  nav ul {
+    display: block;
+  }
 </style>

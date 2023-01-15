@@ -23,88 +23,65 @@
 </template>
 
 <script>
-import DraggableItems from "vuedraggable";
-import { mapGetters } from "vuex";
+import DraggableItems from 'vuedraggable';
+import { mapGetters } from 'vuex';
 
-import CategoriesListItem from "@/components/layout/CategoriesListItem.vue";
+import CategoriesListItem from '@/components/layout/CategoriesListItem.vue';
 
 export default {
-  name: "TabCategories",
+  name: 'TabCategories',
   components: {
     DraggableItems,
     CategoriesListItem,
   },
 
   data() {
-
     return {
-      TabName: "",
+      TabName: '',
     };
-
   },
 
   computed: {
     ...mapGetters({
-      categories: "categoryPages/categories",
-      treeLevel: "categoryPages/treeLevel",
+      categories: 'categoryPages/categories',
+      treeLevel: 'categoryPages/treeLevel',
     }),
   },
   mounted() {
-
-    this.TabName = this.treeLevel > 0 ? "TabArticls" : "TabCategories";
-
+    this.TabName = this.treeLevel > 0 ? 'TabArticls' : 'TabCategories';
   },
   methods: {
     updateOrderValues() {
-
       try {
-
         this.categories.forEach((obj, index) => {
-
           const objRef = obj;
 
           objRef.order = index;
-
         });
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
 
     async saveOrderValues() {
-
       try {
-
-        const order = this.categories.map((obj) => {
-
-          return {
-            id: obj.id,
-            order: obj.order,
-          };
-
-        });
+        const order = this.categories.map((obj) => ({
+          id: obj.id,
+          order: obj.order,
+        }));
 
         await this.saveOrder(order);
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
 
     async saveOrder(order) {
-
       this.isLoading = true;
 
       const result = await this.$http({
-        method: "POST",
-        url: "/categories/order",
+        method: 'POST',
+        url: '/categories/order',
         data: {
           order,
         },
@@ -113,15 +90,12 @@ export default {
       this.isLoading = false;
 
       return result.data;
-
     },
 
     onUpdateOrderValues() {
-
       this.updateOrderValues();
 
       this.saveOrderValues();
-
     },
 
   },

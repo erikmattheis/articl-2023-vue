@@ -1,7 +1,7 @@
 <template>
   <div class="nav-content">
     <h2>Blogs</h2>
-  
+
     <ul>
       <li>Todo</li>
     </ul>
@@ -11,17 +11,15 @@
 <script>
 
 export default {
-  name: "TabBlogs",
+  name: 'TabBlogs',
   components: {
 
   },
 
   data() {
-
     return {
-      TabName: "",
+      TabName: '',
     };
-
   },
 
   computed: {

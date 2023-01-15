@@ -18,22 +18,21 @@
 
 <script setup>
 
-
 defineProps({
   id: {
     type: String,
-    default: "",
+    default: '',
   },
   fullText: {
     type: String,
-    default: "",
+    default: '',
   },
   slug: {
     type: String,
-    default: "",
+    default: '',
   },
 });
 
-defineEmits(["edit-mode"]);
+defineEmits(['edit-mode']);
 
 </script>

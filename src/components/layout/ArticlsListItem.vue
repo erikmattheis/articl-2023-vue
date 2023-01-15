@@ -83,7 +83,7 @@
           </div>
         </details>
       </li>
-      
+
       <li v-if="articl.fullText">
         <details>
           <summary>FUull text</summary>
@@ -107,7 +107,7 @@
         ><br>
         {{ articl.url }}
       </li>
-      
+
       <li v-if="articl.imageCaption">
         {{ articl.imageCaption }}
       </li>
@@ -116,13 +116,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import ArticlActions from "@/components/layout/ArticlActions.vue";
-import { highlightedSubstring, isNumber, noCaseIndexOf } from "@/services/stringsService";
+import ArticlActions from '@/components/layout/ArticlActions.vue';
+import { highlightedSubstring, isNumber, noCaseIndexOf } from '@/services/stringsService';
 
 export default {
-  name: "ArticlsListItem",
+  name: 'ArticlsListItem',
   components: {
     ArticlActions,
   },
@@ -132,63 +132,42 @@ export default {
       default: null,
     },
   },
-  data: () => {
+  data: () => ({
 
-    return {
-
-    };
-
-  },
+  }),
   computed: {
     ...mapGetters({
-      params: "articlsParams/params",
-      isLoggedIn: "tokens/isLoggedIn",
+      params: 'articlsParams/params',
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
     monthStr() {
-
       if (!isNumber(Number(this.articl.month))) {
-
         return this.articl.month;
-
       }
 
-      return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.articl.month - 1];
-
+      return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.articl.month - 1];
     },
     linkMessage() {
-
       try {
-
-        return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace("www.", "")}`;
-
+        return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace('www.', '')}`;
+      } catch {
+        return 'Malformed url';
       }
-
-      catch {
-
-        return "Malformed url";
-
-      }
-
-
     },
     authorsList() {
-
       if (this.articl?.authors?.map) {
-
-        const list = this.articl.authors.map(author => { return `${author.nameFirst} ${author.nameLast}` });
-        return list.join(", ")
-
+        const list = this.articl.authors.map((author) => `${author.nameFirst} ${author.nameLast}`);
+        return list.join(', ');
       }
       return [];
-
     },
   },
   methods: {
     highlightedSubstring,
     noCaseIndexOf,
-  }
+  },
 
-}
+};
 
 </script>
 

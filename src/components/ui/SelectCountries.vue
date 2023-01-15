@@ -1,6 +1,8 @@
 <template>
   <div>
+    <label for="country">Country
     <select
+      id="country"
       :value="modelValue"
       autocomplete="country-name"
       @change="changeCountry"
@@ -8,7 +10,7 @@
       <option
         value=""
       >
-        Choose one 
+        Choose one
       </option>
       <option value="US">
         United States
@@ -761,6 +763,7 @@
         Zimbabwe
       </option>
     </select>
+    </label>
   </div>
 </template>
 
@@ -769,21 +772,18 @@ export default {
   props: {
     modelValue: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-  emits: ["change-country"],
+  emits: ['change-country'],
   methods: {
-  
+
     changeCountry($event) {
+      this.$emit('change-country', $event.target.value);
+    },
 
-        this.$emit("change-country", $event.target.value);
-        
-    }
-    
-  }
+  },
 
-}
+};
 
 </script>
-

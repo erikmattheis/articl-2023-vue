@@ -92,95 +92,71 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
+import VueFeather from 'vue-feather';
+import { mapGetters } from 'vuex';
 
-import { toListWithOptionalConjuction } from "@/services/stringsService";
+import { toListWithOptionalConjuction } from '@/services/stringsService';
 
 export default {
-  name: "TheArticlsSearchParams",
+  name: 'TheArticlsSearchParams',
   components: {
     VueFeather,
   },
-  data: () => {
-
-    return {
-    };
-
-  },
+  data: () => ({
+  }),
   computed: {
     ...mapGetters({
-      params: "articlsParams/params",
-      allTypes: "articlsParams/allTypes",
-      yearsStart: "articlsParams/yearsStart",
+      params: 'articlsParams/params',
+      allTypes: 'articlsParams/allTypes',
+      yearsStart: 'articlsParams/yearsStart',
     }),
   },
   methods: {
     resetValue(arrName) {
-
       try {
-
         switch (arrName) {
+          case 'types': {
+            this.$store.dispatch('articlsParams/types', this.allTypes.slice());
 
-        case "types": {
+            break;
+          }
 
-          this.$store.dispatch("articlsParams/types", this.allTypes.slice());
+          case 'text': {
+            this.$store.dispatch('articlsParams/text', '');
 
-          break;
+            break;
+          }
 
+          case 'title': {
+            this.$store.dispatch('articlsParams/title', '');
+
+            break;
+          }
+
+          case 'journal': {
+            this.$store.dispatch('articlsParams/journal', '');
+
+            break;
+          }
+
+          case 'authors': {
+            this.$store.dispatch('articlsParams/authors', '');
+
+            break;
+          }
+
+          case 'year': {
+            this.$store.dispatch('articlsParams/year', this.yearsStart);
+
+            break;
+          }
+
+          default:
+            throw new Error('Unknown search parameter passed.');
         }
-
-        case "text": {
-
-          this.$store.dispatch("articlsParams/text", "");
-
-          break;
-
-        }
-
-        case "title": {
-
-          this.$store.dispatch("articlsParams/title", "");
-
-          break;
-
-        }
-
-        case "journal": {
-
-          this.$store.dispatch("articlsParams/journal", "");
-
-          break;
-
-        }
-
-        case "authors": {
-
-          this.$store.dispatch("articlsParams/authors", "");
-
-          break;
-
-        }
-
-        case "year": {
-
-          this.$store.dispatch("articlsParams/year", this.yearsStart);
-
-          break;
-
-        }
-
-        default:
-          throw new Error("Unknown search parameter passed.");
-
-        }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
     toListWithOptionalConjuction,
   },

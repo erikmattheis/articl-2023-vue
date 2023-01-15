@@ -37,44 +37,36 @@
  * total, 4650, 7816
  *** */
 
-import TheFooter from "@/components/layout/TheFooter.vue";
-import TheHeader from "@/components/layout/TheHeader.vue";
-import ModalError from "@/components/ui/ModalError.vue";
-import ModalSuccess from "@/components/ui/ModalSuccess.vue";
+import TheFooter from '@/components/layout/TheFooter.vue';
+import TheHeader from '@/components/layout/TheHeader.vue';
+import ModalError from '@/components/ui/ModalError.vue';
+import ModalSuccess from '@/components/ui/ModalSuccess.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     TheHeader,
     TheFooter,
     ModalError,
     ModalSuccess,
   },
-  data: () => {
-
-    return {
-      start: 0,
-    };
-
-  },
+  data: () => ({
+    start: 0,
+  }),
   mounted() {
+    this.$store.dispatch('tokens/accessTokenValue', this.$cookies.get('accessTokenValue'));
 
-    this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
+    this.$store.dispatch('tokens/accessTokenExpires', this.$cookies.get('accessTokenExpires'));
 
-    this.$store.dispatch("tokens/accessTokenExpires", this.$cookies.get("accessTokenExpires"));
+    this.$store.dispatch('tokens/refreshTokenValue', this.$cookies.get('refreshTokenValue'));
 
-    this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
-
-    this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
-
+    this.$store.dispatch('tokens/refreshTokenExpires', this.$cookies.get('refreshTokenExpires'));
   },
   created() {
-
     this.start = performance.now();
-
   },
   methods: {
-    
+
   },
 };
 
@@ -211,7 +203,7 @@ export default {
 .toggle-password {
   position: relative;
 }
-    
+
 .toggle-password-mask {
   cursor: pointer;
   vertical-align: middle;

@@ -38,8 +38,8 @@
   </template>
 </template>
 <script>
-import { debounce } from "lodash";
-import VueFeather from "vue-feather";
+import { debounce } from 'lodash';
+import VueFeather from 'vue-feather';
 
 export default {
   components: {
@@ -47,64 +47,51 @@ export default {
   },
   props: {
     src: {
-      type: String, default: "",
+      type: String, default: '',
     },
     query: {
-      type: String, default: "",
+      type: String, default: '',
     },
     inputValue: {
-      type: String, default: "",
+      type: String, default: '',
     },
     labelValue: {
-      type: String, default: "",
+      type: String, default: '',
     },
   },
   emits: {
     typeaheadUpdated: null,
   },
-  data: () => {
-
-    return {
-      items: [],
-      current: -1,
-      loading: false,
-      selectFirst: true,
-      stringValue: "",
-    };
-
-  },
+  data: () => ({
+    items: [],
+    current: -1,
+    loading: false,
+    selectFirst: true,
+    stringValue: '',
+  }),
   computed: {
     hasItems() {
-
       return this.items.length > 0;
-
     },
 
     isEmpty() {
-
       return !this.stringValue;
-
     },
 
     isDirty() {
-
       return !!this.stringValue;
-
     },
   },
   watch: {
     inputValue: {
       handler(val) {
-
         this.stringValue = val;
-
       },
     },
   },
   mounted() {
-
     this.$refs.input.addEventListener(
-      "blur",
+      'blur',
       () => {
         // it will work now
       },
@@ -120,39 +107,32 @@ export default {
     this.down = debounce(this.down, 200);
 
     this.stringValue = this.inputValue;
-
   },
   methods: {
     async update() {
-
       try {
-
         this.cancel();
 
         if (!this.stringValue) {
-
-          this.$emit("typeaheadUpdated", {
+          this.$emit('typeaheadUpdated', {
             field: this.query,
-            value: "",
+            value: '',
           });
 
           this.removeItems();
-
         }
 
         this.loading = true;
 
         this.hit();
 
-        this.$emit("typeaheadUpdated", {
+        this.$emit('typeaheadUpdated', {
           field: this.query,
           value: this.stringValue,
         });
 
         if (this.stringValue.length < 2) {
-
           return;
-
         }
 
         const response = await this.fetchData();
@@ -164,17 +144,12 @@ export default {
         this.loading = false;
 
         this.hit();
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
 
     async fetchData() {
-
       const params = {
         q: this.stringValue,
       };
@@ -182,7 +157,6 @@ export default {
       return this.$http.get(this.src, {
         params,
       });
-
     },
 
     cancel: () => {
@@ -190,77 +164,51 @@ export default {
     },
 
     removeItems() {
-
       this.items = [];
 
       this.loading = false;
-
     },
 
     setActive(index) {
-
       this.current = index;
-
     },
 
     activeClass(index) {
-
       return {
         active: this.current === index,
       };
-
     },
 
     hit() {
-
       if (this.current !== -1 && this.items && this.items[this.current]) {
-
         this.onHit(this.items[this.current]);
-
       }
-
     },
 
     up() {
-
       if (this.current > 0) {
-
         this.current -= 1;
-
       } else if (this.current === -1) {
-
         this.current = this.items.length - 1;
-
       } else {
-
         this.current = -1;
-
       }
-
     },
 
     down() {
-
       if (this.current < this.items.length - 1) {
-
         this.current += 1;
-
       } else {
-
         this.current = -1;
-
       }
-
     },
 
     onHit(val) {
-
       this.stringValue = val;
 
-      this.$emit("typeaheadUpdated", {
+      this.$emit('typeaheadUpdated', {
         field: this.query, value: val,
       });
-
     },
   },
 };

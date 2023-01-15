@@ -87,95 +87,75 @@
 </template>
 
 <script>
-import { groupBy } from "lodash";
-import { mapGetters } from "vuex";
+import { groupBy } from 'lodash';
+import { mapGetters } from 'vuex';
 
-import DirectoryActions from "@/components/layout/DirectoryActions.vue";
-import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
+import DirectoryActions from '@/components/layout/DirectoryActions.vue';
+import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
+import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  name: "CategoryPage",
+  name: 'CategoryPage',
   components: {
     LoadingPlaceholder,
     DirectoryActions,
     TheBreadcrumbs,
   },
   data() {
-
     return {
       isLoading: true,
-      title: "",
-      slug: "",
+      title: '',
+      slug: '',
     };
-
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-      treeLevel: "categoryPages/treeLevel",
-      articls: "categoryPages/articls",
-      articlTypes: "categoryPages/articlTypes",
-      categories: "categoryPages/categories",
-      notes: "categoryPages/notes",
+      isLoggedIn: 'tokens/isLoggedIn',
+      treeLevel: 'categoryPages/treeLevel',
+      articls: 'categoryPages/articls',
+      articlTypes: 'categoryPages/articlTypes',
+      categories: 'categoryPages/categories',
+      notes: 'categoryPages/notes',
     }),
   },
   watch: {
-    "$route.params.slug": {
+    '$route.params.slug': {
       handler() {
-
         this.updateData();
-
       },
       immediate: true,
     },
   },
   methods: {
     async updateData() {
-
       try {
-
         this.isLoading = true;
 
         const results = await this.fetchData(this.$route.params.slug);
 
         if (results.categories?.length) {
-
-          this.$store.dispatch("categoryPages/categories", results.categories);
-
+          this.$store.dispatch('categoryPages/categories', results.categories);
         } else {
-
-          this.$store.dispatch("categoryPages/categories", []);
-
+          this.$store.dispatch('categoryPages/categories', []);
         }
 
         if (results.breadcrumbs?.length) {
-
-          this.$store.dispatch("categoryPages/breadcrumbs", results.breadcrumbs);
-
+          this.$store.dispatch('categoryPages/breadcrumbs', results.breadcrumbs);
         } else {
-
-          this.$store.dispatch("categoryPages/breadcrumbs", []);
-
+          this.$store.dispatch('categoryPages/breadcrumbs', []);
         }
 
         if (results.articls) {
-
-          this.$store.dispatch("categoryPages/articls", results.articls);
-          this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
-
+          this.$store.dispatch('categoryPages/articls', results.articls);
+          this.$store.dispatch('categoryPages/articlTypes', results.articlTypes);
         } else {
-
-          this.$store.dispatch("categoryPages/articls", []);
-          this.$store.dispatch("categoryPages/articlTypes", []);
-
+          this.$store.dispatch('categoryPages/articls', []);
+          this.$store.dispatch('categoryPages/articlTypes', []);
         }
 
         if (results.notes?.length) {
-
-          this.$store.dispatch("categoryPages/notes", results.notes);
-
+          this.$store.dispatch('categoryPages/notes', results.notes);
         }
 
         this.title = results.category[0]?.title;
@@ -186,24 +166,17 @@ export default {
           title: this.title,
           description,
         });
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.isLoading = false;
-
       }
-
     },
 
     async fetchData(slug) {
-
       const result = await this.$http({
-        method: "GET",
-        url: `/resource/${slug || ""}`,
+        method: 'GET',
+        url: `/resource/${slug || ''}`,
       });
 
       return {
@@ -213,22 +186,13 @@ export default {
         articlTypes: result.data.articls?.length
           ? [
             ...new Set(
-              result.data.articls.map((item) => {
-
-                return item?.type;
-
-              }),
+              result.data.articls.map((item) => item?.type),
             ),
           ]
           : [],
-        articls: groupBy(result.data.articls, (articl) => {
-          
-          return articl?.type;
-
-        }),
+        articls: groupBy(result.data.articls, (articl) => articl?.type),
         notes: result.data.notes,
       };
-
     },
 
   },

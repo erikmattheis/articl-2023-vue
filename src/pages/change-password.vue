@@ -75,120 +75,90 @@
 </template>
 
 <script>
-import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
-import { scoreChars, validateEmail } from "@/services/userService";
+import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import { scoreChars, validateEmail } from '@/services/userService';
 
 export default {
-  name: "PasswordReset",
+  name: 'PasswordReset',
   components: {
     theButtonToggleHidden,
   },
-  data: () => {
-
-    return {
-      password: null,
-      newPassword: null,
-      newPassword2: null,
-      passwordType: "password",
-      newPasswordType: "password",
-      newPassword2Type: "password",
-      buttonDisabled: false,
-      passwordComplexity: 0,
-      errorMessage: "",
-      success: false,
-      result: null,
-      chrs: 0,
-    };
-
-  },
+  data: () => ({
+    password: null,
+    newPassword: null,
+    newPassword2: null,
+    passwordType: 'password',
+    newPasswordType: 'password',
+    newPassword2Type: 'password',
+    buttonDisabled: false,
+    passwordComplexity: 0,
+    errorMessage: '',
+    success: false,
+    result: null,
+    chrs: 0,
+  }),
   watch: {
     newPassword: {
       handler(val) {
-
         this.passwordComplexity = this.scoreChars(val);
-
       },
     },
   },
   mounted: () => {
-
     setTitleAndDescription({
-      title: "Reset Password",
+      title: 'Reset Password',
     });
-
   },
   methods: {
     checkForm() {
-
       let passed = true;
 
       if (this.newPassword?.length < 8) {
-
-        this.errorMessage = "Passwords are at least eight characters.";
+        this.errorMessage = 'Passwords are at least eight characters.';
         passed = false;
-
-      }
-
-      else if (this.newPassword !== this.newPassword2) {
-
-        this.errorMessage = "Passwords do not mach.";
+      } else if (this.newPassword !== this.newPassword2) {
+        this.errorMessage = 'Passwords do not mach.';
         passed = false;
-
       }
 
       return passed;
-
     },
 
     resetFormErrors() {
-
       this.success = null;
 
       this.result = null;
-
     },
 
     async submitForm() {
-
       try {
-
         if (this.checkForm() === true) {
-
           this.buttonDisabled = true;
-     
+
           await this.$http({
-            method: "POST",
-            url: "/auth/change-password",
+            method: 'POST',
+            url: '/auth/change-password',
             data: {
               password: this.password,
               newPassword: this.newPassword,
             },
           });
 
-          this.$store.dispatch("modals/setSuccessTitle", "Password updated");
+          this.$store.dispatch('modals/setSuccessTitle', 'Password updated');
 
           this.$store.dispatch(
-            "modals/setSuccessMessage",
-            "You have successfully changed your password.",
+            'modals/setSuccessMessage',
+            'You have successfully changed your password.',
           );
-
         } else {
-
-          this.$store.dispatch("errors/setError", this.errorMessage);
-
+          this.$store.dispatch('errors/setError', this.errorMessage);
         }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
     scoreChars,
     validateEmail,

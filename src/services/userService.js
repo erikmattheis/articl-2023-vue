@@ -1,19 +1,12 @@
-const charCounts = (val) => {
-
-  return {
-    numUpper: val.length - val.replace(/[A-Z]/g, "").length,
-    numLower: val.length - val.replace(/[a-z]/g, "").length,
-    numDigit: val.length - val.replace(/d/g, "").length,
-    numSpecial: val.length - val.replace(/\W|_/g, "").length,
-  };
-
-};
+const charCounts = (val) => ({
+  numUpper: val.length - val.replace(/[A-Z]/g, '').length,
+  numLower: val.length - val.replace(/[a-z]/g, '').length,
+  numDigit: val.length - val.replace(/d/g, '').length,
+  numSpecial: val.length - val.replace(/\W|_/g, '').length,
+});
 const scoreChars = (val) => {
-
   if (!val) {
-
     return 0;
-
   }
 
   const chars = charCounts(val);
@@ -23,15 +16,11 @@ const scoreChars = (val) => {
   const d = chars.numSpecial > 0 ? 1 : 0;
 
   return a + b + c + d;
-
 };
 
 const validateEmail = (email) => {
-
   if (!email) {
-
     return false;
-
   }
 
   return email.match(
@@ -40,7 +29,6 @@ const validateEmail = (email) => {
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   );
-
 };
 
 export {

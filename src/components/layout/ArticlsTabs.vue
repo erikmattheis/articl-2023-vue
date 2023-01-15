@@ -1,64 +1,32 @@
-<!-- TODO: make component --><template>
+<template>
   <ul class="nav-tabs">
-    <router-link
-      v-slot="{ isActive, navigate }"
-      custom
-      :to="{ name: 'TabArticls'}"
-    >
-      <li :class="{'active':isActive}">
-        <a
-          href
-          @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+    <router-link v-slot="{ isActive, navigate }" custom :to="{ name: 'TabArticls'}">
+      <li :class="{ 'active': isActive }">
+        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
           Articls
         </a>
       </li>
     </router-link>
 
-    <router-link
-      v-slot="{ isActive, navigate }"
-      custom
-      :to="{ 'name': 'TabNotes' }"
-    >
-      <li :class="{'active':isActive}">
-        <a
-          href
-          @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+    <router-link v-slot="{ isActive, navigate }" custom :to="{ 'name': 'TabNotes' }">
+      <li :class="{ 'active': isActive }">
+        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
           Notes
         </a>
       </li>
     </router-link>
 
-    <router-link
-      v-slot="{ isActive, navigate }"
-      custom
-      :to="{ 'name': 'TabBlogs' }"
-    >
-      <li :class="{'active':isActive}">
-        <a
-          href
-          @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+    <router-link v-slot="{ isActive, navigate }" custom :to="{ 'name': 'TabBlogs' }">
+      <li :class="{ 'active': isActive }">
+        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
           Blogs
         </a>
       </li>
     </router-link>
 
-    <router-link
-      v-slot="{ isActive, navigate }"
-      custom
-      :to="{ 'name': 'TabQuestionsAnswers' }"
-    >
-      <li :class="{'active':isActive}">
-        <a
-          href
-          @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+    <router-link v-slot="{ isActive, navigate }" custom :to="{ 'name': 'TabQuestionsAnswers' }">
+      <li :class="{ 'active': isActive }">
+        <a href @click.prevent="navigate()" @keyup.enter.prevent="navigate()">
           Q&amp;A
         </a>
       </li>
@@ -67,26 +35,22 @@
 </template>
 
 <script>
-import { groupBy } from "lodash";
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "ArticlsTabs",
+  name: 'ArticlsTabs',
   data() {
-
     return {
-      slug: "",
+      slug: '',
     };
-
   },
   computed: {
     ...mapGetters({
-      treeLevel: "categoryPages/treeLevel",
-      articlTypes: "categoryPages/articlTypes",
+      treeLevel: 'categoryPages/treeLevel',
+      articlTypes: 'categoryPages/articlTypes',
     }),
   },
   methods: {
-
 
   },
 };

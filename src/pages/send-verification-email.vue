@@ -5,43 +5,31 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
-  data: () => {
-
-    return {
-      result: null,
-    };
-
-  },
+  data: () => ({
+    result: null,
+  }),
   mounted() {
-
     try {
-
       this.sendEmail();
 
       setTitleAndDescription({
-        title: "Verification sent",
+        title: 'Verification sent',
       });
-
     } catch (error) {
-
-      this.$store.dispatch("errors/setError", error);
-
+      this.$store.dispatch('errors/setError', error);
     }
-
   },
   methods: {
     async sendEmail() {
-
       this.result = await this.$http({
-        method: "GET",
+        method: 'GET',
         url: `/auth/send-verification-email?token=${this.$route.query.token}`,
       });
 
-      this.result = "Click the link in the email we sent to verify your address.";
-
+      this.result = 'Click the link in the email we sent to verify your address.';
     },
   },
 };

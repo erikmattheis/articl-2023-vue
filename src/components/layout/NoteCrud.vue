@@ -30,102 +30,75 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 
 export default {
-  name: "NoteCrudComponent",
+  name: 'NoteCrudComponent',
   components: {
     LoadingPlaceholder,
   },
-  emits: ["view-mode"],
-  data: () => {
-
-    return {
-      fullText: "",
-      buttonDisabled: false,
-      formAction: undefined,
-      isLoading: true,
-      id: undefined,
-    };
-
-  },
+  emits: ['view-mode'],
+  data: () => ({
+    fullText: '',
+    buttonDisabled: false,
+    formAction: undefined,
+    isLoading: true,
+    id: undefined,
+  }),
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
   },
   mounted() {
-
-    this.formAction = this.id ? "Edit" : "Create";
+    this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
-
       this.isLoading = false;
-
     } else {
-
       this.getCurrentNote(this.id);
-
     }
-
   },
   methods: {
     async getCurrentNote(id) {
-
       try {
-
         this.isLoading = true;
 
         const result = await this.getNote(id);
 
         this.fullText = result.data.fullText;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.isLoading = false;
-
       }
-
     },
     resetFormErrors() {
-
-      this.errorMessage = "";
-
+      this.errorMessage = '';
     },
     checkForm() {
-
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.title === "") {
-
-        this.errorMessage = "Please enter a title.";
+      if (this.title === '') {
+        this.errorMessage = 'Please enter a title.';
 
         passed = false;
-
       }
 
       return passed;
-
     },
     async submitForm(id) {
-
       try {
-
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-
           this.buttonDisabled = true;
 
-          const verb = id ? "PUT" : "POST";
+          const verb = id ? 'PUT' : 'POST';
 
           await this.$http({
             method: verb,
@@ -136,33 +109,22 @@ export default {
             },
           });
 
-          this.$emit("view-mode", id);
-
+          this.$emit('view-mode', id);
         } else {
-
-          this.$store.dispatch("errors/setError", this.errorMessage);
-
+          this.$store.dispatch('errors/setError', this.errorMessage);
         }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
 
     async getNote(id) {
-
       return this.$http({
-        method: "GET",
+        method: 'GET',
         url: `/notes/${id}`,
       });
-
     },
   },
 };

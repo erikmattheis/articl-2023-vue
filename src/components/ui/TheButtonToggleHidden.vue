@@ -8,7 +8,7 @@
           show = !show;
         "
         @keypress.esc="focus()"
-      >
+      ><p class="sr">Hide password</p>
         <vue-feather
           size="1.2rem"
           type="eye-off"
@@ -227,7 +227,7 @@
           show = !show;
         "
         @keypress.esc="focus()"
-      >
+      > <p class="sr">Show password</p>
         <vue-feather
           size="1.2rem"
           type="eye"
@@ -443,20 +443,16 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
+import VueFeather from 'vue-feather';
 
 export default {
   components: {
-    VueFeather
+    VueFeather,
   },
-  emits: ["show"],
-  data: () => {
-
-    return {
-      show: false,
-    };
-
-  },
+  emits: ['show'],
+  data: () => ({
+    show: false,
+  }),
 };
 </script>
 

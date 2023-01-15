@@ -1,4 +1,4 @@
-.DS_Store
+q.DS_Store
 node_modules
 /dist
 
@@ -14,7 +14,6 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editor directories and files
-.VSCodeCounter
 .idea
 .vscode
 *.suo

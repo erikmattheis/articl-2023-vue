@@ -35,13 +35,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import AdminActionsNote from "@/components/layout/AdminActionsNote.vue";
-import NoteCrud from "@/components/layout/NoteCrud.vue";
+import AdminActionsNote from '@/components/layout/AdminActionsNote.vue';
+import NoteCrud from '@/components/layout/NoteCrud.vue';
 
 export default {
-  name: "NoteListItem",
+  name: 'NoteListItem',
   components: {
     AdminActionsNote,
     NoteCrud,
@@ -52,31 +52,23 @@ export default {
       default: null,
     },
   },
-  data: () => {
-
-    return {
-      isEditing: false,
-      isLoading: false,
-    };
-
-  },
+  data: () => ({
+    isEditing: false,
+    isLoading: false,
+  }),
 
   computed: {
     ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
+      isLoggedIn: 'tokens/isLoggedIn',
     }),
   },
 
   created() {
-
     this.note = this.passedNote;
-
   },
   methods: {
     async getCurrentNote(id) {
-
       try {
-
         this.isLoading = true;
 
         this.isEditing = false;
@@ -86,21 +78,15 @@ export default {
         this.note = result.data;
 
         this.isLoading = false;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
     async getNote(id) {
-
       return this.$http({
-        method: "GET",
+        method: 'GET',
         url: `/notes/${id}`,
       });
-
     },
   },
 };
