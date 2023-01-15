@@ -8,25 +8,21 @@
             id="password"
             v-model="password"
             :type="passwordType"
-            autocomplete="current-password"
-          >
+            autocomplete="current-password">
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
-          />
+            @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
         </div>
       </label>
       <label for="newPassword">New password
         <small
           v-if="passwordComplexity < 3"
-          class="lighter left-space"
-        >
+          class="lighter left-space">
           Use upper- and lowercase, numerical and special characters.
         </small>
         <small
           v-else-if="newPassword.length < 8"
-          class="lighter left-space"
-        >
+          class="lighter left-space">
           Please use 8 or more characters.
         </small>
         <div class="toggle-password">
@@ -34,12 +30,10 @@
             id="newPassword"
             v-model="newPassword"
             :type="newPasswordType"
-            autocomplete="new-password"
-          >
+            autocomplete="new-password">
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="newPasswordType = newPasswordType === 'text' ? 'password' : 'text'"
-          />
+            @show="newPasswordType = newPasswordType === 'text' ? 'password' : 'text'" />
         </div>
       </label>
       <label for="newPassword2">Confirm new new password
@@ -48,26 +42,22 @@
             id="newPassword2"
             v-model="newPassword2"
             :type="newPassword2Type"
-            autocomplete="new-password"
-          >
+            autocomplete="new-password">
           <the-button-toggle-hidden
             class="toggle-password-mask"
-            @show="newPassword2Type = newPassword2Type === 'text' ? 'password' : 'text'"
-          />
+            @show="newPassword2Type = newPassword2Type === 'text' ? 'password' : 'text'" />
         </div>
       </label>
       <button
         id="reset"
         type="submit"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
+        @click.prevent="submitForm()">
         <span v-if="!buttonDisabled">Change Password</span>
       </button>
       <p
         v-if="result"
-        class="invalid"
-      >
+        class="invalid">
         {{ result }}
       </p>
     </form>

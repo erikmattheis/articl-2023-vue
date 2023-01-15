@@ -6,8 +6,7 @@
     <tab-categories />
 
     <directory-actions
-      v-if="isLoggedIn"
-    />
+      v-if="isLoggedIn" />
   </article>
 
   <loading-placeholder v-else />

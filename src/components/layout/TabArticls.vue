@@ -4,34 +4,29 @@
       <li
         v-for="articlType in articlTypes"
         :key="articlType"
-        :class="{ active: articlTypeCurrent === articlType }"
-      >
+        :class="{ active: articlTypeCurrent === articlType }">
         <a
           href
           @click.prevent="articlTypeCurrent = articlType"
-          @keyup.enter.prevent="articlTypeCurrent = articlType"
-        >
+          @keyup.enter.prevent="articlTypeCurrent = articlType">
           {{ articlType }}</a>
       </li>
     </ul>
 
     <ul
       v-if="articlTypeCurrent"
-      class="nav-content"
-    >
+      class="nav-content">
       <draggable-items
         v-model="articls[articlTypeCurrent]"
         tag="ul"
         item-key="id"
         handle=".handle"
         ghost-class="ghost"
-        @change="onUpdateArticlsOrderValues"
-      >
+        @change="onUpdateArticlsOrderValues">
         <template #item="{ element }">
           <articls-list-item
             :articl="element"
-            :order="element.order"
-          />
+            :order="element.order" />
         </template>
       </draggable-items>
     </ul>No entries yet.

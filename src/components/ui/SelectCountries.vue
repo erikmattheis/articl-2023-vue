@@ -5,11 +5,9 @@
         id="country"
         :value="modelValue"
         autocomplete="country-name"
-        @change="changeCountry"
-      >
+        @change="changeCountry">
         <option
-          value=""
-        >
+          value="">
           Choose one
         </option>
         <option value="US">

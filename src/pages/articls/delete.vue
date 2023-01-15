@@ -6,8 +6,7 @@
       <button
         v-if="!!id"
         :aria-busy="buttonDisabled"
-        @click="deleteArticl()"
-      >
+        @click="deleteArticl()">
         Delete
       </button>
     </form>

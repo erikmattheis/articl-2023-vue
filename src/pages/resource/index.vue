@@ -1,86 +1,64 @@
 <template>
-  <article
-    v-if="!isLoading"
-  >
+  <article v-if="!isLoading">
     <the-breadcrumbs />
 
     <h2>{{ title }}</h2>
 
     <ul
       v-if="treeLevel > 1"
-      class="nav-tabs"
-    >
+      class="nav-tabs">
       <router-link
         v-slot="{ isActive, navigate }"
         custom
-        :to="{ name: 'TabArticls'}"
-      >
-        <li :class="{'active':isActive}">
+        :to="{ name: 'TabArticls' }">
+        <li :class="{ active: isActive }">
           <a
             href
             @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Articls
-          </a>
+            @keyup.enter.prevent="navigate()"> Articls </a>
         </li>
       </router-link>
 
       <router-link
         v-slot="{ isActive, navigate }"
         custom
-        :to="{ 'name': 'TabNotes' }"
-      >
-        <li :class="{'active':isActive}">
+        :to="{ name: 'TabNotes' }">
+        <li :class="{ active: isActive }">
           <a
             href
             @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Notes
-          </a>
+            @keyup.enter.prevent="navigate()"> Notes </a>
         </li>
       </router-link>
 
       <router-link
         v-slot="{ isActive, navigate }"
         custom
-        :to="{ 'name': 'TabBlogs' }"
-      >
-        <li :class="{'active':isActive}">
+        :to="{ name: 'TabBlogs' }">
+        <li :class="{ active: isActive }">
           <a
             href
             @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Blogs
-          </a>
+            @keyup.enter.prevent="navigate()"> Blogs </a>
         </li>
       </router-link>
 
       <router-link
         v-slot="{ isActive, navigate }"
         custom
-        :to="{ 'name': 'TabQuestionsAnswers' }"
-      >
-        <li :class="{'active':isActive}">
+        :to="{ name: 'TabQuestionsAnswers' }">
+        <li :class="{ active: isActive }">
           <a
             href
             @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"
-          >
-            Q&amp;A
-          </a>
+            @keyup.enter.prevent="navigate()"> Q&amp;A </a>
         </li>
       </router-link>
     </ul>
 
     <router-view :class="{ 'nav-content': treeLevel > 1 }" />
 
-    <directory-actions
-      v-if="
-        isLoggedIn"
-    />
+    <directory-actions v-if="isLoggedIn" />
   </article>
 
   <loading-placeholder v-else />
@@ -183,18 +161,11 @@ export default {
         breadcrumbs: result.data.breadcrumbs,
         categories: result.data.categories,
         category: result.data.category,
-        articlTypes: result.data.articls?.length
-          ? [
-            ...new Set(
-              result.data.articls.map((item) => item?.type),
-            ),
-          ]
-          : [],
+        articlTypes: result.data.articls?.length ? [...new Set(result.data.articls.map((item) => item?.type))] : [],
         articls: groupBy(result.data.articls, (articl) => articl?.type),
         notes: result.data.notes,
       };
     },
-
   },
 };
 </script>

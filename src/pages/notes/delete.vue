@@ -5,8 +5,7 @@
     <form>
       <button
         v-if="!!id"
-        @click.prevent="deleteNote()"
-      >
+        @click.prevent="deleteNote()">
         Delete
       </button>
     </form>

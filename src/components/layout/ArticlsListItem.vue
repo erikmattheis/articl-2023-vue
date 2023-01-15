@@ -5,19 +5,16 @@
         <a
           :data-tooltip="linkMessage"
           :href="articl.articlUrl"
-          target="_blank"
-        >
+          target="_blank">
           {{ articl.title }}
         </a>
 
         <div
           v-if="isLoggedIn"
-          class="admin articl-actions"
-        >
+          class="admin articl-actions">
           <articl-actions
             :id="articl.id"
-            :title="articl.title"
-          />
+            :title="articl.title" />
         </div>
       </li>
 
@@ -33,15 +30,13 @@
             <li
               v-for="author in articl.authors"
               :key="author.nameLast"
-              class="grid"
-            >
+              class="grid">
               {{ author.nameFirst }} {{ author.nameLast }}
 
               <ul v-if="author.affilliations.length">
                 <li
                   v-for="affilliation in author.affilliations"
-                  :key="affilliation"
-                >
+                  :key="affilliation">
                   {{ affilliation }}
                 </li>
               </ul>
@@ -54,8 +49,7 @@
         {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
           :data-tooltip="linkMessage"
           :href="articl.articlUrl"
-          target="_blank"
-        >{{ articl.articlUrl }}</a>
+          target="_blank">{{ articl.articlUrl }}</a>
       </li>
 
       <li v-if="articl.authorsOrig">
@@ -64,8 +58,7 @@
           }}<strong
             :class="{
               'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
-            }"
-          >{{
+            }">{{
             highlightedSubstring(articl.authorsOrig, params.authors, "term")
           }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
         </small>
@@ -96,15 +89,13 @@
       <li v-if="articl.thumbnailImage">
         <img
           :src="articl.thumbnailImage"
-          :alt="articl.title"
-        >
+          :alt="articl.title">
       </li>
 
       <li v-if="articl.url">
         <img
           :src="articl.url"
-          :alt="articl.title"
-        ><br>
+          :alt="articl.title"><br>
         {{ articl.url }}
       </li>
 

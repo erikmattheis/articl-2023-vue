@@ -1,25 +1,21 @@
 <template>
   <router-link
-    :to="{ name: 'editArticl', params: { id } }"
-  >
+    :to="{ name: 'editArticl', params: { id } }">
     edit
   </router-link>
 
   <router-link
-    :to="{ name: 'deleteArticl', params: { id, title } }"
-  >
+    :to="{ name: 'deleteArticl', params: { id, title } }">
     delete
   </router-link>
 
   <span class="handle">
     <a
-      href="#"
-    ><div class="sr">Reorder articl</div>
+      href="#"><div class="sr">Reorder articl</div>
       <vue-feather
         size="1rem"
         type="move"
-        aria-label="Drag to reorder"
-      />
+        aria-label="Drag to reorder" />
     </a>
   </span>
 </template>

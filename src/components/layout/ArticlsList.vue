@@ -7,28 +7,24 @@
       item-key="id"
       handle=".handle"
       ghost-class="ghost"
-      @change="onUpdateOrderValues"
-    >
+      @change="onUpdateOrderValues">
       <template #item="{ element }">
         <li>
           <articls-list-item
             :articl="element"
-            order="0"
-          />
+            order="0" />
         </li>
       </template>
     </draggable-items>
     <li
-      v-if="(articls.length === 0)"
-    >
+      v-if="(articls.length === 0)">
       No entries yet.
     </li>
   </ul>
   articls: {{ articls }}
   <transition
     name="fade"
-    mode="out-in"
-  >
+    mode="out-in">
     <loading-placeholder v-if="isLoading" />
   </transition>
 </template>

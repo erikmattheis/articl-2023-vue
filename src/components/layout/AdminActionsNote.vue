@@ -3,8 +3,7 @@
     <li>
       <a
         href="#"
-        @click.prevent="$emit('edit-mode')"
-      >
+        @click.prevent="$emit('edit-mode')">
         edit
       </a>
     </li>

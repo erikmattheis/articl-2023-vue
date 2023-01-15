@@ -15,14 +15,12 @@
               id="articlUrl"
               v-model="articlUrl"
               type="text"
-              name="articlUrl"
-            ></label>
+              name="articlUrl"></label>
 
           <button
             type="button"
             :aria-busy="buttonFetchDisabled"
-            @click.prevent="getData()"
-          >
+            @click.prevent="getData()">
             FETCH DATA
           </button>
         </template>
@@ -31,59 +29,49 @@
             id="title"
             v-model="title"
             name="title"
-            autocomplete="off"
-          >
+            autocomplete="off">
         </label>
 
         <label
           v-if="doi"
-          for="doi"
-        >DOI
+          for="doi">DOI
           <input
             id="doi"
             v-model="doi"
             name="doi"
-            autocomplete="off"
-          >
+            autocomplete="off">
         </label>
 
         <fieldset
           v-for="(author, index) in authors"
-          :key="author.id"
-        >
+          :key="author.id">
           <div class="grid">
             <label
-              for="`nameFirst${index}`"
-            >First name
+              for="`nameFirst${index}`">First name
               <input
                 :id="`nameFirst${index}`"
                 v-model="author.nameFirst"
                 :name="`nameFirst${index}`"
-                autocomplete="off"
-              ></label>
+                autocomplete="off"></label>
             <label
-              for="`nameLast${index}`"
-            >Last name
+              for="`nameLast${index}`">Last name
               <input
                 :id="`nameLast${index}`"
                 v-model="author.nameLast"
                 :name="`nameLast${index}`"
-                autocomplete="off"
-              ></label>
+                autocomplete="off"></label>
           </div>
 
           <label
             v-for="(affiliation, affilIndex) in author.affilliations"
             :key="affiliation"
-            for="`affiliation${affilIndex}`"
-          >Affiliation
+            for="`affiliation${affilIndex}`">Affiliation
 
             <input
               id="`affiliation${affilIndex}`"
               v-model="author.affilliations[affilIndex]"
               name="`affiliation${affilIndex}`"
-              autocomplete="off"
-            ></label>
+              autocomplete="off"></label>
         </fieldset>
 
         <label for="journal">Journal
@@ -91,40 +79,35 @@
             id="journal"
             v-model="journal"
             name="journal"
-            autocomplete="off"
-          ></label>
+            autocomplete="off"></label>
 
         <label for="year">Publication Year
           <input
             id="year"
             v-model="year"
             name="year"
-            autocomplete="off"
-          ></label>
+            autocomplete="off"></label>
 
         <label for="month">Publication Month
           <input
             id="month"
             v-model="month"
             name="month"
-            autocomplete="off"
-          ></label>
+            autocomplete="off"></label>
 
         <label for="abstract">Abstract
           <input
             id="abstract"
             v-model="abstract"
             name="abstract"
-            autocomplete="off"
-          ></label>
+            autocomplete="off"></label>
 
         <label for="type">Link type
           <select
             id="type"
             v-model="type"
             name="type"
-            autocomplete="off"
-          >
+            autocomplete="off">
             <optgroup value="Resources">
               <option value="Review (OA)">
                 Review (OA)
@@ -162,13 +145,11 @@
           :input-value="slug"
           label-value="Category slug"
           @update-value="onTypeaheadHit"
-          @keyup="onTypeaheadHit"
-        />
+          @keyup="onTypeaheadHit" />
         <button
           type="button"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm(id)"
-        >
+          @click.prevent="submitForm(id)">
           {{ !id ? "Create" : "Edit" }} Articl
         </button>
       </form>
@@ -177,14 +158,12 @@
         <a
           href
           @click="$router.go()"
-          @keyup.enter="$router.go()"
-        >Create another article</a>
+          @keyup.enter="$router.go()">Create another article</a>
       </template>
     </template>
     <transition
       name="fade"
-      mode="out-in"
-    >
+      mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </article>

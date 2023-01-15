@@ -5,22 +5,19 @@
       <input
         type="hidden"
         name="username"
-        autocomplete="username"
-      >
+        autocomplete="username">
       <label for="email">Email
         <input
           id="email"
           v-model="email"
           name="email"
           type="text"
-          autocomplete="email"
-        ></label>
+          autocomplete="email"></label>
       <button
         id="reset"
         type="submit"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
+        @click.prevent="submitForm()">
         <span v-if="!buttonDisabled">Reset</span>
       </button>
     </form>
@@ -29,8 +26,7 @@
     </p>
     <p
       v-if="errorMessage"
-      class="error"
-    >
+      class="error">
       {{ errorMessage }}
     </p>
   </article>

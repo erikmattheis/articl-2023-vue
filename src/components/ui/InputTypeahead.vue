@@ -7,8 +7,7 @@
         class="icon"
         size="1.5rem"
         type="search"
-        aria-label="Search"
-      />
+        aria-label="Search" />
       <input
         :id="query"
         ref="input"
@@ -20,8 +19,7 @@
         @keydown.enter="hit"
         @keydown.esc="removeItems"
         @blur="removeItems"
-        @keyup="update"
-      >
+        @keyup="update">
 
       <ul>
         <li
@@ -29,8 +27,7 @@
           :key="$index"
           :class="activeClass($index)"
           @mousedown="hit"
-          @mousemove="setActive($index)"
-        >
+          @mousemove="setActive($index)">
           <span v-text="item" />
         </li>
       </ul>

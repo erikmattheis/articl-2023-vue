@@ -14,36 +14,31 @@
             id="title"
             v-model="title"
             type="text"
-            name="title"
-          ></label>
+            name="title"></label>
         <label for="slug">Slug
           <input
             id="slug"
             v-model="slug"
             readonly
             type="text"
-            name="slug"
-          ></label>
+            name="slug"></label>
         <label for="parentSlug">Parent slug
           <input
             id="parentSlug"
             v-model="parentSlug"
             type="text"
-            name="parentSlug"
-          ></label>
+            name="parentSlug"></label>
 
         <label for="description">Description
           <textarea
             id="description"
             name="description"
             rows="10"
-            cols="70"
-          /></label>
+            cols="70" /></label>
         <button
           type="submit"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm(id)"
-        >
+          @click.prevent="submitForm(id)">
           <span v-if="!buttonDisabled">{{ formAction }} category</span>
         </button>
       </form>
@@ -52,14 +47,12 @@
         <a
           href
           @click="$router.go()"
-          @keyup.enter="$router.go()"
-        >Create another category</a>
+          @keyup.enter="$router.go()">Create another category</a>
       </template>
     </template>
     <transition
       name="fade"
-      mode="out-in"
-    >
+      mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </article>

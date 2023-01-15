@@ -3,14 +3,12 @@
     <router-link
       v-slot="{ isActive, navigate }"
       custom
-      :to="{ name: 'TabArticls'}"
-    >
+      :to="{ name: 'TabArticls'}">
       <li :class="{ 'active': isActive }">
         <a
           href
           @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+          @keyup.enter.prevent="navigate()">
           Articls
         </a>
       </li>
@@ -19,14 +17,12 @@
     <router-link
       v-slot="{ isActive, navigate }"
       custom
-      :to="{ 'name': 'TabNotes' }"
-    >
+      :to="{ 'name': 'TabNotes' }">
       <li :class="{ 'active': isActive }">
         <a
           href
           @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+          @keyup.enter.prevent="navigate()">
           Notes
         </a>
       </li>
@@ -35,14 +31,12 @@
     <router-link
       v-slot="{ isActive, navigate }"
       custom
-      :to="{ 'name': 'TabBlogs' }"
-    >
+      :to="{ 'name': 'TabBlogs' }">
       <li :class="{ 'active': isActive }">
         <a
           href
           @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+          @keyup.enter.prevent="navigate()">
           Blogs
         </a>
       </li>
@@ -51,14 +45,12 @@
     <router-link
       v-slot="{ isActive, navigate }"
       custom
-      :to="{ 'name': 'TabQuestionsAnswers' }"
-    >
+      :to="{ 'name': 'TabQuestionsAnswers' }">
       <li :class="{ 'active': isActive }">
         <a
           href
           @click.prevent="navigate()"
-          @keyup.enter.prevent="navigate()"
-        >
+          @keyup.enter.prevent="navigate()">
           Q&amp;A
         </a>
       </li>

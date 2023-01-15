@@ -3,33 +3,28 @@
     v-if="successTitle"
     class="modal-container"
     @click.prevent="close()"
-    @keyup.enter="close()"
-  >
+    @keyup.enter="close()">
     <dialog
       open
       class="modal"
-      @click.stop
-    >
+      @click.stop>
       <article class="max-container-width">
         <header>
           <a
             href="#close"
             aria-label="Close"
             class="close"
-            @click.prevent="close()"
-          />
+            @click.prevent="close()" />
           <h2>{{ successTitle }}</h2>
         </header>
         <section>
           <div
             class="tab"
-            title="success"
-          >
+            title="success">
             <vue-feather
               size="3rem"
               type="check"
-              aria-label="Check mark"
-            />
+              aria-label="Check mark" />
           </div>
           <div class="info">
             <ul>

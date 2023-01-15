@@ -1,15 +1,13 @@
 <template>
   <li>
     <router-link
-      :to="{ name: tabName, params: { slug: category.slug } }"
-    >
+      :to="{ name: tabName, params: { slug: category.slug } }">
       {{ category.title }}
     </router-link>
     <category-actions
       v-if="isLoggedIn"
       :id="category.id"
-      :title="category.title"
-    />
+      :title="category.title" />
   </li>
 </template>
 

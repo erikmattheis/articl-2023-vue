@@ -8,8 +8,7 @@
           v-model="username"
           name="username"
           type="text"
-          autocomplete="username"
-        ></label>
+          autocomplete="username"></label>
 
       <label for="password">Password
         <div class="toggle-password">
@@ -18,18 +17,15 @@
             v-model="password"
             name="password"
             :type="passwordType"
-            autocomplete="current-password"
-          ><the-button-toggle-hidden
-            class="toggle-password-mask"
-            @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
-          />
+            autocomplete="current-password"><the-button-toggle-hidden
+              class="toggle-password-mask"
+              @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
         </div></label>
       <button
         id="Login"
         type="submit"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
+        @click.prevent="submitForm()">
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
@@ -38,8 +34,7 @@
     </router-link>
     <router-link
       to="/users"
-      class="right"
-    >
+      class="right">
       Create account
     </router-link>
   </article>

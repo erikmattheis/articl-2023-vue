@@ -7,13 +7,11 @@
           $emit('show');
           show = !show;
         "
-        @keypress.esc="focus()"
-      ><p class="sr">Hide password</p>
+        @keypress.esc="focus()"><p class="sr">Hide password</p>
         <vue-feather
           size="1.2rem"
           type="eye-off"
-          aria-label="Hide password"
-        />
+          aria-label="Hide password" />
       <!--
         <svg
           version="1.1"
@@ -226,13 +224,11 @@
           $emit('show');
           show = !show;
         "
-        @keypress.esc="focus()"
-      > <p class="sr">Show password</p>
+        @keypress.esc="focus()"> <p class="sr">Show password</p>
         <vue-feather
           size="1.2rem"
           type="eye"
-          aria-label="Show password"
-        />
+          aria-label="Show password" />
       <!---
         <svg
           version="1.1"

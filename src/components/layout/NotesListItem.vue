@@ -11,8 +11,7 @@
         <span class="right"> created at: {{ note.createdAt }}</span>
       </li>
       <li
-        class="main-line"
-      >
+        class="main-line">
         <span :aria-busy="isLoading" /> <span v-if="!isLoading">{{ note.fullText }}</span>
       </li>
     </ul>
@@ -21,8 +20,7 @@
         :id="note.id"
         :full-text="note.fullText"
         :slug="note.slug"
-        @edit-mode="isEditing = true"
-      />
+        @edit-mode="isEditing = true" />
     </div>
   </template>
 
@@ -30,8 +28,7 @@
     v-else
     :slug="note.slug"
     :passed-id="note.id"
-    @view-mode="getCurrentNote"
-  />
+    @view-mode="getCurrentNote" />
 </template>
 
 <script>

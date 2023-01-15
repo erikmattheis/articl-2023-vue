@@ -6,15 +6,13 @@
       item-key="id"
       handle=".handle"
       ghost-class="ghost"
-      @change="onUpdateOrderValues"
-    >
+      @change="onUpdateOrderValues">
       <template #item="{ element }">
         <categories-list-item
           :category="element"
           class="list-item"
           :tree-level="treeLevel"
-          :tab-name="TabName"
-        />
+          :tab-name="TabName" />
       </template>
     </draggable-items>
 

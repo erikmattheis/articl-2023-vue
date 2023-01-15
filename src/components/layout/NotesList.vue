@@ -2,8 +2,7 @@
   <ul>
     <li
       v-for="note in notes || [] "
-      :key="note.fullText"
-    >
+      :key="note.fullText">
       <notes-list-item :passed-note="note" />
     </li>
   </ul>

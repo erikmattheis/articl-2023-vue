@@ -5,26 +5,22 @@
         <a
           href
           @click.prevent="resetValue('text')"
-          @keyup.enter="resetValue('text')"
-        >
+          @keyup.enter="resetValue('text')">
           <vue-feather
             size="1.2rem"
             type="x-square"
-            aria-label="Reset"
-          /><span class="sr">Reset search value to empty</span>
+            aria-label="Reset" /><span class="sr">Reset search value to empty</span>
         </a>
       </li>
       <li v-if="params.title"> Title contains <strong>{{ params.title }}</strong>
         <a
           href
           @click.prevent="resetValue('title')"
-          @keyup.enter="resetValue('title')"
-        >
+          @keyup.enter="resetValue('title')">
           <vue-feather
             size="1.2rem"
             type="x-square"
-            aria-label="Reset"
-          /><span class="sr">Reset title value to empty</span>
+            aria-label="Reset" /><span class="sr">Reset title value to empty</span>
         </a>
       </li>
       <li v-if="params.journal"> Journal is <strong>{{ params.journal }}</strong>
@@ -32,25 +28,21 @@
           href
           aria-label="Reset"
           @click.prevent="resetValue('journal')"
-          @keyup.enter="resetValue('journal')"
-        >
+          @keyup.enter="resetValue('journal')">
           <vue-feather
             size="1.2rem"
-            type="x-square"
-          /><span class="sr">Reset journal value to empty</span>
+            type="x-square" /><span class="sr">Reset journal value to empty</span>
         </a>
       </li>
       <li v-if="params.authors"> Authors contains <strong>{{ params.authors }}</strong>
         <a
           href
           @click.prevent="resetValue('authors')"
-          @keyup.enter="resetValue('authors')"
-        >
+          @keyup.enter="resetValue('authors')">
           <vue-feather
             size="1.2rem"
             type="x-square"
-            aria-label="Reset"
-          /><span class="sr">Reset authors value to empty</span>
+            aria-label="Reset" /><span class="sr">Reset authors value to empty</span>
         </a>
       </li>
       <li v-if="params.year && Number(params.year) !== yearsStart"> Year is <strong>{{ params.yearComparison }} {{
@@ -59,32 +51,27 @@
         <a
           href
           @click.prevent="resetValue('year')"
-          @keyup.enter="resetValue('year')"
-        >
+          @keyup.enter="resetValue('year')">
           <vue-feather
             size="1.2rem"
             type="x-square"
-            aria-label="Reset"
-          ><span class="sr">Reset year value to {{ yearsStart }}</span>
+            aria-label="Reset"><span class="sr">Reset year value to {{ yearsStart }}</span>
           </vue-feather>
         </a>
       </li>
       <li
         v-if="
           params.types?.length && params.types?.length !== allTypes?.length
-        "
-      > Type is <span v-if="params.types?.length > 1">one of </span>
+        "> Type is <span v-if="params.types?.length > 1">one of </span>
         <strong>{{ toListWithOptionalConjuction(params.types, "or") }}</strong>
         <a
           href
           @click.prevent="resetValue('types')"
-          @keyup.enter="resetValue('types')"
-        >
+          @keyup.enter="resetValue('types')">
           <vue-feather
             size="1.2rem"
             type="x-square"
-            aria-label="Reset"
-          /><span class="sr">Reset type value to all types</span>
+            aria-label="Reset" /><span class="sr">Reset type value to all types</span>
         </a>
       </li>
     </ul>

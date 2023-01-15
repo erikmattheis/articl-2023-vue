@@ -11,8 +11,7 @@
         id="Login"
         type="submit"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
+        @click.prevent="submitForm()">
         Start
       </button>
       <pre>{{ result }}</pre>

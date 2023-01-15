@@ -3,13 +3,11 @@
     v-if="errorTitle || successTitle"
     class="modal-container"
     @click.prevent="close()"
-    @keyup.enter="close()"
-  >
+    @keyup.enter="close()">
     <dialog
       open
       class="modal"
-      @click.stop
-    >
+      @click.stop>
       <article class="max-container-width">
         <header>
           generic
@@ -18,18 +16,15 @@
             type="x-square"
             aria-label="Close"
             class="close"
-            @click.prevent="close()"
-          />
+            @click.prevent="close()" />
           <h2>{{ errorTitle }}</h2>
         </header>
         <section>
           <div
-            class="tab"
-          >
+            class="tab">
             <vue-feather
               size="3rem"
-              type="alert-triangle"
-            />
+              type="alert-triangle" />
           </div>
           <div class="info">
             <ul>

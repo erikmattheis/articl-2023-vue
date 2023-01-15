@@ -5,76 +5,63 @@
         <a
           href
           @click.prevent="activeTab = 0"
-          @keyup.enter.prevent="activeTab = 0"
-        >Search</a>
+          @keyup.enter.prevent="activeTab = 0">Search</a>
       </li>
       <li :class="{ active: activeTab === 1 }">
         <a
           href
           @click.prevent="activeTab = 1"
-          @keyup.enter.prevent="activeTab = 1"
-        >More options</a>
+          @keyup.enter.prevent="activeTab = 1">More options</a>
       </li>
     </ul>
     <div
       v-show="(activeTab === 0)"
-      class="active tab-content"
-    >
+      class="active tab-content">
       <label for="title">Title <input
         id="title"
         v-model="title"
-        type="text"
-      ></label>
+        type="text"></label>
     </div>
     <div
       v-show="activeTab === 1"
-      class="active tab-content"
-    >
+      class="active tab-content">
       <input-typeahead
         src="/articls/values/journal"
         :input-value="journal"
         label-value="Journal"
         query="journal"
-        @typeahead-updated="onJournalChange"
-      />
+        @typeahead-updated="onJournalChange" />
       <input-typeahead
         src="/articls/values/authors"
         :input-value="authors"
         label-value="Authors"
         query="authors"
-        @typeahead-updated="onAuthorsChange"
-      />
+        @typeahead-updated="onAuthorsChange" />
       <label for="yearComparison">Year published <label
         v-if="yearsStart === Number(year)"
         for="year"
-        class="horizontal"
-      ><input
-        v-model="yearComparison"
-        type="radio"
-        value="after"
-        name="yearComparison"
-      > After </label>
+        class="horizontal"><input
+          v-model="yearComparison"
+          type="radio"
+          value="after"
+          name="yearComparison"> After </label>
         <label
           v-for="comparison in yearComparisons"
           v-else
           :key="comparison"
           for="yearComparison"
-          class="horizontal"
-        ><input
-          v-model="yearComparison"
-          type="radio"
-          :value="comparison"
-          name="yearComparison"
-        > {{ comparison }} </label>
+          class="horizontal"><input
+            v-model="yearComparison"
+            type="radio"
+            :value="comparison"
+            name="yearComparison"> {{ comparison }} </label>
         <select
           v-model="year"
           autocomplete="off"
-          @change="onYearChange"
-        >
+          @change="onYearChange">
           <option
             v-for="i in years"
-            :key="i"
-          > {{ i }} </option>
+            :key="i"> {{ i }} </option>
         </select>
         <div class="grid">
           <div>
@@ -83,15 +70,13 @@
               <label
                 v-for="articlType in allTypes"
                 :key="articlType"
-                :for="articlType"
-              >
+                :for="articlType">
                 <input
                   :id="articlType"
                   v-model="types"
                   type="checkbox"
                   :value="articlType"
-                  checked="checked"
-                >{{ articlType }}</label>
+                  checked="checked">{{ articlType }}</label>
             </fieldset>
           </div>
 

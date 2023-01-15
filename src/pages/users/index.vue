@@ -18,20 +18,17 @@
               autocomplete="username"
               :aria-invalid="usernameInvalid"
               @keyup="removeUsernameWhiteSpace"
-              @change="checkUsername"
-            ></label>
+              @change="checkUsername"></label>
 
           <label for="password">Password
             <small
               v-if="passwordComplexity < 3"
-              class="left-space"
-            >
+              class="left-space">
               Use upper- and lowercase, numerical and special characters.
             </small>
             <small
               v-else-if="password.length < 8"
-              class="left-space"
-            >
+              class="left-space">
               Please use 8 or more characters.
             </small>
 
@@ -43,12 +40,10 @@
                 :aria-invalid="checkPassword"
                 name="password"
                 autocomplete="new-password"
-                @keyup="checkPassword"
-              >
+                @keyup="checkPassword">
               <the-button-toggle-hidden
                 class="toggle-password-mask"
-                @show="passwordType = passwordType === 'text' ? 'password' : 'text'"
-              />
+                @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
             </div>
           </label>
           <label for="password2">Confirm password
@@ -60,12 +55,10 @@
                 name="password2"
                 :aria-invalid="password2Invalid"
                 autocomplete="new-password"
-                @keyup="checkPassword2"
-              >
+                @keyup="checkPassword2">
               <the-button-toggle-hidden
                 class="toggle-password-mask"
-                @show="password2Type = password2Type === 'text' ? 'password' : 'text'"
-              />
+                @show="password2Type = password2Type === 'text' ? 'password' : 'text'" />
             </div>
           </label>
         </template>
@@ -82,8 +75,7 @@
                 name="nameFirst"
                 :aria-invalid="checkNameFirst"
                 autocomplete="given-name"
-                @keyup="checkNameFirst"
-              ></label>
+                @keyup="checkNameFirst"></label>
           </div>
           <div>
             <label for="nameLast">Last Name
@@ -94,8 +86,7 @@
                 name="nameLast"
                 :aria-invalid="nameLastInvalid"
                 autocomplete="family-name"
-                @keyup="checkNameLast"
-              ></label>
+                @keyup="checkNameLast"></label>
           </div>
         </fieldset>
 
@@ -107,8 +98,7 @@
             name="email"
             :aria-invalid="emailInvalid"
             autocomplete="email"
-            @keyup="checkEmail"
-          ></label>
+            @keyup="checkEmail"></label>
 
         <label for="position">Current position
           <select
@@ -116,12 +106,10 @@
             v-model="position"
             name="position"
             :aria-invalid="positionInvalid"
-            @change="checkPosition"
-          >
+            @change="checkPosition">
             <option
               disabled
-              value=""
-            >
+              value="">
               Please select one
             </option>
             <option value="Student">Student</option>
@@ -138,8 +126,7 @@
             name="education"
             :aria-invalid="educationInvalid"
             autocomplete="education"
-            @keyup="checkEducation"
-          ></label>
+            @keyup="checkEducation"></label>
         <label for="institution">Institution
           <input
             id="institution"
@@ -148,8 +135,7 @@
             name="institution"
             :aria-invalid="institutionInvalid"
             autocomplete="organization"
-            @keyup="checkInstitution"
-          ></label>
+            @keyup="checkInstitution"></label>
         <label for="city">City
           <input
             id="city"
@@ -158,23 +144,20 @@
             name="city"
             :aria-invalid="cityInvalid"
             autocomplete="address-level2"
-            @keyup="checkCity"
-          ></label>
+            @keyup="checkCity"></label>
 
         <select-countries
           id="country"
           v-model="country"
           :aria-invalid="countryInvalid"
-          @change-country="changeCountry"
-        />
+          @change-country="changeCountry" />
 
         <button
           id="Update"
           type="submit"
           :aria-busy="buttonDisabled"
           :disabled="buttonDisabled"
-          @click.prevent="submitForm"
-        >
+          @click.prevent="submitForm">
           <span v-if="!buttonDisabled && method === 'PATCH'">Update Account</span>
           <span v-else-if="!buttonDisabled">Create Account</span>
         </button>
@@ -183,8 +166,7 @@
         </router-link>
         <router-link
           to="/logout"
-          class="right"
-        >
+          class="right">
           Log out
         </router-link>
       </template>

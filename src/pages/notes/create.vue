@@ -12,14 +12,12 @@
           id="fullText"
           v-model="fullText"
           name="fullText"
-          autocomplete="off"
-        />
+          autocomplete="off" />
         </label>
         <button
           type="button"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm(id)"
-        >
+          @click.prevent="submitForm(id)">
           {{ !id? "Create":"Edit" }} Note
         </button>
       </form>
@@ -28,14 +26,12 @@
         <a
           href
           @click="$router.go()"
-          @keyup.enter="$router.go()"
-        >Create another note</a>
+          @keyup.enter="$router.go()">Create another note</a>
       </template>
     </template>
     <transition
       name="fade"
-      mode="out-in"
-    >
+      mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </section>
