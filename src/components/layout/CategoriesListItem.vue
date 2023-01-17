@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="row-admin-container">
     <router-link
       :to="{ name: tabName, params: { slug: category.slug } }">
       {{ category.title }}
@@ -7,6 +7,7 @@
     <category-actions
       v-if="isLoggedIn"
       :id="category.id"
+      class="box"
       :title="category.title" />
   </li>
 </template>

@@ -79,14 +79,16 @@ export default {
 
 @import "//fonts.googleapis.com/css2?family=Open+Sans&display=swap";
 
-.admin button,
-.admin a {
-  color: darkgreen;
+.row-admin-container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: minmax(200px, 1fr) 200px;
 }
 
-.articl-actions.admin {
-  margin: 0;
-  padding: .3rem;
+.row-admin-box {
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
+  grid-gap: 5px;
 }
 
 .fade-enter-active {

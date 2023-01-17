@@ -1,20 +1,23 @@
 <template>
-  <div class="admin grid">
+  <div class="row-admin-box">
     <router-link
+      role="button"
       :to="{ name: 'editCategory'}">
-      edit
+      <small>edit</small>
     </router-link>
 
     <router-link
+      role="button"
       :to="{ name: 'deleteCategory'}">
-      delete
+      <small>delete</small>
     </router-link>
 
     <a
+      role="button"
       class="handle"
       href="#"><div class="sr">Reorder category</div>
       <vue-feather
-        size="1rem"
+        size="0.7rem"
         type="move"
         aria-label="Drag to reorder" />
     </a>
@@ -47,3 +50,14 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+a {
+  padding: 0 !important;
+  width: minmax(min-content, auto);
+
+  align-self: center;
+  justify-self: center;
+
+}
+</style>
