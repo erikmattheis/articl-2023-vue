@@ -120,13 +120,13 @@ const router = createRouter({
 
     {
       name: 'editCategory',
-      path: '/categories/:slug?',
+      path: '/categories/:id?',
       component: createCategoryPage,
     },
 
     {
       name: 'deleteCategory',
-      path: '/categories/delete/:slug?',
+      path: '/categories/delete/:id?',
       component: deleteCategoryPage,
     },
 

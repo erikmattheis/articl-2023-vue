@@ -1,7 +1,7 @@
 <template>
   <div>
     <draggable-items
-      v-model="categories"
+      v-model="categoriesLocal"
       tag="ul"
       item-key="id"
       handle=".handle"
@@ -38,8 +38,15 @@ export default {
       TabName: '',
     };
   },
-
   computed: {
+    categoriesLocal: {
+      get() {
+        return this.categories.map((a) => a);
+      },
+      set(newValue) {
+        this.$store.dispatch('categoryPages/categories', newValue);
+      },
+    },
     ...mapGetters({
       categories: 'categoryPages/categories',
       treeLevel: 'categoryPages/treeLevel',
@@ -56,6 +63,7 @@ export default {
 
           objRef.order = index;
         });
+        this.$store.dispatch('categoryPages/categories', this.categories);
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       }

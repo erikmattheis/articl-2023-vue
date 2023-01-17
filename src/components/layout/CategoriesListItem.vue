@@ -1,6 +1,7 @@
 <template>
-  <li class="row-admin-container">
+  <li class="container">
     <router-link
+      class="box"
       :to="{ name: tabName, params: { slug: category.slug } }">
       {{ category.title }}
     </router-link>
@@ -59,9 +60,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-/*
+.container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: minmax(200px, 1fr) 200px;
+
+  color: #444;
+}
+
 li {
   width:100%;
+  padding:
 
   a {
     cursor: pointer;
@@ -71,5 +80,5 @@ li {
 li:hover {
   background-color: var(--primary-nav-background);
 }
-*/
+
 </style>

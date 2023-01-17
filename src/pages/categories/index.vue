@@ -122,8 +122,7 @@ export default {
     }
   },
   params: {
-    slug: String,
-
+    id: String,
   },
 
   methods: {

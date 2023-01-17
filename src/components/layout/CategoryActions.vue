@@ -2,13 +2,13 @@
   <div class="row-admin-box">
     <router-link
       role="button"
-      :to="{ name: 'editCategory'}">
+      :to="{ name: 'editCategory', params:{id}}">
       <small>edit</small>
     </router-link>
 
     <router-link
       role="button"
-      :to="{ name: 'deleteCategory'}">
+      :to="{ name: 'deleteCategory', params:{id}}">
       <small>delete</small>
     </router-link>
 
