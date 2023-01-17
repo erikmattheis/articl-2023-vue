@@ -53,11 +53,8 @@ export default {
 
 <style scoped lang="scss">
 a {
-  padding: 0 !important;
-  width: minmax(min-content, auto);
-
   align-self: center;
   justify-self: center;
-
+  border:0;
 }
 </style>

@@ -81,14 +81,19 @@ export default {
 
 .row-admin-container {
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: minmax(200px, 1fr) 200px;
+  grid-template-columns: 1fr min-content;
 }
 
 .row-admin-box {
   display: grid;
   grid-template-columns: min-content min-content min-content;
   grid-gap: 5px;
+  padding: 0 5px;
+}
+
+.row-admin-box > a {
+  border: 0 !important;
+  padding: 0 5px !important;
 }
 
 .fade-enter-active {

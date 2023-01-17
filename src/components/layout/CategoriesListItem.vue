@@ -59,10 +59,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+/*
 li {
   width:100%;
-  padding:
 
   a {
     cursor: pointer;
@@ -72,5 +71,5 @@ li {
 li:hover {
   background-color: var(--primary-nav-background);
 }
-
+*/
 </style>
