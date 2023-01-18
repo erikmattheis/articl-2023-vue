@@ -32,6 +32,7 @@
         <label for="description">Description
           <textarea
             id="description"
+            v-model="description"
             name="description"
             rows="10"
             cols="70" /></label>
@@ -77,7 +78,6 @@ export default {
     description: null,
     errorMessage: '',
     formAction: '',
-    id: '',
     isLoading: true,
     oldSlug: null,
     parentSlug: null,
@@ -112,6 +112,7 @@ export default {
   },
   mounted() {
     this.parentSlug = this.$route.query.parentSlug;
+    this.id = this.$route.params.id;
 
     this.formAction = this.id ? 'Edit' : 'Create';
 

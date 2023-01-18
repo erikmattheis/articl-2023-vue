@@ -8,13 +8,17 @@
   --card-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --button-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   --button-hover-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  //--primary-focus: ;
   --form-element-focus-color: transparent;
   --primary-nav-background: $grey-200;
 
   --line-height: 1.5;
   --font-weight: 400;
   --font-size: 17px;
+
+  a:focus,
+  [role=link]:focus {
+    --background-color: transparent;
+  }
   
   // Responsive typography
   @if $enable-responsive-typography {
