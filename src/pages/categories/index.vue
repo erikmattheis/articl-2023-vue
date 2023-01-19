@@ -135,7 +135,9 @@ export default {
 
         Object.assign(this, result.data);
 
-        this.oldSlug = result.data.slug;
+        this.slug = decodeURIComponent(this.slug);
+
+        this.oldSlug = decodeURIComponent(result.data.slug);
 
         this.isLoading = false;
       } catch (error) {
@@ -224,6 +226,10 @@ export default {
         this.buttonDisabled = false;
       }
     },
+    removePunctuation(str) {
+      return str.replace(/[^\w\s']|_/g, '').replace(/\s+/g, ' ');
+    },
+
   },
 };
 </script>

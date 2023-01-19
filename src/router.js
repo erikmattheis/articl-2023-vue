@@ -120,7 +120,7 @@ const router = createRouter({
 
     {
       name: 'editCategory',
-      path: '/categories/:id?',
+      path: '/categories/edit/:id?',
       component: createCategoryPage,
     },
 
