@@ -1,3 +1,21 @@
+/*
+Coding instructions for Chat GPT:
+
+Can you rewite it in a more consistant style? Such as where variables are deined and stored?
+
+Specifically -
+
+Use async/await
+Use try/catch
+Use global error handler
+Use axios to make requests
+Identify places where I could better use the advice "don't repeat yourself" - moving functions that may be used in other to services
+Suggest functions that can be abstracted so they can be used in other files.
+
+What other suggestions do you have to improve the code?
+
+*/
+
 import 'core-js/actual/array/group-by';
 
 import axios from 'axios';
@@ -5,7 +23,7 @@ import axios from 'axios';
 import { createApp } from 'vue';
 import VueCookies from 'vue-cookies';
 
-import { getAccessTokenValue } from '@/services/tokensService';
+import { getAccessTokenValue, getRefreshTokenExpires } from '@/services/tokensService';
 
 import App from './App.vue';
 import router from './router';
@@ -43,69 +61,59 @@ app.config.globalProperties.$http.interceptors.request.use(
   },
   (error) => error,
 );
-
 /*
-const refreshAuthLogic = (failedRequest) => {
+app.config.globalProperties.$http.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const { config, response: { status } } = error;
+    const originalRequest = config;
 
-  return axios.post({
-    method: "POST",
-    url: `${baseURL}/auth/refresh-tokens`,
-    data: {
-      refreshToken: getRefreshTokenValue(),
-    },
-    skipAuthRefresh: true,
-  })
-    .then((tokens) => {
+    if (status === 401) {
+      if (
+        accessTokenExpires()
+        && refreshTokenExpires()
+        && Date.now() > refreshTokenExpires
+      ) {
+        // refresh token has expired, redirect to login page
+        // logout();
+        router.push({ name: 'login' });
+        return Promise.reject(error);
+      }
 
-      setTokens(tokens.data);
-      return Promise.resolve(failedRequest);
-
-    });
-
-};
-
-/*
-async function refreshAuthLogic(failedRequest) {
-
-  if (!getRefreshTokenValue() || failedRequest.isRetry) {
-
-    router.push({ name: "loginPage", query: { redirect: router.currentRoute.value.path } });
-    return Promise.reject();
-
-  }
-
-  // does it need axios instance returned
-  return axios({
-    method: "POST",
-    url: `${baseURL}/auth/refresh-tokens`,
-    data: {
-      refreshToken: getRefreshTokenValue(),
-    },
-  })
-    .then((tokens) => {
-
-      console.log("i am right here", tokens);
-      // eslint-disable-next-line no-param-reassign
-      failedRequest.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
-
-      // eslint-disable-next-line no-param-reassign
-      failedRequest.isRetry = true;
-
-      setTokens(tokens.data);
-
-      return Promise.resolve();
-
-    })
-    .catch((error) => {
-
-      console.log("catching error here", error);
-      return Promise.reject(error);
-
-    });
-
-}
+      // try to renew the session
+      try {
+        await renewSession();
+        // retry the original request
+        return axios(originalRequest);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    }
+    return Promise.reject(error);
+  },
+);
 */
-// createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
+app.config.globalProperties.$http.interceptors.response.use(async (response) => response, async (error) => {
+  const { status } = error.response;
+  if (status === 401) {
+    // check if refresh token is still valid
+    if (getRefreshTokenExpires() > Date.now()) {
+      console.log('refresh token is still valid, renew the session');
+      try {
+        await store.dispatch('renewSession');
+        return axios(error.config);
+      } catch (err) {
+        // session renewal failed, redirect to login page
+        store.dispatch('logout');
+        router.push({ name: 'login' });
+      }
+    }
+    // refresh token is expired, redirect to login page
+    store.dispatch('logout');
+    router.push({ name: 'login' });
+  }
+  return Promise.reject(error);
+});
 
 app.use(router);
 

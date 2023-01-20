@@ -409,11 +409,7 @@ export default {
             },
           });
 
-          console.log('just  ', this.method);
-
           if (result.data) {
-            console.log('got result');
-
             this.result = result.data;
 
             if (this.method === 'POST') {
