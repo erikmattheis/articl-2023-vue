@@ -1,11 +1,11 @@
 <template>
   <article>
     <h1>Delete Category</h1>
-    slug: {{ slug }}
-    <p>Really delete "{{ category.title }}"? This will remove {{ categories.length }} descendent categories to be removed from category navigation.</p>
+
+    <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories to be removed from category navigation.</p>
     <form>
       <button
-        v-if="!!id"
+        v-if="slug"
         :aria-busy="buttonDisabled"
         @click="deleteCategory()">
         Delete
@@ -22,6 +22,7 @@ export default {
   data: () => ({
     buttonDisabled: false,
     categories: [],
+    title: '',
     slug: '',
   }),
   params: {
@@ -30,7 +31,6 @@ export default {
 
   mounted() {
     this.slug = this.$route.params.slug;
-    console.log('slug', this.slug);
     this.getCurrentCategory(this.slug);
   },
   methods: {
@@ -40,7 +40,8 @@ export default {
 
         const result = await this.getCategory(slug);
         Object.assign(this, result.data);
-
+        console.log('result', result.data);
+        this.title = result.data?.category[0]?.title;
         this.isLoading = false;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
