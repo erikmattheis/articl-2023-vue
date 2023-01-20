@@ -8,7 +8,7 @@
 
     <router-link
       role="button"
-      :to="{ name: 'deleteCategory', params:{id}}">
+      :to="{ name: 'deleteCategory', params:{slug,title}}">
       <small>delete</small>
     </router-link>
 
@@ -37,7 +37,7 @@ export default {
       type: String,
       default: '',
     },
-    title: {
+    slug: {
       type: String,
       default: '',
     },

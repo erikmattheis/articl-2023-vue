@@ -9,7 +9,7 @@
       v-if="isLoggedIn"
       :id="category.id"
       class="box"
-      :title="category.title" />
+      :slug="category.slug" />
   </li>
 </template>
 
@@ -37,7 +37,10 @@ export default {
       type: String,
       default: '',
     },
-
+    slug: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {

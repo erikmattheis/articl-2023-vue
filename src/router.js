@@ -126,7 +126,7 @@ const router = createRouter({
 
     {
       name: 'deleteCategory',
-      path: '/categories/delete/:id?',
+      path: '/categories/delete/:slug?',
       component: deleteCategoryPage,
     },
 
