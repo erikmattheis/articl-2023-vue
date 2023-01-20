@@ -7,7 +7,7 @@
       <button
         v-if="slug"
         :aria-busy="buttonDisabled"
-        @click="deleteCategory()">
+        @click.prevent="deleteCategory()">
         Delete
       </button>
     </form>
@@ -24,6 +24,8 @@ export default {
     categories: [],
     title: '',
     slug: '',
+    parentSlug: '',
+    id: '',
   }),
   params: {
 
@@ -42,6 +44,8 @@ export default {
         Object.assign(this, result.data);
         console.log('result', result.data);
         this.title = result.data?.category[0]?.title;
+        this.parentSlug = result.data?.category[0]?.parentSlug;
+        this.id = result.data?.category[0]?.id;
         this.isLoading = false;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
@@ -65,6 +69,8 @@ export default {
           'modals/setSuccessMessage',
           `The category "${this.title}" has been permanently deleted.`,
         );
+        console.log('this.parentSlug', this.parentSlug);
+        this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       } finally {

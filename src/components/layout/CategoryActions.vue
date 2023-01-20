@@ -9,7 +9,7 @@
     <router-link
       role="button"
       :to="{ name: 'deleteCategory', params:{slug}}">
-      <small>delete</small>Show 
+      <small>delete</small>
     </router-link>
 
     <a
