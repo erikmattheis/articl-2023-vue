@@ -43,7 +43,6 @@
 <script>
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
-import { setTokens } from '@/services/tokensService';
 
 export default {
   name: 'LoginPage',
@@ -104,8 +103,12 @@ export default {
           }
 
           this.resetFormErrors();
-
-          setTokens(result.data.tokens);
+          const tokensMS = this.convertStringDatesToMS(result.data.tokens);
+          console.log('tokensMS', tokensMS);
+          this.$store.dispatch('tokens/accessTokenValue', tokensMS.access.token);
+          this.$store.dispatch('tokens/accessTokenExpires', tokensMS.access.expires);
+          this.$store.dispatch('tokens/refreshTokenValue', tokensMS.refresh.token);
+          this.$store.dispatch('tokens/refreshTokenExpires', tokensMS.refresh.expires);
 
           const theme = result.data.user?.theme !== 'dark' ? 'light' : 'dark';
 
@@ -146,6 +149,22 @@ export default {
       } finally {
         this.buttonDisabled = false;
       }
+    },
+
+    convertStringDatesToMS(tokens) {
+      const result = JSON.parse(JSON.stringify(tokens));
+
+      result.access.token = tokens.access.token;
+      result.access.expires = Date.parse(
+        tokens.access.expires,
+      );
+
+      result.access.token = tokens.access.token;
+      result.refresh.expires = Date.parse(
+        tokens.refresh.expires,
+      );
+
+      return result;
     },
   },
 };

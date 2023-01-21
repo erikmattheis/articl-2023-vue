@@ -109,7 +109,6 @@ export default {
     queryUC: (val) => val[0].toUpperCase() + val.substring(1),
     ...mapGetters({
       years: 'articlsParams/years',
-      isLoggedIn: 'tokens/isLoggedIn',
     }),
     text: {
       get() {

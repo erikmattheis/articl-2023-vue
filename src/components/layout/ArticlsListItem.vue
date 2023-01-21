@@ -10,7 +10,7 @@
         </a>
 
         <div
-          v-if="isLoggedIn"
+          v-if="isLoggedInMixin"
           class="admin articl-actions">
           <articl-actions
             :id="articl.id"
@@ -129,7 +129,6 @@ export default {
   computed: {
     ...mapGetters({
       params: 'articlsParams/params',
-      isLoggedIn: 'tokens/isLoggedIn',
     }),
     monthStr() {
       if (!isNumber(Number(this.articl.month))) {

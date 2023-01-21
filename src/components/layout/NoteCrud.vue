@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 
@@ -44,11 +43,6 @@ export default {
     isLoading: true,
     id: undefined,
   }),
-  computed: {
-    ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
-    }),
-  },
   mounted() {
     this.formAction = this.id ? 'Edit' : 'Create';
 

@@ -6,7 +6,7 @@
       {{ category.title }}
     </router-link>
     <category-actions
-      v-if="isLoggedIn"
+      v-if="isLoggedInMixin"
       :id="category.id"
       class="box"
       :slug="category.slug" />
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 import CategoryActions from '@/components/layout/CategoryActions.vue';
 
@@ -47,12 +46,6 @@ export default {
     return {
       TabName: '',
     };
-  },
-
-  computed: {
-    ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
-    }),
   },
 
   methods: {

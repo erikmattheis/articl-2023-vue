@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 import CardNotification from '@/components/ui/CardNotification.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
@@ -104,10 +103,6 @@ export default {
 
       return str;
     },
-
-    ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
-    }),
 
   },
   mounted() {
@@ -205,7 +200,7 @@ export default {
 
           await this.$http({
             method: verb,
-            url: `/categories/${id}`,
+            url: '/categories/',
             data,
           });
 
@@ -217,6 +212,7 @@ export default {
             'modals/setSuccessMessage',
             'The category was successfully updated.',
           );
+          this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }

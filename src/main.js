@@ -19,17 +19,18 @@ What other suggestions do you have to improve the code?
 import 'core-js/actual/array/group-by';
 
 import axios from 'axios';
-// import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { createApp } from 'vue';
 import VueCookies from 'vue-cookies';
-
-import { getAccessTokenValue, getRefreshTokenExpires } from '@/services/tokensService';
 
 import App from './App.vue';
 import router from './router';
 import store from './store/index';
 
+import isLoggedInMixin from './mixins/isLoggedInMixin';
+
 const app = createApp(App);
+
+app.mixin(isLoggedInMixin);
 
 let baseURL = '';
 let secure = true;
@@ -51,7 +52,7 @@ app.config.globalProperties.$http = axios.create({
 app.config.globalProperties.$http.interceptors.request.use(
   (request) => {
     const req = request;
-    const accessTokenValue = getAccessTokenValue();
+    const { accessTokenValue } = store.state.tokens;
 
     if (accessTokenValue && req.url !== '/auth/refresh-tokens') {
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
@@ -61,43 +62,14 @@ app.config.globalProperties.$http.interceptors.request.use(
   },
   (error) => error,
 );
-/*
-app.config.globalProperties.$http.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const { config, response: { status } } = error;
-    const originalRequest = config;
 
-    if (status === 401) {
-      if (
-        accessTokenExpires()
-        && refreshTokenExpires()
-        && Date.now() > refreshTokenExpires
-      ) {
-        // refresh token has expired, redirect to login page
-        // logout();
-        router.push({ name: 'login' });
-        return Promise.reject(error);
-      }
-
-      // try to renew the session
-      try {
-        await renewSession();
-        // retry the original request
-        return axios(originalRequest);
-      } catch (err) {
-        return Promise.reject(err);
-      }
-    }
-    return Promise.reject(error);
-  },
-);
-*/
 app.config.globalProperties.$http.interceptors.response.use(async (response) => response, async (error) => {
-  const { status } = error.response;
+  const { status } = error;
+
   if (status === 401) {
     // check if refresh token is still valid
-    if (getRefreshTokenExpires() > Date.now()) {
+    const { refreshTokenExpires } = store.state.tokens;
+    if (refreshTokenExpires > Date.now()) {
       console.log('refresh token is still valid, renew the session');
       try {
         await store.dispatch('renewSession');

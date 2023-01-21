@@ -15,7 +15,7 @@
         <span :aria-busy="isLoading" /> <span v-if="!isLoading">{{ note.fullText }}</span>
       </li>
     </ul>
-    <div v-if="isLoggedIn">
+    <div v-if="isLoggedInMixin">
       <admin-actions-note
         :id="note.id"
         :full-text="note.fullText"
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 import AdminActionsNote from '@/components/layout/AdminActionsNote.vue';
 import NoteCrud from '@/components/layout/NoteCrud.vue';
@@ -53,12 +52,6 @@ export default {
     isEditing: false,
     isLoading: false,
   }),
-
-  computed: {
-    ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
-    }),
-  },
 
   created() {
     this.note = this.passedNote;

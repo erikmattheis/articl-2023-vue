@@ -69,7 +69,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
       articls: 'categoryPages/articls',
       articlTypes: 'categoryPages/articlTypes',
     }),

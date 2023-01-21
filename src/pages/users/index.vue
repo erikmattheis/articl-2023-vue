@@ -8,63 +8,60 @@
     </h1>
     <form>
       <template v-if="!isLoading">
-        <template v-if="method === 'POST'">
-          <label for="username">User Name {{ usernameInvalid }}
+        <label for="username">Username
+          <input
+            id="username"
+            v-model="username"
+            :readonly="isLoggedInMixin"
+            type="text"
+            name="username"
+            autocomplete="username"
+            :aria-invalid="usernameInvalid"
+            @keyup="removeUsernameWhiteSpace"
+            @change="checkUsername"></label>
+
+        <label for="password">Password
+          <small
+            v-if="passwordComplexity < 3"
+            class="left-space">
+            Use upper- and lowercase, numerical and special characters.
+          </small>
+          <small
+            v-else-if="password.length < 8"
+            class="left-space">
+            Please use 8 or more characters.
+          </small>
+
+          <div class="toggle-password">
             <input
-              id="username"
-              v-model="username"
-              type="text"
-              name="username"
-              autocomplete="username"
-              :aria-invalid="usernameInvalid"
-              @keyup="removeUsernameWhiteSpace"
-              @change="checkUsername"></label>
+              id="password"
+              v-model="password"
+              :type="passwordType"
+              :aria-invalid="checkPassword"
+              name="password"
+              autocomplete="new-password"
+              @keyup="checkPassword">
+            <the-button-toggle-hidden
+              class="toggle-password-mask"
+              @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
+          </div>
+        </label>
+        <label for="password2">Confirm password
+          <div class="toggle-password">
+            <input
+              id="password2"
+              v-model="password2"
+              :type="password2Type"
+              name="password2"
+              :aria-invalid="password2Invalid"
+              autocomplete="new-password"
+              @keyup="checkPassword2">
+            <the-button-toggle-hidden
+              class="toggle-password-mask"
+              @show="password2Type = password2Type === 'text' ? 'password' : 'text'" />
+          </div>
+        </label>
 
-          <label for="password">Password
-            <small
-              v-if="passwordComplexity < 3"
-              class="left-space">
-              Use upper- and lowercase, numerical and special characters.
-            </small>
-            <small
-              v-else-if="password.length < 8"
-              class="left-space">
-              Please use 8 or more characters.
-            </small>
-
-            <div class="toggle-password">
-              <input
-                id="password"
-                v-model="password"
-                :type="passwordType"
-                :aria-invalid="checkPassword"
-                name="password"
-                autocomplete="new-password"
-                @keyup="checkPassword">
-              <the-button-toggle-hidden
-                class="toggle-password-mask"
-                @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
-            </div>
-          </label>
-          <label for="password2">Confirm password
-            <div class="toggle-password">
-              <input
-                id="password2"
-                v-model="password2"
-                :type="password2Type"
-                name="password2"
-                :aria-invalid="password2Invalid"
-                autocomplete="new-password"
-                @keyup="checkPassword2">
-              <the-button-toggle-hidden
-                class="toggle-password-mask"
-                @show="password2Type = password2Type === 'text' ? 'password' : 'text'" />
-            </div>
-          </label>
-        </template>
-        <p v-else>
-          Username: {{ username }}
-        </p>
         <fieldset class="grid">
           <div>
             <label for="nameFirst">First Name
@@ -175,7 +172,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 import selectCountries from '@/components/ui/SelectCountries.vue';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
@@ -197,6 +193,7 @@ export default {
 
   data: () => ({
     username: '',
+    usernameInvalid: false,
     password: '',
     passwordType: 'password',
     passwordInvalid: '',
@@ -227,12 +224,6 @@ export default {
     errorMessage: '',
     result: '',
   }),
-
-  computed: {
-    ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
-    }),
-  },
   watch: {
     password: {
       handler(val) {
@@ -241,7 +232,7 @@ export default {
     },
   },
   mounted() {
-    if (this.isLoggedIn) {
+    if (this.isLoggedInMixin) {
       this.method = 'GET';
 
       this.fetchData();

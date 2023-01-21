@@ -6,7 +6,7 @@
     <tab-categories />
 
     <directory-actions
-      v-if="isLoggedIn" />
+      v-if="isLoggedInMixin" />
   </article>
 
   <loading-placeholder v-else />
@@ -35,7 +35,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
       treeLevel: 'categoryPages/treeLevel',
       articls: 'categoryPages/articls',
       articlTypes: 'categoryPages/articlTypes',

@@ -37,7 +37,7 @@
             </router-link>
           </li>
 
-          <li v-if="!isLoggedIn">
+          <li v-if="!isLoggedInMixin">
             <router-link
               to="/login">
               <span class="sr">User</span>
@@ -161,7 +161,7 @@ export default {
   computed: {
 
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
+      accessTokenExpires: 'tokens/accessTokenExpires',
     }),
 
   },

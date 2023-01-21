@@ -58,7 +58,7 @@
 
     <router-view :class="{ 'nav-content': treeLevel > 1 }" />
 
-    <directory-actions v-if="isLoggedIn" />
+    <directory-actions v-if="isLoggedInMixin" />
   </article>
 
   <loading-placeholder v-else />
@@ -89,7 +89,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
       treeLevel: 'categoryPages/treeLevel',
       articls: 'categoryPages/articls',
       articlTypes: 'categoryPages/articlTypes',

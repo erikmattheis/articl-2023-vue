@@ -29,11 +29,6 @@ export default {
     isEditing: false,
     editMode: false,
   }),
-  computed: {
-    ...mapGetters({
-      isLoggedIn: 'tokens/isLoggedIn',
-    }),
-  },
 
   methods: {
 
