@@ -213,7 +213,11 @@ export default {
             'modals/setSuccessMessage',
             'The category was successfully updated.',
           );
-          this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+          if (Number(this.parentSlug) === 0) {
+            this.$router.push({ name: 'homePage' });
+          } else {
+            this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+          }
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }

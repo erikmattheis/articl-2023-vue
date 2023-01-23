@@ -2,7 +2,7 @@
   <article>
     <h1>Delete Category</h1>
 
-    <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories to be removed from category navigation.</p>
+    <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories  from category navigation.</p>
     <form>
       <button
         v-if="slug"
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'DeleteCategory',
   components: {
@@ -68,7 +69,11 @@ export default {
           'modals/setSuccessMessage',
           `The category "${this.title}" has been permanently deleted.`,
         );
-        this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+        if (Number(this.parentSlug) === 0) {
+          this.$router.push({ name: 'homePage' });
+        } else {
+          this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+        }
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       } finally {
