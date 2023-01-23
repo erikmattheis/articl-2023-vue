@@ -783,11 +783,16 @@ export default {
   emits: ['change-country'],
   data() {
     return {
-      modelValue: this.country,
+      modelValue: '',
     };
   },
+  watch: {
+    country(newValue) {
+      this.modelValue = newValue;
+    },
+  },
   created() {
-
+    this.modelValue = this.country;
   },
   methods: {
 

@@ -147,7 +147,7 @@
             :aria-invalid="cityInvalid"
             autocomplete="address-level2"
             @blur="elementBlurred"></label>
-
+        country: {{ country }}
         <select-countries
           id="country"
           :country="country"
