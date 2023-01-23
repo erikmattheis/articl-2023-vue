@@ -149,7 +149,7 @@
           v-model="country"
           :aria-invalid="countryInvalid"
           @change-country="changeCountry"
-          @blur="elementBlurred" />
+          @focusout="elementBlurred" />
 
         <button
           id="Update"
@@ -279,7 +279,7 @@ export default {
       return this.city.length === 0;
     },
     countryInvalid() {
-      if (this.focusedElements.indexOf('country') > -1) {
+      if (this.focusedElements.indexOf('country') === -1) {
         return null;
       }
       return this.country.length === 0;
@@ -314,7 +314,7 @@ export default {
 
   methods: {
     elementBlurred(e) {
-      console.log(e.target.name);
+      console.log(e);
       if (this.focusedElements.indexOf(e.target.name) === -1) {
         this.focusedElements.push(e.target.name);
       }
@@ -369,13 +369,7 @@ export default {
     resetFormErrors() {
       this.result = null;
     },
-
-    usernameHasBlurred(val) {
-      return val.length < 3;
-    },
-
     changeCountry(country) {
-      this.checkCountry();
       this.country = country;
     },
 

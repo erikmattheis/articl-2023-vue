@@ -3,11 +3,11 @@
     <label for="country">Country
       <select
         id="country"
+        name="country"
         :value="modelValue"
         :aria-invalid="ariaInvalid"
         autocomplete="country-name"
-        @change="changeCountry"
-        @blur="countryBlurred">
+        @change="changeCountry">
         <option
           value="">
           Choose one
@@ -773,6 +773,10 @@ export default {
     modelValue: {
       type: String,
       default: '',
+    },
+    ariaInvalid: {
+      type: Boolean,
+      default: null,
     },
   },
   emits: ['change-country'],
