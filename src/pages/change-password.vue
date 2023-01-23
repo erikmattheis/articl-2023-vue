@@ -1,7 +1,8 @@
 <template>
   <article>
-    <h1>Reset newPassword</h1>
+    <h1>Reset Password</h1>
     <form>
+      <!--
       <label for="password">Current password
         <div class="toggle-password">
           <input
@@ -13,6 +14,13 @@
             class="toggle-password-mask"
             @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
         </div>
+      </label>
+      -->
+      <label for="username">Username
+        <input
+          id="username"
+          v-model="username"
+          autocomplete="username">
       </label>
       <label for="newPassword">New password
         <small
@@ -75,10 +83,10 @@ export default {
     theButtonToggleHidden,
   },
   data: () => ({
+    username: null,
     password: null,
     newPassword: null,
     newPassword2: null,
-    passwordType: 'password',
     newPasswordType: 'password',
     newPassword2Type: 'password',
     buttonDisabled: false,
@@ -130,8 +138,9 @@ export default {
             method: 'POST',
             url: '/auth/change-password',
             data: {
-              password: this.password,
+              username: this.username,
               newPassword: this.newPassword,
+              newPassword2: this.newPassword2,
             },
           });
 
