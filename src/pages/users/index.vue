@@ -8,7 +8,7 @@
     </h1>
     <form>
       <template v-if="!isLoading">
-        <label for="username">Username
+        <label for="username">Username {{ isLoggedInMixin }}
           <input
             id="username"
             v-model="username"
@@ -20,7 +20,9 @@
             @keyup="removeUsernameWhiteSpace"
             @blur="elementBlurred"></label>
 
-        <label for="password">Password
+        <label
+          v-if="!isLoggedInMixin"
+          for="password">Password
           <small
             v-if="passwordComplexity < 3"
             class="left-space">
@@ -47,7 +49,9 @@
               @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
           </div>
         </label>
-        <label for="password2">Confirm password
+        <label
+          v-if="!isLoggedInMixin"
+          for="password2">Confirm password
           <div class="toggle-password">
             <input
               id="password2"
@@ -146,7 +150,7 @@
 
         <select-countries
           id="country"
-          v-model="country"
+          :country="country"
           :aria-invalid="countryInvalid"
           @change-country="changeCountry"
           @focusout="elementBlurred" />
@@ -314,7 +318,6 @@ export default {
 
   methods: {
     elementBlurred(e) {
-      console.log(e);
       if (this.focusedElements.indexOf(e.target.name) === -1) {
         this.focusedElements.push(e.target.name);
       }
@@ -325,9 +328,9 @@ export default {
 
         const result = await this.getMe();
 
-        Object.assign(this, result);
+        /* Object.assign(this, result); */
 
-        this.usernameFocused = result.username ? result.username : '';
+        this.username = result.username ? result.username : '';
 
         this.nameFirst = result.nameFirst ? result.nameFirst : '';
 

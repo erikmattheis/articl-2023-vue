@@ -20,6 +20,10 @@
     --background-color: transparent;
   }
   
+  input[readonly] {
+    cursor: not-allowed;
+  }
+
   // Responsive typography
   @if $enable-responsive-typography {
     @if map-get($breakpoints, "xs") {

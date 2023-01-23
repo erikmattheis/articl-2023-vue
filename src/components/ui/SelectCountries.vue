@@ -9,8 +9,9 @@
         autocomplete="country-name"
         @change="changeCountry">
         <option
+          disabled
           value="">
-          Choose one
+          Please select one
         </option>
         <option value="US">
           United States
@@ -770,7 +771,7 @@
 <script>
 export default {
   props: {
-    modelValue: {
+    country: {
       type: String,
       default: '',
     },
@@ -780,6 +781,14 @@ export default {
     },
   },
   emits: ['change-country'],
+  data() {
+    return {
+      modelValue: this.country,
+    };
+  },
+  created() {
+
+  },
   methods: {
 
     changeCountry($event) {

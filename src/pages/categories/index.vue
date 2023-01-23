@@ -229,9 +229,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-input[readonly] {
-  cursor: not-allowed;
-}
-</style>
