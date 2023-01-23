@@ -187,6 +187,7 @@ export default {
           this.buttonDisabled = true;
 
           const verb = id ? 'PUT' : 'POST';
+          const possiblyEmtyId = id || '';
           const data = {
             title: this.title,
             slug: this.slug,
@@ -200,7 +201,7 @@ export default {
 
           await this.$http({
             method: verb,
-            url: '/categories/',
+            url: `/categories/${possiblyEmtyId}`,
             data,
           });
 
