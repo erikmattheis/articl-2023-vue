@@ -18,7 +18,7 @@
             autocomplete="username"
             :aria-invalid="usernameInvalid"
             @keyup="removeUsernameWhiteSpace"
-            @change="checkUsername"></label>
+            @blur="elementBlurred"></label>
 
         <label for="password">Password
           <small
@@ -37,10 +37,11 @@
               id="password"
               v-model="password"
               :type="passwordType"
-              :aria-invalid="checkPassword"
+              :aria-invalid="passwordInvalid"
               name="password"
               autocomplete="new-password"
-              @keyup="checkPassword">
+              @keyup="checkPassword"
+              @blur="elementBlurred">
             <the-button-toggle-hidden
               class="toggle-password-mask"
               @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
@@ -55,7 +56,7 @@
               name="password2"
               :aria-invalid="password2Invalid"
               autocomplete="new-password"
-              @keyup="checkPassword2">
+              @blur="elementBlurred">
             <the-button-toggle-hidden
               class="toggle-password-mask"
               @show="password2Type = password2Type === 'text' ? 'password' : 'text'" />
@@ -70,9 +71,9 @@
                 v-model="nameFirst"
                 type="text"
                 name="nameFirst"
-                :aria-invalid="checkNameFirst"
+                :aria-invalid="nameFirstInvalid"
                 autocomplete="given-name"
-                @keyup="checkNameFirst"></label>
+                @blur="elementBlurred"></label>
           </div>
           <div>
             <label for="nameLast">Last Name
@@ -83,7 +84,7 @@
                 name="nameLast"
                 :aria-invalid="nameLastInvalid"
                 autocomplete="family-name"
-                @keyup="checkNameLast"></label>
+                @blur="elementBlurred"></label>
           </div>
         </fieldset>
 
@@ -95,7 +96,7 @@
             name="email"
             :aria-invalid="emailInvalid"
             autocomplete="email"
-            @keyup="checkEmail"></label>
+            @blur="elementBlurred"></label>
 
         <label for="position">Current position
           <select
@@ -103,7 +104,7 @@
             v-model="position"
             name="position"
             :aria-invalid="positionInvalid"
-            @change="checkPosition">
+            @blur="elementBlurred">
             <option
               disabled
               value="">
@@ -123,7 +124,7 @@
             name="education"
             :aria-invalid="educationInvalid"
             autocomplete="education"
-            @keyup="checkEducation"></label>
+            @blur="elementBlurred"></label>
         <label for="institution">Institution
           <input
             id="institution"
@@ -132,7 +133,7 @@
             name="institution"
             :aria-invalid="institutionInvalid"
             autocomplete="organization"
-            @keyup="checkInstitution"></label>
+            @blur="elementBlurred"></label>
         <label for="city">City
           <input
             id="city"
@@ -141,13 +142,14 @@
             name="city"
             :aria-invalid="cityInvalid"
             autocomplete="address-level2"
-            @keyup="checkCity"></label>
+            @blur="elementBlurred"></label>
 
         <select-countries
           id="country"
           v-model="country"
           :aria-invalid="countryInvalid"
-          @change-country="changeCountry" />
+          @change-country="changeCountry"
+          @blur="elementBlurred" />
 
         <button
           id="Update"
@@ -192,31 +194,21 @@ export default {
   },
 
   data: () => ({
+    focusedElements: [],
     username: '',
-    usernameInvalid: false,
     password: '',
     passwordType: 'password',
-    passwordInvalid: '',
     password2: '',
     password2Type: 'password',
-    password2Invalid: '',
     passwordComplexity: 0,
     nameFirst: '',
-    nameFirstInvalid: false,
     nameLast: '',
-    nameLastInvalid: false,
     email: '',
-    emailInvalid: false,
     position: '',
-    positionInvalid: false,
     education: '',
-    educationInvalid: false,
     institution: '',
-    institutionInvalid: false,
     city: '',
-    cityInvalid: false,
     country: '',
-    countryInvalid: false,
     method: 'PATCH',
     formActionUrl: '/users/me',
     buttonDisabled: false,
@@ -224,6 +216,75 @@ export default {
     errorMessage: '',
     result: '',
   }),
+  computed: {
+    usernameInvalid() {
+      if (this.focusedElements.indexOf('username') === -1) {
+        return null;
+      }
+      return this.username.length < 3;
+    },
+    passwordInvalid() {
+      if (this.focusedElements.indexOf('password') === -1) {
+        return null;
+      }
+      return this.password.length > 7 && this.passwordComplexity > 2;
+    },
+    password2Invalid() {
+      if (this.focusedElements.indexOf('password2') === -1) {
+        return null;
+      }
+      return this.password2 !== this.password;
+    },
+    nameFirstInvalid() {
+      if (this.focusedElements.indexOf('nameFirst') === -1) {
+        return null;
+      }
+      return this.nameFirst.length === 0;
+    },
+    nameLastInvalid() {
+      if (this.focusedElements.indexOf('nameLast') === -1) {
+        return null;
+      }
+      return this.nameLast.length === 0;
+    },
+    emailInvalid() {
+      if (this.focusedElements.indexOf('email') === -1) {
+        return null;
+      }
+      return this.validateEmail(this.email);
+    },
+    educationInvalid() {
+      if (this.focusedElements.indexOf('education') === -1) {
+        return null;
+      }
+      return this.education.length === 0;
+    },
+    positionInvalid() {
+      if (this.focusedElements.indexOf('position') === -1) {
+        return null;
+      }
+      console.log('this.position.length', this.position);
+      return this.position.length === 0;
+    },
+    institutionInvalid() {
+      if (this.focusedElements.indexOf('institution') === -1) {
+        return null;
+      }
+      return this.institution.length === 0;
+    },
+    cityInvalid() {
+      if (this.focusedElements.indexOf('city') === -1) {
+        return null;
+      }
+      return this.city.length === 0;
+    },
+    countryInvalid() {
+      if (this.focusedElements.indexOf('country') > -1) {
+        return null;
+      }
+      return this.country.length === 0;
+    },
+  },
   watch: {
     password: {
       handler(val) {
@@ -252,13 +313,21 @@ export default {
   },
 
   methods: {
+    elementBlurred(e) {
+      console.log(e.target.name);
+      if (this.focusedElements.indexOf(e.target.name) === -1) {
+        this.focusedElements.push(e.target.name);
+      }
+    },
     async fetchData() {
       try {
         this.isLoading = true;
 
         const result = await this.getMe();
 
-        this.username = result.username ? result.username : '';
+        Object.assign(this, result);
+
+        this.usernameFocused = result.username ? result.username : '';
 
         this.nameFirst = result.nameFirst ? result.nameFirst : '';
 
@@ -296,33 +365,20 @@ export default {
 
       return result.data;
     },
+
     resetFormErrors() {
       this.result = null;
     },
 
-    checkUsername(e) {
-      return e.target.value.length > 2;
+    usernameHasBlurred(val) {
+      return val.length < 3;
     },
 
     changeCountry(country) {
       this.checkCountry();
       this.country = country;
     },
-    checkPassword(e) {
-      return this.scoreChars(e.target.value) > 3;
-    },
-    checkPassword2(e) {
-      return e.target.value === this.password;
-    },
-    checkNameFirst(e) {
-      return e.target.value.length;
-    },
-    checkNameLast(e) {
-      return e.target.value.length;
-    },
-    checkEmail(e) {
-      return this.validateEmail(e.target.value);
-    },
+
     /*
 
         this.nameFirstInvalid = true;

@@ -4,8 +4,10 @@
       <select
         id="country"
         :value="modelValue"
+        :aria-invalid="ariaInvalid"
         autocomplete="country-name"
-        @change="changeCountry">
+        @change="changeCountry"
+        @blur="countryBlurred">
         <option
           value="">
           Choose one
