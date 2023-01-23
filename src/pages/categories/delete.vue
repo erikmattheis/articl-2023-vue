@@ -42,7 +42,6 @@ export default {
 
         const result = await this.getCategory(slug);
         Object.assign(this, result.data);
-        console.log('result', result.data);
         this.title = result.data?.category[0]?.title;
         this.parentSlug = result.data?.category[0]?.parentSlug;
         this.id = result.data?.category[0]?.id;
@@ -69,7 +68,6 @@ export default {
           'modals/setSuccessMessage',
           `The category "${this.title}" has been permanently deleted.`,
         );
-        console.log('this.parentSlug', this.parentSlug);
         this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
       } catch (error) {
         this.$store.dispatch('errors/setError', error);

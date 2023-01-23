@@ -70,7 +70,6 @@ app.config.globalProperties.$http.interceptors.response.use(async (response) => 
     // check if refresh token is still valid
     const { refreshTokenExpires } = store.state.tokens;
     if (refreshTokenExpires > Date.now()) {
-      console.log('refresh token is still valid, renew the session');
       try {
         await store.dispatch('renewSession');
         return axios(error.config);

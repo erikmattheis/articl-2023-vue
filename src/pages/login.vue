@@ -104,7 +104,6 @@ export default {
 
           this.resetFormErrors();
           const tokensMS = this.convertStringDatesToMS(result.data.tokens);
-          console.log('tokensMS', tokensMS);
           this.$store.dispatch('tokens/accessTokenValue', tokensMS.access.token);
           this.$store.dispatch('tokens/accessTokenExpires', tokensMS.access.expires);
           this.$store.dispatch('tokens/refreshTokenValue', tokensMS.refresh.token);

@@ -267,7 +267,6 @@ export default {
       if (this.focusedElements.indexOf('position') === -1) {
         return null;
       }
-      console.log('this.position.length', this.position);
       return this.position.length === 0;
     },
     institutionInvalid() {
@@ -432,8 +431,6 @@ export default {
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-          console.log('form passes setting button disabled');
-
           this.buttonDisabled = true;
 
           const result = await this.$http({
