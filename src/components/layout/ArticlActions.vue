@@ -1,23 +1,26 @@
 <template>
-  <router-link
-    :to="{ name: 'editArticl', params: { id } }">
-    edit
-  </router-link>
+  <div class="row-admin-box">
+    <router-link
+      role="button"
+      :to="{ name: 'editArticl', params:{id}}">
+      <small>edit</small>
+    </router-link>
+    <router-link
+      role="button"
+      :to="{ name: 'deleteArticl', params: { id, title }}">
+      <small>delete</small>
+    </router-link>
 
-  <router-link
-    :to="{ name: 'deleteArticl', params: { id, title } }">
-    delete
-  </router-link>
-
-  <span class="handle">
     <a
+      role="button"
+      class="handle"
       href="#"><div class="sr">Reorder articl</div>
       <vue-feather
-        size="1rem"
+        size="0.7rem"
         type="move"
         aria-label="Drag to reorder" />
     </a>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -53,6 +56,10 @@ export default {
 
 .grid a {
   display:inline-block;
-
+}
+a {
+  align-self: center;
+  justify-self: center;
+  border:0;
 }
 </style>

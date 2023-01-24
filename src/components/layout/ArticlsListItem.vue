@@ -1,24 +1,22 @@
 <template>
   <div class="articl">
     <ul>
-      <li class="title">
+      <li class="title container">
         <a
           :data-tooltip="linkMessage"
           :href="articl.articlUrl"
+          class="box"
           target="_blank">
           {{ articl.title }}
         </a>
 
-        <div
-          v-if="isLoggedInMixin"
-          class="admin articl-actions">
-          <articl-actions
-            :id="articl.id"
-            :title="articl.title" />
-        </div>
+        <articl-actions
+          :id="articl.id"
+          class="box"
+          :title="articl.title" />
       </li>
 
-      <li>
+      <li class="articl-details">
         <p class="authors-list">
           {{ authorsList }}
         </p>
@@ -45,14 +43,18 @@
         </details>
       </li>
 
-      <li v-if="articl.journal">
+      <li
+        v-if="articl.journal"
+        class="articl-details">
         {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
           :data-tooltip="linkMessage"
           :href="articl.articlUrl"
           target="_blank">{{ articl.articlUrl }}</a>
       </li>
 
-      <li v-if="articl.authorsOrig">
+      <li
+        v-if="articl.authorsOrig"
+        class="articl-details">
         <small>
           {{ highlightedSubstring(articl.authorsOrig, params.authors, "prefix")
           }}<strong
@@ -64,11 +66,15 @@
         </small>
       </li>
 
-      <li v-if="articl.source">
+      <li
+        v-if="articl.source"
+        class="articl-details">
         {{ articl.source }}
       </li>
 
-      <li v-if="articl.abstract">
+      <li
+        v-if="articl.abstract"
+        class="articl-details">
         <details>
           <summary>Abstract</summary>
           <div>
@@ -77,7 +83,9 @@
         </details>
       </li>
 
-      <li v-if="articl.fullText">
+      <li
+        v-if="articl.fullText"
+        class="articl-details">
         <details>
           <summary>FUull text</summary>
           <div>
@@ -86,20 +94,26 @@
         </details>
       </li>
 
-      <li v-if="articl.thumbnailImage">
+      <li
+        v-if="articl.thumbnailImage"
+        class="articl-details">
         <img
           :src="articl.thumbnailImage"
           :alt="articl.title">
       </li>
 
-      <li v-if="articl.url">
+      <li
+        v-if="articl.url"
+        class="articl-details">
         <img
           :src="articl.url"
           :alt="articl.title"><br>
         {{ articl.url }}
       </li>
 
-      <li v-if="articl.imageCaption">
+      <li
+        v-if="articl.imageCaption"
+        class="articl-details">
         {{ articl.imageCaption }}
       </li>
     </ul>
@@ -163,6 +177,26 @@ export default {
 
 <style scoped lang="scss">
 
+.container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: minmax(200px, 1fr) 200px;
+  color: #444;
+}
+
+li {
+  width:100%;
+  padding:
+
+  a {
+    cursor: pointer;
+  }
+}
+
+li:hover {
+  background-color: var(--primary-nav-background);
+}
+
 .articl {
   border-bottom: 1px solid $grey-100;
   margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
@@ -179,7 +213,7 @@ details {
 
 summary,
 details,
-li:not(.title) {
+.articl-details {
   font-size: 0.875rem;
 }
 
@@ -205,38 +239,4 @@ strong:not([class="not-strong"]) {
   margin-bottom: 0;
 }
 
-/*
-summary details .grid small::after {
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  -webkit-margin-start: calc(var(--spacing, 1rem) * 0.5);
-  margin-inline-start: calc(var(--spacing, 1rem) * 0.5);
-  float: right;
-  transform: rotate(-90deg);
-  background-image: var(--icon-chevron);
-  background-position: right center;
-  background-size: 1rem auto;
-  background-repeat: no-repeat;
-  content: "";
-  transition: transform var(--transition);
-}
-*/
-
-/*
-li {
-  width:100%;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1rem;
-}
-
-li:nth-child(even){
-    background-color: var(--bg1);
-}
-*/
-/*
-
-*/
 </style>
