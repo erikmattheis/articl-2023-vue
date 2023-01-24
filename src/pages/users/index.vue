@@ -8,7 +8,7 @@
     </h1>
     <form>
       <template v-if="!isLoading">
-        <label for="username">Username {{ isLoggedInMixin }}
+        <label for="username">Username
           <input
             id="username"
             v-model="username"
@@ -17,6 +17,7 @@
             name="username"
             autocomplete="username"
             :aria-invalid="usernameInvalid"
+            maxlen="64"
             @keyup="removeUsernameWhiteSpace"
             @blur="elementBlurred"></label>
 
@@ -24,14 +25,9 @@
           v-if="!isLoggedInMixin"
           for="password">Password
           <small
-            v-if="passwordComplexity < 3"
+            v-if="passwordInvalid"
             class="left-space">
-            Use upper- and lowercase, numerical and special characters.
-          </small>
-          <small
-            v-else-if="password.length < 8"
-            class="left-space">
-            Please use 8 or more characters.
+            Must be 8 or more characters and contain at least one uppercase letter, one lowercase letter and a digit.
           </small>
 
           <div class="toggle-password">
@@ -40,9 +36,9 @@
               v-model="password"
               :type="passwordType"
               :aria-invalid="passwordInvalid"
+              maxlen="64"
               name="password"
               autocomplete="new-password"
-              @keyup="checkPassword"
               @blur="elementBlurred">
             <the-button-toggle-hidden
               class="toggle-password-mask"
@@ -57,6 +53,7 @@
               id="password2"
               v-model="password2"
               :type="password2Type"
+              maxlen="64"
               name="password2"
               :aria-invalid="password2Invalid"
               autocomplete="new-password"
@@ -147,7 +144,6 @@
             :aria-invalid="cityInvalid"
             autocomplete="address-level2"
             @blur="elementBlurred"></label>
-        country: {{ country }}
         <select-countries
           id="country"
           :country="country"
@@ -164,14 +160,18 @@
           <span v-if="!buttonDisabled && method === 'PATCH'">Update Account</span>
           <span v-else-if="!buttonDisabled">Create Account</span>
         </button>
-        <router-link to="/change-password">
+        <router-link
+          v-if="isLoggedInMixin"
+          to="/change-password">
           Change password
         </router-link>
-        <router-link
-          to="/logout"
-          class="right">
+        <a
+          v-if="isLoggedInMixin"
+          class="right"
+          @keyup="logout()"
+          @click="logout()">
           Log out
-        </router-link>
+        </a>
       </template>
     </form>
   </article>
@@ -231,13 +231,14 @@ export default {
       if (this.focusedElements.indexOf('password') === -1) {
         return null;
       }
-      return this.password.length > 7 && this.passwordComplexity > 2;
+
+      return this.scoreChars(this.password) < 4;
     },
     password2Invalid() {
       if (this.focusedElements.indexOf('password2') === -1) {
         return null;
       }
-      return this.password2 !== this.password;
+      return (this.password.length > 0 && this.password2 !== this.password) || this.scoreChars(this.password2) < 4;
     },
     nameFirstInvalid() {
       if (this.focusedElements.indexOf('nameFirst') === -1) {
@@ -286,13 +287,6 @@ export default {
         return null;
       }
       return this.country.length === 0;
-    },
-  },
-  watch: {
-    password: {
-      handler(val) {
-        this.passwordComplexity = this.scoreChars(val);
-      },
     },
   },
   mounted() {
@@ -375,50 +369,49 @@ export default {
       this.country = country;
     },
 
-    /*
-
-        this.nameFirstInvalid = true;
-        errorMessages.push("Please enter both your fist and last names.");
-        passed = false;
-
-      }
-    if(!this.nameLast) {
-
-      this.nameLastInvalid = true;
-      errorMessages.push("Please enter both your fist and last names.");
-      passed = false;
-
-    }
-    if (!this.institution) {
-
-      this.institutionInvalid = true;
-      errorMessages.push("Please enter your institution.");
-      passed = false;
-
-    }
-    if (!this.city) {
-
-      this.cityInvalid = true;
-      errorMessages.push("Please enter your city.");
-      passed = false;
-
-    }
-    if (!this.country) {
-
-      this.countryInvalid = true;
-      errorMessages.push("Please enter your country.");
-      passed = false;
-      {
-
-      }
-    }
-        */
     checkForm() {
       const passed = true;
 
       const errorMessages = [];
 
-      if (!passed) {
+      if (this.method === 'POST') {
+        if (this.usernameInvalid) {
+          errorMessages.push('Your username must be at least three characters long.');
+        }
+
+        if (this.passwordInvalid) {
+          errorMessages.push('Password must be at least eight chanacters and contain an upper case letter, a lower case letter and a digit.');
+        }
+        if (this.password2Invalid) {
+          errorMessages.push('Please conform (re-enter) a password.');
+        }
+      }
+      if (this.nameFirstInvalid) {
+        errorMessages.push('Please enter your first name.');
+      }
+      if (this.nameLastInvalid) {
+        errorMessages.push('Please enter your last name.');
+      }
+      if (this.emailInvalid) {
+        errorMessages.push('Please enter a valid email address.');
+      }
+      if (this.educationInvalid) {
+        errorMessages.push('Please enter your education.');
+      }
+      if (this.positionInvalid) {
+        errorMessages.push('Please enter your position.');
+      }
+      if (this.institutionInvalid) {
+        errorMessages.push('Please enter your institution.');
+      }
+      if (this.cityInvalid) {
+        errorMessages.push('Please enter your city.');
+      }
+      if (this.countryInvalid) {
+        errorMessages.push('Please enter your country.');
+      }
+
+      if (!errorMessages.length) {
         this.errorMessage = errorMessages.join(',');
         this.$store.dispatch('errors/setError', this.errorMessage);
       }
@@ -472,7 +465,33 @@ export default {
         this.buttonDisabled = false;
       }
     },
+    async logout() {
+      try {
+        const refreshToken = this.$store.getters['tokens/refreshTokenValue'];
 
+        if (refreshToken) {
+          await this.$http({
+            method: 'POST',
+            url: '/auth/logout',
+            data: {
+              refreshToken,
+            },
+          });
+
+          this.clearLocalData();
+          this.$router.push('/');
+        }
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      } finally {
+        localStorage.clear();
+
+        this.$store.dispatch('tokens/logout');
+      }
+    },
+    removeUsernameWhiteSpace() {
+      this.username = this.username.replace(/\s/g, '');
+    },
     scoreChars,
     validateEmail,
   },
