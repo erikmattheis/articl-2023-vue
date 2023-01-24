@@ -10,7 +10,6 @@ const scoreChars = (val) => {
   }
 
   const chars = charCounts(val);
-  console.log(chars);
   const a = chars.numUpper > 0 ? 1 : 0;
   const b = chars.numLower > 0 ? 1 : 0;
   const c = chars.numDigit > 0 ? 1 : 0;
