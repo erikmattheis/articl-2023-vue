@@ -42,9 +42,26 @@ const toListWithOptionalConjuction = (array, conj = '') => {
   );
 };
 
+const convertStringDatesToMS = (tokens) => {
+  const result = JSON.parse(JSON.stringify(tokens));
+
+  result.access.token = tokens.access.token;
+  result.access.expires = Date.parse(
+    tokens.access.expires,
+  );
+
+  result.access.token = tokens.access.token;
+  result.refresh.expires = Date.parse(
+    tokens.refresh.expires,
+  );
+
+  return result;
+};
+
 export {
   highlightedSubstring,
   isNumber,
   noCaseIndexOf,
   toListWithOptionalConjuction,
+  convertStringDatesToMS,
 };

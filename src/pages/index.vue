@@ -2,7 +2,6 @@
   <article v-if="!isLoading">
     <h3>Category</h3>
     <h2>{{ title }}</h2>
-
     <tab-categories />
 
     <directory-actions
@@ -41,6 +40,7 @@ export default {
       articlTypes: 'categoryPages/articlTypes',
       categories: 'categoryPages/categories',
       notes: 'categoryPages/notes',
+      user: 'users/user',
     }),
   },
   watch: {

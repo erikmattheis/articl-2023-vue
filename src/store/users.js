@@ -1,4 +1,5 @@
-import { login, logout } from '../services/userService';
+import { login as userLogin, logout as userLogout } from '../services/userService';
+import { convertStringDatesToMS } from '../services/stringsService';
 
 export default {
   namespaced: true,
@@ -7,10 +8,12 @@ export default {
     isEmailVerified: undefined,
     username: undefined,
     id: undefined,
+    user: undefined,
   }),
 
   mutations: {
     SET_USER(state, user) {
+      state.user = user;
       state.username = user.username;
       state.id = user.id;
     },
@@ -29,17 +32,23 @@ export default {
 
     async login({ commit }, { username, password }) {
       try {
-        const { data } = await login({ username, password });
-        commit('SET_USER', data);
+        const response = await userLogin({ username, password });
+        const { data } = response;
+        commit('SET_USER', data.user);
+        const tokens = convertStringDatesToMS(data.tokens);
+        commit('tokens/SET_ACCESS_TOKEN_EXPIRES', tokens.access.expires, { root: true });
+        commit('tokens/SET_ACCESS_TOKEN_VALUE', tokens.access.value, { root: true });
+        commit('tokens/SET_REFRESH_TOKEN_EXPIRES', tokens.refresh.expires, { root: true });
+        commit('tokens/SET_REFRESH_TOKEN_VALUE', tokens.refresh.value, { root: true });
+        // commit('SET_TOKENS', tokens);
       } catch (error) {
         throw new Error(error);
       }
     },
-
-    async logout({ commit }) {
+    async logout({ commit, state }) {
       try {
-        const { refreshToken } = this.$store.state;
-        await logout({ refreshToken });
+        const { refreshToken } = state;
+        await userLogout({ refreshToken });
         commit('CLEAR_USER');
       } catch (error) {
         throw new Error(error);

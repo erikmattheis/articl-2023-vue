@@ -35,7 +35,7 @@ const validateEmail = (email) => {
 
 const login = async ({ username, password }) => {
   try {
-    const { data } = await axiosInstance.post('/auth/login', { username, password });
+    const data = await axiosInstance.post('/auth/login', { username, password });
     return data;
   } catch (error) {
     throw new Error(error);

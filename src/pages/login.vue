@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 
@@ -58,11 +59,22 @@ export default {
     buttonDisabled: false,
     passwordType: 'password',
   }),
+  computed: {
+    ...mapGetters({
+      treeLevel: 'categoryPages/treeLevel',
+      articls: 'categoryPages/articls',
+      articlTypes: 'categoryPages/articlTypes',
+      categories: 'categoryPages/categories',
+      notes: 'categoryPages/notes',
+      user: 'users/user',
+    }),
+  },
   mounted: () => {
     setTitleAndDescription({
       title: 'Login',
     });
   },
+
   methods: {
     resetFormErrors() {
       this.errorMessage = '';
@@ -90,10 +102,13 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const result = await this.$store.dispatch('users/login', {
+          await this.$store.dispatch('users/login', {
             password: this.password,
             username: this.username,
           });
+
+          /*
+          console.log('in login.vue', result);
 
           this.resetFormErrors();
           const theme = result.data.user?.theme !== 'dark' ? 'light' : 'dark';
@@ -114,7 +129,7 @@ export default {
             'font-size',
             fontSize,
           );
-
+*/
           if (
             this.$route.query.redirect
           && this.$route.query.redirect !== '/login'
@@ -137,21 +152,6 @@ export default {
       }
     },
 
-    convertStringDatesToMS(tokens) {
-      const result = JSON.parse(JSON.stringify(tokens));
-
-      result.access.token = tokens.access.token;
-      result.access.expires = Date.parse(
-        tokens.access.expires,
-      );
-
-      result.access.token = tokens.access.token;
-      result.refresh.expires = Date.parse(
-        tokens.refresh.expires,
-      );
-
-      return result;
-    },
   },
 };
 </script>
