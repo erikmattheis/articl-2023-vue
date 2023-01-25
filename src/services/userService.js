@@ -1,3 +1,5 @@
+import { $http } from '../main';
+
 const charCounts = (val) => ({
   numUpper: val.length - val.replace(/[A-Z]/g, '').length,
   numLower: val.length - val.replace(/[a-z]/g, '').length,
@@ -31,6 +33,23 @@ const validateEmail = (email) => {
   );
 };
 
+const login = async ({ username, password }) => {
+  try {
+    const { data } = await $http.post('/auth/login', { username, password });
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const logout = async (refreshToken) => {
+  try {
+    await axios.post('/auth/logout', { refreshToken });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export {
-  scoreChars, validateEmail,
+  scoreChars, validateEmail, login, logout,
 };

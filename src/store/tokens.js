@@ -30,16 +30,6 @@ export default {
   },
 
   actions: {
-    logout: (context) => {
-      context.commit('SET_ACCESS_TOKEN_EXPIRES', '');
-
-      context.commit('SET_ACCESS_TOKEN_VALUE', '');
-
-      context.commit('SET_REFRESH_TOKEN_EXPIRES', '');
-
-      context.commit('SET_REFRESH_TOKEN_VALUE', '');
-    },
-
     accessTokenExpires: (context, payload) => {
       context.commit('SET_ACCESS_TOKEN_EXPIRES', payload);
       VueCookies.set('accessTokenExpires', payload);

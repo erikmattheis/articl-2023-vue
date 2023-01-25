@@ -1,16 +1,24 @@
+import { login, logout } from '../services/userService';
+
 export default {
   namespaced: true,
 
   state: () => ({
     isEmailVerified: undefined,
-    user: undefined,
-    userFullName: undefined,
-    userId: undefined,
+    username: undefined,
+    id: undefined,
   }),
 
   mutations: {
-    SET_USER: (state, payload) => {
-      state.user = payload;
+    SET_USER(state, user) {
+      state.username = user.username;
+      state.id = user.id;
+    },
+
+    CLEAR_USER(state) {
+      state.username = '';
+      state.id = null;
+      state.authenticated = false;
     },
   },
 
@@ -18,16 +26,36 @@ export default {
     setUser: (context, payload) => {
       context.commit('SET_USER', payload);
     },
+
+    async login({ commit }, { username, password }) {
+      try {
+        const { data } = await login({ username, password });
+        commit('SET_USER', data);
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+
+    async logout({ commit }) {
+      try {
+        const { refreshToken } = this.$store.state;
+        await logout({ refreshToken });
+        commit('CLEAR_USER');
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
+
   getters: {
 
-    isEmailVerified: (state) => state.user.isEmailVerified,
+    isEmailVerified: (state) => state.isEmailVerified,
 
     user: (state) => state.user,
 
-    userFullName: (state) => `${state.user.nameFirst} ${state.user.nameLast}`,
+    id: (state) => state.id,
 
-    userId: (state) => state.user.id,
+    username: (state) => state.username,
 
   },
 };

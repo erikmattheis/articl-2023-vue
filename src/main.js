@@ -45,7 +45,7 @@ if (window.location.hostname === '192.168.1.130' || window.location.hostname ===
   baseURL = 'https://api.articl.net/v1';
 }
 
-app.config.globalProperties.$http = axios.create({
+app.prototype.$http = axios.create({
   baseURL,
 });
 

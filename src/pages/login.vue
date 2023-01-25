@@ -70,8 +70,14 @@ export default {
     checkForm() {
       let passed = true;
 
-      if (!this.username || this.username.length < 3) {
-        this.errorMessage = 'User names must be three or more characters.';
+      if (!this.username) {
+        this.errorMessage = 'Please enter your username.';
+
+        passed = false;
+      }
+
+      if (!this.password) {
+        this.errorMessage = 'Please enter your password.';
 
         passed = false;
       }
@@ -84,31 +90,12 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const result = await this.$http({
-            method: 'POST',
-            url: '/auth/login',
-            data: {
-              password: this.password,
-              username: this.username,
-            },
+          const result = await this.$store.dispatch('users/login', {
+            password: this.password,
+            username: this.username,
           });
 
-          if (result?.status > 309) {
-            this.$store.dispatch(
-              'errors/setError',
-              result,
-            );
-
-            return;
-          }
-
           this.resetFormErrors();
-          const tokensMS = this.convertStringDatesToMS(result.data.tokens);
-          this.$store.dispatch('tokens/accessTokenValue', tokensMS.access.token);
-          this.$store.dispatch('tokens/accessTokenExpires', tokensMS.access.expires);
-          this.$store.dispatch('tokens/refreshTokenValue', tokensMS.refresh.token);
-          this.$store.dispatch('tokens/refreshTokenExpires', tokensMS.refresh.expires);
-
           const theme = result.data.user?.theme !== 'dark' ? 'light' : 'dark';
 
           this.$cookies.set(
