@@ -9,6 +9,7 @@
 
 <script>
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'VerifyEmailPage',
@@ -32,7 +33,7 @@ export default {
     async submitForm() {
       this.isLoading = true;
 
-      const response = await this.$http({
+      const response = await axiosInstance({
         method: 'GET',
         url: `/auth/verify-email?token=${this.$route.query.token}`,
       });

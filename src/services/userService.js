@@ -1,4 +1,4 @@
-import { $http } from '../main';
+import axiosInstance from '@/services/axiosService';
 
 const charCounts = (val) => ({
   numUpper: val.length - val.replace(/[A-Z]/g, '').length,
@@ -35,7 +35,7 @@ const validateEmail = (email) => {
 
 const login = async ({ username, password }) => {
   try {
-    const { data } = await $http.post('/auth/login', { username, password });
+    const { data } = await axiosInstance.post('/auth/login', { username, password });
     return data;
   } catch (error) {
     throw new Error(error);
@@ -44,7 +44,7 @@ const login = async ({ username, password }) => {
 
 const logout = async (refreshToken) => {
   try {
-    await axios.post('/auth/logout', { refreshToken });
+    await axiosInstance.post('/auth/logout', { refreshToken });
   } catch (error) {
     throw new Error(error);
   }

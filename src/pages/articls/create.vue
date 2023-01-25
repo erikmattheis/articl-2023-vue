@@ -175,6 +175,7 @@ import inputTypeahead from '@/components/ui/InputTypeahead.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { fetchData } from '@/services/fetchingService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'EditArticlPage',
@@ -302,7 +303,7 @@ export default {
           this.buttonDisabled = true;
 
           const verb = id ? 'PUT' : 'POST';
-          const result = await this.$http({
+          const result = await axiosInstance({
             method: verb,
             url,
             data: {
@@ -333,7 +334,7 @@ export default {
     },
 
     async getArticl(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'GET',
         url: `/articls/${id}`,
       });

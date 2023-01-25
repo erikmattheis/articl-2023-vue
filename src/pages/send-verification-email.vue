@@ -6,6 +6,7 @@
 
 <script>
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   data: () => ({
@@ -24,7 +25,7 @@ export default {
   },
   methods: {
     async sendEmail() {
-      this.result = await this.$http({
+      this.result = await axiosInstance({
         method: 'GET',
         url: `/auth/send-verification-email?token=${this.$route.query.token}`,
       });

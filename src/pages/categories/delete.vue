@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'DeleteCategory',
@@ -52,7 +53,7 @@ export default {
       }
     },
     async getCategory(slug) {
-      return this.$http({
+      return axiosInstance({
         method: 'GET',
         url: `/resource/${slug}`,
       });
@@ -81,7 +82,7 @@ export default {
       }
     },
     async submitDelete(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'DELETE',
         url: '/categories',
         data: {

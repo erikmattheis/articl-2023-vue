@@ -183,6 +183,7 @@ import selectCountries from '@/components/ui/SelectCountries.vue';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { scoreChars, validateEmail } from '@/services/userService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'UsersPage',
@@ -354,7 +355,7 @@ export default {
     },
 
     async getMe() {
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'GET',
         url: '/users/me',
       });
@@ -426,7 +427,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const result = await this.$http({
+          const result = await axiosInstance({
             method: this.method,
             url: this.formActionUrl,
             data: {
@@ -470,7 +471,7 @@ export default {
         const refreshToken = this.$store.getters['tokens/refreshTokenValue'];
 
         if (refreshToken) {
-          await this.$http({
+          await axiosInstance({
             method: 'POST',
             url: '/auth/logout',
             data: {

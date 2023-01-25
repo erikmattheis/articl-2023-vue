@@ -35,6 +35,7 @@
 <script>
 import validateEmail from '@/services/emailValidationService';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'ForgotPass',
@@ -72,7 +73,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const result = await this.$http({
+          const result = await axiosInstance({
             method: 'POST',
             url: '/auth/forgot-password',
             data: {

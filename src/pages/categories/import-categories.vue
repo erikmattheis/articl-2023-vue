@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
+
 export default {
   name: 'ImportCategoriesPage',
   data: () => ({
@@ -32,7 +34,7 @@ export default {
     async submitForm() {
       this.buttonDisabled = true;
 
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'POST',
         url: '/categories/import-categories',
       });

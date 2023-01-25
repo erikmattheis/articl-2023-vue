@@ -29,6 +29,7 @@
 <script>
 
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'NoteCrudComponent',
@@ -91,7 +92,7 @@ export default {
 
           const verb = id ? 'PUT' : 'POST';
 
-          await this.$http({
+          await axiosInstance({
             method: verb,
             url: `/notes/${id}`,
             data: {
@@ -112,7 +113,7 @@ export default {
     },
 
     async getNote(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'GET',
         url: `/notes/${id}`,
       });

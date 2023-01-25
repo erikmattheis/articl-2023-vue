@@ -35,6 +35,7 @@
 
 import AdminActionsNote from '@/components/layout/AdminActionsNote.vue';
 import NoteCrud from '@/components/layout/NoteCrud.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'NoteListItem',
@@ -73,7 +74,7 @@ export default {
       }
     },
     async getNote(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'GET',
         url: `/notes/${id}`,
       });

@@ -41,6 +41,7 @@
 import cardNotification from '@/components/ui/CardNotification.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'EditNoteComponent',
@@ -108,7 +109,7 @@ export default {
           this.buttonDisabled = true;
 
           const verb = id ? 'PUT' : 'POST';
-          const result = await this.$http({
+          const result = await axiosInstance({
             method: verb,
             url: `/notes/${id}`,
             data: {
@@ -132,7 +133,7 @@ export default {
     },
 
     async getNote(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'GET',
         url: `/notes/${id}`,
       });

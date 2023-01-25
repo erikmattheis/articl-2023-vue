@@ -37,6 +37,7 @@
 <script>
 import { debounce } from 'lodash';
 import VueFeather from 'vue-feather';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   components: {
@@ -151,7 +152,7 @@ export default {
         q: this.stringValue,
       };
 
-      return this.$http.get(this.src, {
+      return axiosInstance.get(this.src, {
         params,
       });
     },

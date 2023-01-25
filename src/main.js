@@ -27,29 +27,19 @@ import router from './router';
 import store from './store/index';
 
 import isLoggedInMixin from './mixins/isLoggedInMixin';
+import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
 app.mixin(isLoggedInMixin);
 
-let baseURL = '';
 let secure = true;
 
 if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
-  baseURL = 'http://localhost:5000/v1';
-
   secure = false;
-} else if (window.location.hostname === 'articl-vue-dev.herokuapp.com') {
-  baseURL = 'https://articl-api-dev.herokuapp.com/v1';
-} else {
-  baseURL = 'https://api.articl.net/v1';
 }
 
-app.prototype.$http = axios.create({
-  baseURL,
-});
-
-app.config.globalProperties.$http.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (request) => {
     const req = request;
     const { accessTokenValue } = store.state.tokens;
@@ -63,7 +53,7 @@ app.config.globalProperties.$http.interceptors.request.use(
   (error) => error,
 );
 
-app.config.globalProperties.$http.interceptors.response.use(async (response) => response, async (error) => {
+axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
   const { status } = error;
 
   if (status === 401) {

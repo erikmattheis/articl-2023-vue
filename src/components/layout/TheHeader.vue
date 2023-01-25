@@ -149,6 +149,7 @@ import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
 import { clear as clearLocalStorage } from '@/services/localStorageService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'TheHeader',
@@ -186,7 +187,7 @@ export default {
 
         this.$cookies.set('data-theme', this.theme);
 
-        await this.$http({
+        await axiosInstance({
           method: 'PATCH',
           url: '/users/me',
           data: {
@@ -213,7 +214,7 @@ export default {
         const refreshToken = this.$store.getters['tokens/refreshTokenValue'];
 
         if (refreshToken) {
-          await this.$http({
+          await axiosInstance({
             method: 'POST',
             url: '/auth/logout',
             data: {

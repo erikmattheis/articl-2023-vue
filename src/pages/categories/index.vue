@@ -63,6 +63,7 @@
 
 import CardNotification from '@/components/ui/CardNotification.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'CreateCategoryPage',
@@ -140,7 +141,7 @@ export default {
       }
     },
     async getCategory(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'GET',
         url: `/categories/${id}`,
       });
@@ -199,7 +200,7 @@ export default {
             data.oldSlug = this.oldSlug;
           }
 
-          await this.$http({
+          await axiosInstance({
             method: verb,
             url: `/categories/${possiblyEmtyId}`,
             data,

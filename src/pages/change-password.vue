@@ -76,6 +76,7 @@
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { scoreChars, validateEmail } from '@/services/userService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'PasswordReset',
@@ -134,7 +135,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          await this.$http({
+          await axiosInstance({
             method: 'POST',
             url: '/auth/change-password',
             data: {

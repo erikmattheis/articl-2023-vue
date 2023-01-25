@@ -41,6 +41,7 @@ import DraggableItems from 'vuedraggable';
 import { mapGetters } from 'vuex';
 
 import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'TabArticls',
@@ -106,7 +107,7 @@ export default {
     async saveArticlsOrder(order) {
       this.isLoading = true;
 
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'POST',
         url: '/articls/order',
         data: {

@@ -23,6 +23,7 @@
 <script>
 import DraggableItems from 'vuedraggable';
 import { mapGetters } from 'vuex';
+import axiosInstance from '@/services/axiosService';
 
 import CategoriesListItem from '@/components/layout/CategoriesListItem.vue';
 
@@ -85,7 +86,7 @@ export default {
     async saveOrder(order) {
       this.isLoading = true;
 
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'POST',
         url: '/categories/order',
         data: {

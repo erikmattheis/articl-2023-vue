@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
+
 export default {
   name: 'DeleteNote',
   props: {
@@ -48,7 +50,7 @@ export default {
       }
     },
     async submitDelete(id) {
-      return this.$http({
+      return axiosInstance({
         method: 'DELETE',
         url: '/notes',
         data: {

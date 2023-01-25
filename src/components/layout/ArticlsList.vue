@@ -36,6 +36,7 @@ import { mapGetters } from 'vuex';
 
 import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'ArticlsList',
@@ -129,7 +130,7 @@ export default {
     async saveOrder(order) {
       this.isLoading = true;
 
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'POST',
         url: '/articls/order',
         data: {
@@ -144,7 +145,7 @@ export default {
     async getArticls(params) {
       this.isLoading = true;
 
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'GET',
         url: '/articls',
         params,

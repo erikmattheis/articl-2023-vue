@@ -19,6 +19,7 @@ import DirectoryActions from '@/components/layout/DirectoryActions.vue';
 import TabCategories from '@/components/layout/TabCategories.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'CategoryPage',
@@ -97,7 +98,7 @@ export default {
     },
 
     async fetchData() {
-      const result = await this.$http({
+      const result = await axiosInstance({
         method: 'GET',
         url: '/resource/0',
       });
