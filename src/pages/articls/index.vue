@@ -156,6 +156,7 @@
       <template v-else>
         <card-notification success-message="Success" />
         <a
+          v-if="!id"
           href
           @click="$router.go()"
           @keyup.enter="$router.go()">Create another article</a>
