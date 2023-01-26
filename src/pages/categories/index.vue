@@ -210,9 +210,10 @@ export default {
 
           this.$store.dispatch('modals/setSuccessTitle', 'Category ppdated.');
 
+          const actionDescription = this.id ? 'updated' : 'created';
           this.$store.dispatch(
             'modals/setSuccessMessage',
-            'The category was successfully updated.',
+            `The category was successfully ${actionDescription}.`,
           );
           if (Number(this.parentSlug) === 0) {
             this.$router.push({ name: 'homePage' });
