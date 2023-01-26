@@ -5,7 +5,8 @@
     <tab-categories />
 
     <directory-actions
-      v-if="isLoggedInMixin" />
+      v-if="isLoggedInMixin"
+      :level="0" />
   </article>
 
   <loading-placeholder v-else />

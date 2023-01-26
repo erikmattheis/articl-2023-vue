@@ -7,6 +7,7 @@
     </router-link>
 
     <router-link
+      v-if="level === 2"
       :to="{ name: 'createArticlPage', query: { slug: $route.params.slug ? $route.params.slug : '0' } }"
       role="button">
       New Articl Here
@@ -17,5 +18,11 @@
 <script>
 export default {
   name: 'DirectoryActions',
+  props: {
+    level: {
+      type: Number,
+      default: 0,
+    },
+  },
 };
 </script>

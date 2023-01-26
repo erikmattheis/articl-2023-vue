@@ -58,7 +58,9 @@
 
     <router-view :class="{ 'nav-content': treeLevel > 1 }" />
 
-    <directory-actions v-if="isLoggedInMixin" />
+    <directory-actions
+      v-if="isLoggedInMixin"
+      :level="treeLevel" />
   </article>
 
   <loading-placeholder v-else />
