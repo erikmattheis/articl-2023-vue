@@ -32,7 +32,7 @@ if (window.location.hostname === "192.168.1.130" || window.location.hostname ===
 
 } else {
 
-  baseURL = "https://api.articl.net/v1";
+  baseURL = "https://articl-api-dev.herokuapp.com/v1";
 
 }
 
