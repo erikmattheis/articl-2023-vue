@@ -4,18 +4,22 @@
       {{ formAction }} articl
     </h1>
     <h1 v-else>
-      Success
+      Articl Created
     </h1>
-
-    <card-notification success-message="Success" />
+    <!---
+    <div class="row-auto-container">
+      <card-notification
+        class="item-auto-box"
+        success-message="Success" />
+  -->
     <a
-      role="button"
+
       tabindex="0"
       href
       @click="$router.push({ name: 'createArticlPage', query: { slug } })"
       @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another article</a>
 
-    <template v-if="!isLoading">
+    <template v-if="!isLoading && !success">
       <form>
         <template v-if="!id">
           <label for="articlUrl">URL
@@ -170,7 +174,7 @@
 </template>
 
 <script>
-import cardNotification from '@/components/ui/CardNotification.vue';
+// import cardNotification from '@/components/ui/CardNotification.vue';
 import inputTypeahead from '@/components/ui/InputTypeahead.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { fetchData } from '@/services/fetchingService';
@@ -181,7 +185,6 @@ export default {
   name: 'EditArticlPage',
   components: {
     LoadingPlaceholder,
-    cardNotification,
     inputTypeahead,
   },
 

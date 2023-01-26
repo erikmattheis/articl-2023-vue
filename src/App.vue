@@ -76,11 +76,32 @@ export default {
 
 @import "//fonts.googleapis.com/css2?family=Open+Sans&display=swap";
 
+.inline-block {
+  display:inline
+}
+
 .row-admin-container {
   display: grid;
   grid-template-columns: 1fr min-content;
 }
 
+.row-auto-container {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  justify-items: start;
+  grid-auto-rows: max-content;
+}
+
+.item-auto-box{
+padding: 0.5em 1em;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
 .row-admin-box {
   display: grid;
   grid-template-columns: min-content min-content min-content;
