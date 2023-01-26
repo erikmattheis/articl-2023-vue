@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import createArticlPage from '@/pages/articls/create.vue';
+import createArticlPage from '@/pages/articls/index.vue';
 import deleteArticlPage from '@/pages/articls/delete.vue';
-import searchArticls from '@/pages/articls/index.vue';
+import searchArticls from '@/pages/articls/search.vue';
 import deleteCategoryPage from '@/pages/categories/delete.vue';
 import createCategoryPage from '@/pages/categories/index.vue';
 import categoryPage from '@/pages/resource/index.vue';
@@ -132,13 +132,14 @@ const router = createRouter({
 
     {
       name: 'editArticl',
-      path: '/articls/create/:id',
+      path: '/articls/:editId',
       component: createArticlPage,
+      props: true,
     },
 
     {
       name: 'createArticlPage',
-      path: '/articls/create',
+      path: '/articls',
       component: createArticlPage,
     },
 

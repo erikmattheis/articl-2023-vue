@@ -2,7 +2,7 @@
   <div class="row-admin-box">
     <router-link
       role="button"
-      :to="{ name: 'editArticl', params:{id}}">
+      :to="{ name: 'editArticl', params:{editId:id}}">
       <small>edit</small>
     </router-link>
     <router-link
