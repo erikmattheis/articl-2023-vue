@@ -1,16 +1,16 @@
 <template>
-  <div class="admin">
+  <div class="row-admin-box actions-columns box">
     <router-link
       :to="{ name: 'createCategoryPage', query: { parentSlug: $route.params.slug ? $route.params.slug : '0' } }"
       role="button">
-      New Category Here
+      <small>New Category Here</small>
     </router-link>
 
     <router-link
       v-if="level === 2"
       :to="{ name: 'createArticlPage', query: { slug: $route.params.slug ? $route.params.slug : '0' } }"
       role="button">
-      New Articl Here
+      <small>New Articl Here</small>
     </router-link>
   </div>
 </template>
@@ -26,3 +26,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.actions-column {
+grid-template-columns: 50% 50%;
+}
+
+</style>

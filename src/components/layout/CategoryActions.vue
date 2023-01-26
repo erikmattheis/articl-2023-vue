@@ -1,14 +1,14 @@
 <template>
-  <div class="row-admin-box">
+  <div class="row-admin-box box">
     <router-link
       role="button"
-      :to="{ name: 'editCategory', params:{id}}">
+      :to="{ name: 'editCategory', params: { id }}">
       <small>edit</small>
     </router-link>
 
     <router-link
       role="button"
-      :to="{ name: 'deleteCategory', params:{slug}}">
+      :to="{ name: 'deleteCategory', params: { slug }}">
       <small>delete</small>
     </router-link>
 
@@ -57,4 +57,5 @@ a {
   justify-self: center;
   border:0;
 }
+
 </style>
