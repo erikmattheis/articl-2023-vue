@@ -22,9 +22,21 @@ if (window.location.hostname === "192.168.1.130" || window.location.hostname ===
 
   secure = false;
 
-} else if (process.env.HEROKU_APP_NAME === "articl-restful-api") {
+} else if (process.env.HEROKU_APP_NAME === "articl-vue-2022") {
 
   baseURL = "https://articl-restful-api.herokuapp.com/v1";
+
+}
+
+else if (process.env.HEROKU_APP_NAME === "articl-vue-dev") {
+
+  baseURL = "https://articl-api-dev.herokuapp.com/v1";
+
+}
+
+else {
+
+  baseURL = "https://api.articl.net/v1";
 
 }
 
