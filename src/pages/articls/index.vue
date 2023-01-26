@@ -7,8 +7,16 @@
       Success
     </h1>
 
+    <card-notification success-message="Success" />
+    <a
+      role="button"
+      tabindex="0"
+      href
+      @click="$router.push({ name: 'createArticlPage', query: { slug } })"
+      @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another article</a>
+
     <template v-if="!isLoading">
-      <form v-if="!success">
+      <form>
         <template v-if="!id">
           <label for="articlUrl">URL
             <input
@@ -16,7 +24,6 @@
               v-model="articlUrl"
               type="text"
               name="articlUrl"></label>
-
           <button
             type="button"
             :aria-busy="buttonFetchDisabled"
@@ -153,16 +160,6 @@
           {{ !id ? "Create" : "Edit" }} Articl
         </button>
       </form>
-
-      <template v-else>
-        <card-notification success-message="Success" />
-        <a
-          role="button"
-          tabindex="0"
-          href
-          @click="$router.push({ name: 'createArticlPage', query: { slug } })"
-          @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another article</a>
-      </template>
     </template>
     <transition
       name="fade"
