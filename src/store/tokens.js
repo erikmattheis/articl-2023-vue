@@ -38,28 +38,30 @@ export default {
     },
     accessTokenExpires: (context, payload) => {
       context.commit('SET_ACCESS_TOKEN_EXPIRES', payload);
-      VueCookies.set('accessTokenExpires', payload);
     },
 
     accessTokenValue: (context, payload) => {
       context.commit('SET_ACCESS_TOKEN_VALUE', payload);
-
-      VueCookies.set('accessTokenValue', payload);
     },
 
     refreshTokenExpires: (context, payload) => {
       context.commit('SET_REFRESH_TOKEN_EXPIRES', payload);
-      VueCookies.set('refreshTokenExpires', payload);
     },
 
     refreshTokenValue: (context, payload) => {
       context.commit('SET_REFRESH_TOKEN_VALUE', payload);
-      VueCookies.set('refreshTokenValue', payload);
     },
 
   },
 
   getters: {
+
+    tokens: (state) => ({
+      accessTokenExpires: state.accessTokenExpires * 1000,
+      accessTokenValue: state.accessTokenValue,
+      refreshTokenExpires: state.refreshTokenExpires * 1000,
+      refreshTokenValue: state.refreshTokenValue,
+    }),
 
     accessTokenExpires: (state) => state.accessTokenExpires * 1000,
 

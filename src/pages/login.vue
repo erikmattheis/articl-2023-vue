@@ -67,6 +67,7 @@ export default {
       categories: 'categoryPages/categories',
       notes: 'categoryPages/notes',
       user: 'users/user',
+      tokens: 'tokens/tokens',
     }),
   },
   mounted: () => {
@@ -107,11 +108,14 @@ export default {
             username: this.username,
           });
 
-          /*
-
           this.resetFormErrors();
-          const theme = result.data.user?.theme !== 'dark' ? 'light' : 'dark';
 
+          this.$cookies.set('accessTokenExpires', this.tokens.accessTokenExpires);
+          this.$cookies.set('accessTokenValue', this.tokens.accessTokenValue);
+          this.$cookies.set('refreshTokenExpires', this.tokens.refreshTokenExpires);
+          this.$cookies.set('refreshTokenValue', this.tokens.refreshTokenValue);
+
+          const theme = this.user?.theme !== 'dark' ? 'light' : 'dark';
           this.$cookies.set(
             'data-theme',
             theme,
@@ -122,13 +126,13 @@ export default {
             theme,
           );
 
-          const fontSize = result.data.user?.fontSize !== 16 ? result.data.user?.fontSize : 16;
+          const fontSize = this.user?.fontSize !== 16 ? this.user?.fontSize : 16;
 
           this.$cookies.set(
             'font-size',
             fontSize,
           );
-*/
+
           if (
             this.$route.query.redirect
           && this.$route.query.redirect !== '/login'

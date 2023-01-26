@@ -6,6 +6,7 @@ const charCounts = (val) => ({
   numDigit: val.length - val.replace(/[0-9]/g, '').length,
   numSpecial: val.length - val.replace(/\W|_/g, '').length,
 });
+
 const scoreChars = (val) => {
   if (!val) {
     return 0;

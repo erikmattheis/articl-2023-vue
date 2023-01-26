@@ -1,5 +1,5 @@
 <template>
-  <div class="row-admin-box actions-columns box">
+  <div class="row-admin-box actions-column box">
     <router-link
       :to="{ name: 'createCategoryPage', query: { parentSlug: $route.params.slug ? $route.params.slug : '0' } }"
       role="button">
@@ -29,7 +29,6 @@ export default {
 
 <style>
 .actions-column {
-grid-template-columns: 50% 50%;
+grid-template-columns: max-content max-content;
 }
-
 </style>

@@ -6,7 +6,7 @@
     <h1 v-else>
       Success
     </h1>
-    id: {{ id }}
+
     <template v-if="!isLoading">
       <form v-if="!success">
         <template v-if="!id">
@@ -321,8 +321,20 @@ export default {
           });
 
           this.success = true;
+          this.abstract = result.data.abstract;
+          this.affiliations = result.data.affiliations;
+          this.doi = result.data.doi;
+          this.articlUrl = result.data.articlUrl;
+          this.authorsOrig = result.data.authorsOrig;
+          this.authors = result.data.authors;
+          this.journal = result.data.journal;
+          this.month = result.data.month;
+          this.title = result.data.title;
+          this.type = result.data.type;
 
-          Object.assign(this, result.data);
+          this.year = '';
+
+          // Object.assign(this, result.data);
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }
