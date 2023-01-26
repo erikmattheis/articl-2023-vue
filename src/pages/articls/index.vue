@@ -153,14 +153,15 @@
           {{ !id ? "Create" : "Edit" }} Articl
         </button>
       </form>
+
       <template v-else>
         <card-notification success-message="Success" />
         <a
           role="button"
           tabindex="0"
           href
-          @click="$router.push({ name: 'createArticlPage', params: { editId: '' } })"
-          @keyup.enter="$router.push({ name: 'createArticlPage', params: { editId: '' } })">Create another article</a>
+          @click="$router.push({ name: 'createArticlPage', query: { slug } })"
+          @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another article</a>
       </template>
     </template>
     <transition
