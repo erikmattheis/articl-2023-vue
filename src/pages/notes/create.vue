@@ -55,8 +55,8 @@
 
 <script>
 import cardNotification from "@/components/ui/CardNotification.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import { setTitleAndDescription } from "@/services/htmlMetaService";
 
 export default {
   name: "EditNoteComponent",

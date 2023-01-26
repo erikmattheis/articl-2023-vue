@@ -26,15 +26,11 @@ if (window.location.hostname === "192.168.1.130" || window.location.hostname ===
 
   baseURL = "https://articl-restful-api.herokuapp.com/v1";
 
-}
-
-else if (process.env.HEROKU_APP_NAME === "articl-vue-dev") {
+} else if (process.env.HEROKU_APP_NAME === "articl-vue-dev") {
 
   baseURL = "https://articl-api-dev.herokuapp.com/v1";
 
-}
-
-else {
+} else {
 
   baseURL = "https://api.articl.net/v1";
 
