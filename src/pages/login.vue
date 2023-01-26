@@ -108,7 +108,6 @@ export default {
           });
 
           /*
-          console.log('in login.vue', result);
 
           this.resetFormErrors();
           const theme = result.data.user?.theme !== 'dark' ? 'light' : 'dark';

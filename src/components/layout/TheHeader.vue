@@ -230,7 +230,7 @@ export default {
       } finally {
         localStorage.clear();
 
-        this.$store.dispatch('tokens/logout');
+        this.$store.dispatch('users/logout');
       }
     },
     setTextSize(size) {

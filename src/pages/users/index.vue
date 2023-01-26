@@ -215,7 +215,7 @@ export default {
     city: '',
     country: '',
     method: 'PATCH',
-    formActionUrl: '/users/me',
+    formActionUrl: '',
     buttonDisabled: false,
     isLoading: true,
     errorMessage: '',
@@ -487,7 +487,7 @@ export default {
       } finally {
         localStorage.clear();
 
-        this.$store.dispatch('tokens/logout');
+        this.$store.dispatch('users/logout');
       }
     },
     removeUsernameWhiteSpace() {

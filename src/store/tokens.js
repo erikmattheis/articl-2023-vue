@@ -32,9 +32,9 @@ export default {
   actions: {
     setTokens: (context, payload) => {
       context.commit('SET_ACCESS_TOKEN_EXPIRES', payload.access.expires);
-      context.commit('SET_ACCESS_TOKEN_VALUE', payload.access.value);
+      context.commit('SET_ACCESS_TOKEN_VALUE', payload.access.token);
       context.commit('SET_REFRESH_TOKEN_EXPIRES', payload.refresh.expires);
-      context.commit('SET_REFRESH_TOKEN_VALUE', payload.refresh.value);
+      context.commit('SET_REFRESH_TOKEN_VALUE', payload.refresh.token);
     },
     accessTokenExpires: (context, payload) => {
       context.commit('SET_ACCESS_TOKEN_EXPIRES', payload);
@@ -43,6 +43,7 @@ export default {
 
     accessTokenValue: (context, payload) => {
       context.commit('SET_ACCESS_TOKEN_VALUE', payload);
+
       VueCookies.set('accessTokenValue', payload);
     },
 
