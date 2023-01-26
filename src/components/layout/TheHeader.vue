@@ -25,6 +25,7 @@
         </ul>
 
         <ul class="right">
+          <!--
           <li>
             <router-link
               :to="{ name: 'searchArticls' }"
@@ -36,6 +37,7 @@
                 aria-label="Search" />
             </router-link>
           </li>
+        -->
 
           <li v-if="!isLoggedInMixin">
             <router-link

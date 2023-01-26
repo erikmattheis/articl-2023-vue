@@ -156,10 +156,11 @@
       <template v-else>
         <card-notification success-message="Success" />
         <a
-          v-if="!id"
+          role="button"
+          tabindex="0"
           href
-          @click="$router.go()"
-          @keyup.enter="$router.go()">Create another article</a>
+          @click="$router.push({ name: 'createArticlPage', params: { editId: '' } })"
+          @keyup.enter="$router.push({ name: 'createArticlPage', params: { editId: '' } })">Create another article</a>
       </template>
     </template>
     <transition

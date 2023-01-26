@@ -21,7 +21,6 @@
       No entries yet.
     </li>
   </ul>
-  articls: {{ articls }}
   <transition
     name="fade"
     mode="out-in">

@@ -29,7 +29,7 @@
             :order="element.order" />
         </template>
       </draggable-items>
-    </ul>No entries yet.
+    </ul>
     <div v-if="(articls[articlTypeCurrent]?.length === 0)">
       No entries yet.
     </div>
