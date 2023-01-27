@@ -1,60 +1,61 @@
 <template>
-  <div class="admin grid">
+  <div class="row-admin-box box">
     <router-link
-      :to="{ name: 'editCategory', params: { passedId: id } }"
       role="button"
-    >
-      edit
+      :to="{ name: 'editCategory', params: { id }}">
+      <small>edit</small>
     </router-link>
 
     <router-link
-      :to="{ name: 'deleteCategory', params: { id, title } }"
       role="button"
-    >
-      delete
+      :to="{ name: 'deleteCategory', params: { slug }}">
+      <small>delete</small>
     </router-link>
 
     <a
+      role="button"
       class="handle"
-      href="#"
-    ><div class="sr">Reorder category</div>
+      href="#"><div class="sr">Reorder category</div>
       <vue-feather
-        alt="reorder category"
-        size="1rem"
+        size="0.7rem"
         type="move"
-        aria-label="move"
-      />
+        aria-label="Drag to reorder" />
     </a>
   </div>
 </template>
 
 <script>
-import VueFeather from "vue-feather";
+import VueFeather from 'vue-feather';
 
 export default {
-  name: "CategoryActions",
+  name: 'CategoryActions',
   components: {
     VueFeather,
   },
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
-    title: {
+    slug: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-  data: () => {
-
-    return {
-      expanded: false,
-    };
-
-  },
+  data: () => ({
+    expanded: false,
+  }),
   computed: {
 
   },
 };
 </script>
+
+<style scoped lang="scss">
+a {
+  align-self: center;
+  justify-self: center;
+  border:0;
+}
+
+</style>

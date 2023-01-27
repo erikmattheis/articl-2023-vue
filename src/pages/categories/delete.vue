@@ -1,13 +1,13 @@
 <template>
   <article>
     <h1>Delete Category</h1>
-    <p>Really delete "{{ title }}"?</p>
+
+    <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories  from category navigation.</p>
     <form>
       <button
-        v-if="!!id"
+        v-if="slug"
         :aria-busy="buttonDisabled"
-        @click="deleteCategory()"
-      >
+        @click.prevent="deleteCategory()">
         Delete
       </button>
     </form>
@@ -15,67 +15,80 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
+
 export default {
-  name: "DeleteCategory",
+  name: 'DeleteCategory',
   components: {
   },
-  data: () => {
-
-    return {
-      id: undefined,
-      title: "Nothing to delete",
-      buttonDisabled: false,
-    };
+  data: () => ({
+    buttonDisabled: false,
+    categories: [],
+    title: '',
+    slug: '',
+    parentSlug: '',
+    id: '',
+  }),
+  params: {
 
   },
+
   mounted() {
-
-    if (this.$route.params?.id) {
-
-      this.id = this.$route.params?.id;
-
-      this.title = this.$route.params?.title;
-
-    }
-
+    this.slug = this.$route.params.slug;
+    this.getCurrentCategory(this.slug);
   },
   methods: {
-    async deleteCategory() {
-
+    async getCurrentCategory(slug) {
       try {
+        this.isLoading = true;
 
+        const result = await this.getCategory(slug);
+        Object.assign(this, result.data);
+        this.title = result.data?.category[0]?.title;
+        this.parentSlug = result.data?.category[0]?.parentSlug;
+        this.id = result.data?.category[0]?.id;
+        this.isLoading = false;
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      }
+    },
+    async getCategory(slug) {
+      return axiosInstance({
+        method: 'GET',
+        url: `/resource/${slug}`,
+      });
+    },
+    async deleteCategory() {
+      try {
         this.buttonDisabled = true;
 
         await this.submitDelete(this.id);
 
-        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
+        this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
 
         this.$store.dispatch(
-          "modals/setSuccessMessage",
+          'modals/setSuccessMessage',
           `The category "${this.title}" has been permanently deleted.`,
         );
-
+        if (Number(this.parentSlug) === 0) {
+          this.$router.push({ name: 'homePage' });
+        } else {
+          this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+        }
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
     async submitDelete(id) {
-
-      return this.$http({
-        method: "DELETE",
-        url: "/categories",
+      return axiosInstance({
+        method: 'DELETE',
+        url: '/categories',
         data: {
           id,
         },
       });
-
     },
   },
 };

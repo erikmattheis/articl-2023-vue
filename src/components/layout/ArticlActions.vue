@@ -1,59 +1,50 @@
 <template>
-  <router-link
-    :to="{ name: 'editArticl', params: { passedId: id } }"
-    role="button"
-  >
-    edit
-  </router-link>
-
-  <a role="button">Change status</a>
-
-  <router-link
-    :to="{ name: 'deleteArticl', params: { id, title } }"
-    role="button"
-  >
-    delete
-  </router-link>
-
-  <span class="handle">
-    <a
-      href="#"
+  <div class="row-admin-box">
+    <router-link
       role="button"
-    ><div class="sr">Reorder articl</div>
+      :to="{ name: 'editArticl', params:{editId:id}}">
+      <small>edit</small>
+    </router-link>
+    <router-link
+      role="button"
+      :to="{ name: 'deleteArticl', params: { id, title }}">
+      <small>delete</small>
+    </router-link>
+
+    <a
+      role="button"
+      class="handle"
+      href="#"><div class="sr">Reorder articl</div>
       <vue-feather
-        alt="reorder articl"
-        size="1rem"
+        size="0.7rem"
         type="move"
-        aria-label="move"
-      />
+        aria-label="Drag to reorder" />
     </a>
-  </span>
+  </div>
 </template>
 
 <script>
-import VueFeather from "vue-feather";
+import VueFeather from 'vue-feather';
 
 export default {
-  name: "ArticlActions",
+  name: 'ArticlActions',
   components: {
     VueFeather,
   },
   props: {
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     title: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   data() {
-
     return {
       expanded: false,
     };
-
   },
 };
 </script>
@@ -65,6 +56,10 @@ export default {
 
 .grid a {
   display:inline-block;
-
+}
+a {
+  align-self: center;
+  justify-self: center;
+  border:0;
 }
 </style>

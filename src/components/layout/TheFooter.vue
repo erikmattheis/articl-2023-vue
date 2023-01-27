@@ -8,17 +8,11 @@
 
 <script>
 export default {
-  data: () => {
-
-    return {
-      year: "",
-    };
-
-  },
-  beforeMount() {
-
+  data: () => ({
+    year: '',
+  }),
+  created() {
     this.year = new Date().getFullYear();
-
   },
 };
 </script>

@@ -3,13 +3,15 @@
     v-if="errorTitle"
     class="modal-container"
     @click.prevent="close()"
-    @keyup.enter="close()"
-  >
+    @keyup.enter="close()">
+    <div
+      open
+      class="backdrop"
+      @click.stop />
     <dialog
       open
       class="modal"
-      @click.stop
-    >
+      @click.stop>
       <article class="max-container-width">
         <header>
           <vue-feather
@@ -17,19 +19,16 @@
             type="x-square"
             aria-label="Close"
             class="close"
-            @click.prevent="close()"
-          />
+            @click.prevent="close()" />
           <h2>{{ errorTitle }}</h2>
         </header>
         <section>
           <div
             class="tab"
-            title="error"
-          >
+            title="error">
             <vue-feather
               size="3rem"
-              type="alert-triangle"
-            />
+              type="alert-triangle" />
           </div>
           <div class="info">
             <ul>
@@ -57,36 +56,30 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
+import VueFeather from 'vue-feather';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
     VueFeather,
   },
-  data: () => {
-
-    return {
-      title: "",
-      showErrorStack: "",
-    };
-
-  },
+  data: () => ({
+    title: '',
+    showErrorStack: '',
+  }),
   computed: {
     ...mapGetters({
-      errorTitle: "errors/errorTitle",
-      errorMessage: "errors/errorMessage",
-      errorDetail: "errors/errorDetail",
-      errorLineNumber: "errors/errorLineNumber",
-      errorFileName: "errors/errorFileName",
-      errorStack: "errors/errorStack",
+      errorTitle: 'errors/errorTitle',
+      errorMessage: 'errors/errorMessage',
+      errorDetail: 'errors/errorDetail',
+      errorLineNumber: 'errors/errorLineNumber',
+      errorFileName: 'errors/errorFileName',
+      errorStack: 'errors/errorStack',
     }),
   },
   methods: {
     close() {
-
-      this.$store.dispatch("errors/clearError");
-
+      this.$store.dispatch('errors/clearError');
     },
   },
 };
@@ -94,30 +87,28 @@ export default {
 
 <style scoped lang="scss">
 .modal-container {
-  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 1000;
-  display: flex;
-  background-color: var(--bg0);
 }
 
 .modal {
   width: 90%;
   margin: auto;
-  background-color: var(--bg1);
   border: 0.2rem;
 }
 
 article {
   max-width: 100%;
+
 }
 
 section {
-  overflow: auto;
+  overflow: visible;
   white-space: nowrap;
+
 }
 
 section div {
@@ -133,7 +124,7 @@ section div {
 }
 
 #app > div > dialog > article > section > div.info {
-  min-width: calc(100% - 6rem);
+  max-width: calc(100% - 6rem);
   min-height: 6rem;
   padding: 1rem;
   color: #dd2c00;
@@ -146,8 +137,9 @@ dialog article button {
   background-color: #dd2c00;
 }
 
-.close {
-  cursor: pointer;
+dialog article header a,
+#app > div > dialog > article > header > a {
+  color: #cfa;
 }
 
 dialog article header,
@@ -166,18 +158,6 @@ dialog article ul li {
   white-space: pre-wrap;
 }
 
-html[data-theme="dark"] .modal-container {
-  background-color: var(--bg0);
-}
-
-html[data-theme="dark"] .modal {
-  background-color: var(--bg0);
-}
-
-html[data-theme="dark"] article {
-  background-color: var(--bg1);
-}
-
 html[data-theme="dark"] #app > div > dialog > article > section > div.info,
 html[data-theme="dark"]
 #app
@@ -188,7 +168,7 @@ html[data-theme="dark"]
 > div.info
 ul
 li {
-  color: var(--bg0) !important;
+  color: var(--contrast) !important;
 }
 
 small {

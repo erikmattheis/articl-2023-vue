@@ -3,39 +3,35 @@
     <li>
       <a
         href="#"
-        @click.prevent="$emit('edit-mode')"
-      >
+        @click.prevent="$emit('edit-mode')">
         edit
       </a>
     </li>
     <li>
-      <a>Change status</a>
-    </li>
-    <li>
-      <router-link :to="{ name: 'deleteNote', params: { id, fullText, slug } }">
+      <router-link :to="{ name: 'deleteNote' }">
         delete
       </router-link>
     </li>
   </ul>
 </template>
 
-<script>
-export default {
-  name: "NoteActions",
-  props: {
-    id: {
-      type: String,
-      default: "",
-    },
-    fullText: {
-      type: String,
-      default: "",
-    },
-    slug: {
-      type: String,
-      default: "",
-    },
+<script setup>
+
+defineProps({
+  id: {
+    type: String,
+    default: '',
   },
-  emits: ["edit-mode"],
-};
+  fullText: {
+    type: String,
+    default: '',
+  },
+  slug: {
+    type: String,
+    default: '',
+  },
+});
+
+defineEmits(['edit-mode']);
+
 </script>

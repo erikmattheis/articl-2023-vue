@@ -3,46 +3,39 @@
     <div class="box-placeholder">
       <h2
         class="text-p line"
-        :style="{ width: pickWidth(40,80) + '%' }"
-      >
+        :style="{ width: pickWidth(40,80) + '%' }">
         r&nbsp;
       </h2>
 
       <ul class="nav-tabs">
         <li
           class="text-p line"
-          :style="{ width: pickWidth(80,100) + '%' }"
-        >
+          :style="{ width: pickWidth(80,100) + '%' }">
 &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }"
-        >
+          :style="{ width: pickWidth(80,100) + '%' }">
 &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }"
-        >
+          :style="{ width: pickWidth(80,100) + '%' }">
 &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }"
-        >
+          :style="{ width: pickWidth(80,100) + '%' }">
 &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }"
-        >
+          :style="{ width: pickWidth(80,100) + '%' }">
 &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(20,100) + '%' }"
-        >
+          :style="{ width: pickWidth(20,100) + '%' }">
 &nbsp;
         </li>
       </ul>
@@ -52,13 +45,9 @@
 
 <script>
 export default {
-  name: "LoadingPlaceholder",
+  name: 'LoadingPlaceholder',
   methods: {
-    pickWidth: (min, max) => {
-
-      return Math.floor(Math.random() * (max - min + 1) + min);
-
-    },
+    pickWidth: (min, max) => Math.floor(Math.random() * (max - min + 1) + min),
   },
 };
 </script>

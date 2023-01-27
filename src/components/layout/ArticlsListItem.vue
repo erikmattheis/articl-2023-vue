@@ -1,116 +1,133 @@
 <template>
-  <div class="grid">
+  <div class="articl">
     <ul>
-      <li>
-        <h3>
-          <a
-            :href="articl.articlUrl"
-            target="_blank"
-          >
-            {{ articl.title }}
-          </a>
-        </h3>
-      </li>
-      <li v-if="articl.titleExcerpt">
-        <a :href="articl.articlUrl">
-          {{ articl.titleExcerpt }}
+      <li class="title container">
+        <a
+          :data-tooltip="linkMessage"
+          :href="articl.articlUrl"
+          class="box"
+          target="_blank">
+          {{ articl.title }}
         </a>
+
+        <articl-actions
+          :id="articl.id"
+          class="box"
+          :title="articl.title" />
       </li>
 
-      <li v-if="articl.journal">
-        {{ articl.journal }}
-      </li>
-      <li v-if="articl.year">
-        {{ articl.year }}
+      <li class="articl-details">
+        <p class="authors-list">
+          {{ authorsList }}
+        </p>
+        <details>
+          <summary>
+            Affiliations
+          </summary>
+          <ul>
+            <li
+              v-for="author in articl.authors"
+              :key="author.nameLast"
+              class="grid">
+              {{ author.nameFirst }} {{ author.nameLast }}
+
+              <ul v-if="author.affilliations.length">
+                <li
+                  v-for="affilliation in author.affilliations"
+                  :key="affilliation">
+                  {{ affilliation }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </details>
       </li>
 
-      <li v-if="articl.authorsOrig">
+      <li
+        v-if="articl.journal"
+        class="articl-details">
+        {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
+          :data-tooltip="linkMessage"
+          :href="articl.articlUrl"
+          target="_blank">{{ articl.articlUrl }}</a>
+      </li>
+
+      <li
+        v-if="articl.authorsOrig"
+        class="articl-details">
         <small>
-          {{ highlightedSubstring(articl.authorsOrig, params.authors,"prefix")
+          {{ highlightedSubstring(articl.authorsOrig, params.authors, "prefix")
           }}<strong
             :class="{
               'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
-            }"
-          >{{
-            highlightedSubstring(articl.authorsOrig, params.authors,"term")
-          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors,"suffix") }}
+            }">{{
+            highlightedSubstring(articl.authorsOrig, params.authors, "term")
+          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
         </small>
       </li>
-      <template
-        v-for="author in articl.authors"
-        :key="author.nameLast"
-      >
-        <li v-if="author.nameFirst || author.nameLast">
-          {{ author.nameFirst }} {{ author.nameLast }}
-        </li>
-        <template
-          v-if="author?.affilliations.length"
-        >
-          <li
-            v-for="affilliation in author.affilliations"
-            :key="affilliation"
-          >
-            {{ affilliation }}
-          </li>
-        </template>
-      </template>
 
-      <li v-if="articl.abstract">
-        {{ articl.abstract }}
-      </li>
-      <li v-if="articl.fullText">
-        {{ articl.fullText }}
-      </li>
-      <li v-if="articl.thumbnailImage">
-        <img
-          :src="articl.thumbnailImage"
-          :alt="articl.title"
-        >
-      </li>
-      <li v-if="articl.url">
-        <img
-          :src="articl.url"
-          :alt="articl.title"
-        ><br>
-        {{ articl.url }}
-      </li>
-      <li v-if="articl.imageCaption">
-        {{ articl.imageCaption }}
-      </li>
-      <li v-if="articl.institution">
-        {{ articl.institution }}
-      </li>
-      <li v-if="articl.source">
+      <li
+        v-if="articl.source"
+        class="articl-details">
         {{ articl.source }}
       </li>
+
       <li
-        v-if="isLoggedIn && articl.status"
-        class="admin"
-      >
-        {{ articl.status }}
+        v-if="articl.abstract"
+        class="articl-details">
+        <details>
+          <summary>Abstract</summary>
+          <div>
+            {{ articl.abstract }}
+          </div>
+        </details>
+      </li>
+
+      <li
+        v-if="articl.fullText"
+        class="articl-details">
+        <details>
+          <summary>FUull text</summary>
+          <div>
+            {{ articl.fullText }}
+          </div>
+        </details>
+      </li>
+
+      <li
+        v-if="articl.thumbnailImage"
+        class="articl-details">
+        <img
+          :src="articl.thumbnailImage"
+          :alt="articl.title">
+      </li>
+
+      <li
+        v-if="articl.url"
+        class="articl-details">
+        <img
+          :src="articl.url"
+          :alt="articl.title"><br>
+        {{ articl.url }}
+      </li>
+
+      <li
+        v-if="articl.imageCaption"
+        class="articl-details">
+        {{ articl.imageCaption }}
       </li>
     </ul>
-    <div
-      v-if="isLoggedIn"
-      class="admin"
-    >
-      <articl-actions
-        :id="articl.id"
-        class="tools"
-        :title="articl.title"
-      />
-    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import ArticlActions from "@/components/layout/ArticlActions.vue";
-import { highlightedSubstring, isNumber, noCaseIndexOf } from "@/services/stringsService";
+import ArticlActions from '@/components/layout/ArticlActions.vue';
+import { highlightedSubstring, isNumber, noCaseIndexOf } from '@/services/stringsService';
 
 export default {
-  name: "ArticlsListItem",
+  name: 'ArticlsListItem',
   components: {
     ArticlActions,
   },
@@ -120,47 +137,88 @@ export default {
       default: null,
     },
   },
-  data: () => {
+  data: () => ({
 
-    return {
-
-    };
-
-  },
+  }),
   computed: {
     ...mapGetters({
-      allStatuses: "articlsParams/allStatuses",
-      params: "articlsParams/params",
-      isLoggedIn: "tokens/isLoggedIn",
+      params: 'articlsParams/params',
     }),
     monthStr() {
-
       if (!isNumber(Number(this.articl.month))) {
-
         return this.articl.month;
-
       }
 
-      return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.articl.month - 1];
-
+      return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.articl.month - 1];
+    },
+    linkMessage() {
+      try {
+        return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace('www.', '')}`;
+      } catch {
+        return 'Malformed url';
+      }
+    },
+    authorsList() {
+      if (this.articl?.authors?.map) {
+        const list = this.articl.authors.map((author) => `${author.nameFirst} ${author.nameLast}`);
+        return list.join(', ');
+      }
+      return [];
     },
   },
   methods: {
     highlightedSubstring,
     noCaseIndexOf,
   },
+
 };
 
 </script>
 
 <style scoped lang="scss">
-.outline {
-  border: 1px solid var(--bg0);
-  margin-bottom: var(--spacing);
+
+.container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: minmax(200px, 1fr) 200px;
+  color: #444;
+}
+
+li {
+  width:100%;
+  padding:
+
+  a {
+    cursor: pointer;
+  }
+}
+
+li:hover {
+  background-color: var(--primary-nav-background);
+}
+
+.articl {
+  border-bottom: 1px solid $grey-100;
+  margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
+}
+
+.authors-list {
+  margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
+}
+
+details {
+  margin-bottom: calc(vsr(--typography-spacing-vertical) * 0.25);
+  border-bottom: 0;
+}
+
+summary,
+details,
+.articl-details {
+  font-size: 0.875rem;
 }
 
 a {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 #app > main > article > div > div > small > ul > li > a {
@@ -176,30 +234,9 @@ strong:not([class="not-strong"]) {
   background-color: #749157;
 }
 
-li {
-  width:100%;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 1rem;
+.grid > ul li {
+  width: 100%;
+  margin-bottom: 0;
 }
-/*
-li:nth-child(even){
-    background-color: var(--bg1);
-}
-*/
-svg {
 
-  a{ fill:#fcb425; }
-
-  .b{ fill:#231f20; }
-
-  .c{ fill:#fff; }
-}
-.grid {
-  grid-template-columns: auto auto;
-}
-.tools {
-  width: max-content;
-}
 </style>

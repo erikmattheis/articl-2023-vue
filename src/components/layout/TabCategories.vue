@@ -1,20 +1,18 @@
 <template>
   <div>
     <draggable-items
-      v-model="categories"
+      v-model="categoriesLocal"
       tag="ul"
       item-key="id"
       handle=".handle"
       ghost-class="ghost"
-      @change="onUpdateOrderValues"
-    >
+      @change="onUpdateOrderValues">
       <template #item="{ element }">
         <categories-list-item
           :category="element"
           class="list-item"
           :tree-level="treeLevel"
-          :tab-name="TabName"
-        />
+          :tab-name="TabName" />
       </template>
     </draggable-items>
 
@@ -23,88 +21,74 @@
 </template>
 
 <script>
-import DraggableItems from "vuedraggable";
-import { mapGetters } from "vuex";
+import DraggableItems from 'vuedraggable';
+import { mapGetters } from 'vuex';
+import axiosInstance from '@/services/axiosService';
 
-import CategoriesListItem from "@/components/layout/CategoriesListItem.vue";
+import CategoriesListItem from '@/components/layout/CategoriesListItem.vue';
 
 export default {
-  name: "TabCategories",
+  name: 'TabCategories',
   components: {
     DraggableItems,
     CategoriesListItem,
   },
 
   data() {
-
     return {
-      TabName: "",
+      TabName: '',
     };
-
   },
-
   computed: {
+    categoriesLocal: {
+      get() {
+        return this.categories.map((a) => a);
+      },
+      set(newValue) {
+        this.$store.dispatch('categoryPages/categories', newValue);
+      },
+    },
     ...mapGetters({
-      categories: "categoryPages/categories",
-      treeLevel: "categoryPages/treeLevel",
+      categories: 'categoryPages/categories',
+      treeLevel: 'categoryPages/treeLevel',
     }),
   },
   mounted() {
-
-    this.TabName = this.treeLevel > 0 ? "TabArticls" : "TabCategories";
-
+    this.TabName = this.treeLevel > 0 ? 'TabArticls' : 'TabCategories';
   },
   methods: {
     updateOrderValues() {
-
       try {
-
         this.categories.forEach((obj, index) => {
-
           const objRef = obj;
 
           objRef.order = index;
-
         });
-
+        this.$store.dispatch('categoryPages/categories', this.categories);
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
 
     async saveOrderValues() {
-
       try {
-
-        const order = this.categories.map((obj) => {
-
-          return {
-            id: obj.id,
-            order: obj.order,
-          };
-
-        });
+        const order = this.categories.map((obj) => ({
+          id: obj.id,
+          order: obj.order,
+        }));
 
         await this.saveOrder(order);
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
 
     async saveOrder(order) {
-
       this.isLoading = true;
 
-      const result = await this.$http({
-        method: "POST",
-        url: "/categories/order",
+      const result = await axiosInstance({
+        method: 'POST',
+        url: '/categories/order',
         data: {
           order,
         },
@@ -113,15 +97,12 @@ export default {
       this.isLoading = false;
 
       return result.data;
-
     },
 
     onUpdateOrderValues() {
-
       this.updateOrderValues();
 
       this.saveOrderValues();
-
     },
 
   },

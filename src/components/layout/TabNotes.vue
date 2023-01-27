@@ -1,11 +1,10 @@
 <template>
-  <div class="gr">
+  <div class="tab-content">
     <h2>Notes</h2>
     <ul>
       <li
         v-for="note in notes || [] "
-        :key="note.fullText"
-      >
+        :key="note.fullText">
         <notes-list-item :passed-note="note" />
       </li>
     </ul>
@@ -13,29 +12,27 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import NotesListItem from "@/components/layout/NotesListItem.vue";
+import NotesListItem from '@/components/layout/NotesListItem.vue';
 
 export default {
-  name: "TabNotes",
+  name: 'TabNotes',
   components: { NotesListItem },
   props: {
     items: {
-      default: () => { return []; },
+      default: () => [],
       type: Array,
     },
   },
   data() {
-
     return {
 
     };
-
   },
   computed: {
     ...mapGetters({
-      notes: "categoryPages/notes",
+      notes: 'categoryPages/notes',
     }),
   },
 };

@@ -11,18 +11,16 @@
         <span class="right"> created at: {{ note.createdAt }}</span>
       </li>
       <li
-        class="main-line"
-      >
+        class="main-line">
         <span :aria-busy="isLoading" /> <span v-if="!isLoading">{{ note.fullText }}</span>
       </li>
     </ul>
-    <div v-if="isLoggedIn">
+    <div v-if="isLoggedInMixin">
       <admin-actions-note
         :id="note.id"
         :full-text="note.fullText"
         :slug="note.slug"
-        @edit-mode="isEditing = true"
-      />
+        @edit-mode="isEditing = true" />
     </div>
   </template>
 
@@ -30,18 +28,17 @@
     v-else
     :slug="note.slug"
     :passed-id="note.id"
-    @view-mode="getCurrentNote"
-  />
+    @view-mode="getCurrentNote" />
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
-import AdminActionsNote from "@/components/layout/AdminActionsNote.vue";
-import NoteCrud from "@/components/layout/NoteCrud.vue";
+import AdminActionsNote from '@/components/layout/AdminActionsNote.vue';
+import NoteCrud from '@/components/layout/NoteCrud.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: "NoteListItem",
+  name: 'NoteListItem',
   components: {
     AdminActionsNote,
     NoteCrud,
@@ -52,31 +49,17 @@ export default {
       default: null,
     },
   },
-  data: () => {
-
-    return {
-      isEditing: false,
-      isLoading: false,
-    };
-
-  },
-
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
-  },
+  data: () => ({
+    isEditing: false,
+    isLoading: false,
+  }),
 
   created() {
-
     this.note = this.passedNote;
-
   },
   methods: {
     async getCurrentNote(id) {
-
       try {
-
         this.isLoading = true;
 
         this.isEditing = false;
@@ -86,21 +69,15 @@ export default {
         this.note = result.data;
 
         this.isLoading = false;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
     async getNote(id) {
-
-      return this.$http({
-        method: "GET",
+      return axiosInstance({
+        method: 'GET',
         url: `/notes/${id}`,
       });
-
     },
   },
 };

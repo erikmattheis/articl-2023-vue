@@ -7,197 +7,116 @@
             id="fullText"
             v-model="fullText"
             name="fullText"
-            autocomplete="off"
-          />
-        </label>
-
-        <label for="status">Status
-          <select
-            id="status"
-            v-model="status"
-            name="status"
-          >
-            <option value="Published">Published</option>
-            <option value="Draft">Draft</option>
-            <option value="Pending">Pending</option>
-            <option value="Trash">Trash</option>
-          </select>
+            autocomplete="off" />
         </label>
 
         <button
           type="button"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm(id)"
-        >
+          @click.prevent="submitForm(id)">
           {{ !id ? "Create" : "Edit" }} Note
         </button>
       </form>
     </template>
     <transition
       name="fade"
-      mode="out-in"
-    >
+      mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: "NoteCrudComponent",
+  name: 'NoteCrudComponent',
   components: {
     LoadingPlaceholder,
   },
-  props: {
-    passedId: {
-      default: "",
-      type: String,
-    },
-    slug: {
-      default: "",
-      type: String,
-    },
-  },
-  emits: ["view-mode"],
-  data: () => {
-
-    return {
-      fullText: "",
-      status: "Published",
-      buttonDisabled: false,
-      formAction: undefined,
-      isLoading: true,
-      id: undefined,
-    };
-
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
-  },
+  emits: ['view-mode'],
+  data: () => ({
+    fullText: '',
+    buttonDisabled: false,
+    formAction: undefined,
+    isLoading: true,
+    id: undefined,
+  }),
   mounted() {
-
-    this.id = this.passedId;
-
-    this.formAction = this.id ? "Edit" : "Create";
+    this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
-
       this.isLoading = false;
-
     } else {
-
       this.getCurrentNote(this.id);
-
     }
-
   },
   methods: {
     async getCurrentNote(id) {
-
       try {
-
         this.isLoading = true;
 
         const result = await this.getNote(id);
 
         this.fullText = result.data.fullText;
-
-        this.status = result.data.status;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.isLoading = false;
-
       }
-
     },
     resetFormErrors() {
-
-      this.errorMessage = "";
-
+      this.errorMessage = '';
     },
     checkForm() {
-
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.title === "") {
-
-        this.errorMessage = "Please enter a title.";
-
-        passed = false;
-
-      } else if (this.status === "") {
-
-        this.errorMessage = "Please choose a status.";
+      if (this.title === '') {
+        this.errorMessage = 'Please enter a title.';
 
         passed = false;
-
       }
 
       return passed;
-
     },
     async submitForm(id) {
-
       try {
-
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-
           this.buttonDisabled = true;
 
-          const verb = id ? "PUT" : "POST";
+          const verb = id ? 'PUT' : 'POST';
 
-          await this.$http({
+          await axiosInstance({
             method: verb,
             url: `/notes/${id}`,
             data: {
               fullText: this.fullText,
               slug: this.slug,
-              status: this.status,
             },
           });
 
-          this.$emit("view-mode", id);
-
+          this.$emit('view-mode', id);
         } else {
-
-          this.$store.dispatch("errors/setError", this.errorMessage);
-
+          this.$store.dispatch('errors/setError', this.errorMessage);
         }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
 
     async getNote(id) {
-
-      return this.$http({
-        method: "GET",
+      return axiosInstance({
+        method: 'GET',
         url: `/notes/${id}`,
       });
-
     },
   },
 };

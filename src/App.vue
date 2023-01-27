@@ -5,8 +5,7 @@
       <router-view v-slot="{ Component }">
         <transition
           name="fade"
-          mode="out-in"
-        >
+          mode="out-in">
           <component :is="Component" />
         </transition>
       </router-view>
@@ -37,125 +36,33 @@
  * total, 4650, 7816
  *** */
 
-import TheFooter from "@/components/layout/TheFooter.vue";
-import TheHeader from "@/components/layout/TheHeader.vue";
-import ModalError from "@/components/ui/ModalError.vue";
-import ModalSuccess from "@/components/ui/ModalSuccess.vue";
+import TheFooter from '@/components/layout/TheFooter.vue';
+import TheHeader from '@/components/layout/TheHeader.vue';
+import ModalError from '@/components/ui/ModalError.vue';
+import ModalSuccess from '@/components/ui/ModalSuccess.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     TheHeader,
     TheFooter,
     ModalError,
     ModalSuccess,
   },
-  data: () => {
+  data: () => ({
 
-    return {
-      start: 0,
-    };
-
-  },
+  }),
   mounted() {
+    this.$store.dispatch('tokens/accessTokenValue', this.$cookies.get('accessTokenValue'));
 
-    this.$store.dispatch("tokens/accessTokenValue", this.$cookies.get("accessTokenValue"));
+    this.$store.dispatch('tokens/accessTokenExpires', this.$cookies.get('accessTokenExpires'));
 
-    this.$store.dispatch("tokens/accessTokenExpires", this.$cookies.get("accessTokenExpires"));
+    this.$store.dispatch('tokens/refreshTokenValue', this.$cookies.get('refreshTokenValue'));
 
-    this.$store.dispatch("tokens/refreshTokenValue", this.$cookies.get("refreshTokenValue"));
-
-    this.$store.dispatch("tokens/refreshTokenExpires", this.$cookies.get("refreshTokenExpires"));
-
-  },
-  created() {
-
-    this.start = performance.now();
-
+    this.$store.dispatch('tokens/refreshTokenExpires', this.$cookies.get('refreshTokenExpires'));
   },
   methods: {
-    // called before the element is inserted into the DOM.
-    // use this to set the "enter-from" state of the element
-    onBeforeEnter() {
 
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onBeforeEnter`);
-
-    },
-
-    // called one frame after the element is inserted.
-    // use this to start the animation.
-    onEnter(_el, done) {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onEnter`);
-
-      done();
-
-    },
-
-    // called when the enter transition has finished.
-    onAfterEnter() {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onAfterEnter`);
-
-      console.log("----------------");
-
-    },
-    onEnterCancelled() {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onEnterCancelled`);
-
-    },
-    // called before the leave hook.
-    // Most of the time, you shoud just use the leave hook.
-    onBeforeLeave() {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onBeforeLeave`);
-
-    },
-    // called when the leave transition starts.
-    // use this to start the leaving animation.
-    onLeave(_el, done) {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onLeave`);
-
-      // call the done callback to indicate transition end
-      // optional if used in combination with CSS
-      done();
-
-    },
-
-    // called when the leave transition has finished and the
-    // element has been removed from the DOM.
-    onAfterLeave() {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} onAfterLeave`);
-
-      console.log("----------------");
-
-    },
-
-    // only available with v-show transitions
-    onLeaveCancelled() {
-
-      const result = performance.now() - this.start;
-
-      console.log(`${result} leaveCancelled`);
-
-    },
   },
 };
 
@@ -163,55 +70,48 @@ export default {
 
 <style lang="scss">
 @import "./assets/variables";
-@import "./assets/placeholder";
-@import "~/node_modules/@picocss/pico/css/pico.css";
-@import "//fonts.googleapis.com/css2?family=Montserrat&display=swap";
-@import "//fonts.googleapis.com/css2?family=Poppins&display=swap";
+@import "~/node_modules/@picocss/pico/scss/pico.scss";
+@import "./assets/maxwidth.scss";
+@import "./assets/styles-override.scss";
 
-#app {
-  background-color: var(--bg2);
+@import "//fonts.googleapis.com/css2?family=Open+Sans&display=swap";
+
+.inline-block {
+  display:inline
 }
 
-.admin {
-  background-color: #ffffff;
-  border: 4px solid green;
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-
+.row-admin-container {
+  display: grid;
+  grid-template-columns: 1fr min-content;
 }
 
-.admin button,
-.admin a[role=button] {
-  background-color: #eeeeee;
-  border: 1px solid green;
-  color: darkgreen;
-  margin: 0.2rem;
-  padding: 0 0.8rem;
-  font-size: 0.7rem;
+.row-auto-container {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  justify-items: start;
+  grid-auto-rows: max-content;
 }
 
-.articl-actions a,
-.note-actions a,
-.nav-tabs li a {
-  align-items: center;
-  display: flex;
-  height: 1.6rem;
-  justify-content: center;
-  padding: 0 1rem;
+.item-auto-box{
+padding: 0.5em 1em;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  text-align: center;
   text-decoration: none;
-  transition: background-color .3s;
-  margin:0;
+  display: inline-block;
+  cursor: pointer;
+}
+.row-admin-box {
+  display: grid;
+  grid-template-columns: min-content min-content min-content;
+  grid-gap: 5px;
+  padding: 0 5px;
 }
 
-.nav-tabs li a:first-child {
-  padding-left: 0;
-}
-
-.articl-actions.admin {
-  border: 1px solid green;
-  margin: 0;
-  padding: .3rem;
+.row-admin-box > a {
+  border: 0 !important;
+  padding: 0 5px !important;
 }
 
 .fade-enter-active {
@@ -249,22 +149,65 @@ export default {
   padding: 0 0.5rem;
 }
 
+.nav-tabs-margin {
+  margin: var(--nav-element-spacing-vertical) var(--nav-element-spacing-vertical);
+}
+
+.nav-tabs-inner-margin {
+  margin: 0 var(--nav-element-spacing-vertical);
+}
+
+.nav-tabs li.active,
+.active {
+  border: 1px solid $grey-100;
+  border-bottom: 1px solid var(--background-color);
+}
+
 .nav-tabs {
+  margin-bottom: 0;
   column-gap: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .nav-tabs li,
 .note-actions li,
 .articl-actions li {
-  border-bottom: 1px solid transparent;
+  border-width: 1px;
+  border-right-width: 0;
+  border-style: solid;
+  border-color: $grey-100;
+  border: 1px solid transparent;
   display: inline-block;
-  font-size: 1rem;
+  padding: var(--nav-element-spacing-horizontal);
   vertical-align: middle;
+  margin-bottom: 0;
+  column-gap: 0;
 }
 
-.nav-tabs li.active,
-.active {
-  border-color: var(--bg0);
+.nav-tabs li:last-child,
+.note-actions li:last-child,
+.articl-actions li:last-child {
+  border-right-width: 1px;
+}
+
+.articl-actions a,
+.note-actions a,
+.nav-tabs li a {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.nav-content {
+  position:relative;
+  top: -1px;
+  z-index:0;
+  border: 1px solid $grey-100;
+  padding: var(--spacing)
 }
 
 .right {
@@ -287,12 +230,15 @@ export default {
 
 .toggle-password-mask {
   cursor: pointer;
+  vertical-align: middle;
+  //padding: calc(var(--form-element-spacing-horizontal) * 0.5);
   height: 2.2rem;
   position: absolute;
+  top: calc(var(--form-element-spacing-vertical) * 0.5);
   right: 1rem;
-  top: 40%;
-  transform: translateY(-40%);
   width: 2.2rem;
+  top:50%;
+  transform:translateY(-50%);
 }
 
 .vertical-container {
@@ -315,37 +261,22 @@ export default {
 :where(:root),
 html,
 body {
-  --primary-focus: transparent;
-  background-color: var(--bg0);
-  font-family: Poppins, Arial, sans-serif !important;
-}
-
-body {
   align-items: center;
   border-radius: 0;
   display: flex;
   justify-content: center;
 }
 
-body * {
-  border-radius: 0 !important;
-}
-
-footer article {
+:root footer article {
   margin-bottom: 0;
   margin-top: 0;
 }
 
-header article {
+:root header article {
   margin-bottom: 0;
   margin-top: 0;
   padding-bottom: 0;
   padding-top: 0;
-}
-
-header article,
-footer article {
-  background-color: var(--bg1);
 }
 
 input:not([type="checkbox"], [type="radio"], [type="range"]) {
@@ -355,7 +286,7 @@ input:not([type="checkbox"], [type="radio"], [type="range"]) {
 input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]),
 select,
 textarea {
-  padding: .4rem .6rem !important;
+  padding: calc(var(--form-element-spacing-vertical) * 0.5) calc(var(--form-element-spacing-horizontal) * 0.5);
 }
 
 input[role="switch"],
@@ -363,23 +294,19 @@ input[type="radio"] {
   border-radius: 1rem !important;
 }
 
-main article {
-  background-color: var(--bg2);
+:root main article {
   margin-bottom: 0;
   margin-top: 0;
+  padding-top: 0;
 }
 
+article h2,
 main form {
-  margin-bottom: 0;
+  margin-bottom: var(--block-spacing-vertical);
 }
 
 small {
-  font-size: .7rem;
-}
-
-small .small-caps {
-  opacity: 0.6;
-  font-variant: small-caps;
+  font-size: 0.7rem;
 }
 
 ul {

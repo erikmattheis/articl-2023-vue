@@ -3,37 +3,33 @@
     v-if="successTitle"
     class="modal-container"
     @click.prevent="close()"
-    @keyup.enter="close()"
-  >
+    @keyup.enter="close()">
     <dialog
       open
       class="modal"
-      @click.stop
-    >
+      @click.stop>
       <article class="max-container-width">
         <header>
           <a
             href="#close"
             aria-label="Close"
             class="close"
-            @click.prevent="close()"
-          />
+            @click.prevent="close()" />
           <h2>{{ successTitle }}</h2>
         </header>
         <section>
           <div
             class="tab"
-            title="success"
-          >
+            title="success">
             <vue-feather
               size="3rem"
               type="check"
-            />
+              aria-label="Check mark" />
           </div>
           <div class="info">
             <ul>
               <li v-if="successMessage">
-                {{ successMessage }}
+                <small>{{ successMessage }}</small>
               </li>
             </ul>
           </div>
@@ -47,8 +43,8 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
-import { mapGetters } from "vuex";
+import VueFeather from 'vue-feather';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -56,15 +52,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      successTitle: "modals/successTitle",
-      successMessage: "modals/successMessage",
+      successTitle: 'modals/successTitle',
+      successMessage: 'modals/successMessage',
+      okFunction: 'modals/okFunction',
     }),
   },
   methods: {
     close() {
-
-      this.$store.dispatch("modals/clearSuccess");
-
+      this.$store.dispatch('modals/clearSuccess');
     },
   },
 };
@@ -78,14 +73,11 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
-  display: flex;
-  background-color: black;
 }
 
 .modal {
   width: 90%;
   margin: auto;
-  background-color: white;
   border: 0.2rem;
 }
 
@@ -111,7 +103,7 @@ section div {
 }
 
 #app > div > dialog > article > section > div.info {
-  min-width: calc(100% - 6rem);
+  max-width: calc(100% - 6rem);
   min-height: 6rem;
   padding: 1rem;
   color: #0071001a;
@@ -136,7 +128,6 @@ dialog article button:hover {
 }
 
 dialog article header h2 {
-  margin-bottom: 0;
   color: #fff;
 }
 
@@ -169,5 +160,10 @@ ul
 li {
   color: black !important;
   background-color: #cfa;
+}
+
+small {
+  display: inline-block;
+  line-height: 1;
 }
 </style>

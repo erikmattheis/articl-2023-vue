@@ -1,111 +1,63 @@
 export default {
   namespaced: true,
 
-  state: () => {
-
-    return {
-      articls: [],
-      articlTypes: [],
-      categories: [],
-      notes: [],
-      treeLevel: undefined,
-      breadcrumbs: [],
-    };
-
-  },
+  state: () => ({
+    articls: [],
+    articlTypes: [],
+    categories: [],
+    notes: [],
+    treeLevel: undefined,
+    breadcrumbs: [],
+  }),
 
   mutations: {
     SET_CATEGORIES: (state, payload) => {
-
       state.categories = payload;
-
     },
     SET_ARTICLS: (state, payload) => {
-
       state.articls = payload;
-
     },
     SET_ARTICL_TYPES: (state, payload) => {
-
       state.articlTypes = payload;
-
     },
     SET_NOTES: (state, payload) => {
-
       state.notes = payload;
-
     },
     SET_BREADCRUMBS: (state, payload) => {
-
       state.breadcrumbs = payload;
-
     },
   },
 
   actions: {
     categories: (context, payload) => {
-
-      context.commit("SET_CATEGORIES", payload);
-
+      context.commit('SET_CATEGORIES', payload);
     },
     articls: (context, payload) => {
-
-      context.commit("SET_ARTICLS", payload);
-
+      context.commit('SET_ARTICLS', payload);
     },
     articlTypes: (context, payload) => {
-
-      context.commit("SET_ARTICL_TYPES", payload);
-
+      context.commit('SET_ARTICL_TYPES', payload);
     },
     notes: (context, payload) => {
-
-      context.commit("SET_NOTES", payload);
-
+      context.commit('SET_NOTES', payload);
     },
     breadcrumbs: (context, payload) => {
-
-      context.commit("SET_BREADCRUMBS", payload);
-
+      context.commit('SET_BREADCRUMBS', payload);
     },
   },
   getters: {
 
-    categories: (state) => {
+    categories: (state) => state.categories,
 
-      return state.categories;
+    articls: (state) => state.articls,
 
-    },
+    articlTypes: (state) => state.articlTypes,
 
-    articls: (state) => {
+    notes: (state) => state.notes,
 
-      return state.articls;
+    treeLevel: (state) => state.breadcrumbs.length - 1,
 
-    },
-
-    articlTypes: (state) => {
-
-      return state.articlTypes;
-
-    },
-
-    notes: (state) => {
-
-      return state.notes;
-
-    },
-
-    treeLevel: (state) => {
-
-      return state.breadcrumbs.length - 1;
-
-    },
-
-    breadcrumbs: (state) => {
-
-      return state.breadcrumbs;
-
-    },
+    breadcrumbs: (state) => state.breadcrumbs,
 
   },
 };

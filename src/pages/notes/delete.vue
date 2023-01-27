@@ -5,8 +5,7 @@
     <form>
       <button
         v-if="!!id"
-        @click.prevent="deleteNote()"
-      >
+        @click.prevent="deleteNote()">
         Delete
       </button>
     </form>
@@ -14,62 +13,50 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
+
 export default {
-  name: "DeleteNote",
+  name: 'DeleteNote',
   props: {
     fullText: {
       type: String,
-      default: "",
+      default: '',
     },
     id: {
       type: String,
-      default: "",
+      default: '',
     },
     slug: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-  data: () => {
-
-    return {};
-
-  },
+  data: () => ({}),
   mounted() {
 
   },
   methods: {
     async deleteNote() {
-
       try {
-
         this.buttonDisabled = true;
 
         await this.submitDelete(this.id);
 
-        this.$router.push({ name: "categoryPage", params: { slug: this.slug } });
-
+        this.$router.push({ name: 'categoryPage', params: { slug: this.slug } });
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
     async submitDelete(id) {
-
-      return this.$http({
-        method: "DELETE",
-        url: "/notes",
+      return axiosInstance({
+        method: 'DELETE',
+        url: '/notes',
         data: {
           id,
         },
       });
-
     },
   },
 };

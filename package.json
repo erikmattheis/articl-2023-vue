@@ -1,6 +1,5 @@
 {
-  "name": "latest-articl-frontent-dev",
-  "main": "index.js",
+  "name": "replace",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,130 +13,32 @@
     "node": "18.x"
   },
   "dependencies": {
-    "@picocss/pico": "^1.5.2",
-    "axios": "^0.27.2",
-    "axios-auth-refresh": "^3.3.1",
-    "compression": "^1.7.4",
+    "@picocss/pico": "^1.5.6",
+    "axios": "^1.2.2",
     "core-js": "^3.8.3",
-    "express": "^4.18.1",
     "lodash": "^4.17.21",
-    "serve-static": "^1.15.0",
     "vue": "^3.2.13",
-    "vue-cookies": "^1.8.1",
+    "vue-cookies": "^1.8.2",
     "vue-feather": "^2.0.0",
-    "vue-router": "^4.0.15",
+    "vue-router": "^4.1.5",
     "vuedraggable": "^4.1.0",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
-    "@volar-plugins/prettier": "^1.1.4",
-    "@vue/cli-plugin-babel": "^5.0.4",
-    "@vue/cli-plugin-eslint": "^5.0.4",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
-    "eslint": "^8.18.0",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-sort-keys-fix": "^1.1.2",
-    "eslint-plugin-vue": "^9.1.1",
-    "eslint-plugin-vuejs-accessibility": "^1.2.0",
-    "postcss-html": "^1.4.1",
-    "sass": "^1.52.2",
-    "sass-loader": "^13.0.0",
-    "stylelint-config-recommended-vue": "^1.4.0",
-    "stylelint-webpack-plugin": "^3.3.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-recommended",
-      "@vue/airbnb"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2020
-    },
-    "plugins": [
-      "simple-import-sort",
-      "sort-keys-fix",
-      "vuejs-accessibility",
-      "prefer-arrow",
-      "vue"
-    ],
-    "rules": {
-      "arrow-body-style": [
-        "error",
-        "always"
-      ],
-      "indent": "off",
-      "max-len": [
-        "error",
-        {
-          "code": 1000
-        }
-      ],
-      "no-console": "off",
-      "padded-blocks": [
-        "error",
-        {
-          "blocks": "always",
-          "classes": "always",
-          "switches": "always"
-        },
-        {
-          "allowSingleLineBlocks": true
-        }
-      ],
-      "quotes": [
-        "error",
-        "double"
-      ],
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error"
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ],
-  "sideEffects": [
-    "**/*.css",
-    "**/*.scss"
-  ],
-  "stylelint": {
-    "extends": [
-      "stylelint-config-recommended-vue"
-    ],
-    "rules": {
-      "selector-pseudo-element-no-unknown": [
-        true,
-        {
-          "ignorePseudoElements": [
-            "v-deep"
-          ]
-        }
-      ],
-      "block-closing-brace-newline-after": "always",
-      "block-closing-brace-newline-before": "always-multi-line",
-      "block-closing-brace-space-before": "always-single-line",
-      "block-opening-brace-newline-after": "always-multi-line",
-      "block-opening-brace-space-after": "always-single-line",
-      "color-no-invalid-hex": true,
-      "indentation": 2,
-      "rule-empty-line-before": "always",
-      "linebreaks": "unix",
-      "no-eol-whitespace": true,
-      "property-no-unknown": true,
-      "unit-no-unknown": true
-    },
-    "syntax": "scss",
-    "customSyntax": "postcss-html"
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-vue": "^8.0.3",
+    "eslint-plugin-vuejs-accessibility": "^1.1.0",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "vuex-module-decorators": "^2.0.0"
   }
 }

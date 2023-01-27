@@ -11,8 +11,7 @@
         id="Login"
         type="submit"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-      >
+        @click.prevent="submitForm()">
         Start
       </button>
       <pre>{{ result }}</pre>
@@ -21,26 +20,23 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
+
 export default {
-  name: "ImportCategoriesPage",
-  data: () => {
-
-    return {
-      buttonDisabled: false,
-      success: false,
-      result: null,
-      chrs: 0,
-    };
-
-  },
+  name: 'ImportCategoriesPage',
+  data: () => ({
+    buttonDisabled: false,
+    success: false,
+    result: null,
+    chrs: 0,
+  }),
   methods: {
     async submitForm() {
-
       this.buttonDisabled = true;
 
-      const result = await this.$http({
-        method: "POST",
-        url: "/categories/import-categories",
+      const result = await axiosInstance({
+        method: 'POST',
+        url: '/categories/import-categories',
       });
 
       this.success = true;
@@ -48,7 +44,6 @@ export default {
       this.result = result.data;
 
       this.buttonDisabled = false;
-
     },
   },
 };
@@ -57,10 +52,5 @@ export default {
 <style scoped>
 *[readonly] {
   cursor: not-allowed;
-}
-
-.success {
-  background-color: honeydew;
-  border: 8px solid green;
 }
 </style>

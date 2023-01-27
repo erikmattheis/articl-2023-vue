@@ -6,32 +6,18 @@
     <h1 v-else>
       Success
     </h1>
-    slug: {{ slug }}
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="fullText">Note <textarea
           id="fullText"
           v-model="fullText"
           name="fullText"
-          autocomplete="off"
-        />
-        </label>
-        <label for="status">Status <select
-          id="status"
-          v-model="status"
-          name="status"
-        >
-          <option value="Published"> Published </option>
-          <option value="Draft"> Draft </option>
-          <option value="Pending"> Pending </option>
-          <option value="Trash"> Trash </option>
-        </select>
+          autocomplete="off" />
         </label>
         <button
           type="button"
           :aria-busy="buttonDisabled"
-          @click.prevent="submitForm(id)"
-        >
+          @click.prevent="submitForm(id)">
           {{ !id? "Create":"Edit" }} Note
         </button>
       </form>
@@ -40,72 +26,50 @@
         <a
           href
           @click="$router.go()"
-          @keyup.enter="$router.go()"
-        >Create another note</a>
+          @keyup.enter="$router.go()">Create another note</a>
       </template>
     </template>
     <transition
       name="fade"
-      mode="out-in"
-    >
+      mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </section>
 </template>
 
 <script>
-import cardNotification from "@/components/ui/CardNotification.vue";
-import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
-import { setTitleAndDescription } from "@/services/htmlMetaService";
+import cardNotification from '@/components/ui/CardNotification.vue';
+import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: "EditNoteComponent",
+  name: 'EditNoteComponent',
   components: {
     LoadingPlaceholder,
     cardNotification,
   },
-  props: {
-    passedId: {
-      default: "",
-      type: String,
-    },
-  },
-  data: () => {
-
-    return {
-      fullText: "",
-      status: "Published",
-    };
-
-  },
+  data: () => ({
+    fullText: '',
+  }),
   mounted() {
-
-    this.id = this.passedId;
-
-    this.formAction = this.id ? "Edit" : "Create";
+    this.formAction = this.id ? 'Edit' : 'Create';
 
     if (!this.id) {
-
       this.slug = this.$route.params.slug;
 
       this.isLoading = false;
-
     } else {
-
       this.getCurrentNote(this.id);
-
     }
 
     setTitleAndDescription({
       title: this.formAction,
     });
-
   },
   methods: {
     async getCurrentNote(id) {
-
       try {
-
         this.isLoading = true;
 
         const result = await this.getNote(id);
@@ -113,97 +77,66 @@ export default {
         Object.assign(this, result.data);
 
         this.isLoading = false;
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       }
-
     },
     resetFormErrors() {
-
       this.success = null;
 
       this.result = null;
 
-      this.errorMessage = "";
-
+      this.errorMessage = '';
     },
     checkForm() {
-
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.fullText === "") {
-
-        this.errorMessage = "Please enter some text.";
-
-        passed = false;
-
-      } else if (this.status === "") {
-
-        this.errorMessage = "Please choose a status.";
+      if (this.fullText === '') {
+        this.errorMessage = 'Please enter some text.';
 
         passed = false;
-
       }
 
       return passed;
-
     },
     async submitForm(id) {
-
       try {
-
         this.resetFormErrors();
 
         if (this.checkForm() === true) {
-
           this.buttonDisabled = true;
 
-          const verb = id ? "PUT" : "POST";
-          const result = await this.$http({
+          const verb = id ? 'PUT' : 'POST';
+          const result = await axiosInstance({
             method: verb,
             url: `/notes/${id}`,
             data: {
               authors: this.authors,
               fullText: this.fullText,
               slug: this.slug,
-              status: this.status,
             },
           });
 
           this.success = true;
 
           Object.assign(this, result.data);
-
         } else {
-
-          this.$store.dispatch("errors/setError", this.errorMessage);
-
+          this.$store.dispatch('errors/setError', this.errorMessage);
         }
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
 
     async getNote(id) {
-
-      return this.$http({
-        method: "GET",
+      return axiosInstance({
+        method: 'GET',
         url: `/notes/${id}`,
       });
-
     },
   },
 };

@@ -2,43 +2,33 @@
   <ul>
     <li
       v-for="note in notes || [] "
-      :key="note.fullText"
-    >
+      :key="note.fullText">
       <notes-list-item :passed-note="note" />
     </li>
   </ul>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import NotesListItem from "@/components/layout/NotesListItem.vue";
+import NotesListItem from '@/components/layout/NotesListItem.vue';
 
 export default {
-  name: "NoteList",
+  name: 'NoteList',
   components: {
     NotesListItem,
   },
   props: {
     notes: {
       type: Array,
-      default: () => { return []; },
+      default: () => [],
     },
   },
-  data: () => {
-
-    return {
-      isLoading: true,
-      isEditing: false,
-      editMode: false,
-    };
-
-  },
-  computed: {
-    ...mapGetters({
-      isLoggedIn: "tokens/isLoggedIn",
-    }),
-  },
+  data: () => ({
+    isLoading: true,
+    isEditing: false,
+    editMode: false,
+  }),
 
   methods: {
 

@@ -2,12 +2,11 @@
   <section>
     <div
       class="tab"
-      title="success"
-    >
+      title="success">
       <vue-feather
         size="60"
         type="check"
-      />
+        aria-label="Check mark" />
     </div>
     <div class="info">
       <aside>{{ successMessage }}</aside>
@@ -16,7 +15,7 @@
 </template>
 
 <script>
-import VueFeather from "vue-feather";
+import VueFeather from 'vue-feather';
 
 export default {
   components: {
@@ -24,20 +23,17 @@ export default {
   },
   props: {
     successMessage: {
-      type: String, default: "",
+      type: String, default: '',
     },
   },
-  data: () => {
-
-    return {
-      title: "",
-    };
-
-  },
+  data: () => ({
+    title: '',
+  }),
 };
 </script>
 
 <style scoped>
+
 section {
   overflow: auto;
 }
@@ -66,4 +62,5 @@ section div {
   color: black;
   background: #dcedc8;
 }
+
 </style>

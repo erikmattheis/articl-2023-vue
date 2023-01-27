@@ -1,25 +1,41 @@
-import "core-js/actual/array/group-by";
+/*
+Coding instructions for Chat GPT:
 
-import axios from "axios";
-import createAuthRefreshInterceptor from "axios-auth-refresh";
-import { createApp } from "vue";
-import VueCookies from "vue-cookies";
+Can you rewite it in a more consistant style? Such as where variables are deined and stored?
 
-import { getAccessTokenValue, getRefreshTokenValue, setTokens } from "@/services/tokensService";
+Specifically -
 
-import App from "./App.vue";
-import router from "./router";
-import store from "./store/index";
+Use async/await
+Use try/catch
+Use global error handler
+Use axios to make requests
+Identify places where I could better use the advice "don't repeat yourself" - moving functions that may be used in other to services
+Suggest functions that can be abstracted so they can be used in other files.
+
+What other suggestions do you have to improve the code?
+
+*/
+
+import 'core-js/actual/array/group-by';
+
+import axios from 'axios';
+import { createApp } from 'vue';
+import VueCookies from 'vue-cookies';
+
+import App from './App.vue';
+import router from './router';
+import store from './store/index';
+
+import isLoggedInMixin from './mixins/isLoggedInMixin';
+import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
-let baseURL;
+app.mixin(isLoggedInMixin);
+
 let secure = true;
 
-if (window.location.hostname === "192.168.1.130" || window.location.hostname === "localhost") {
-
-  baseURL = "http://localhost:5000/v1";
-
+if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
   secure = false;
 
 } else if (process.env.HEROKU_APP_NAME === "articl-vue-2022") {
@@ -36,89 +52,42 @@ if (window.location.hostname === "192.168.1.130" || window.location.hostname ===
 
 }
 
-app.config.globalProperties.$http = axios.create({
-  baseURL,
-});
-
-app.config.globalProperties.$http.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (request) => {
-
     const req = request;
-    const accessTokenValue = getAccessTokenValue();
+    const { accessTokenValue } = store.state.tokens;
 
-    if (accessTokenValue && req.url !== "/auth/refresh-tokens") {
-
+    if (accessTokenValue && req.url !== '/auth/refresh-tokens') {
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
-
     }
 
     return Promise.resolve(req);
-
   },
-  (error) => { return error; },
+  (error) => error,
 );
 
-const refreshAuthLogic = (failedRequest) => {
+axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
+  const { status } = error;
 
-  return axios.post({
-    method: "POST",
-    url: `${baseURL}/auth/refresh-tokens`,
-    data: {
-      refreshToken: getRefreshTokenValue(),
-    },
-    skipAuthRefresh: true,
-  })
-    .then((tokens) => {
-
-      setTokens(tokens.data);
-      return Promise.resolve(failedRequest);
-
-    });
-
-};
-
-/*
-async function refreshAuthLogic(failedRequest) {
-
-  if (!getRefreshTokenValue() || failedRequest.isRetry) {
-
-    router.push({ name: "loginPage", query: { redirect: router.currentRoute.value.path } });
-    return Promise.reject();
-
+  if (status === 401) {
+    // check if refresh token is still valid
+    const { refreshTokenExpires } = store.state.tokens;
+    if (refreshTokenExpires > Date.now()) {
+      try {
+        await store.dispatch('renewSession');
+        return axios(error.config);
+      } catch (err) {
+        // session renewal failed, redirect to login page
+        store.dispatch('logout');
+        router.push({ name: 'login' });
+      }
+    }
+    // refresh token is expired, redirect to login page
+    store.dispatch('logout');
+    router.push({ name: 'login' });
   }
-
-  // does it need axios instance returned
-  return axios({
-    method: "POST",
-    url: `${baseURL}/auth/refresh-tokens`,
-    data: {
-      refreshToken: getRefreshTokenValue(),
-    },
-  })
-    .then((tokens) => {
-
-      console.log("i am right here", tokens);
-      // eslint-disable-next-line no-param-reassign
-      failedRequest.response.config.headers.Authorization = `Bearer ${getAccessTokenValue()}`;
-
-      // eslint-disable-next-line no-param-reassign
-      failedRequest.isRetry = true;
-
-      setTokens(tokens.data);
-
-      return Promise.resolve();
-
-    })
-    .catch((error) => {
-
-      console.log("catching error here", error);
-      return Promise.reject(error);
-
-    });
-
-}
-*/
-createAuthRefreshInterceptor(app.config.globalProperties.$http, refreshAuthLogic);
+  return Promise.reject(error);
+});
 
 app.use(router);
 
@@ -128,4 +97,4 @@ app.use(VueCookies, {
 
 app.use(store);
 
-app.mount("#app");
+app.mount('#app');

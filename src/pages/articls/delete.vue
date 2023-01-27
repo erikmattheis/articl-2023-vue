@@ -6,8 +6,7 @@
       <button
         v-if="!!id"
         :aria-busy="buttonDisabled"
-        @click="deleteArticl()"
-      >
+        @click="deleteArticl()">
         Delete
       </button>
     </form>
@@ -15,67 +14,55 @@
 </template>
 
 <script>
+import axiosInstance from '@/services/axiosService';
+
 export default {
-  name: "DeleteArticl",
+  name: 'DeleteArticl',
   components: {
   },
-  data: () => {
-
-    return {
-      id: undefined,
-      title: "Nothing to delete",
-      buttonDisabled: false,
-    };
-
+  props: {
+    id: {
+      default: () => '',
+      type: String,
+    },
+    title: {
+      default: () => '',
+      type: String,
+    },
   },
+  data: () => ({
+    buttonDisabled: false,
+  }),
   mounted() {
-
-    if (this.$route.params?.id) {
-
-      this.id = this.$route.params?.id;
-
-      this.title = this.$route.params?.title;
-
-    }
 
   },
   methods: {
     async deleteArticl() {
-
       try {
-
         this.buttonDisabled = true;
 
         await this.submitDelete(this.id);
 
-        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
+        this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
 
         this.$store.dispatch(
-          "modals/setSuccessMessage",
+          'modals/setSuccessMessage',
           `The articl "${this.title}" has been permanently deleted.`,
         );
-
       } catch (error) {
-
-        this.$store.dispatch("errors/setError", error);
-
+        this.$store.dispatch('errors/setError', error);
       } finally {
-
         this.buttonDisabled = false;
-
       }
-
     },
     async submitDelete(id) {
-
-      return this.$http({
-        method: "DELETE",
-        url: "/articls",
+      return axiosInstance({
+        method: 'DELETE',
+        url: '/articls',
         data: {
           id,
         },
       });
-
     },
   },
 };

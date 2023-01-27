@@ -8,61 +8,46 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from "@/services/htmlMetaService";
+import { setTitleAndDescription } from '@/services/htmlMetaService';
+import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: "VerifyEmailPage",
+  name: 'VerifyEmailPage',
 
-  data: () => {
-
-    return {
-      resultTitle: null,
-      result: null,
-    };
-
-  },
-  mounted() {
-
+  data: () => ({
+    resultTitle: null,
+    result: null,
+  }),
+  async mounted() {
     try {
-
-      this.submitForm();
+      await this.submitForm();
 
       setTitleAndDescription({
-        title: "Forgot Password",
+        title: 'Email Verification',
       });
-
     } catch (error) {
-
-      this.$store.dispatch("errors/setError", error);
-
+      this.$store.dispatch('errors/setError', error);
     }
-
   },
   methods: {
     async submitForm() {
-
       this.isLoading = true;
 
-      const response = await this.$http({
-        method: "GET",
+      const response = await axiosInstance({
+        method: 'GET',
         url: `/auth/verify-email?token=${this.$route.query.token}`,
       });
 
       if (response?.status === 204) {
-
-        this.resultTitle = "Email verified";
-
+        this.resultTitle = 'Email verified';
       } else {
-
         this.$store.dispatch(
-          "errors/setError",
+          'errors/setError',
           response,
         );
-
       }
 
       this.isLoading = false;
-
     },
   },
 };
