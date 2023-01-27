@@ -6,8 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lint:scss": "stylelint ./src/**/*.{vue,scss} --fix",
-    "start": "node index.js"
+    "lint:scss": "stylelint ./src/**/*.{vue,scss} --fix"
   },
   "engines": {
     "node": "18.x"
