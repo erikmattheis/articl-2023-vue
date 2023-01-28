@@ -93,7 +93,7 @@ export default {
 }
 
 .item-auto-box{
-padding: 0.5em 1em;
+  padding: 0.5em 1em;
   background-color: var(--primary);
   color: white;
   border: none;
@@ -111,7 +111,7 @@ padding: 0.5em 1em;
 
 .row-admin-box > a {
   border: 0 !important;
-  padding: 0 5px !important;
+  padding: 0 10px !important;
 }
 
 .fade-enter-active {
@@ -303,10 +303,6 @@ input[type="radio"] {
 article h2,
 main form {
   margin-bottom: var(--block-spacing-vertical);
-}
-
-small {
-  font-size: 0.7rem;
 }
 
 ul {

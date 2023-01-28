@@ -3,21 +3,27 @@
     <h1 v-if="!success">
       {{ formAction }} articl
     </h1>
-    <h1 v-else>
-      Articl Created
-    </h1>
+    <template v-else>
+      <h1>Articl Created</h1>
+      <a
+        tabindex="0"
+        href
+        @click="$router.push({ name: 'createArticlPage', query: { slug } })"
+        @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another articl in the same category</a>
+
+      <a
+        tabindex="0"
+        href
+        @click="$router.push({ name: 'categoryPage', slug: { slug } })"
+        @keyup.enter="$router.push({ name: 'categoryPage', query: { slug} })">Return to Category lists </a>
+    </template>
+
     <!---
     <div class="row-auto-container">
       <card-notification
         class="item-auto-box"
         success-message="Success" />
   -->
-    <a
-
-      tabindex="0"
-      href
-      @click="$router.push({ name: 'createArticlPage', query: { slug } })"
-      @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another article</a>
 
     <template v-if="!isLoading && !success">
       <form>
