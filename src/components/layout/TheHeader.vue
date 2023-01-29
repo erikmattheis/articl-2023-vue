@@ -150,7 +150,6 @@
 import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
-import { clear as clearLocalStorage } from '@/services/localStorageService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -201,39 +200,8 @@ export default {
         this.$store.dispatch('errors/setError', error);
       }
     },
-
-    clearLocalData() {
-      try {
-        this.$cookies.keys().forEach((cookie) => this.$cookies.remove(cookie));
-
-        clearLocalStorage();
-      } catch (error) {
-        this.$store.dispatch('errors/setError', error);
-      }
-    },
     async logout() {
-      try {
-        const refreshToken = this.$store.getters['tokens/refreshTokenValue'];
-
-        if (refreshToken) {
-          await axiosInstance({
-            method: 'POST',
-            url: '/auth/logout',
-            data: {
-              refreshToken,
-            },
-          });
-
-          this.clearLocalData();
-          this.$router.push('/');
-        }
-      } catch (error) {
-        this.$store.dispatch('errors/setError', error);
-      } finally {
-        localStorage.clear();
-
-        this.$store.dispatch('users/logout');
-      }
+      await this.$store.dispatch('users/logout');
     },
     setTextSize(size) {
       document.documentElement.style.setProperty(

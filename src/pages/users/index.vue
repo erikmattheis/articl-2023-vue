@@ -466,30 +466,6 @@ export default {
         this.buttonDisabled = false;
       }
     },
-    async logout() {
-      try {
-        const refreshToken = this.$store.getters['tokens/refreshTokenValue'];
-
-        if (refreshToken) {
-          await axiosInstance({
-            method: 'POST',
-            url: '/auth/logout',
-            data: {
-              refreshToken,
-            },
-          });
-
-          this.clearLocalData();
-          this.$router.push('/');
-        }
-      } catch (error) {
-        this.$store.dispatch('errors/setError', error);
-      } finally {
-        localStorage.clear();
-
-        this.$store.dispatch('users/logout');
-      }
-    },
     removeUsernameWhiteSpace() {
       this.username = this.username.replace(/\s/g, '');
     },

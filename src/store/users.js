@@ -21,7 +21,6 @@ export default {
     CLEAR_USER(state) {
       state.username = '';
       state.id = null;
-      state.authenticated = false;
     },
   },
 
@@ -47,13 +46,15 @@ export default {
         throw new Error(error);
       }
     },
-    async logout({ commit, state }) {
+    async logout({ dispatch, commit, rootGetters }) {
       try {
-        const { refreshToken } = state;
+        const refreshToken = rootGetters['tokens/refreshTokenValue'];
         await userLogout({ refreshToken });
+
+        dispatch('tokens/clearTokens', { rememberMe: true }, { root: true });
         commit('CLEAR_USER');
       } catch (error) {
-        throw new Error(error);
+        dispatch('errors/setError', error, { root: true });
       }
     },
   },

@@ -65,12 +65,12 @@ axiosInstance.interceptors.response.use(async (response) => response, async (err
         return axios(error.config);
       } catch (err) {
         // session renewal failed, redirect to login page
-        store.dispatch('logout');
+        store.dispatch('users/logout');
         router.push({ name: 'login' });
       }
     }
     // refresh token is expired, redirect to login page
-    store.dispatch('logout');
+    store.dispatch('users/logout');
     router.push({ name: 'login' });
   }
   return Promise.reject(error);
