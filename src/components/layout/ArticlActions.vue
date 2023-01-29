@@ -3,7 +3,7 @@
     <router-link
       role="button"
       :to="{ name: 'editArticl', params:{editId:id}}">
-      <small>edit</small>
+      <small>edit {{ title }}</small>
     </router-link>
     <router-link
       role="button"

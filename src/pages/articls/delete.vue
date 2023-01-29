@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>Delete Articl</h1>
+    <h1>Delete Articl {{ id }}</h1>
     <p>Really delete "{{ title }}"?</p>
     <form>
       <button
