@@ -145,9 +145,8 @@ const router = createRouter({
 
     {
       name: 'deleteArticl',
-      path: '/articls/delete/:id/:title',
+      path: '/articls/delete/:id',
       component: deleteArticlPage,
-      props: true,
     },
 
     {

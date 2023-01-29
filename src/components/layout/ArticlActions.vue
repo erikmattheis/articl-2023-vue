@@ -3,11 +3,11 @@
     <router-link
       role="button"
       :to="{ name: 'editArticl', params:{editId:id}}">
-      <small>edit {{ title }}</small>
+      <small>edit</small>
     </router-link>
     <router-link
       role="button"
-      :to="{ name: 'deleteArticl', params: { id, title }}">
+      :to="{ name: 'deleteArticl', params: { id }}">
       <small>delete</small>
     </router-link>
 
