@@ -1,7 +1,7 @@
 import VueCookies from 'vue-cookies';
 import axiosInstance from '@/services/axiosService';
 
-const clearTokens = (rememberMe) => {
+const clearJWTTokens = (rememberMe) => {
   VueCookies.remove('accessTokenValue');
   VueCookies.remove('accessTokenExpires');
 
@@ -11,18 +11,18 @@ const clearTokens = (rememberMe) => {
   }
 };
 
-const getToken = (key) => VueCookies.get(key);
+const getJWTToken = (key) => VueCookies.get(key);
 
-const setToken = (key, value) => VueCookies.set(key, value);
+const setJWTToken = (key, value) => VueCookies.set(key, value);
 
-const setTokens = (tokens) => {
+const setJWTTokens = (tokens) => {
   VueCookies.set('accessTokenValue', tokens.access?.token);
   VueCookies.set('accessTokenExpires', tokens.access?.expires);
   VueCookies.set('refreshTokenValue', tokens.refresh?.token);
   VueCookies.set('refreshTokenExpires', tokens.refresh?.expires);
 };
 
-const renewJWTSession = async (refreshTokenValue) => {
+const refreshJWTSession = async (refreshTokenValue) => {
   const result = await axiosInstance({
     method: 'POST',
     url: '/auth/refresh-tokens',
@@ -35,5 +35,5 @@ const renewJWTSession = async (refreshTokenValue) => {
 };
 
 export {
-  getToken, clearTokens, setToken, setTokens, renewJWTSession,
+  getJWTToken, clearJWTTokens, setJWTToken, setJWTTokens, refreshJWTSession,
 };
