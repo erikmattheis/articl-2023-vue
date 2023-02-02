@@ -35,6 +35,16 @@ import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
+app.config.errorHandler = (error, vm, info) => {
+  console.log('onfo', info);
+  store.dispatch('errors/setError', error);
+};
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.log('Unhandled rejection (promise: ', event.promise, ', reason: ', event.reason, ').');
+  store.dispatch('errors/setError', event.reason);
+});
+
 app.mixin(isLoggedInMixin);
 
 let secure = true;

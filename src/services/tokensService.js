@@ -27,10 +27,10 @@ const refreshJWTSession = async (refreshTokenValue) => {
     method: 'POST',
     url: '/auth/refresh-tokens',
     data: {
-      refreshTokenValue,
+      refreshToken: refreshTokenValue,
     },
   });
-
+  console.log('refreshJWTSession', result);
   return result.data.tokens;
 };
 

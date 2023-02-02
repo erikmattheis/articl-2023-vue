@@ -7,6 +7,7 @@ const noCaseIndexOf = (str, subString) => {
 
   return str.toLowerCase().indexOf(subString.toLowerCase());
 };
+
 const highlightedSubstring = (str, subString, part) => {
   if (!subString && part === 'prefix') {
     return str;
@@ -50,7 +51,7 @@ const convertStringDatesToMS = (tokens) => {
     tokens.access.expires,
   );
 
-  result.access.token = tokens.access.token;
+  result.refresh.token = tokens.refresh.token;
   result.refresh.expires = Date.parse(
     tokens.refresh.expires,
   );
