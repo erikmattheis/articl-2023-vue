@@ -5,14 +5,19 @@ Can you rewite it in a more consistant style? Such as where variables are deined
 
 Specifically -
 
+Use Composition API
+Add unit tests with Jest. I keep making edits that break something else, the tests should prevent that.
+Use functional programming whenever possible
 Use async/await
 Use try/catch
 Use global error handler
-Use axios to make requests
+Use axios to make requests through an istance caklled axiosService
 Identify places where I could better use the advice "don't repeat yourself" - moving functions that may be used in other to services
 Suggest functions that can be abstracted so they can be used in other files.
 
 What other suggestions do you have to improve the code?
+
+Please include rewriting these instructions if they can be clearer or more distinct.
 
 */
 
@@ -55,8 +60,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
   const { status } = error;
-
-  if (status === 401) {
+  if (status === 403) {
     // check if refresh token is still valid
     const { refreshTokenExpires } = store.state.tokens;
     if (refreshTokenExpires > Date.now()) {
@@ -67,6 +71,24 @@ axiosInstance.interceptors.response.use(async (response) => response, async (err
         // session renewal failed, redirect to login page
         store.dispatch('users/logout');
         router.push({ name: 'login' });
+        return Promise.reject(err);
+      }
+    }
+    // refresh token is expired, redirect to login page
+    store.dispatch('users/logout');
+    router.push({ name: 'login' });
+  } else if (status === 401) {
+    // check if refresh token is still valid
+    const { refreshTokenExpires } = store.state.tokens;
+    if (refreshTokenExpires > Date.now()) {
+      try {
+        await store.dispatch('renewSession');
+        return axios(error.config);
+      } catch (err) {
+        // session renewal failed, redirect to login page
+        store.dispatch('users/logout');
+        router.push({ name: 'login' });
+        return Promise.reject(err);
       }
     }
     // refresh token is expired, redirect to login page
