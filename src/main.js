@@ -23,7 +23,6 @@ Please include rewriting these instructions if they can be clearer or more disti
 
 import 'core-js/actual/array/group-by';
 
-import axios from 'axios';
 import { createApp } from 'vue';
 import VueCookies from 'vue-cookies';
 
@@ -60,13 +59,15 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
   const { status } = error;
+  console.log('in interceptor');
   if (status === 403) {
+    console.log('403');
     // check if refresh token is still valid
     const { refreshTokenExpires } = store.state.tokens;
     if (refreshTokenExpires > Date.now()) {
+      console.log('refreshTokenExpires is still valid');
       try {
-        await store.dispatch('renewSession');
-        return axios(error.config);
+        await store.dispatch('tokens/refreshSession');
       } catch (err) {
         // session renewal failed, redirect to login page
         store.dispatch('users/logout');
@@ -79,21 +80,17 @@ axiosInstance.interceptors.response.use(async (response) => response, async (err
     router.push({ name: 'login' });
   } else if (status === 401) {
     // check if refresh token is still valid
+    console.log('trying refresh');
     const { refreshTokenExpires } = store.state.tokens;
     if (refreshTokenExpires > Date.now()) {
       try {
-        await store.dispatch('renewSession');
-        return axios(error.config);
+        await store.dispatch('tokens/refreshSession');
       } catch (err) {
         // session renewal failed, redirect to login page
         store.dispatch('users/logout');
         router.push({ name: 'login' });
-        return Promise.reject(err);
       }
     }
-    // refresh token is expired, redirect to login page
-    store.dispatch('users/logout');
-    router.push({ name: 'login' });
   }
   return Promise.reject(error);
 });

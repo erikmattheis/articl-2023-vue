@@ -35,13 +35,6 @@ export default {
         const { data } = response;
         const tokens = convertStringDatesToMS(data.tokens);
         dispatch('tokens/setTokens', tokens, { root: true });
-        /*
-        commit('tokens/SET_ACCESS_TOKEN_EXPIRES', tokens.access.expires, { root: true });
-        commit('tokens/SET_ACCESS_TOKEN_VALUE', tokens.access.token, { root: true });
-        commit('tokens/SET_REFRESH_TOKEN_EXPIRES', tokens.refresh.expires, { root: true });
-        commit('tokens/SET_REFRESH_TOKEN_VALUE', tokens.refresh.token, { root: true });
-        */
-        // commit('SET_TOKENS', tokens);
       } catch (error) {
         throw new Error(error);
       }

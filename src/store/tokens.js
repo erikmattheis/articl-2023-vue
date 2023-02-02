@@ -64,9 +64,10 @@ export default {
       context.commit('SET_REFRESH_TOKEN_VALUE', payload);
     },
 
-    refreshSession({ state }) {
+    async refreshSession({ state }) {
+      console.log('refreshSession action called');
       const { refreshTokenValue } = state;
-      const tokens = refreshJWTSession(refreshTokenValue);
+      const tokens = await refreshJWTSession(refreshTokenValue);
       setJWTTokens(tokens);
     },
 
