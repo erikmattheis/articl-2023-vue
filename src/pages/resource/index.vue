@@ -168,44 +168,6 @@ export default {
         notes: result.data.notes,
       };
     },
-
-    /*
-
-      const sortingArray = ['Podcasts', 'Review (OA)', 'Review (PA)', 'Research (OA)', 'Research (PA)', 'Web', 'Images', 'Videos'];
-      const articlTypes = Object.keys(result.data.articls).sort((a, b) => sortingArray.indexOf(a) - sortingArray.indexOf(b));
-      const groupedArticls = groupBy(result.data.articls, 'type');
-      console.log('groupedArticls', groupedArticls);
-      const groupedSortedArticls = sortingArray.reduce((acc, type) => {
-        acc[type] = groupedArticls[type] || [];
-        return acc;
-      }, {});
-      console.log('groupedSortedArticls', groupedSortedArticls);
-      /*
-      const { data } = result;
-
-      const groupedArticls = groupBy(data.articls, 'type');
-
-      const sortedArticls = sortingArray.reduce((acc, type) => {
-        acc[type] = groupedArticls[type] || [];
-        return acc;
-      }, {});
-
-      const articlTypes = Object.keys(groupedArticls).sort((a, b) => sortingArray.indexOf(a) - sortingArray.indexOf(b));
-
-      const articls = Object.entries(sortedArticls);
-
-      console.log(JSON.stringify(articls));
-
-      return {
-        breadcrumbs: result.data.breadcrumbs,
-        categories: result.data.categories,
-        category: result.data.category,
-        articlTypes,
-        articls: groupedSortedArticls,
-        notes: result.data.notes,
-      };
-      */
-
   },
 };
 </script>
