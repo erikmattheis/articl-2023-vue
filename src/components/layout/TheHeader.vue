@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import VueCookies from 'vue-cookies';
 import VueFeather from 'vue-feather';
 import { mapGetters } from 'vuex';
 
@@ -169,14 +170,14 @@ export default {
   },
 
   created() {
-    const theme = this.$cookies.get('data-theme');
+    const theme = VueCookies.get('data-theme');
 
     this.theme = theme !== 'dark' ? 'light' : 'dark';
 
     document.documentElement.setAttribute('data-theme', this.theme);
 
-    if (this.$cookies.isKey('font-size')) {
-      this.setTextSize(this.$cookies.get('font-size'));
+    if (VueCookies.isKey('font-size')) {
+      this.setTextSize(VueCookies.get('font-size'));
     }
   },
   methods: {
@@ -209,7 +210,13 @@ export default {
         `${18 * size}px`,
       );
 
-      this.$cookies.set('--font-size', size);
+      VueCookies.set('font-size', size);
+    },
+    clearLocalData() {
+      this.$store.dispatch('tokens/clearTokens', false);
+      VueCookies.remove('data-theme');
+      VueCookies.remove('font-size');
+      this.$router.push('/');
     },
 
   },

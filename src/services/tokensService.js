@@ -30,8 +30,7 @@ const refreshJWTSession = async (refreshTokenValue) => {
       refreshToken: refreshTokenValue,
     },
   });
-  console.log('refreshJWTSession', result);
-  return result.data.tokens;
+  return result.data;
 };
 
 export {

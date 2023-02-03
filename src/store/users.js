@@ -41,11 +41,10 @@ export default {
     },
     async logout({ dispatch, commit, rootGetters }) {
       try {
-        const refreshToken = rootGetters['tokens/refreshTokenValue'];
-        await userLogout({ refreshToken });
-
+        const accessToken = rootGetters['tokens/accessTokenValue'];
         dispatch('tokens/clearTokens', { rememberMe: true }, { root: true });
         commit('CLEAR_USER');
+        await userLogout({ accessToken });
       } catch (error) {
         dispatch('errors/setError', error, { root: true });
       }

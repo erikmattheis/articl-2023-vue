@@ -43,9 +43,9 @@ const login = async ({ username, password }) => {
   }
 };
 
-const logout = async ({ refreshToken }) => {
+const logout = async ({ accessToken }) => {
   try {
-    await axiosInstance.post('/auth/logout', { refreshToken });
+    await axiosInstance.post('/auth/logout', { accessToken });
   } catch (error) {
     throw new Error(error);
   }
