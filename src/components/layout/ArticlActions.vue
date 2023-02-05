@@ -5,9 +5,10 @@
       :to="{ name: 'editArticl', params:{editId:id}}">
       <small>edit</small>
     </router-link>
+
     <router-link
       role="button"
-      :to="{ name: 'deleteArticl', params: { id, title }}">
+      :to="{ name: 'deleteArticl', params: { id, title, slug, type }}">
       <small>delete</small>
     </router-link>
 
@@ -37,6 +38,14 @@ export default {
       default: '',
     },
     title: {
+      type: String,
+      default: '',
+    },
+    slug: {
+      type: String,
+      default: '',
+    },
+    type: {
       type: String,
       default: '',
     },

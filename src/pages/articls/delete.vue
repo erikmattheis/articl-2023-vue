@@ -1,15 +1,27 @@
 <template>
-  <article>
-    <h1>Delete Articl {{ id }}</h1>
+  <article v-if="!deleted">
+    <h1>Delete Articl</h1>
     <p>Really delete "{{ title }}"?</p>
     <form>
       <button
         v-if="!!id"
         :aria-busy="buttonDisabled"
-        @click="deleteArticl()">
+        @click.prevent="deleteArticl()">
         Delete
       </button>
     </form>
+  </article>
+  <article v-else>
+    <h1>Deletion successful</h1>
+    <p>The articl "{{ title }}" has been permanently deleted.</p>
+
+    <p>
+      slug:{{ slug }}
+      Return to <router-link
+        :to="{ name: 'TabArticls', params: { slug, type } }">
+        category
+      </router-link>.
+    </p>
   </article>
 </template>
 
@@ -25,13 +37,22 @@ export default {
       default: () => '',
       type: String,
     },
+    slug: {
+      default: () => '',
+      type: String,
+    },
     title: {
+      default: () => '',
+      type: String,
+    },
+    type: {
       default: () => '',
       type: String,
     },
   },
   data: () => ({
     buttonDisabled: false,
+    deleted: false,
   }),
   mounted() {
 
@@ -42,6 +63,8 @@ export default {
         this.buttonDisabled = true;
 
         await this.submitDelete(this.id);
+
+        this.deleted = true;
 
         this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
 

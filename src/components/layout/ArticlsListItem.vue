@@ -13,7 +13,9 @@
         <articl-actions
           :id="articl.id"
           class="box"
-          :title="articl.title" />
+          :title="articl.title"
+          :slug="articl.slug"
+          :type="articl.type" />
       </li>
 
       <li class="articl-details">
