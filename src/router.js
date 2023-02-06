@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import createArticlPage from '@/pages/articls/index.vue';
-import deleteArticlPage from '@/pages/articls/delete.vue';
+import DeleteArticlPage from '@/pages/articls/delete.vue';
 // import searchArticls from '@/pages/articls/search.vue';
 import deleteCategoryPage from '@/pages/categories/delete.vue';
 import createCategoryPage from '@/pages/categories/index.vue';
@@ -144,9 +144,9 @@ const router = createRouter({
     },
 
     {
-      name: 'deleteArticl',
+      name: 'DeleteArticlPage',
       path: '/articls/delete/:id/:slug/:type/:title',
-      component: deleteArticlPage,
+      component: DeleteArticlPage,
     },
 
     {

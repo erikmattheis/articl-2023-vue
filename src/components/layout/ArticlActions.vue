@@ -6,10 +6,9 @@
       <small>edit</small>
       <small>edit</small>
     </router-link>
-
     <router-link
       role="button"
-      :to="{ name: 'deleteArticl', params: { id, title, slug, type }}">
+      :to="{ name: 'DeleteArticlPage', params: { id, title, slug, type }}">
       <small>delete</small>
     </router-link>
 

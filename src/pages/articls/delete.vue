@@ -24,37 +24,25 @@
 import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: 'DeleteArticl',
-  components: {
-  },
-  props: {
-    id: {
-      default: () => '',
-      type: String,
-    },
-    slug: {
-      default: () => '',
-      type: String,
-    },
-    title: {
-      default: () => '',
-      type: String,
-    },
-    type: {
-      default: () => '',
-      type: String,
-    },
-  },
+  name: 'DeleteArticlPage',
   data: () => ({
     buttonDisabled: false,
     deleted: false,
+    id: '',
+    slug: '',
+    type: '',
+    title: '',
   }),
   mounted() {
-
+    this.id = this.$route.params.id;
+    this.slug = this.$route.params.slug;
+    this.type = this.$route.params.type;
+    this.title = this.$route.params.title;
   },
   methods: {
 
     async deleteArticl() {
+      console.log('this.id', this.id);
       try {
         this.buttonDisabled = true;
 
