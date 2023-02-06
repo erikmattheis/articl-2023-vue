@@ -4,6 +4,7 @@
       role="button"
       :to="{ name: 'editArticl', params:{editId:id}}">
       <small>edit</small>
+      <small>edit</small>
     </router-link>
 
     <router-link

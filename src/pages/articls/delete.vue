@@ -4,7 +4,6 @@
     <p>Really delete "{{ title }}"?</p>
     <form>
       <button
-        v-if="!!id"
         :aria-busy="buttonDisabled"
         @click.prevent="deleteArticl()">
         Delete
@@ -12,16 +11,12 @@
     </form>
   </article>
   <article v-else>
-    <h1>Deletion successful</h1>
-    <p>The articl "{{ title }}" has been permanently deleted.</p>
-
-    <p>
-      slug:{{ slug }}
-      Return to <router-link
-        :to="{ name: 'TabArticls', params: { slug, type } }">
-        category
-      </router-link>.
-    </p>
+    <h1>Articl Deleted</h1>
+    <a
+      tabindex="0"
+      href
+      @click.prevent="$router.push({ name: 'TabArticls', params: { slug, type } })"
+      @keyup.enter.prevent="$router.push({ name: 'TabArticls', params: { slug, type } })">Return to Category Page </a>
   </article>
 </template>
 
@@ -58,6 +53,7 @@ export default {
 
   },
   methods: {
+
     async deleteArticl() {
       try {
         this.buttonDisabled = true;
@@ -72,12 +68,20 @@ export default {
           'modals/setSuccessMessage',
           `The articl "${this.title}" has been permanently deleted.`,
         );
+        this.deleted = true;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       } finally {
         this.buttonDisabled = false;
       }
     },
+    async getArticl(id) {
+      return axiosInstance({
+        method: 'GET',
+        url: `/articls/${id}`,
+      });
+    },
+
     async submitDelete(id) {
       return axiosInstance({
         method: 'DELETE',
@@ -90,3 +94,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.grid {
+  white-space:nowrap;
+}
+
+.grid a {
+  display:inline-block;
+}
+a {
+  align-self: center;
+  justify-self: center;
+  border:0;
+}
+</style>
