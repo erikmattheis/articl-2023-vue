@@ -36,7 +36,7 @@ import axiosInstance from './services/axiosService';
 const app = createApp(App);
 
 app.config.errorHandler = (error, vm, info) => {
-  console.log('onfo', info);
+  console.log('global error', info);
   store.dispatch('errors/setError', error);
 };
 

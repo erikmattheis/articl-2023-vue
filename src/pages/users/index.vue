@@ -334,6 +334,9 @@ export default {
   },
 
   methods: {
+    async logout() {
+      await this.$store.dispatch('users/logout');
+    },
     elementBlurred(e) {
       if (this.focusedElements.indexOf(e.target.name) === -1) {
         this.focusedElements.push(e.target.name);
