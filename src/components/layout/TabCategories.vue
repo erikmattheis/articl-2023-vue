@@ -113,10 +113,8 @@ export default {
 <style scoped>
 
 li {
-  width:100%;
+
   overflow-x: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap
 }
 
 a {
