@@ -255,6 +255,7 @@ export default {
   flex-grow: 1;
 }
 
+/*
 :where(:root),
 html,
 body {
@@ -263,6 +264,7 @@ body {
   display: flex;
   justify-content: center;
 }
+*/
 
 :root footer article {
   margin-bottom: 0;
