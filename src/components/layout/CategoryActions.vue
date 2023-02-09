@@ -3,13 +3,19 @@
     <router-link
       role="button"
       :to="{ name: 'editCategory', params: { id }}">
-      <small>edit</small>
+      <vue-feather
+        size="0.7rem"
+        type="edit"
+        aria-label="Drag to reorder" />
     </router-link>
 
     <router-link
       role="button"
       :to="{ name: 'deleteCategory', params: { slug }}">
-      <small>delete</small>
+      <vue-feather
+        size="0.7rem"
+        type="delete"
+        aria-label="Drag to reorder" />
     </router-link>
 
     <a
