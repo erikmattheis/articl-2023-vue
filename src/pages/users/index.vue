@@ -319,6 +319,8 @@ export default {
 
       this.fetchData();
 
+      this.formActionUrl = '/users';
+
       this.method = 'PATCH';
     } else {
       this.method = 'POST';
