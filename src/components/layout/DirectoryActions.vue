@@ -28,8 +28,9 @@ export default {
 };
 </script>
 
-<style>
+<style type="scss" scoped>
 .actions-column {
-grid-template-columns: max-content max-content;
+  margin-top: var(--nav-element-spacing-vertical);
+  grid-template-columns: max-content max-content;
 }
 </style>
