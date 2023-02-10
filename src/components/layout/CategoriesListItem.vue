@@ -59,15 +59,13 @@ export default {
 .container {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: minmax(200px, 1fr) 200px;
-
+  grid-template-columns: minmax(min-content, 1fr) min-content;
   color: #444;
 }
 
 li {
   width:100%;
-  padding:
-
+  padding:0 !important;
   a {
     cursor: pointer;
   }
