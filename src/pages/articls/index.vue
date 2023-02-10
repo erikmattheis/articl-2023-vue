@@ -23,13 +23,6 @@
       </ul>
     </template>
 
-    <!---
-    <div class="row-auto-container">
-      <card-notification
-        class="item-auto-box"
-        success-message="Success" />
-  -->
-
     <template v-if="!isLoading && !success">
       <form>
         <template v-if="!id">
@@ -229,10 +222,9 @@ export default {
     };
   },
   mounted() {
-    this.id = this.editId;
     this.formAction = this.id ? 'Edit' : 'Create';
 
-    if (!this.id) {
+    if (!this.editId) {
       this.slug = this.$route.query.slug;
 
       this.onTypeaheadHit({
@@ -241,6 +233,7 @@ export default {
 
       this.isLoading = false;
     } else {
+      this.id = this.editId;
       this.getCurrentArticl(this.id);
     }
 

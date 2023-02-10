@@ -25,7 +25,7 @@
         <li
           v-for="(item, $index) in items"
           :key="$index"
-          :class="activeClass($index)"
+          :class="{'active':$index===current, 'no-padding':true}"
           @mousedown="hit"
           @mousemove="setActive($index)">
           <span v-text="item" />
@@ -221,7 +221,7 @@ ul {
   position: absolute;
   z-index: 1;
   width: 100%;
-  background-color: var(--bg1);
+  background-color: var(--background-color);
 }
 
 li {
@@ -246,7 +246,7 @@ label .icon {
   background-color: var(--primary);
 }
 
-label> :where(input, select, textarea) {
+label > :where(input, select, textarea) {
   margin-top: 0;
 }
 

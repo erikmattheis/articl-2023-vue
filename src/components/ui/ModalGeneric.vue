@@ -155,7 +155,7 @@ dialog article ul li {
 }
 
 html[data-theme="dark"] article {
-  background-color: var(--bg1);
+  background-color: var(--background-color);
 }
 
 html[data-theme="dark"] #app > div > dialog > article > section > div.info,

@@ -137,7 +137,7 @@ export default {
 }
 
 .line-detail {
-  background-color: var(--bg1);
+  background-color: var(--background-color);
   padding: 0 0.5rem;
 }
 
@@ -328,7 +328,7 @@ export default {
 }
 
 body > div {
-  margin: auto;
+  margin:auto;
 }
 
 :root footer article {
