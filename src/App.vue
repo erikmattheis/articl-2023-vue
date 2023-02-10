@@ -194,7 +194,28 @@ export default {
   background-color: transparent;
 }
 
+.nav-content {
+  position:relative;
+  top: -1px;
+  z-index: 0;
+  border: 1px solid $grey-100;
+  padding: var(--spacing);
+}
+
+.nav-inner-content {
+  position:relative;
+  top: -1px;
+  z-index: 0;
+  border: 1px solid $grey-100;
+  padding: calc(var(--spacing) * 0.25);
+}
+
 @media (max-width: map-get($breakpoints, "sm")) {
+
+  article {
+    padding: calc(var(--block-spacing-horizontal) * 0.25);
+  }
+
   .nav-tabs-margin {
     margin: calc(var(--nav-element-spacing-vertical)*0.5) calc(var(--nav-element-spacing-vertical) * 0.5);
   }
@@ -247,14 +268,15 @@ export default {
     text-decoration: none;
     background-color: transparent;
   }
-}
 
-.nav-content {
-  position:relative;
-  top: -1px;
-  z-index:0;
-  border: 1px solid $grey-100;
-  padding: var(--spacing)
+  .nav-content {
+    padding: calc(var(--nav-element-spacing-horizontal) * 0.25);
+  }
+
+  .articl ul,
+  .nav-content ul li {
+    padding-left: calc(var(--nav-element-spacing-horizontal) * 0.25) !important;
+  }
 }
 
 .right {
@@ -304,17 +326,6 @@ export default {
 .vertical-container main article {
   flex-grow: 1;
 }
-
-/*
-:where(:root),
-html,
-body {
-  align-items: center;
-  border-radius: 0;
-  display: flex;
-  justify-content: center;
-}
-*/
 
 :root footer article {
   margin-bottom: 0;

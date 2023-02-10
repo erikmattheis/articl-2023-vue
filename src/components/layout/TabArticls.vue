@@ -15,10 +15,10 @@
 
     <ul
       v-if="articlTypeCurrent"
-      class="nav-content">
+      class="nav-inner-content">
       <draggable-items
         v-model="articls[articlTypeCurrent]"
-        tag="ul"
+        tag="li"
         item-key="id"
         handle=".handle"
         ghost-class="ghost"

@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-content">
+  <div class="nav-inner-content">
     <h2>Blogs</h2>
 
     <ul>

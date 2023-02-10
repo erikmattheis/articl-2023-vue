@@ -102,7 +102,6 @@ export default {
 
 article {
   max-width: 100%;
-
 }
 
 section {
