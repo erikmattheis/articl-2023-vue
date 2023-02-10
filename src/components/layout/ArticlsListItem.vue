@@ -204,6 +204,10 @@ li:hover {
   margin-bottom: calc(var(--typography-spacing-vertical) * 0.5);
 }
 
+.articl:last-child {
+  border: 0 !important;
+}
+
 .authors-list {
   margin-bottom: calc(var(--typography-spacing-vertical) * 0.25);
 }
