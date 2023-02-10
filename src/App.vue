@@ -89,8 +89,8 @@ export default {
   grid-auto-rows: max-content;
 }
 
-.item-auto-box{
-  padding: 0.5em 1em;
+.item-auto-box {
+  padding: 0.25em 0.5em;
   background-color: var(--primary);
   color: white;
   border: none;
@@ -102,13 +102,12 @@ export default {
 .row-admin-box {
   display: grid;
   grid-template-columns: min-content min-content min-content;
-  grid-gap: 5px;
+  grid-gap: 2px;
   padding: 0 5px;
 }
 
 .row-admin-box > a {
-  border: 0 !important;
-  padding: 0 10px !important;
+  padding: 0 5px !important;
 }
 
 .fade-enter-active {
@@ -142,16 +141,12 @@ export default {
   padding: 0 0.5rem;
 }
 
-.line-main {
-  padding: 0 0.5rem;
-}
-
 .nav-tabs-margin {
-  margin: var(--nav-element-spacing-vertical) var(--nav-element-spacing-vertical);
+  margin: calc(var(--nav-element-spacing-vertical) * 0.5) calc(var(--nav-element-spacing-vertical) * 0.5);
 }
 
 .nav-tabs-inner-margin {
-  margin: 0 var(--nav-element-spacing-vertical);
+  margin: 0 calc(var(--nav-element-spacing-vertical) * 0.5);
 }
 
 .nav-tabs li.active,
@@ -197,6 +192,61 @@ export default {
   padding: 0 1rem;
   text-decoration: none;
   background-color: transparent;
+}
+
+@media (max-width: map-get($breakpoints, "sm")) {
+  .nav-tabs-margin {
+    margin: calc(var(--nav-element-spacing-vertical)*0.5) calc(var(--nav-element-spacing-vertical) * 0.5);
+  }
+
+  .nav-tabs-inner-margin {
+    margin: 0 calc(var(--nav-element-spacing-vertical) *0.5);
+  }
+
+  .nav-tabs li.active,
+  .active {
+    border: 1px solid $grey-100;
+    border-bottom: 1px solid var(--background-color);
+  }
+
+  .nav-tabs {
+    margin-bottom: 0;
+    column-gap: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .nav-tabs li,
+  .note-actions li,
+  .articl-actions li {
+    border-width: 1px;
+    border-right-width: 0;
+    border-style: solid;
+    border-color: $grey-100;
+    border: 1px solid transparent;
+    display: inline-block;
+    padding: calc(var(--nav-element-spacing-horizontal) * 0.25);
+    vertical-align: middle;
+    margin-bottom: 0;
+    column-gap: 0;
+  }
+
+  .nav-tabs li:last-child,
+  .note-actions li:last-child,
+  .articl-actions li:last-child {
+    border-right-width: 1px;
+  }
+
+  .articl-actions a,
+  .note-actions a,
+  .nav-tabs li a {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+    text-decoration: none;
+    background-color: transparent;
+  }
 }
 
 .nav-content {
