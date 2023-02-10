@@ -327,6 +327,10 @@ export default {
   flex-grow: 1;
 }
 
+body > div {
+  margin: auto;
+}
+
 :root footer article {
   margin-bottom: 0;
   margin-top: 0;

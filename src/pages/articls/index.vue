@@ -10,15 +10,15 @@
           <a
             tabindex="0"
             href
-            @click="$router.push({ name: 'createArticlPage', query: { slug } })"
-            @keyup.enter="$router.push({ name: 'createArticlPage', query: { slug} })">Create another articl in the same category</a>
+            @click.prevent="$router.go()"
+            @keyup.enter.prevent="$router.go()">Create another articl in the same category</a>
         </li>
         <li>
           <a
             tabindex="0"
             href
-            @click="$router.push(`/resource/${ slug }/articls`)"
-            @keyup.enter="$router.push(`/resource/${ slug }/articls`)">Return to Category Page </a>
+            @click.prevent="$router.push(`/resource/${ slug }/articls`)"
+            @keyup.enter.prevent="$router.push(`/resource/${ slug }/articls`)">Return to Category Page </a>
         </li>
       </ul>
     </template>
