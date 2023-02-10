@@ -17,8 +17,8 @@
           <a
             tabindex="0"
             href
-            @click="$router.push({ name: 'categoryPage', slug: { slug } })"
-            @keyup.enter="$router.push({ name: 'categoryPage', query: { slug} })">Return to Category lists </a>
+            @click="$router.push(`/resource/${ slug }/articls`)"
+            @keyup.enter="$router.push(`/resource/${ slug }/articls`)">Return to Category Page </a>
         </li>
       </ul>
     </template>

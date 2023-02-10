@@ -33,7 +33,6 @@ export default {
     DraggableItems,
     CategoriesListItem,
   },
-
   data() {
     return {
       TabName: '',
@@ -113,7 +112,6 @@ export default {
 <style scoped>
 
 li {
-
   overflow-x: hidden;
 }
 
