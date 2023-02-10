@@ -190,6 +190,7 @@ Please include rewriting these instructions if they can be clearer or more disti
         </router-link>
         <a
           v-if="isLoggedInMixin"
+          href
           class="right"
           @keyup="logout()"
           @click="logout()">
@@ -214,15 +215,10 @@ export default {
     selectCountries,
     theButtonToggleHidden,
   },
-  props: {
-    id: {
-      default: () => '',
-      type: String,
-    },
-  },
 
   data: () => ({
     focusedElements: [],
+    id: '',
     username: '',
     password: '',
     passwordType: 'password',
@@ -352,6 +348,8 @@ export default {
 
         /* Object.assign(this, result); */
 
+        this.id = result.id ? result.id : '';
+
         this.username = result.username ? result.username : '';
 
         this.nameFirst = result.nameFirst ? result.nameFirst : '';
@@ -399,8 +397,6 @@ export default {
     },
 
     checkForm() {
-      const passed = true;
-
       const errorMessages = [];
 
       if (this.method === 'POST') {
@@ -440,12 +436,12 @@ export default {
         errorMessages.push('Please enter your country.');
       }
 
-      if (!errorMessages.length) {
+      if (errorMessages.length) {
         this.errorMessage = errorMessages.join(',');
         this.$store.dispatch('errors/setError', this.errorMessage);
       }
 
-      return passed;
+      return !errorMessages.length;
     },
 
     async submitForm() {
@@ -455,21 +451,26 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
+          const data = {
+            nameFirst: this.nameFirst,
+            nameLast: this.nameLast,
+            email: this.email,
+            education: this.education,
+            position: this.position,
+            institution: this.institution,
+            city: this.city,
+            country: this.country,
+          };
+
+          if (this.method === 'POST') {
+            data.username = this.username;
+            data.password = this.password;
+          }
+
           const result = await axiosInstance({
             method: this.method,
-            url: this.formActionUrl,
-            data: {
-              username: this.username,
-              password: this.password,
-              nameFirst: this.nameFirst,
-              nameLast: this.nameLast,
-              email: this.email,
-              education: this.education,
-              position: this.position,
-              institution: this.institution,
-              city: this.city,
-              country: this.country,
-            },
+            url: `${this.formActionUrl}/${this.id}`,
+            data,
           });
 
           if (result.data) {
