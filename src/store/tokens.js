@@ -65,7 +65,6 @@ export default {
     },
 
     async refreshSession({ state }) {
-      console.log('refreshSession action called');
       const { refreshTokenValue } = state;
       const tokens = await refreshJWTSession(refreshTokenValue);
       setJWTTokens(tokens);

@@ -344,7 +344,6 @@ export default {
     },
     async fetchData() {
       try {
-        this.$store.dispatch('tokens/refreshSession');
         this.isLoading = true;
 
         const result = await this.getMe();
