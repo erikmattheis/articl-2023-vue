@@ -1,5 +1,5 @@
 <template>
-  <template v-if="!isEditing">
+  <div>
     <ul>
       <li class="line-detail">
         <template v-if="note.author?.nameFirst || note.author?.nameLast">
@@ -22,26 +22,16 @@
         :slug="note.slug"
         @edit-mode="isEditing = true" />
     </div>
-  </template>
-
-  <note-crud
-    v-else
-    :slug="note.slug"
-    :passed-id="note.id"
-    @view-mode="getCurrentNote" />
+  </div>
 </template>
 
 <script>
-
 import AdminActionsNote from '@/components/layout/AdminActionsNote.vue';
-import NoteCrud from '@/components/layout/NoteCrud.vue';
 import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: 'NoteListItem',
   components: {
     AdminActionsNote,
-    NoteCrud,
   },
   props: {
     passedNote: {

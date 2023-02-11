@@ -69,7 +69,6 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
   const { status } = error;
-  console.log('in interceptor');
   if (status === 403) {
     console.log('403');
     // check if refresh token is still valid

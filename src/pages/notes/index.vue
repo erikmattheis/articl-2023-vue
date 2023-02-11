@@ -1,14 +1,34 @@
 <template>
-  <section class="admin">
-    <template v-if="!isLoading">
+  <article>
+    <h1 v-if="!success">
+      {{ formAction }} Note
+    </h1>
+    <template v-else>
+      <h1>Note Created</h1>
+      <ul>
+        <li>
+          <a
+            tabindex="0"
+            href
+            @click.prevent="$router.go()"
+            @keyup.enter.prevent="$router.go()">Create another note in the same category</a>
+        </li>
+        <li>
+          <a
+            tabindex="0"
+            href
+            @click.prevent="$router.push(`/resource/${ slug }/notes`)"
+            @keyup.enter.prevent="$router.push(`/resource/${ slug }/notes`)">Return to Category Page </a>
+        </li>
+      </ul>
+    </template>
+    <template v-if="!isLoading && !success">
       <form>
-        <label for="fullText">Note
+        <label for="fullText">
           <textarea
             id="fullText"
             v-model="fullText"
-            name="fullText"
-            autocomplete="off" />
-        </label>
+            name="fullText" /></label>
 
         <button
           type="button"
@@ -23,34 +43,48 @@
       mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
-  </section>
+  </article>
 </template>
 
 <script>
-
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
+import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
+  name: 'EditNotePage',
   components: {
     LoadingPlaceholder,
   },
-  emits: ['view-mode'],
-  data: () => ({
-    fullText: '',
-    buttonDisabled: false,
-    formAction: undefined,
-    isLoading: true,
-    id: undefined,
-  }),
+
+  props: {
+    editId: {
+      type: String,
+      default: '',
+    },
+  },
+
+  data() {
+    return {
+      id: '',
+      fullText: '',
+    };
+  },
   mounted() {
     this.formAction = this.id ? 'Edit' : 'Create';
 
-    if (!this.id) {
+    if (!this.editId) {
+      this.slug = this.$route.query.slug;
+
       this.isLoading = false;
     } else {
+      this.id = this.editId;
       this.getCurrentNote(this.id);
     }
+
+    setTitleAndDescription({
+      title: `${this.formAction} Note`,
+    });
   },
   methods: {
     async getCurrentNote(id) {
@@ -59,14 +93,18 @@ export default {
 
         const result = await this.getNote(id);
 
-        this.fullText = result.data.fullText;
+        Object.assign(this, result.data);
+
+        this.isLoading = false;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
-      } finally {
-        this.isLoading = false;
       }
     },
     resetFormErrors() {
+      this.success = null;
+
+      this.result = null;
+
       this.errorMessage = '';
     },
     checkForm() {
@@ -74,8 +112,8 @@ export default {
 
       let passed = true;
 
-      if (this.title === '') {
-        this.errorMessage = 'Please enter a title.';
+      if (this.fullText === '') {
+        this.errorMessage = 'Please enter the text of the note.';
 
         passed = false;
       }
@@ -83,6 +121,8 @@ export default {
       return passed;
     },
     async submitForm(id) {
+      const url = `/notes/${id}`;
+
       try {
         this.resetFormErrors();
 
@@ -90,17 +130,15 @@ export default {
           this.buttonDisabled = true;
 
           const verb = id ? 'PUT' : 'POST';
-
           await axiosInstance({
             method: verb,
-            url: `/notes/${id}`,
+            url,
             data: {
               fullText: this.fullText,
               slug: this.slug,
             },
           });
-
-          this.$emit('view-mode', id);
+          this.success = true;
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }
@@ -122,14 +160,7 @@ export default {
 </script>
 
 <style scoped>
-form input.another {
-  padding-right: 4.6 rem;
-}
-
-form input.another button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 4.4rem;
+button {
+  margin-top: var(--typography-spacing-vertical);
 }
 </style>

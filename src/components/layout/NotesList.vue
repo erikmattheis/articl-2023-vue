@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 import NotesListItem from '@/components/layout/NotesListItem.vue';
 

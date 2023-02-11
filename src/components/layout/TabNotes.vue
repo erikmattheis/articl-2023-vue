@@ -1,6 +1,7 @@
 <template>
   <div class="tab-content">
     <h2>Notes</h2>
+    <notes-form />
     <ul>
       <li
         v-for="note in notes || [] "
@@ -13,12 +14,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
+import NotesForm from '@/components/layout/NotesForm.vue';
 import NotesListItem from '@/components/layout/NotesListItem.vue';
 
 export default {
   name: 'TabNotes',
-  components: { NotesListItem },
+  components: { NotesListItem, NotesForm },
   props: {
     items: {
       default: () => [],

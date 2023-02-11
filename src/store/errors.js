@@ -43,7 +43,6 @@ export default {
 
   actions: {
     setError: (context, payload) => {
-      console.log('serError', payload);
       let errorTitle = 'Error';
       let errorMessage = 'Unknown error';
       let errorFileName = '';

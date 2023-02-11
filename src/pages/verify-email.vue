@@ -41,10 +41,7 @@ export default {
       if (response?.status === 204) {
         this.resultTitle = 'Email verified';
       } else {
-        this.$store.dispatch(
-          'errors/setError',
-          response,
-        );
+        this.$store.dispatch('errors/setError', response);
       }
 
       this.isLoading = false;
