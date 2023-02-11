@@ -136,11 +136,6 @@ export default {
   padding-left: 2rem;
 }
 
-.line-detail {
-  background-color: var(--background-color);
-  padding: 0 0.5rem;
-}
-
 .nav-tabs-margin {
   margin: calc(var(--nav-element-spacing-vertical) * 0.5) calc(var(--nav-element-spacing-vertical) * 0.5);
 }

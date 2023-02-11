@@ -89,7 +89,7 @@
         v-if="articl.fullText"
         class="articl-details">
         <details>
-          <summary>FUull text</summary>
+          <summary>Full text</summary>
           <div>
             {{ articl.fullText }}
           </div>

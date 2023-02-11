@@ -1,21 +1,17 @@
 <template>
-  <div>
-    <ul>
-      <li class="line-detail">
-        <template v-if="note.author?.nameFirst || note.author?.nameLast">
-          {{ note.author.nameFirst }} {{ note.author.nameLast }}
-        </template>
-        <template v-else>
-          Anonymous
-        </template>
+  <div class="container">
+    <!--
+      <li>
         <span class="right"> created at: {{ note.createdAt }}</span>
       </li>
-      <li
-        class="main-line">
-        <span :aria-busy="isLoading" /> <span v-if="!isLoading">{{ note.fullText }}</span>
-      </li>
-    </ul>
-    <div v-if="isLoggedInMixin">
+      -->
+    <div class="box main-line">
+      <p>{{ note.fullText }}</p>
+      –{{ note.author.nameFirst }} {{ note.author.nameLast }}
+    </div>
+    <div
+      v-if="isLoggedInMixin"
+      class="box">
       <admin-actions-note
         :id="note.id"
         :full-text="note.fullText"
@@ -72,3 +68,11 @@ export default {
   },
 };
 </script>
+<style scoped type="scss">
+  .container {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: minmax(200px, 1fr) 200px;
+    color: #444;
+  }
+</style>
