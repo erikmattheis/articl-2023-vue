@@ -1,8 +1,5 @@
 <template>
   <article>
-    <h1>
-      {{ formAction }} Note
-    </h1>
     <template v-if="noteCreated">
       <h1>Note Created</h1>
       <ul>

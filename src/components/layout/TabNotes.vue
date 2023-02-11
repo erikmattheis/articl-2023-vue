@@ -1,7 +1,12 @@
 <template>
   <div class="tab-content">
     <h2>Notes</h2>
-    <notes-form />
+
+    <details>
+      <summary>Add Note</summary>
+      <notes-form />
+    </details>
+
     <ul>
       <li
         v-for="note in notes || [] "
