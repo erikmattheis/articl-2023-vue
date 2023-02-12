@@ -2,31 +2,21 @@
   <div class="row-admin-box">
     <router-link
       role="button"
-      :to="{ name: 'editArticl', params:{ editId:id }}">
+      :to="{ name: 'editNote', params:{ editId:id }}">
       <vue-feather
         size="0.7rem"
         type="edit"
-        aria-label="Edit articl" />
+        aria-label="Edit note" />Edit
     </router-link>
 
     <router-link
       role="button"
-      :to="{ name: 'DeleteArticlPage', params: { id, title, slug, type }}">
+      :to="{ name: 'deleteNote', params: { id }}">
       <vue-feather
         size="0.7rem"
         type="delete"
-        aria-label="Delete articl" />
+        aria-label="Delete note" />
     </router-link>
-
-    <a
-      role="button"
-      class="handle"
-      href="#"><div class="sr">Reorder articl</div>
-      <vue-feather
-        size="0.7rem"
-        type="move"
-        aria-label="Drag to reorder" />
-    </a>
   </div>
 </template>
 
@@ -42,22 +32,14 @@ export default {
       type: String,
       default: '',
     },
-    title: {
-      type: String,
-      default: '',
-    },
-    slug: {
-      type: String,
-      default: '',
-    },
-    type: {
+    fullText: {
       type: String,
       default: '',
     },
   },
   data() {
     return {
-      expanded: false,
+      fullTextExcerpt: this.fullText?.substring(0, 32),
     };
   },
 };

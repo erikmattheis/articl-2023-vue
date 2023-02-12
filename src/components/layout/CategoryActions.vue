@@ -48,12 +48,6 @@ export default {
       default: '',
     },
   },
-  data: () => ({
-    expanded: false,
-  }),
-  computed: {
-
-  },
 };
 </script>
 

@@ -1,33 +1,26 @@
 <template>
   <div class="container">
-    <!--
-      <li>
-        <span class="right"> created at: {{ note.createdAt }}</span>
-      </li>
-      -->
     <div class="box main-line">
       <p>{{ note.fullText }}</p>
-      –{{ note.author.nameFirst }} {{ note.author.nameLast }}
+      <small>–{{ note.author.nameFirst }} {{ note.author.nameLast }}</small>
     </div>
     <div
       v-if="isLoggedInMixin"
       class="box">
-      <admin-actions-note
+      <note-actions
         :id="note.id"
-        :full-text="note.fullText"
-        :slug="note.slug"
         @edit-mode="isEditing = true" />
     </div>
   </div>
 </template>
 
 <script>
-import AdminActionsNote from '@/components/layout/AdminActionsNote.vue';
+import NoteActions from '@/components/layout/NoteActions.vue';
 import axiosInstance from '@/services/axiosService';
 
 export default {
   components: {
-    AdminActionsNote,
+    NoteActions,
   },
   props: {
     passedNote: {
@@ -35,6 +28,7 @@ export default {
       default: null,
     },
   },
+  emits: ['edit-mode'],
   data: () => ({
     isEditing: false,
     isLoading: false,
@@ -72,7 +66,7 @@ export default {
   .container {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: minmax(200px, 1fr) 200px;
+    grid-template-columns: minmax(min-content, 1fr) min-content;
     color: #444;
   }
 </style>

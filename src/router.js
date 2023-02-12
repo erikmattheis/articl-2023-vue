@@ -50,12 +50,22 @@ const router = createRouter({
         name: 'TabNotes',
         path: 'notes',
         component: TabNotes,
-        props: true,
+        children: [{
+          name: 'editNote',
+          path: 'edit/:id',
+          component: TabNotes,
+        },
+        {
+          name: 'deleteNote',
+          path: 'delete/:id',
+          component: deleteNote,
+        }],
       },
       {
         name: 'TabBlogs',
         path: 'blogs',
         component: TabBlogs,
+
       },
       {
         name: 'TabQuestionsAnswers',
@@ -147,12 +157,6 @@ const router = createRouter({
       name: 'DeleteArticlPage',
       path: '/articls/delete/:id/:slug/:type/:title',
       component: DeleteArticlPage,
-    },
-
-    {
-      name: 'deleteNote',
-      path: '/notes/delete',
-      component: deleteNote,
     },
 
     {

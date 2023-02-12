@@ -9,8 +9,8 @@
 
     <ul>
       <li
-        v-for="note in notes || [] "
-        :key="note.fullText">
+        v-for="note in notes || []"
+        :key="note.id">
         <notes-list-item :passed-note="note" />
       </li>
     </ul>
