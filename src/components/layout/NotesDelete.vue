@@ -43,6 +43,7 @@ export default {
 
         const result = await this.getNote(id);
         if (result.data) {
+          this.fullText = result.data.fullText;
           this.nameFirst = result.data.author.nameFirst;
           this.nameLast = result.data.author.nameLast;
         } else {
