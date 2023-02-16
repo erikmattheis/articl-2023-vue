@@ -34,9 +34,21 @@ export default {
   }),
   mounted() {
     this.id = this.$route.params.id;
+    this.getCurrentNote(this.id);
   },
   methods: {
+    async getCurrentNote(id) {
+      try {
+        this.isLoading = true;
 
+        const result = await this.getNote(id);
+        Object.assign(this, result.data);
+
+        this.isLoading = false;
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      }
+    },
     async deleteNote() {
       try {
         this.buttonDisabled = true;

@@ -6,12 +6,12 @@
       <vue-feather
         size="0.7rem"
         type="edit"
-        aria-label="Edit note" />Edit
+        aria-label="Edit note" />
     </router-link>
 
     <router-link
       role="button"
-      :to="{ name: 'deleteNote', params: { id }}">
+      :to="{ name: 'deleteNote', params: { note }}">
       <vue-feather
         size="0.7rem"
         type="delete"

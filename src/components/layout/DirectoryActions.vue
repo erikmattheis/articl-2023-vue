@@ -1,5 +1,5 @@
 <template>
-  <div class="row-admin-box actions-column box">
+  <div class="row-admin-box actions-column">
     <router-link
       v-if="level !== 2"
       :to="{ name: 'createCategoryPage', query: { parentSlug: $route.params.slug ? $route.params.slug : '0' } }"

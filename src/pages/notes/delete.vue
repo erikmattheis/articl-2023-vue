@@ -1,10 +1,8 @@
 <template>
   <article>
-    <h1>Delete Note{{ slug }}</h1>
-    <p>Really delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
+    <p>Really delete the note by {{ note.user.nameFirst }} {{ note.user.nameLast }} that starts "{{ note.fullText.substring(0,40) }}..."?</p>
     <form>
       <button
-        v-if="!!id"
         @click.prevent="deleteNote()">
         Delete
       </button>
@@ -16,19 +14,11 @@
 import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: 'DeleteNote',
+  name: 'NoteDelete',
   props: {
-    fullText: {
-      type: String,
-      default: '',
-    },
-    id: {
-      type: String,
-      default: '',
-    },
-    slug: {
-      type: String,
-      default: '',
+    note: {
+      type: Object,
+      default: () => {},
     },
   },
   data: () => ({}),

@@ -14,7 +14,7 @@
           <a
             tabindex="0"
             href
-            @click.prevent="$router.push(`/resource/${ slug }/notes`)"
+            @click.prevent="$router.push(`/resource/${ slug }/notes;`)"
             @keyup.enter.prevent="$router.push(`/resource/${ slug }/notes`)">Return to Category Page </a>
         </li>
       </ul>

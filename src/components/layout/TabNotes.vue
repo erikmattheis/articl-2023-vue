@@ -2,6 +2,8 @@
   <div class="tab-content">
     <h2>Notes</h2>
 
+    <router-view />
+
     <details>
       <summary>Add Note</summary>
       <notes-form />

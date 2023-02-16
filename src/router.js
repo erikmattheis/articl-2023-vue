@@ -52,8 +52,9 @@ const router = createRouter({
         component: TabNotes,
         children: [{
           name: 'editNote',
-          path: 'edit/:id',
+          path: 'edit/:editId',
           component: TabNotes,
+          props: true,
         },
         {
           name: 'deleteNote',
