@@ -1,7 +1,7 @@
 <template>
   <article v-if="!deleted">
     <h1>Delete Articl</h1>
-    <p>Really delete the note <span v-if="note.fullText?.length > 64"> that begins, </span> "{{ note.fullText?.substring(0, 64) }}"?</p>
+    <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
     <form>
       <button
         :aria-busy="buttonDisabled"
@@ -28,9 +28,9 @@ export default {
     buttonDisabled: false,
     deleted: false,
     id: '',
-    slug: '',
-    type: '',
-    title: '',
+    fullText: '',
+    nameFirst: '',
+    nameLast: '',
   }),
   mounted() {
     this.id = this.$route.params.id;
@@ -42,7 +42,12 @@ export default {
         this.isLoading = true;
 
         const result = await this.getNote(id);
-        Object.assign(this, result.data);
+        if (result.data) {
+          this.nameFirst = result.data.author.nameFirst;
+          this.nameLast = result.data.author.nameLast;
+        } else {
+          this.$store.dispatch('errors/setError', 'No note found.');
+        }
 
         this.isLoading = false;
       } catch (error) {

@@ -8,7 +8,7 @@ import categoryPage from '@/pages/resource/index.vue';
 import forgotPassPage from '@/pages/forgot-pass.vue';
 import homePage from '@/pages/index.vue';
 import loginPage from '@/pages/login.vue';
-import deleteNote from '@/pages/notes/delete.vue';
+import deleteNote from '@/components/layout/NotesDelete.vue';
 import notFound from '@/pages/NotFound.vue';
 
 import resetPasswordPage from '@/pages/change-password.vue';
