@@ -11,7 +11,7 @@
 
     <router-link
       role="button"
-      :to="{ name: 'deleteNote', params: { note }}">
+      :to="{ name: 'deleteNote', params: { id }}">
       <vue-feather
         size="0.7rem"
         type="delete"

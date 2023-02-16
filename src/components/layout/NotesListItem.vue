@@ -8,7 +8,7 @@
       v-if="isLoggedInMixin"
       class="box">
       <note-actions
-        :note="note" />
+        :id="note.id" />
     </div>
   </div>
   <div v-if="confirmDelete">
@@ -30,14 +30,18 @@ export default {
   components: {
     NoteActions,
   },
-
   props: {
     passedNote: {
       type: Object,
       default: null,
     },
   },
-
+  data() {
+    return {
+      note: {},
+      confirmDelete: false,
+    };
+  },
   async created() {
     this.note = this.passedNote;
   },
