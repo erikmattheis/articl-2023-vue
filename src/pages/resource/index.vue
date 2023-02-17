@@ -34,18 +34,6 @@
       <router-link
         v-slot="{ isActive, navigate }"
         custom
-        :to="{ name: 'TabBlogs' }">
-        <li :class="{ active: isActive }">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"> Blogs </a>
-        </li>
-      </router-link>
-
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
         :to="{ name: 'TabQuestionsAnswers' }">
         <li :class="{ active: isActive }">
           <a
