@@ -1,6 +1,6 @@
 <template>
   <article v-if="!deleted">
-    <h1>Delete Articl</h1>
+    <h1>Delete Note</h1>
     <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
     <form>
       <button
@@ -25,7 +25,7 @@ import axiosInstance from '@/services/axiosService';
 
 export default {
   data: () => ({
-    buttonDisabled: false,
+    buttonDisabled: true,
     deleted: false,
     id: '',
     fullText: '',
@@ -40,12 +40,12 @@ export default {
     async getCurrentNote(id) {
       try {
         this.isLoading = true;
-
         const result = await this.getNote(id);
         if (result.data) {
           this.fullText = result.data.fullText;
           this.nameFirst = result.data.author.nameFirst;
           this.nameLast = result.data.author.nameLast;
+          this.buttonDisabled = false;
         } else {
           this.$store.dispatch('errors/setError', 'No note found.');
         }
@@ -72,8 +72,6 @@ export default {
         this.deleted = true;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
-      } finally {
-        this.buttonDisabled = false;
       }
     },
     async getNote(id) {

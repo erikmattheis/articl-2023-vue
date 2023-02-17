@@ -1,8 +1,6 @@
 <template>
   <div class="tab-content">
-    <h2>Notes</h2>
-
-    <router-view />
+    <h2>Notes</h2>xw
 
     <details>
       <summary>Add Note</summary>

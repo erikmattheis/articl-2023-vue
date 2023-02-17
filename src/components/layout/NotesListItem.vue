@@ -7,11 +7,31 @@
     <div
       v-if="isLoggedInMixin"
       class="box">
-      <note-actions
-        :id="note.id" />
+      <div class="row-admin-box">
+        <router-link
+          role="button"
+          :to="{ name: 'editNote', params:{ editId:note.id }}">
+          <vue-feather
+            size="0.7rem"
+            type="edit"
+            aria-label="Edit note" />
+        </router-link>
+
+        <router-link
+          role="button"
+          :to="{ name: 'deleteNote', params: { id: note.id }}">
+          <vue-feather
+            size="0.7rem"
+            type="delete"
+            aria-label="Delete note" />
+        </router-link>
+      </div>
     </div>
-  </div>
-  <div v-if="confirmDelete">
+
+    <notes-delete
+      v-if="note.id===$route.params.id"
+      :passed-note="note" />
+    <!--xw
     <p>Permanently delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
 
     <button @click="deleteNote(note.id)">
@@ -20,17 +40,21 @@
     <button @click="confirmDelete = false">
       No
     </button>
+    -->
   </div>
 </template>
 
 <script>
-import NoteActions from '@/components/layout/NoteActions.vue';
+import NotesDelete from '@/components/layout/NotesDelete.vue';
+import VueFeather from 'vue-feather';
 
 export default {
   components: {
-    NoteActions,
+    NotesDelete,
+    VueFeather,
   },
   props: {
+
     passedNote: {
       type: Object,
       default: null,
