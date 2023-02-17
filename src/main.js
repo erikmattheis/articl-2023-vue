@@ -35,13 +35,11 @@ import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
-app.config.errorHandler = (error, vm, info) => {
-  console.log('global error', info);
+app.config.errorHandler = (error) => {
   store.dispatch('errors/setError', error);
 };
 
 window.addEventListener('unhandledrejection', (event) => {
-  console.log('Unhandled rejection (promise: ', event.promise, ', reason: ', event.reason, ').');
   store.dispatch('errors/setError', event.reason);
 });
 
@@ -70,11 +68,9 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
   const { status } = error;
   if (status === 403) {
-    console.log('403');
     // check if refresh token is still valid
     const { refreshTokenExpires } = store.state.tokens;
     if (refreshTokenExpires > Date.now()) {
-      console.log('refreshTokenExpires is still valid');
       try {
         await store.dispatch('tokens/refreshSession');
       } catch (err) {
@@ -89,7 +85,6 @@ axiosInstance.interceptors.response.use(async (response) => response, async (err
     router.push({ name: 'login' });
   } else if (status === 401) {
     // check if refresh token is still valid
-    console.log('trying refresh');
     const { refreshTokenExpires } = store.state.tokens;
     if (refreshTokenExpires > Date.now()) {
       try {

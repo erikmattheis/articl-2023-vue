@@ -42,7 +42,6 @@ export default {
   methods: {
 
     async deleteArticl() {
-      console.log('this.id', this.id);
       try {
         this.buttonDisabled = true;
 

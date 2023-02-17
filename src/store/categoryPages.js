@@ -44,6 +44,11 @@ export default {
     breadcrumbs: (context, payload) => {
       context.commit('SET_BREADCRUMBS', payload);
     },
+    removeNote: (context, payload) => {
+      const { notes } = context.state;
+      const newNotes = notes.filter((note) => note.id !== payload);
+      context.commit('SET_NOTES', newNotes);
+    },
   },
   getters: {
 

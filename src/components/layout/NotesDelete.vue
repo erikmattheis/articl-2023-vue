@@ -24,6 +24,7 @@
 import axiosInstance from '@/services/axiosService';
 
 export default {
+  emits: ['note-removed'],
   data: () => ({
     buttonDisabled: true,
     deleted: false,
@@ -62,6 +63,8 @@ export default {
         await this.submitDelete(this.id);
 
         this.deleted = true;
+        this.$store.dispatch('categoryPages/removeNote', this.id);
+        this.$emit('note-removed');
 
         this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
 
