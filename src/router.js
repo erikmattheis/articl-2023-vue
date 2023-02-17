@@ -66,7 +66,6 @@ const router = createRouter({
         name: 'TabBlogs',
         path: 'blogs',
         component: TabBlogs,
-
       },
       {
         name: 'TabQuestionsAnswers',

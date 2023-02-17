@@ -1,25 +1,6 @@
 <template>
   <article>
-    <template v-if="noteCreated">
-      <h1>Note Created</h1>
-      <ul>
-        <li>
-          <a
-            tabindex="0"
-            href
-            @click.prevent="$router.go()"
-            @keyup.enter.prevent="$router.go()">Create another note in the same category</a>
-        </li>
-        <li>
-          <a
-            tabindex="0"
-            href
-            @click.prevent="$router.push(`/resource/${ slug }/notes;`)"
-            @keyup.enter.prevent="$router.push(`/resource/${ slug }/notes`)">Return to Category Page </a>
-        </li>
-      </ul>
-    </template>
-    <template v-if="!isLoading && !noteCreated">
+    <template v-if="!isLoading">
       <form>
         <label for="fullText">
           <textarea
@@ -140,6 +121,7 @@ export default {
             },
           });
           this.noteCreated = true;
+          this.$router.go(0);
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }

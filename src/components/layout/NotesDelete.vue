@@ -1,6 +1,5 @@
 <template>
   <article v-if="!deleted">
-    <h1>Delete Note</h1>
     <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
     <form>
       <button
@@ -10,21 +9,12 @@
       </button>
     </form>
   </article>
-  <article v-else>
-    <h1>Note Deleted</h1>
-    <a
-      tabindex="0"
-      href
-      @click.prevent="$router.push({ name: 'TabNotes', params: { slug, type } })"
-      @keyup.enter.prevent="$router.push({ name: 'TabNotes', params: { slug, type } })">Return to Category Page </a>
-  </article>
 </template>
 
 <script>
 import axiosInstance from '@/services/axiosService';
 
 export default {
-  emits: ['note-removed'],
   data: () => ({
     buttonDisabled: true,
     deleted: false,
@@ -64,14 +54,7 @@ export default {
 
         this.deleted = true;
         this.$store.dispatch('categoryPages/removeNote', this.id);
-        this.$emit('note-removed');
 
-        this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
-
-        this.$store.dispatch(
-          'modals/setSuccessMessage',
-          `The articl "${this.title}" has been permanently deleted.`,
-        );
         this.deleted = true;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
