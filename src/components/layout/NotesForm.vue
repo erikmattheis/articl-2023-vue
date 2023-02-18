@@ -1,27 +1,25 @@
 <template>
-  <article>
-    <template v-if="!isLoading">
-      <form>
-        <label for="fullText">
-          <textarea
-            id="fullText"
-            v-model="fullText"
-            name="fullText" /></label>
+  <template v-if="!isLoading">
+    <form>
+      <label for="fullText">
+        <textarea
+          id="fullText"
+          v-model="fullText"
+          name="fullText" /></label>
 
-        <button
-          type="button"
-          :aria-busy="buttonDisabled"
-          @click.prevent="submitForm()">
-          {{ !id ? "Create" : "Edit" }} Note
-        </button>
-      </form>
-    </template>
-    <transition
-      name="fade"
-      mode="out-in">
-      <loading-placeholder v-if="isLoading" />
-    </transition>
-  </article>
+      <button
+        type="button"
+        :aria-busy="buttonDisabled"
+        @click.prevent="submitForm()">
+        {{ !id ? "Create" : "Edit" }} Note
+      </button>
+    </form>
+  </template>
+  <transition
+    name="fade"
+    mode="out-in">
+    <loading-placeholder v-if="isLoading" />
+  </transition>
 </template>
 
 <script>
@@ -33,18 +31,15 @@ export default {
   components: {
     LoadingPlaceholder,
   },
-
   props: {
-    editId: {
-      type: String,
-      default: '',
+    passedNote: {
+      type: Object,
+      default: () => {},
     },
   },
-
   data() {
     return {
-      id: '',
-      fullText: '',
+      note: {},
       isLoading: false,
       formAction: false,
       noteCreated: false,
@@ -52,20 +47,15 @@ export default {
     };
   },
 
-  computed: {
-    slug() {
-      return this.$route.params.slug;
-    },
-  },
-
   mounted() {
-    if (!this.editId) {
+    this.note = this.passedNote;
+
+    if (!this.note?.id) {
       this.formAction = 'Create';
       this.isLoading = false;
     } else {
-      this.id = this.editId;
       this.formAction = 'Edit';
-      this.getCurrentNote(this.id);
+      // this.getCurrentNote(this.id);
     }
 
     setTitleAndDescription({
@@ -73,6 +63,7 @@ export default {
     });
   },
   methods: {
+    /*
     async getCurrentNote(id) {
       try {
         this.isLoading = true;
@@ -86,6 +77,7 @@ export default {
         this.$store.dispatch('errors/setError', error);
       }
     },
+    */
     resetFormErrors() {
       this.errorMessage = '';
     },
@@ -117,7 +109,6 @@ export default {
             url,
             data: {
               fullText: this.fullText,
-              slug: this.slug,
             },
           });
           this.noteCreated = true;
@@ -131,13 +122,14 @@ export default {
         this.buttonDisabled = false;
       }
     },
-
+    /*
     async getNote(id) {
       return axiosInstance({
         method: 'GET',
         url: `/notes/${id}`,
       });
     },
+    */
   },
 };
 </script>

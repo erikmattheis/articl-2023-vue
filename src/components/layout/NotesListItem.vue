@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <p>{{ note.fullText }}</p>
-      <small>–{{ note.author.nameFirst }} {{ note.author.nameLast }}</small>
+      <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}</small>
     </div>
     <div
       v-if="noteIsUsers && isLoggedInMixin"
@@ -10,7 +10,7 @@
       <div class="row-admin-box">
         <router-link
           role="button"
-          :to="{ name: 'editNote', params:{ editId:note.id }}">
+          :to="{ name: 'editNote', params:{ id: note.id }}">
           <vue-feather
             size="0.7rem"
             type="edit"
@@ -27,6 +27,10 @@
         </router-link>
       </div>
     </div>
+
+    <notes-form
+      v-if="note.id === $route.params.id"
+      :passed-note="note" />
 
     <notes-delete
       v-if="note.id === $route.params.id"
@@ -47,37 +51,40 @@
 <script>
 import { mapGetters } from 'vuex';
 import NotesDelete from '@/components/layout/NotesDelete.vue';
+import NotesForm from '@/components/layout/NotesForm.vue';
 import VueFeather from 'vue-feather';
 
 export default {
   components: {
     NotesDelete,
+    NotesForm,
     VueFeather,
   },
   props: {
-
     passedNote: {
       type: Object,
-      default: null,
+      default: () => {},
     },
   },
   data() {
     return {
       note: {},
       confirmDelete: false,
+      noteIsUsers: false,
     };
   },
   computed: {
     ...mapGetters({
       user: 'users/user',
     }),
-
   },
   async created() {
-    this.note = this.passedNote;
-    this.noteIsUsers = this.note.author.id === this.user?.id;
+    if (this.passedNote) {
+      this.note = this.passedNote;
+      // this.fullText = this.passedNote.fullText;
+      this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
+    }
   },
-
   methods: {},
 };
 </script>

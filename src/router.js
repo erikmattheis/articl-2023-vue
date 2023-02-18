@@ -9,6 +9,7 @@ import forgotPassPage from '@/pages/forgot-pass.vue';
 import homePage from '@/pages/index.vue';
 import loginPage from '@/pages/login.vue';
 import deleteNote from '@/components/layout/NotesDelete.vue';
+import editNote from '@/components/layout/NotesForm.vue';
 import notFound from '@/pages/NotFound.vue';
 
 import resetPasswordPage from '@/pages/change-password.vue';
@@ -52,14 +53,18 @@ const router = createRouter({
         component: TabNotes,
         children: [{
           name: 'editNote',
-          path: 'edit/:editId',
-          component: TabNotes,
-          props: true,
+          path: 'edit/:id',
+          component: editNote,
         },
         {
           name: 'deleteNote',
           path: 'delete/:id',
           component: deleteNote,
+        },
+        {
+          name: 'editNote',
+          path: 'edit/:id',
+          component: editNote,
         }],
       },
       {
