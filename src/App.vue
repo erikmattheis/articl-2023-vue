@@ -52,7 +52,10 @@ export default {
 
   }),
   mounted() {
-
+    const user = this.$cookies.get('user');
+    if (user) {
+      this.$store.dispatch('users/setUser', user);
+    }
   },
   methods: {
 

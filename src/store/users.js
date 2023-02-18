@@ -26,7 +26,9 @@ export default {
 
   actions: {
     setUser: (context, payload) => {
-      context.commit('SET_USER', payload);
+      const user = JSON.stringify(payload);
+      console.log('setting', user);
+      context.commit('SET_USER', user);
     },
 
     async login({ dispatch }, { username, password }) {
@@ -35,6 +37,7 @@ export default {
         const { data } = response;
         const tokens = convertStringDatesToMS(data.tokens);
         dispatch('tokens/setTokens', tokens, { root: true });
+        dispatch('setUser', data.user);
       } catch (error) {
         throw new Error(error);
       }
@@ -55,7 +58,7 @@ export default {
 
     isEmailVerified: (state) => state.isEmailVerified,
 
-    user: (state) => state.user,
+    user: (state) => JSON.parse(state.user),
 
     id: (state) => state.id,
 

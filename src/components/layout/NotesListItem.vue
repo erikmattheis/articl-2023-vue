@@ -5,7 +5,7 @@
       <small>–{{ note.author.nameFirst }} {{ note.author.nameLast }}</small>
     </div>
     <div
-      v-if="isLoggedInMixin"
+      v-if="noteIsUsers && isLoggedInMixin"
       class="box">
       <div class="row-admin-box">
         <router-link
@@ -29,9 +29,9 @@
     </div>
 
     <notes-delete
-      v-if="note.id===$route.params.id"
+      v-if="note.id === $route.params.id"
       :passed-note="note" />
-    <!--xw
+    <!--
     <p>Permanently delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
 
     <button @click="deleteNote(note.id)">
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import NotesDelete from '@/components/layout/NotesDelete.vue';
 import VueFeather from 'vue-feather';
 
@@ -66,8 +67,15 @@ export default {
       confirmDelete: false,
     };
   },
+  computed: {
+    ...mapGetters({
+      user: 'users/user',
+    }),
+
+  },
   async created() {
     this.note = this.passedNote;
+    this.noteIsUsers = this.note.author.id === this.user?.id;
   },
 
   methods: {},
