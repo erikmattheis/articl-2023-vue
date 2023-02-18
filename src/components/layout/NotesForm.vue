@@ -11,7 +11,7 @@
         type="button"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()">
-        {{ !id ? "Create" : "Edit" }} Note
+        {{ !passedNote?.author ? "Create" : "Edit" }} Note
       </button>
     </form>
   </template>
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       note: {},
+      fullText: '',
       isLoading: false,
       formAction: false,
       noteCreated: false,
@@ -48,7 +49,7 @@ export default {
   },
 
   mounted() {
-    this.note = this.passedNote;
+    this.fullText = this.passedNote?.fullText || '';
 
     if (!this.note?.id) {
       this.formAction = 'Create';

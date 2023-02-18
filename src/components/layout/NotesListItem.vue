@@ -27,25 +27,14 @@
         </router-link>
       </div>
     </div>
-
-    <notes-form
-      v-if="note.id === $route.params.id"
-      :passed-note="note" />
-
-    <notes-delete
-      v-if="note.id === $route.params.id"
-      :passed-note="note" />
-    <!--
-    <p>Permanently delete note that starts "{{ fullText.substring(0,40) }}..."?</p>
-
-    <button @click="deleteNote(note.id)">
-      Yes
-    </button>
-    <button @click="confirmDelete = false">
-      No
-    </button>
-    -->
   </div>
+  <notes-form
+    v-if="routeName === 'editNote' && note.id === $route.params.id"
+    :passed-note="note" />
+
+  <notes-delete
+    v-else-if="routeName === 'deleteNote' && note.id === $route.params.id"
+    :passed-note="note" />
 </template>
 
 <script>
@@ -77,12 +66,15 @@ export default {
     ...mapGetters({
       user: 'users/user',
     }),
+    routeName() {
+      return this.$route.name;
+    },
   },
-  async created() {
+  created() {
     if (this.passedNote) {
       this.note = this.passedNote;
-      // this.fullText = this.passedNote.fullText;
       this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
+      console.log('noteIsUsers', this.$router.currentRoute);
     }
   },
   methods: {},
