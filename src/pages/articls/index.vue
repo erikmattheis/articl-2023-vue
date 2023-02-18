@@ -222,9 +222,9 @@ export default {
     };
   },
   mounted() {
+    this.id = this.editId;
     this.formAction = this.id ? 'Edit' : 'Create';
-
-    if (!this.editId) {
+    if (!this.id) {
       this.slug = this.$route.query.slug;
 
       this.onTypeaheadHit({
@@ -233,12 +233,11 @@ export default {
 
       this.isLoading = false;
     } else {
-      this.id = this.editId;
       this.getCurrentArticl(this.id);
     }
 
     setTitleAndDescription({
-      title: this.formAction,
+      title: `${this.formAction}Articl`,
     });
   },
   methods: {
