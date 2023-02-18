@@ -1,5 +1,5 @@
 <template>
-  <article v-if="!deleted">
+  <template v-if="!deleted">
     <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
     <form>
       <button
@@ -8,7 +8,7 @@
         Delete
       </button>
     </form>
-  </article>
+  </template>
 </template>
 
 <script>
