@@ -1,17 +1,23 @@
 <template>
-  <template v-if="!isLoading && note?.id">
+  <template v-if="!isLoading && !note?.id">
     <form>
       <label for="fullText">
         <textarea
           id="fullText"
-          v-model="note.fullText"
+          v-model="fullText"
           name="fullText" /></label>
+
+      <button
+        type="button"
+        @click.prevent="cancel()">
+        Cancel
+      </button>
 
       <button
         type="button"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()">
-        {{ !note.id ? "Create" : "Edit" }} Note
+        {{ !note?.id ? "Create" : "Edit" }} Note
       </button>
     </form>
   </template>
@@ -40,6 +46,8 @@ export default {
   data() {
     return {
       note: {},
+      fullText: '',
+      fullTextOriginal: '',
       isLoading: false,
       formAction: false,
       noteCreated: false,
@@ -52,8 +60,9 @@ export default {
 
     if (!this.note?.id) {
       this.formAction = 'Create';
-      this.isLoading = false;
     } else {
+      this.fullText = this.note.fullText;
+      this.fullTextOriginal = this.note.fullText;
       this.formAction = 'Edit';
     }
 
@@ -62,21 +71,10 @@ export default {
     });
   },
   methods: {
-    /*
-    async getCurrentNote(id) {
-      try {
-        this.isLoading = true;
-
-        const result = await this.getNote(id);
-
-        Object.assign(this, result.data);
-
-        this.isLoading = false;
-      } catch (error) {
-        this.$store.dispatch('errors/setError', error);
-      }
+    cancel() {
+      this.fullText = this.fullTextOriginal;
+      this.$router.push({ name: 'TabNotes' });
     },
-    */
     resetFormErrors() {
       this.errorMessage = '';
     },
@@ -85,7 +83,7 @@ export default {
 
       let passed = true;
 
-      if (this.note.fullText === '') {
+      if (this.fullText === '') {
         this.errorMessage = 'Please enter the text of the note.';
 
         passed = false;
@@ -94,7 +92,13 @@ export default {
       return passed;
     },
     async submitForm() {
-      const url = `/notes/${this.note?.id}`;
+      let url = '/notes/';
+
+      const id = this.note?.id;
+
+      if (id) {
+        url = `/notes/${id}}`;
+      }
 
       try {
         this.resetFormErrors();
@@ -102,12 +106,12 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = this.note.id ? 'PATCH' : 'POST';
+          const verb = this.note?.id ? 'PATCH' : 'POST';
           await axiosInstance({
             method: verb,
             url,
             data: {
-              fullText: this.note.fullText,
+              fullText: this.fullText,
             },
           });
           this.noteCreated = true;

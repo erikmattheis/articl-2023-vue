@@ -21,8 +21,6 @@ Please include rewriting these instructions if they can be clearer or more disti
 
 */
 
-import 'core-js/actual/array/group-by';
-
 import { createApp } from 'vue';
 import VueCookies from 'vue-cookies';
 
@@ -35,9 +33,11 @@ import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
+/*
 app.config.errorHandler = (error) => {
   store.dispatch('errors/setError', error);
 };
+*/
 
 window.addEventListener('unhandledrejection', (event) => {
   store.dispatch('errors/setError', event.reason);
