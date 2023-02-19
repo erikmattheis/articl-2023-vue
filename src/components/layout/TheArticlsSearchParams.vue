@@ -67,7 +67,7 @@
         <a
           href
           @click.prevent="resetValue('types')"
-          @keyup.enter="resetValue('types')">
+          @keyup.enter.prevent="resetValue('types')">
           <vue-feather
             size="1.2rem"
             type="x-square"

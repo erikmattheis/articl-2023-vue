@@ -1,11 +1,10 @@
 <template>
-  <div class="container">
-    <div v-if="routeName === 'TabNotes'">
+  <div class="container" v-if="note?.id !== $route.params.id">
+    <div>
       <p>{{ note.fullText }}</p>
       <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}</small>
     </div>
-    <div
-      v-if="noteIsUsers && isLoggedInMixin"
+    <div v-if="noteIsUsers && isLoggedInMixin && note?.id !== $route.params.id"
       class="box">
       <div class="row-admin-box">
         <router-link
@@ -28,6 +27,7 @@
       </div>
     </div>
   </div>
+
   <notes-form
     v-if="routeName === 'editNote' && note?.id === $route.params.id"
     :passed-note="note" />
@@ -85,5 +85,6 @@ export default {
     grid-gap: 10px;
     grid-template-columns: minmax(min-content, 1fr) min-content;
     color: #444;
+    border-bottom: 1px solid var(--muted-border-color);
   }
 </style>

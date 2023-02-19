@@ -1,5 +1,4 @@
 <template>
-  <template v-if="!isLoading && !note?.id">
     <form>
       <label for="fullText">
         <textarea
@@ -7,20 +6,26 @@
           v-model="fullText"
           name="fullText" /></label>
 
-      <button
-        type="button"
-        @click.prevent="cancel()">
-        Cancel
-      </button>
+      <a
+      href
+      class="a"
+        tabindex="0"
+        role="button"
+        @click.prevent="cancel()"
+        @keyup.esc.prevent="cancel()">Cancel</a>
 
-      <button
-        type="button"
+      <a
+        href
+        class="a"
+        tabindex="0"
+        role="button"
         :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()">
-        {{ !note?.id ? "Create" : "Edit" }} Note
-      </button>
+        @click.prevent="submitForm()"
+        @keyup.enter.prevent="submitForm()">
+        {{ !note?.id ? "Create" : "Edit" }} Note</a>
+
     </form>
-  </template>
+
   <transition
     name="fade"
     mode="out-in">
@@ -72,7 +77,7 @@ export default {
   },
   methods: {
     cancel() {
-      this.fullText = this.fullTextOriginal;
+      // this.fullText = this.fullTextOriginal;
       this.$router.push({ name: 'TabNotes' });
     },
     resetFormErrors() {
@@ -129,7 +134,14 @@ export default {
 </script>
 
 <style scoped>
-button {
-  margin-top: var(--typography-spacing-vertical);
+button,
+.a {
+  margin-top: var(--nav-link-spacing-vertical);
+  margin-right: var(--nav-link-spacing-horizontal);
 }
+
+form {
+  background-color: var(--muted-border-color);
+}
+
 </style>
