@@ -60,11 +60,6 @@ const router = createRouter({
           name: 'deleteNote',
           path: 'delete/:id',
           component: deleteNote,
-        },
-        {
-          name: 'editNote',
-          path: 'edit/:id',
-          component: editNote,
         }],
       },
       {

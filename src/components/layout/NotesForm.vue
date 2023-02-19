@@ -1,17 +1,17 @@
 <template>
-  <template v-if="!isLoading">
+  <template v-if="!isLoading && note?.id">
     <form>
       <label for="fullText">
         <textarea
           id="fullText"
-          v-model="fullText"
+          v-model="note.fullText"
           name="fullText" /></label>
 
       <button
         type="button"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()">
-        {{ !passedNote?.author ? "Create" : "Edit" }} Note
+        {{ !note.id ? "Create" : "Edit" }} Note
       </button>
     </form>
   </template>
@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       note: {},
-      fullText: '',
       isLoading: false,
       formAction: false,
       noteCreated: false,
@@ -49,14 +48,13 @@ export default {
   },
 
   mounted() {
-    this.fullText = this.passedNote?.fullText || '';
+    this.note = this.passedNote;
 
     if (!this.note?.id) {
       this.formAction = 'Create';
       this.isLoading = false;
     } else {
       this.formAction = 'Edit';
-      // this.getCurrentNote(this.id);
     }
 
     setTitleAndDescription({
@@ -87,7 +85,7 @@ export default {
 
       let passed = true;
 
-      if (this.fullText === '') {
+      if (this.note.fullText === '') {
         this.errorMessage = 'Please enter the text of the note.';
 
         passed = false;
@@ -96,7 +94,7 @@ export default {
       return passed;
     },
     async submitForm() {
-      const url = `/notes/${this.id}`;
+      const url = `/notes/${this.note?.id}`;
 
       try {
         this.resetFormErrors();
@@ -104,16 +102,15 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = this.id ? 'PATCH' : 'POST';
+          const verb = this.note.id ? 'PATCH' : 'POST';
           await axiosInstance({
             method: verb,
             url,
             data: {
-              fullText: this.fullText,
+              fullText: this.note.fullText,
             },
           });
           this.noteCreated = true;
-          this.$router.go(0);
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }
@@ -123,14 +120,6 @@ export default {
         this.buttonDisabled = false;
       }
     },
-    /*
-    async getNote(id) {
-      return axiosInstance({
-        method: 'GET',
-        url: `/notes/${id}`,
-      });
-    },
-    */
   },
 };
 </script>

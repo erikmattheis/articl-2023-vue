@@ -58,7 +58,7 @@ export default {
 
     isEmailVerified: (state) => state.isEmailVerified,
 
-    user: (state) => JSON.parse(state.user),
+    user: (state) => JSON.parse(state.user || '{}'),
 
     id: (state) => state.id,
 

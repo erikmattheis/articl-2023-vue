@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div>
+    <div v-if="routeName === 'TabNotes'">
       <p>{{ note.fullText }}</p>
       <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}</small>
     </div>
@@ -19,7 +19,7 @@
 
         <router-link
           role="button"
-          :to="{ name: 'deleteNote', params: { id: note.id }}">
+          :to="{ name: 'deleteNote', params: { id: note?.id }}">
           <vue-feather
             size="0.7rem"
             type="delete"
@@ -29,11 +29,11 @@
     </div>
   </div>
   <notes-form
-    v-if="routeName === 'editNote' && note.id === $route.params.id"
+    v-if="routeName === 'editNote' && note?.id === $route.params.id"
     :passed-note="note" />
 
   <notes-delete
-    v-else-if="routeName === 'deleteNote' && note.id === $route.params.id"
+    v-else-if="routeName === 'deleteNote' && note?.id === $route.params.id"
     :passed-note="note" />
 </template>
 
@@ -70,11 +70,10 @@ export default {
       return this.$route.name;
     },
   },
-  created() {
-    if (this.passedNote) {
+  beforeMount() {
+    if (this.passedNote.id) {
       this.note = this.passedNote;
       this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
-      console.log('noteIsUsers', this.$router.currentRoute);
     }
   },
   methods: {},
