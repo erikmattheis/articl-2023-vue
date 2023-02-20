@@ -1,6 +1,7 @@
 <template>
-  <div class="container" v-if="note?.id !== $route.params.id">
+  <div class="container" v-if="note?.id !== $route.params.id || noteWasUpdated">
     <div>
+      <p v-if="noteWasUpdated"><ins>Your note was successfully updated.</ins></p>
       <p>{{ note.fullText }}</p>
       <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}</small>
     </div>
@@ -28,8 +29,9 @@
   </div>
 
   <notes-form
-    v-if="routeName === 'editNote' && note?.id === $route.params.id"
-    :passed-note="note" />
+    v-if="routeName === 'editNote' && note?.id === $route.params.id && !noteWasUpdated"
+    :passed-note="note"
+    @note-updated="noteUpdated()" />
 
   <notes-delete
     v-else-if="routeName === 'deleteNote' && note?.id === $route.params.id"
@@ -59,6 +61,7 @@ export default {
       note: {},
       confirmDelete: false,
       noteIsUsers: false,
+      noteWasUpdated: false,
     };
   },
   computed: {
@@ -75,7 +78,12 @@ export default {
       this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
     }
   },
-  methods: {},
+  methods: {
+    noteUpdated() {
+      this.noteWasUpdated = true;
+    },
+
+  },
 };
 </script>
 <style scoped type="scss">

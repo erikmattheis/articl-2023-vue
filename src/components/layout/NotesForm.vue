@@ -50,6 +50,7 @@ export default {
       default: () => { },
     },
   },
+  emits: ['note-updated'],
   data() {
     return {
       note: {},
@@ -122,6 +123,7 @@ export default {
             },
           });
           this.noteCreated = true;
+          this.$emit('note-updated');
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }

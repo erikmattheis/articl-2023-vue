@@ -8,8 +8,7 @@
     </details>
 
     <ul>
-      <li
-        v-for="note in notes || []"
+      <li v-for="note in notes || []"
         :key="note.id">
         <notes-list-item :passed-note="note" />
       </li>
