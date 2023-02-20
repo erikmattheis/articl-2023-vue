@@ -4,8 +4,7 @@
       <p>{{ note.fullText }}</p>
       <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}</small>
     </div>
-    <div v-if="noteIsUsers && isLoggedInMixin && note?.id !== $route.params.id"
-      class="box">
+    <div v-if="noteIsUsers && isLoggedInMixin && note?.id !== $route.params.id" class="box">
       <div class="row-admin-box">
         <router-link
           role="button"
@@ -87,4 +86,5 @@ export default {
     color: #444;
     border-bottom: 1px solid var(--muted-border-color);
   }
+
 </style>

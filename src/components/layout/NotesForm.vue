@@ -5,10 +5,12 @@
           id="fullText"
           v-model="fullText"
           name="fullText" /></label>
-
+          <div class="grid">
+<div class="grid-right">
       <a
       href
       class="a"
+
         tabindex="0"
         role="button"
         @click.prevent="cancel()"
@@ -23,7 +25,7 @@
         @click.prevent="submitForm()"
         @keyup.enter.prevent="submitForm()">
         {{ !note?.id ? "Create" : "Edit" }} Note</a>
-
+      </div></div>
     </form>
 
   <transition
@@ -45,7 +47,7 @@ export default {
   props: {
     passedNote: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
   },
   data() {
@@ -102,7 +104,7 @@ export default {
       const id = this.note?.id;
 
       if (id) {
-        url = `/notes/${id}}`;
+        url = `/notes/${id}`;
       }
 
       try {
@@ -142,6 +144,10 @@ button,
 
 form {
   background-color: var(--muted-border-color);
+  padding: var(--form-element-spacing-horizontal) !important;
 }
 
+textarea {
+  width: 100%;
+}
 </style>

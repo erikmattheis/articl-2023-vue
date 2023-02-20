@@ -27,7 +27,6 @@ export default {
   actions: {
     setUser: (context, payload) => {
       const user = JSON.stringify(payload);
-      console.log('setting', user);
       context.commit('SET_USER', user);
     },
 

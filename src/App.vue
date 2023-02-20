@@ -73,7 +73,7 @@ export default {
 @import "//fonts.googleapis.com/css2?family=Open+Sans&display=swap";
 
 .inline-block {
-  display:inline
+  display: inline
 }
 
 .row-admin-container {
@@ -98,6 +98,7 @@ export default {
   display: inline-block;
   cursor: pointer;
 }
+
 .row-admin-box {
   display: grid;
   grid-template-columns: min-content min-content min-content;
@@ -189,7 +190,7 @@ export default {
 }
 
 .nav-content {
-  position:relative;
+  position: relative;
   top: -1px;
   z-index: 0;
   border: 1px solid $grey-100;
@@ -197,7 +198,7 @@ export default {
 }
 
 .nav-inner-content {
-  position:relative;
+  position: relative;
   top: -1px;
   z-index: 0;
   border: 1px solid $grey-100;
@@ -300,8 +301,8 @@ export default {
   top: calc(var(--form-element-spacing-vertical) * 0.5);
   right: 1rem;
   width: 2.2rem;
-  top:50%;
-  transform:translateY(-50%);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .vertical-container {
@@ -322,7 +323,7 @@ export default {
 }
 
 body > div {
-  margin:auto;
+  margin: auto;
 }
 
 :root footer article {
@@ -373,6 +374,7 @@ ul li {
 }
 
 @media prefers-reduced-motion {
+
   .fade-leave-to,
   .fade-enter-from {
     opacity: 1;
