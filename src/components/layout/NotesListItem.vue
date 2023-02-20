@@ -1,11 +1,13 @@
 <template>
   <div class="container" v-if="note?.id !== $route.params.id || noteWasUpdated">
     <div>
+      <p>{{ note.fullText }}</p>
       <p v-if="noteWasUpdated"><ins>Your note was successfully updated.</ins></p>
       <p>{{ note.fullText }}</p>
-      <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}</small>
+      <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }} {{ noteDate }}</small>
     </div>
-    <div v-if="noteIsUsers && isLoggedInMixin && note?.id !== $route.params.id" class="box">
+
+    <div v-if="noteWasUpdated || noteIsUsers && isLoggedInMixin && note?.id !== $route.params.id" class="box">
       <div class="row-admin-box">
         <router-link
           role="button"
@@ -43,6 +45,7 @@ import { mapGetters } from 'vuex';
 import NotesDelete from '@/components/layout/NotesDelete.vue';
 import NotesForm from '@/components/layout/NotesForm.vue';
 import VueFeather from 'vue-feather';
+import { toFormattedUserDateTime } from '@/services/dateTimesService';
 
 export default {
   components: {
@@ -70,6 +73,9 @@ export default {
     }),
     routeName() {
       return this.$route.name;
+    },
+    noteDate() {
+      return toFormattedUserDateTime(this.note.createdAt);
     },
   },
   beforeMount() {
