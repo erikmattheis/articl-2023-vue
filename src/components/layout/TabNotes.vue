@@ -1,6 +1,6 @@
 <template>
   <div class="tab-content">
-    <h2>Notes</h2>
+    <h2>Notes ({{notes?.length}})</h2>
 
     <details>
       <summary>Add Note</summary>
@@ -10,7 +10,7 @@
     <ul>
       <li v-for="note in notes || []"
         :key="note.id">
-        <notes-list-item :passed-note="note" @note-updated=" noteUpdated"/>
+        <notes-list-item :passed-note="note" @note-updated="noteUpdated"/>
       </li>
     </ul>
   </div>
@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     noteUpdated(note) {
-      this.noteWasUpdated = true;
       this.notes.push(note);
     },
   },

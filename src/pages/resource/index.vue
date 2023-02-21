@@ -51,7 +51,6 @@
       :level="treeLevel" />
   </article>
 
-  <loading-placeholder v-else />
 </template>
 
 <script>
@@ -60,14 +59,12 @@ import { mapGetters } from 'vuex';
 
 import DirectoryActions from '@/components/layout/DirectoryActions.vue';
 import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
-import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'CategoryPage',
   components: {
-    LoadingPlaceholder,
     DirectoryActions,
     TheBreadcrumbs,
   },

@@ -6,27 +6,27 @@
           v-model="fullText"
           name="fullText" /></label>
           <div class="grid">
-<div class="grid-right">
-      <a
-      href
-      class="a"
+            <div class="grid-right">
+              <a
+                href
+                class="a"
+                tabindex="0"
+                role="button"
+                @click.prevent="cancel()"
+                @keyup.esc.prevent="cancel()">Cancel</a>
 
-        tabindex="0"
-        role="button"
-        @click.prevent="cancel()"
-        @keyup.esc.prevent="cancel()">Cancel</a>
-
-      <a
-        href
-        class="a"
-        tabindex="0"
-        role="button"
-        :aria-disabled="buttonDisabled"
-        :aria-busy="buttonDisabled"
-        @click.prevent="submitForm()"
-        @keyup.enter.prevent="submitForm()">
-        {{ !note?.id ? "Create" : "Edit" }} Note</a>
-      </div></div>
+            <a
+              href
+              class="a"
+              tabindex="0"
+              role="button"
+              :aria-disabled="buttonDisabled"
+              :aria-busy="buttonDisabled"
+              @click.prevent="submitForm()"
+              @keyup.enter.prevent="submitForm()">
+              {{ !note?.id ? "Create" : "Edit" }} Note</a>
+            </div>
+          </div>
     </form>
 
 </template>
@@ -120,13 +120,11 @@ export default {
             data,
           });
           this.noteCreated = true;
-          console.log('result', result);
           this.$emit('note-updated', result.data);
           if (id) {
             console.log('id', id);
             this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
           } else {
-            console.log('here');
             this.$router.push({ name: 'TabNotes' });
           }
         } else {
