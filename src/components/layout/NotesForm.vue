@@ -21,6 +21,7 @@
         class="a"
         tabindex="0"
         role="button"
+        :aria-disabled="buttonDisabled"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()"
         @keyup.enter.prevent="submitForm()">
@@ -28,22 +29,13 @@
       </div></div>
     </form>
 
-  <transition
-    name="fade"
-    mode="out-in">
-    <loading-placeholder v-if="isLoading" />
-  </transition>
 </template>
 
 <script>
-import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
-  components: {
-    LoadingPlaceholder,
-  },
   props: {
     passedNote: {
       type: Object,
@@ -103,9 +95,15 @@ export default {
       let url = '/notes/';
 
       const id = this.note?.id;
+      const data = {
+        fullText: this.fullText,
+      };
 
       if (id) {
         url = `/notes/${id}`;
+      } else {
+        data.slug = this.$route.params.slug;
+        console.log('this.$route.slug', this.$route.params.slug);
       }
 
       try {
@@ -115,15 +113,22 @@ export default {
           this.buttonDisabled = true;
 
           const verb = this.note?.id ? 'PATCH' : 'POST';
-          await axiosInstance({
+
+          const result = await axiosInstance({
             method: verb,
             url,
-            data: {
-              fullText: this.fullText,
-            },
+            data,
           });
           this.noteCreated = true;
-          this.$emit('note-updated');
+          console.log('result', result);
+          this.$emit('note-updated', result.data);
+          if (id) {
+            console.log('id', id);
+            this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
+          } else {
+            console.log('here');
+            this.$router.push({ name: 'TabNotes' });
+          }
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }

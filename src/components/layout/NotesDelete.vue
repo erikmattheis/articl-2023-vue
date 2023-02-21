@@ -27,6 +27,7 @@ export default {
     this.id = this.$route.params.id;
     this.getCurrentNote(this.id);
   },
+
   methods: {
     async getCurrentNote(id) {
       try {

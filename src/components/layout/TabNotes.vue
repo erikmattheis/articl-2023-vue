@@ -10,7 +10,7 @@
     <ul>
       <li v-for="note in notes || []"
         :key="note.id">
-        <notes-list-item :passed-note="note" />
+        <notes-list-item :passed-note="note" @note-updated=" noteUpdated"/>
       </li>
     </ul>
   </div>
@@ -39,6 +39,12 @@ export default {
     ...mapGetters({
       notes: 'categoryPages/notes',
     }),
+  },
+  methods: {
+    noteUpdated(note) {
+      this.noteWasUpdated = true;
+      this.notes.push(note);
+    },
   },
 };
 

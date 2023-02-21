@@ -4,9 +4,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(relativeTime);
 
 const toFormattedUserDateTime = (dateString) => {
-  console.log(dateString);
   const date = dayjs(dateString);
-  console.log(date instanceof dayjs);
+
   const threshold = 3; // days threshold for relative time
 
   if (date.isAfter(dayjs().subtract(threshold, 'day'))) {
