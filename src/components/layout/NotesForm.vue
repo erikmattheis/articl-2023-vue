@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     cancel() {
-      // this.fullText = this.fullTextOriginal;
+      this.fullText = this.fullTextOriginal;
       this.$router.push({ name: 'TabNotes' });
     },
     resetFormErrors() {
@@ -103,7 +103,6 @@ export default {
         url = `/notes/${id}`;
       } else {
         data.slug = this.$route.params.slug;
-        console.log('this.$route.slug', this.$route.params.slug);
       }
 
       try {
@@ -119,13 +118,13 @@ export default {
             url,
             data,
           });
+
           this.noteCreated = true;
           this.$emit('note-updated', result.data);
           if (id) {
-            console.log('id', id);
             this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
           } else {
-            this.$router.push({ name: 'TabNotes' });
+            this.$router.push({ name: 'TabNotes', params: { slug: this.$route.params.slug } });
           }
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);

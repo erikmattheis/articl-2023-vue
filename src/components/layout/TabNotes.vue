@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     noteUpdated(note) {
+      console.log('noteUpdated', note);
       this.notes.push(note);
     },
   },

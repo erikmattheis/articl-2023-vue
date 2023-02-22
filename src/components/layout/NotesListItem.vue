@@ -65,7 +65,6 @@ export default {
       note: {},
       confirmDelete: false,
       noteIsUsers: false,
-      noteWasUpdated: false,
     };
   },
   computed: {
