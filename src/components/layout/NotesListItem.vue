@@ -32,7 +32,7 @@
     <notes-form
       v-if="routeName === 'editNote' && note?.id === $route.params.id && user.id === note.author.id"
       :passed-note="note"
-      @note-updated="noteUpdated()" />
+      @note-updated="noteUpdated" />
 
     <notes-delete
       v-else-if="routeName === 'deleteNote' && note?.id === $route.params.id && user.id === note.author.id"
@@ -67,6 +67,7 @@ export default {
       noteIsUsers: false,
     };
   },
+  emits: ['note-updated'],
   computed: {
     ...mapGetters({
       user: 'users/user',
@@ -108,8 +109,12 @@ export default {
   },
   */
   methods: {
-    noteUpdated() {
+    noteUpdated(note) {
+      console.log('passing uop');
       this.noteWasUpdated = true;
+      console.log('passing uop 2');
+      this.$emit('note-updated', note);
+      console.log('passing uop 3');
     },
   },
 };

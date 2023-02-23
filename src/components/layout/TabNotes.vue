@@ -7,7 +7,7 @@
       <notes-form />
     </details>
 
-    <ul>
+    <ul v-if="notes && notes.length">
       <li v-for="note in notes || []"
         :key="note.id">
         <notes-list-item :passed-note="note" @note-updated="noteUpdated"/>
@@ -42,8 +42,8 @@ export default {
   },
   methods: {
     noteUpdated(note) {
-      console.log('noteUpdated', note);
-      this.notes.push(note);
+      this.notes.find(({ id }) => id === note.id).fullText = note.fullText;
+      this.noteWasUpdated = true;
     },
   },
 };
