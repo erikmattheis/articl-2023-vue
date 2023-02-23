@@ -276,7 +276,7 @@ export default {
       if (this.focusedElements.indexOf('email') === -1) {
         return null;
       }
-      return this.validateEmail(this.email);
+      return !this.validateEmail(this.email);
     },
     educationInvalid() {
       if (this.focusedElements.indexOf('education') === -1) {

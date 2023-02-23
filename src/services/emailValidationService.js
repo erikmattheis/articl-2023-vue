@@ -1,5 +1,6 @@
 export default {
   validateEmail: (email) => {
+    console.log('email', email);
     if (!email) {
       return false;
     }
