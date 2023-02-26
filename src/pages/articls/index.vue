@@ -26,12 +26,12 @@
     <template v-if="!isLoading && !success">
       <form>
         <template v-if="!id">
-          <label for="articlUrl">URL
+          <label for="url">URL
             <input
-              id="articlUrl"
-              v-model="articlUrl"
+              id="url"
+              v-model="url"
               type="text"
-              name="articlUrl"></label>
+              name="url"></label>
           <button
             type="button"
             :aria-busy="buttonFetchDisabled"
@@ -205,7 +205,7 @@ export default {
       abstract: '',
       affiliations: '',
       doi: '',
-      articlUrl: '',
+      url: '',
       authorsOrig: '',
       authors: [],
       buttonDisabled: false,
@@ -255,11 +255,11 @@ export default {
       }
     },
     async getData() {
-      if (this.articlUrl) {
+      if (this.url) {
         try {
           this.buttonFetchDisabled = true;
 
-          const result = await fetchData(this.articlUrl);
+          const result = await fetchData(this.url);
 
           if (result) {
             Object.assign(this, result);
@@ -317,7 +317,7 @@ export default {
             data: {
               abstract: this.abstract,
               affiliation: this.affiliation,
-              articlUrl: this.articlUrl,
+              url: this.url,
               type: this.type,
               authors: this.authors,
               slug: this.slug,
@@ -332,7 +332,7 @@ export default {
           this.abstract = result.data.abstract;
           this.affiliations = result.data.affiliations;
           this.doi = result.data.doi;
-          this.articlUrl = result.data.articlUrl;
+          this.url = result.data.url;
           this.authorsOrig = result.data.authorsOrig;
           this.authors = result.data.authors;
           this.journal = result.data.journal;

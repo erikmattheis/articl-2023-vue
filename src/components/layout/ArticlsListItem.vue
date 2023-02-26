@@ -4,7 +4,7 @@
       <li class="title container">
         <a
           :data-tooltip="linkMessage"
-          :href="articl.articlUrl"
+          :href="articl.url"
           class="box"
           target="_blank">
           {{ articl.title }}
@@ -50,8 +50,8 @@
         class="articl-details">
         {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
           :data-tooltip="linkMessage"
-          :href="articl.articlUrl"
-          target="_blank">{{ articl.articlUrl }}</a>
+          :href="articl.url"
+          target="_blank">{{ articl.url }}</a>
       </li>
 
       <li
@@ -155,7 +155,7 @@ export default {
     },
     linkMessage() {
       try {
-        return `Read article on ${(new URL(this.articl.articlUrl)).hostname.replace('www.', '')}`;
+        return `Read article on ${(new URL(this.articl.url)).hostname.replace('www.', '')}`;
       } catch {
         return 'Malformed url';
       }
