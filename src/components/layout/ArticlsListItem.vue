@@ -33,7 +33,7 @@
               class="grid">
               {{ author.nameFirst }} {{ author.nameLast }}
 
-              <ul v-if="author.affilliations.length">
+              <ul v-if="author.affilliations?.length">
                 <li
                   v-for="affilliation in author.affilliations"
                   :key="affilliation">
