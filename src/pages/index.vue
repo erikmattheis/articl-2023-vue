@@ -1,11 +1,12 @@
 <template>
   <article v-if="!isLoading">
     <h2>{{ title }}</h2>
-    <tab-categories />
+
+    <categories-list />
 
     <directory-actions
       v-if="isLoggedInMixin"
-      :level="0" />
+      :tree-level="0" />
   </article>
 
   <loading-placeholder v-else />
@@ -15,16 +16,16 @@
 import { mapGetters } from 'vuex';
 
 import DirectoryActions from '@/components/layout/DirectoryActions.vue';
-import TabCategories from '@/components/layout/TabCategories.vue';
+import CategoriesList from '@/components/layout/CategoriesList.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
-  name: 'CategoryPage',
+  name: 'HomePage',
   components: {
     LoadingPlaceholder,
-    TabCategories,
+    CategoriesList,
     DirectoryActions,
   },
   data() {
@@ -35,7 +36,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      treeLevel: 'categoryPages/treeLevel',
       articls: 'categoryPages/articls',
       articlTypes: 'categoryPages/articlTypes',
       categories: 'categoryPages/categories',

@@ -1,132 +1,110 @@
 <template>
-  <ul>
-    <draggable-items
-      v-if="!isLoading"
-      v-model="articls"
-      tag="ul"
-      item-key="id"
-      handle=".handle"
-      ghost-class="ghost"
-      @change="onUpdateOrderValues">
-      <template #item="{ element }">
-        <li>
+  <div>
+    <ul class="nav-tabs nav-tabs-inner-margin">
+      <li
+        v-for="articlType in articlTypes"
+        :key="articlType"
+        :class="{ active: articlTypeCurrent === articlType }">
+        <a
+          href
+          @click.prevent="articlTypeCurrent = articlType"
+          @keyup.enter.prevent="articlTypeCurrent = articlType">
+          {{ articlType }}</a>
+      </li>
+    </ul>
+
+    <ul
+      v-if="articlTypeCurrent"
+      class="nav-inner-content">
+      <draggable-items
+        v-model="articls[articlTypeCurrent]"
+        tag="li"
+        item-key="id"
+        handle=".handle"
+        ghost-class="ghost"
+        @change="onUpdateArticlsOrderValues">
+        <template #item="{ element }">
           <articls-list-item
             :articl="element"
-            order="0" />
-        </li>
-      </template>
-    </draggable-items>
-    <li
-      v-if="(articls.length === 0)">
+            :order="element.order" />
+        </template>
+      </draggable-items>
+    </ul>
+    <div v-if="(articls[articlTypeCurrent]?.length === 0)">
       No entries yet.
-    </li>
-  </ul>
-  <transition
-    name="fade"
-    mode="out-in">
-    <loading-placeholder v-if="isLoading" />
-  </transition>
+    </div>
+  </div>
 </template>
 
 <script>
-import { isEqual } from 'lodash';
 import DraggableItems from 'vuedraggable';
 import { mapGetters } from 'vuex';
 
 import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
-import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import axiosInstance from '@/services/axiosService';
 
 export default {
   name: 'ArticlsList',
   components: {
     DraggableItems,
-    LoadingPlaceholder,
     ArticlsListItem,
   },
-  data: () => ({
-    articls: [],
-    isLoading: false,
-  }),
-  computed: {
-    ...mapGetters({
-      params: 'articlsParams/params',
-    }),
-  },
-  watch: {
-    params: {
-      handler(newValue) {
-        this.updateValues(newValue);
-      },
-      deep: true,
+  props: {
+    items: {
+      default: () => [],
+      type: Array,
+    },
+    type: {
+      default: () => '',
+      type: String,
+    },
+    slug: {
+      default: () => '',
+      type: String,
     },
   },
+  data() {
+    return {
+      articlTypeCurrent: undefined,
+    };
+  },
+  computed: {
+    ...mapGetters({
+      articls: 'categoryPages/articls',
+      articlTypes: 'categoryPages/articlTypes',
+    }),
+  },
+  mounted() {
+    [this.articlTypeCurrent] = this.articlTypes;
+  },
   methods: {
-    updateOrderValues() {
-      try {
-        this.articls.forEach((obj, index) => {
-          const objValue = obj;
 
-          objValue.order = index;
+    updateArticlsOrderValues(articlType) {
+      try {
+        this.articls[articlType].forEach((obj, index) => {
+          const objRef = obj;
+
+          objRef.order = index;
         });
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       }
     },
-    async saveOrderValues() {
+
+    async saveArticlsOrderValues(articlType) {
       try {
-        const order = this.articls.map((obj) => ({
+        const order = this.articls[articlType].map((obj) => ({
           id: obj.id,
           order: obj.order,
         }));
 
-        await this.saveOrder(order);
+        await this.saveArticlsOrder(order);
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       }
     },
-    onUpdateOrderValues() {
-      this.updateOrderValues();
 
-      this.saveOrderValues();
-    },
-    async updateValues(params) {
-      try {
-        if (isEqual(params, {
-        })) {
-          this.articls = [];
-
-          this.totalResults = '--';
-
-          return;
-        }
-
-        if (params) {
-          this.isLoading = true;
-
-          const result = await this.getArticls(params);
-
-          this.isLoading = false;
-
-          if (Number(result.page) === 1 || result.results?.length === 0) {
-            this.articls = [];
-
-            this.totalResults = '--';
-          }
-
-          this.articls = this.articls.concat(result.results);
-
-          this.totalPages = result.totalPages;
-
-          this.limit = result.limit;
-
-          this.totalResults = result.totalResults;
-        }
-      } catch (error) {
-        this.$store.dispatch('errors/setError', error);
-      }
-    },
-    async saveOrder(order) {
+    async saveArticlsOrder(order) {
       this.isLoading = true;
 
       const result = await axiosInstance({
@@ -141,19 +119,13 @@ export default {
 
       return result.data;
     },
-    async getArticls(params) {
-      this.isLoading = true;
 
-      const result = await axiosInstance({
-        method: 'GET',
-        url: '/articls',
-        params,
-      });
+    onUpdateArticlsOrderValues() {
+      this.updateArticlsOrderValues(this.articlTypeCurrent);
 
-      this.isLoading = false;
-
-      return result.data;
+      this.saveArticlsOrderValues(this.articlTypeCurrent);
     },
   },
 };
+
 </script>

@@ -129,7 +129,6 @@ import ArticlActions from '@/components/layout/ArticlActions.vue';
 import { highlightedSubstring, isNumber, noCaseIndexOf } from '@/services/stringsService';
 
 export default {
-  name: 'ArticlsListItem',
   components: {
     ArticlActions,
   },

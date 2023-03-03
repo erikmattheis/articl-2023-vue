@@ -1,11 +1,11 @@
 <template>
   <div class="tab-content">
-    <h2>Notes</h2>
+    <h2>Q and A</h2>
     <ul>
       <li
-        v-for="note in notes || [] "
-        :key="note.fullText">
-        <notes-list-item :passed-note="note" />
+        v-for="QAndA in QAndAs || [] "
+        :key="QAndA.fullText">
+        <q-and-a-list-item :passed-q-and-a="QAndA" />
       </li>
     </ul>
   </div>
@@ -13,12 +13,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-import NotesListItem from '@/components/layout/NotesListItem.vue';
+import QAndAListItem from '@/components/layout/QAndAListItem.vue';
 
 export default {
-  name: 'TabNotes',
-  components: { NotesListItem },
+  components: {
+    QAndAListItem,
+  },
   props: {
     items: {
       default: () => [],
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      notes: 'categoryPages/notes',
+      QAndAs: 'categoryPages/QAndAs',
     }),
   },
 };

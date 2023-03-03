@@ -61,11 +61,6 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      treeLevel: 'categoryPages/treeLevel',
-      articls: 'categoryPages/articls',
-      articlTypes: 'categoryPages/articlTypes',
-      categories: 'categoryPages/categories',
-      notes: 'categoryPages/notes',
       user: 'users/user',
       tokens: 'tokens/tokens',
     }),

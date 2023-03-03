@@ -15,8 +15,8 @@
     <a
       tabindex="0"
       href
-      @click.prevent="$router.push({ name: 'TabArticls', params: { slug, type } })"
-      @keyup.enter.prevent="$router.push({ name: 'TabArticls', params: { slug, type } })">Return to Category Page </a>
+      @click.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })"
+      @keyup.enter.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })">Return to Category Page </a>
   </article>
 </template>
 

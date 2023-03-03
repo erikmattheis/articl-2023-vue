@@ -6,6 +6,7 @@ export default {
     articlTypes: [],
     categories: [],
     notes: [],
+    QAndAs: [],
     treeLevel: undefined,
     breadcrumbs: [],
   }),
@@ -56,11 +57,13 @@ export default {
 
     articls: (state) => state.articls,
 
+    QAndAs: (state) => state.QAndAs,
+
     articlTypes: (state) => state.articlTypes,
 
     notes: (state) => state.notes,
 
-    treeLevel: (state) => state.breadcrumbs.length - 1,
+    treeLevel: (state) => state.breadcrumbs.length,
 
     breadcrumbs: (state) => state.breadcrumbs,
 

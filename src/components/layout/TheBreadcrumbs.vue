@@ -12,7 +12,7 @@
         :key="breadcrumb">
         <router-link
           v-if="index !== breadcrumbs.length - 1"
-          :to="{ name: index < 2 ? 'TabCategories':'TabArticls', params: { slug : breadcrumb.slug } }">
+          :to="{ name: index < 2 ? 'TabCategories':'ArticlsList', params: { slug : breadcrumb.slug } }">
           {{ breadcrumb.title }}
         </router-link>
         <span v-else> {{ breadcrumb.title }}</span>

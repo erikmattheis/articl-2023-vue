@@ -32,20 +32,15 @@ export default {
       type: Number,
       default: 0,
     },
-    tabName: {
-      type: String,
-      default: '',
-    },
     slug: {
       type: String,
       default: '',
     },
   },
-
-  data() {
-    return {
-      TabName: '',
-    };
+  computed: {
+    tabName() {
+      return this.treeLevel !== 3 ? 'TabCategories' : 'ArticlsList';
+    },
   },
 
   methods: {

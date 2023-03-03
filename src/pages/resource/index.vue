@@ -1,54 +1,19 @@
 <template>
   <article v-if="!isLoading">
+
+    level: {{ treeLevel }}
+
     <the-breadcrumbs />
 
     <h2>{{ title }}</h2>
 
-    <ul
-      v-if="treeLevel > 1"
-      class="nav-tabs">
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ name: 'TabArticls' }">
-        <li :class="{ active: isActive }">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"> Articls </a>
-        </li>
-      </router-link>
+    <categories-tabs v-if="treeLevel > 3" />
 
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ name: 'TabNotes' }">
-        <li :class="{ active: isActive }">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"> Notes </a>
-        </li>
-      </router-link>
-
-      <router-link
-        v-slot="{ isActive, navigate }"
-        custom
-        :to="{ name: 'TabQuestionsAnswers' }">
-        <li :class="{ active: isActive }">
-          <a
-            href
-            @click.prevent="navigate()"
-            @keyup.enter.prevent="navigate()"> Q&amp;A </a>
-        </li>
-      </router-link>
-    </ul>
-
-    <router-view :class="{ 'nav-content': treeLevel > 1 }" />
+    <router-view :class="{ 'nav-content': treeLevel > 3 }" />
 
     <directory-actions
       v-if="isLoggedInMixin"
-      :level="treeLevel" />
+      :tree-level="treeLevel" />
   </article>
 
 </template>
@@ -57,6 +22,7 @@
 import { groupBy } from 'lodash';
 import { mapGetters } from 'vuex';
 
+import CategoriesTabs from '@/components/layout/CategoriesTabs.vue';
 import DirectoryActions from '@/components/layout/DirectoryActions.vue';
 import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
 import { setTitleAndDescription } from '@/services/htmlMetaService';
@@ -65,6 +31,7 @@ import axiosInstance from '@/services/axiosService';
 export default {
   name: 'CategoryPage',
   components: {
+    CategoriesTabs,
     DirectoryActions,
     TheBreadcrumbs,
   },
@@ -112,7 +79,6 @@ export default {
         }
 
         if (results.articls) {
-          console.log('results.articls', results.articls);
           this.$store.dispatch('categoryPages/articls', results.articls);
           this.$store.dispatch('categoryPages/articlTypes', results.articlTypes);
         } else {

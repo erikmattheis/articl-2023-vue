@@ -16,7 +16,6 @@
       </template>
     </draggable-items>
 
-    <router-view />
   </div>
 </template>
 
@@ -53,7 +52,7 @@ export default {
     }),
   },
   mounted() {
-    this.TabName = this.treeLevel > 0 ? 'TabArticls' : 'TabCategories';
+    this.TabName = this.treeLevel > 3 ? 'ArticlsList' : 'TabCategories';
   },
   methods: {
     updateOrderValues() {

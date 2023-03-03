@@ -15,11 +15,10 @@ import notFound from '@/pages/NotFound.vue';
 import resetPasswordPage from '@/pages/change-password.vue';
 import usersPage from '@/pages/users/index.vue';
 import verifyEmailPage from '@/pages/verify-email.vue';
-import TabCategories from '@/components/layout/TabCategories.vue';
-import TabNotes from '@/components/layout/TabNotes.vue';
-import TabArticls from '@/components/layout/TabArticls.vue';
-import TabBlogs from '@/components/layout/TabBlogs.vue';
-import TabQuestionsAnswers from '@/components/layout/TabQuestionsAnswers.vue';
+import TabCategories from '@/components/layout/CategoriesList.vue';
+import TabNotes from '@/components/layout/NotesList.vue';
+import ArticlsList from '@/components/layout/ArticlsList.vue';
+import TabQuestionsAnswers from '@/components/layout/QAndAList.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -68,19 +67,14 @@ const router = createRouter({
         }],
       },
       {
-        name: 'TabBlogs',
-        path: 'blogs',
-        component: TabBlogs,
-      },
-      {
         name: 'TabQuestionsAnswers',
         path: 'qa',
         component: TabQuestionsAnswers,
       },
       {
-        name: 'TabArticls',
+        name: 'ArticlsList',
         path: 'articls/:type?',
-        component: TabArticls,
+        component: ArticlsList,
       }],
 
     },
