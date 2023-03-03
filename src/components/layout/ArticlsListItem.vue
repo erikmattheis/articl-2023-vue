@@ -22,7 +22,7 @@
         <p class="authors-list">
           {{ authorsList }}
         </p>
-        <details>
+        <details v-if="!articl?.wpPost?.ID">
           <summary>
             Affiliations
           </summary>

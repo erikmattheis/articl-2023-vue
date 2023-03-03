@@ -1,8 +1,6 @@
 <template>
   <article v-if="!isLoading">
 
-    level: {{ treeLevel }}
-
     <the-breadcrumbs />
 
     <h2>{{ title }}</h2>
