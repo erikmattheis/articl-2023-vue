@@ -28,9 +28,18 @@
           </summary>
           <ul>
             <li
-              v-for="author in articl.authors"
-              :key="author.nameLast"
+              v-for="(author, index) in articl.authors"
+              :key="index"
               class="grid">
+              <template v-if="author.nameFirst?.length || author.nameLast?.length">
+                <span>{{ author.nameFirst }} {{ author.nameLast }}</span>
+                <ul>
+                  <li
+                    v-for="affilliation in author.affilliations"
+                    :key="affilliation">
+                    {{ affilliation }}
+                  </li>
+                </ul>
               {{ author.nameFirst }} {{ author.nameLast }}
 
               <ul v-if="author.affilliations?.length">
@@ -40,6 +49,10 @@
                   {{ affilliation }}
                 </li>
               </ul>
+              </template>
+              <template v-else-if="author.length">
+                <span>{{ author }}</span>
+              </template>
             </li>
           </ul>
         </details>
@@ -161,7 +174,7 @@ export default {
     },
     authorsList() {
       if (this.articl?.authors?.map) {
-        const list = this.articl.authors.map((author) => `${author.nameFirst} ${author.nameLast}`);
+        const list = this.articl.authors.map((author) => (author.nameFirst ? `${author.nameFirst} ${author.nameLast}` : author));
         return list.join(', ');
       }
       return [];
