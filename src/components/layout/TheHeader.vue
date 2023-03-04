@@ -178,6 +178,8 @@ export default {
 
     if (VueCookies.isKey('font-size')) {
       this.setTextSize(VueCookies.get('font-size'));
+    } else {
+      this.setTextSize(1);
     }
   },
   methods: {
@@ -187,7 +189,7 @@ export default {
 
         document.documentElement.setAttribute('data-theme', this.theme);
 
-        this.$cookies.set('data-theme', this.theme);
+        VueCookies.set('data-theme', this.theme);
 
         await axiosInstance({
           method: 'PATCH',
@@ -205,12 +207,22 @@ export default {
       await this.$store.dispatch('users/logout');
     },
     setTextSize(size) {
+      let newSize;
+      if (size < 0.6) {
+        newSize = 0.8 * size;
+      } else if (size > 1.75) {
+        newSize = 1.2 * size;
+      } else if (size === 1) {
+        newSize = 20;
+      } else {
+        const currentSize = getComputedStyle(document.documentElement).getPropertyValue('--font-size');
+        newSize = parseFloat(currentSize) * size;
+      }
       document.documentElement.style.setProperty(
         '--font-size',
-        `${18 * size}px`,
+        `${newSize}px`,
       );
-
-      VueCookies.set('font-size', size);
+      VueCookies.set('font-size', newSize);
     },
     clearLocalData() {
       this.$store.dispatch('tokens/clearTokens', false);

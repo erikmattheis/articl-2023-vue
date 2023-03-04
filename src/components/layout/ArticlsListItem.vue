@@ -231,7 +231,7 @@ details {
 summary,
 details,
 .articl-details {
-  font-size: 0.875rem;
+  font-size: 0.07rem;
 }
 
 a {

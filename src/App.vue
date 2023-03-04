@@ -43,6 +43,7 @@ import ModalSuccess from '@/components/ui/ModalSuccess.vue';
 export default {
   name: 'App',
   components: {
+
     TheHeader,
     TheFooter,
     ModalError,
@@ -69,8 +70,11 @@ export default {
 @import "~/node_modules/@picocss/pico/scss/pico.scss";
 @import "./assets/maxwidth.scss";
 @import "./assets/styles-override.scss";
-
 @import "//fonts.googleapis.com/css2?family=Open+Sans&display=swap";
+
+.smaller {
+  font-size: 0.7rem;
+}
 
 .inline-block {
   display: inline
