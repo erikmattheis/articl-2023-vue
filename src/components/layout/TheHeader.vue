@@ -82,8 +82,8 @@
                       <a
                         class="less-margin"
                         href="#"
-                        @click.prevent="setTextSize(0.8)"
-                        @keyup.enter="setTextSize(0.8)">
+                        @click.prevent="changeTextSize(0.85)"
+                        @keyup.enter="changeTextSize(0.85)">
                         <vue-feather
                           size="0.6rem"
                           type="type"
@@ -95,8 +95,8 @@
                       <a
                         class="less-margin"
                         href="#"
-                        @click.prevent="setTextSize(1)"
-                        @keyup.enter="setTextSize(1)">
+                        @click.prevent="changeTextSize(1)"
+                        @keyup.enter="changeTextSize(1)">
                         <vue-feather
                           size="0.8rem"
                           type="type"
@@ -108,8 +108,8 @@
                       <a
                         class="less-margin"
                         href="#"
-                        @click.prevent="setTextSize(1.2)"
-                        @keyup.enter="setTextSize(1.2)">
+                        @click.prevent="changeTextSize(1.15)"
+                        @keyup.enter="changeTextSize(1.15)">
                         <vue-feather
                           size="1rem"
                           type="type"
@@ -177,9 +177,9 @@ export default {
     document.documentElement.setAttribute('data-theme', this.theme);
 
     if (VueCookies.isKey('font-size')) {
-      this.setTextSize(VueCookies.get('font-size'));
+      this.changeTextSize(VueCookies.get('font-size'));
     } else {
-      this.setTextSize(1);
+      this.changeTextSize(1);
     }
   },
   methods: {
@@ -206,23 +206,29 @@ export default {
     async logout() {
       await this.$store.dispatch('users/logout');
     },
-    setTextSize(size) {
+    getDefaultProperty(tag, prop) {
+      const elem = document.createElement(tag);
+      document.body.appendChild(elem);
+      const defaultStyles = { ...window.getComputedStyle(elem) };
+      document.body.removeChild(elem);
+      return defaultStyles[prop];
+    },
+    changeTextSize(factor) {
       let newSize;
-      if (size < 0.6) {
-        newSize = 0.8 * size;
-      } else if (size > 1.75) {
-        newSize = 1.2 * size;
-      } else if (size === 1) {
-        newSize = 20;
+      if (factor === 1) {
+        newSize = this.getDefaultProperty('body', '--font-size');
+        newSize = parseFloat(newSize) || 16;
       } else {
-        const currentSize = getComputedStyle(document.documentElement).getPropertyValue('--font-size');
-        newSize = parseFloat(currentSize) * size;
+        let currentSize = getComputedStyle(document.documentElement).getPropertyValue('--font-size');
+        currentSize = currentSize || 16;
+        newSize = parseFloat(currentSize) * factor;
       }
+
       document.documentElement.style.setProperty(
         '--font-size',
         `${newSize}px`,
       );
-      VueCookies.set('font-size', newSize);
+      VueCookies.set('font-size', factor);
     },
     clearLocalData() {
       this.$store.dispatch('tokens/clearTokens', false);
