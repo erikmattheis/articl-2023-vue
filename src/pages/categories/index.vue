@@ -18,15 +18,14 @@
         <button
           type="button"
           :aria-busy="aiButtonDisabled"
-          @click.prevent="getAIDescription">
+          @click.prevent="getAISummary">
           <span v-if="!aiButtonDisabled">Get AI Description</span>
         </button>
-
-        <label for="description">AI Description
+        <label for="AISummary">AI Summary
           <textarea
-            id="aiDescription"
-            v-model="aiDescription"
-            name="aiDescription"
+            id="AISummary"
+            v-model="AISummary"
+            name="AISummary"
             rows="10"
             cols="70" /></label>
         <label for="description">Description
@@ -89,7 +88,7 @@ export default {
     categories: [],
     chrs: 0,
     description: null,
-    aiDescription: null,
+    AISummary: null,
     errorMessage: '',
     formAction: '',
     isLoading: true,
@@ -197,19 +196,19 @@ export default {
 
       return passed;
     },
-    async getAIDescription() {
+    async getAISummary() {
       try {
         this.buttonDisabled = true;
 
         const result = await axiosInstance({
-          method: 'POST',
-          url: '/categories/describe',
-          data: {
+          method: 'GET',
+          url: '/categories/ai-summary',
+          params: {
             text: this.title,
           },
         });
 
-        this.aiDescription = result.data.description;
+        this.AISummary = result.data;
 
         this.buttonDisabled = false;
       } catch (error) {
@@ -229,7 +228,7 @@ export default {
             title: this.title,
             slug: this.slug,
             description: this.description,
-            aiDescription: this.aiDescription,
+            AISummary: this.AISummary,
             parentSlug: this.parentSlug,
           };
 
