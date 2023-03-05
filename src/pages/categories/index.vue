@@ -209,10 +209,10 @@ export default {
         });
 
         this.AISummary = result.data;
-
-        this.buttonDisabled = false;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
+      } finally {
+        this.buttonDisabled = false;
       }
     },
     async submitForm(id) {
