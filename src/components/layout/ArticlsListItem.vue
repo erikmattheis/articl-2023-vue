@@ -173,9 +173,19 @@ export default {
       }
     },
     authorsList() {
-      if (this.articl?.authors?.map) {
-        const list = this.articl.authors.map((author) => (author.nameFirst ? `${author.nameFirst} ${author.nameLast}` : author));
+      if (this.articl?.authors?.map && this.articl?.authors?.length) {
+        let list;
+        if (typeof this.articl.authors[0] === 'string') {
+          list = this.articl.authors;
+        } else {
+          list = this.articl.authors.map((author) => (author.nameFirst ? `${author.nameFirst} ${author.nameLast}` : author));
+        }
+
         return list.join(', ');
+      }
+      if (this.articl?.authorsOrig?.length) {
+        console.log('is authorsOrig');
+        return this.articl.authorsOrig;
       }
       return [];
     },
@@ -231,7 +241,7 @@ details {
 summary,
 details,
 .articl-details {
-  font-size: 0.07rem;
+  font-size: 0.7rem;
 }
 
 a {
