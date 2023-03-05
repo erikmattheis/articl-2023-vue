@@ -15,6 +15,7 @@
             v-model="title"
             type="text"
             name="title"></label>
+            <!--
         <button
           type="button"
           :aria-busy="aiButtonDisabled"
@@ -28,6 +29,7 @@
             name="AISummary"
             rows="10"
             cols="70" /></label>
+            -->
         <label for="description">Description
           <textarea
             id="description"
