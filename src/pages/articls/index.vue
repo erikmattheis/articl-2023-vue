@@ -203,7 +203,6 @@ export default {
     return {
       id: '',
       abstract: '',
-      affiliations: '',
       doi: '',
       url: '',
       authorsOrig: '',
@@ -316,7 +315,6 @@ export default {
             url,
             data: {
               abstract: this.abstract,
-              affiliation: this.affiliation,
               url: this.url,
               type: this.type,
               authors: this.authors,
@@ -330,7 +328,6 @@ export default {
 
           this.success = true;
           this.abstract = result.data.abstract;
-          this.affiliations = result.data.affiliations;
           this.doi = result.data.doi;
           this.url = result.data.url;
           this.authorsOrig = result.data.authorsOrig;

@@ -25,28 +25,32 @@ const getDB = (url) => {
 };
 //  Authors as found in Pubmed Data
 const extractAuthorsPMC = (element) => {
-  if (!element.querySelector('surname').textContent) {
+  if (!element.querySelector('surname')?.textContent) {
     return '';
   }
 
-  let authors = element.querySelector('surname') ? `${element.querySelector('surname').textContent} ` : '';
+  let authors = element.querySelector('surname') ? `${element.querySelector('surname')?.textContent} ` : '';
 
-  authors += element.querySelector('given-names') ? `${element.querySelector('given-names').textContent} ` : '';
+  authors += element.querySelector('given-names') ? `${element.querySelector('given-names')?.textContent} ` : '';
 
-  authors += element.querySelector('degrees') ? `${element.querySelector('degrees').textContent}<br><br>` : '';
+  authors += element.querySelector('degrees') ? `${element.querySelector('degrees')?.textContent}<br><br>` : '';
 
   return authors;
 };
 const extractAuthorsPubMed = (element) => {
-  if (!element.querySelector('LastName').textContent) {
+  if (!element.querySelector('LastName')?.textContent) {
     return '';
   }
 
   let authors = '';
 
-  authors += element.querySelector('LastName') ? element.querySelector('LastName').textContent : '';
+  const hasLastName = element.querySelector('LastName')?.textContent;
 
-  authors += element.querySelector('ForeName') ? element.querySelector('ForeName').textContent : '<br><br>';
+  authors += hasLastName ? element.querySelector('LastName').textContent : '';
+
+  const hasFirstName = element.querySelector('FirstName')?.textContent;
+
+  authors += hasFirstName ? element.querySelector('FirstName').textContent : '<br><br>';
 
   return authors;
 };
@@ -62,7 +66,7 @@ const extractAuthorsObjectsPubMed = (element) => {
   return {
     nameFirst: element.querySelector('ForeName') ? element.querySelector('ForeName')?.textContent : '',
     nameLast: element.querySelector('LastName')?.textContent,
-    affilliations: affl.map((ele) => ele.textContent),
+    affilliations: affl.map((ele) => ele?.textContent),
   };
 };
 // Handle the Async fetch of Pubmed Data
@@ -84,7 +88,7 @@ const api = async (surl) => {
 
   switch (database) {
     case 'pmc': {
-      result.title = responseDocument.querySelectorAll('article-title')[0].textContent;
+      result.title = responseDocument.querySelectorAll('article-title')[0]?.textContent;
 
       const authorsPMC = responseDocument.querySelectorAll('contrib');
 
@@ -95,28 +99,28 @@ const api = async (surl) => {
       const temporary = responseDocument.querySelectorAll('aff');
 
       temporary.forEach((element) => {
-        result.affiliation += `${element.textContent}<br><br>`;
+        result.affiliation += `${element?.textContent}<br><br>`;
       });
 
-      result.journal = responseDocument.querySelectorAll('journal-title')[0].textContent;
+      result.journal = responseDocument.querySelectorAll('journal-title')[0]?.textContent;
 
-      result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0].textContent;
+      result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0]?.textContent;
 
-      result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0].textContent;
+      result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0]?.textContent;
 
-      result.abstract = responseDocument.querySelectorAll('abstract')[0].textContent;
+      result.abstract = responseDocument.querySelectorAll('abstract')[0]?.textContent;
 
       break;
     }
 
     case 'pubmed': {
       try {
-        result.title = responseDocument.querySelectorAll('ArticleTitle')[0].textContent;
+        result.title = responseDocument.querySelectorAll('ArticleTitle')[0]?.textContent;
       } catch (error) {
         throw new Error(error);
       }
 
-      result.doi = responseDocument.querySelectorAll('[IdType=doi]')[0].textContent;
+      result.doi = responseDocument.querySelectorAll('[IdType=doi]')[0]?.textContent;
 
       const authorsPubMed = responseDocument.querySelectorAll('Author');
 
@@ -125,15 +129,15 @@ const api = async (surl) => {
         result.authorsOrig += extractAuthorsPubMed(element);
       });
 
-      result.affiliation = responseDocument.querySelectorAll('Affiliation')[0].textContent;
+      result.affiliation = responseDocument.querySelectorAll('Affiliation')[0]?.textContent;
 
-      result.journal = responseDocument.querySelectorAll('Title')[0].textContent;
+      result.journal = responseDocument.querySelectorAll('Title')[0]?.textContent;
 
-      result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0].textContent;
+      result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0]?.textContent;
 
-      result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0].textContent;
+      result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0]?.textContent;
 
-      result.abstract = responseDocument.querySelectorAll('Abstract')[0].textContent;
+      result.abstract = responseDocument.querySelectorAll('Abstract')[0]?.textContent;
 
       break;
     }
@@ -159,21 +163,21 @@ async function scrape(surl) {
   switch (database) {
     case 'pmc':
       try {
-        result.title = responseDocument.querySelectorAll('h1[class="content-title"]')[0].textContent;
+        result.title = responseDocument.querySelectorAll('h1[class="content-title"]')[0]?.textContent;
 
-        result.authors = responseDocument.querySelectorAll('[class="contrib-group fm-author"]') ? responseDocument.querySelectorAll('[class="contrib-group fm-author"]')[0].textContent : '';
+        result.authors = responseDocument.querySelectorAll('[class="contrib-group fm-author"]') ? responseDocument.querySelectorAll('[class="contrib-group fm-author"]')[0]?.textContent : '';
 
         const temporary = responseDocument.querySelectorAll('[class="fm-affl"]');
 
         temporary.forEach((element) => {
-          result.affiliation += `${element.textContent}<br><br>`;
+          result.affiliation += `${element?.textContent}<br><br>`;
         });
 
-        result.journal = responseDocument.querySelectorAll('li[class="archive"]')[0].textContent;
+        result.journal = responseDocument.querySelectorAll('li[class="archive"]')[0]?.textContent;
 
-        result.year = responseDocument.querySelectorAll('li[class="issue-page"]')[0].textContent;
+        result.year = responseDocument.querySelectorAll('li[class="issue-page"]')[0]?.textContent;
 
-        result.abstract = responseDocument.querySelectorAll('[class="tsec sec"]')[0].textContent;
+        result.abstract = responseDocument.querySelectorAll('[class="tsec sec"]')[0]?.textContent;
       } catch (error) {
         throw new Error(error);
       }
@@ -182,23 +186,23 @@ async function scrape(surl) {
 
     case 'pubmed':
       try {
-        result.title = responseDocument.querySelectorAll('[class="heading-title"]')[0].textContent;
+        result.title = responseDocument.querySelectorAll('[class="heading-title"]')[0]?.textContent;
 
-        result.authors = responseDocument.querySelectorAll('[class="authors-list"]') ? responseDocument.querySelectorAll('[class="authors-list"]')[0].textContent : '';
+        result.authors = responseDocument.querySelectorAll('[class="authors-list"]') ? responseDocument.querySelectorAll('[class="authors-list"]')[0]?.textContent : '';
 
-        result.affiliation = responseDocument.querySelectorAll('[class="affiliations"] ul')[0].textContent;
+        result.affiliation = responseDocument.querySelectorAll('[class="affiliations"] ul')[0]?.textContent;
 
-        result.journal = responseDocument.querySelectorAll('#full-view-journal-trigger')[0].textContent;
+        result.journal = responseDocument.querySelectorAll('#full-view-journal-trigger')[0]?.textContent;
 
-        const yearTry = responseDocument.querySelectorAll('span[class="cit"]')[0].textContent;
+        const yearTry = responseDocument.querySelectorAll('span[class="cit"]')[0]?.textContent;
 
         [result.year] = yearTry.split(' ');
 
-        const monthTry = responseDocument.querySelectorAll('span[class="cit"]')[0].textContent;
+        const monthTry = responseDocument.querySelectorAll('span[class="cit"]')[0]?.textContent;
 
         [, result.month] = monthTry.split(' ');
 
-        result.abstract = responseDocument.querySelectorAll('#enc-abstract')[0].textContent;
+        result.abstract = responseDocument.querySelectorAll('#enc-abstract')[0]?.textContent;
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       }

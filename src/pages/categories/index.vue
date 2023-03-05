@@ -15,6 +15,27 @@
             v-model="title"
             type="text"
             name="title"></label>
+        <button
+          type="button"
+          :aria-busy="aiButtonDisabled"
+          @click.prevent="getAIDescription">
+          <span v-if="!aiButtonDisabled">Get AI Description</span>
+        </button>
+
+        <label for="description">AI Description
+          <textarea
+            id="aiDescription"
+            v-model="aiDescription"
+            name="aiDescription"
+            rows="10"
+            cols="70" /></label>
+        <label for="description">Description
+          <textarea
+            id="description"
+            v-model="description"
+            name="description"
+            rows="10"
+            cols="70" /></label>
         <label for="slug">Slug
           <input
             id="slug"
@@ -28,14 +49,6 @@
             v-model="parentSlug"
             type="text"
             name="parentSlug"></label>
-
-        <label for="description">Description
-          <textarea
-            id="description"
-            v-model="description"
-            name="description"
-            rows="10"
-            cols="70" /></label>
         <button
           type="submit"
           :aria-busy="buttonDisabled"
@@ -76,6 +89,7 @@ export default {
     categories: [],
     chrs: 0,
     description: null,
+    aiDescription: null,
     errorMessage: '',
     formAction: '',
     isLoading: true,
@@ -86,6 +100,9 @@ export default {
     title: null,
   }),
   computed: {
+    aiButtonDisabled() {
+      return !this.title || this.buttonDisabled;
+    },
     slug() {
       if (!this.title) {
         return '';
@@ -180,6 +197,25 @@ export default {
 
       return passed;
     },
+    async getAIDescription() {
+      try {
+        this.buttonDisabled = true;
+
+        const result = await axiosInstance({
+          method: 'POST',
+          url: '/categories/describe',
+          data: {
+            text: this.title,
+          },
+        });
+
+        this.aiDescription = result.data.description;
+
+        this.buttonDisabled = false;
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      }
+    },
     async submitForm(id) {
       try {
         this.resetFormErrors();
@@ -193,6 +229,7 @@ export default {
             title: this.title,
             slug: this.slug,
             description: this.description,
+            aiDescription: this.aiDescription,
             parentSlug: this.parentSlug,
           };
 
