@@ -207,6 +207,7 @@ export default {
   z-index: 0;
   border: 1px solid $grey-100;
   padding: calc(var(--spacing) * 0.25);
+  padding-top: var(--spacing);
 }
 
 @media (max-width: map-get($breakpoints, "sm")) {

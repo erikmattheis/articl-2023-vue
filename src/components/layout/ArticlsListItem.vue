@@ -11,6 +11,7 @@
         </a>
 
         <articl-actions
+          v-if="isLoggedInMixin"
           :id="articl.id"
           class="box"
           :title="articl.title"
@@ -184,7 +185,6 @@ export default {
         return list.join(', ');
       }
       if (this.articl?.authorsOrig?.length) {
-        console.log('is authorsOrig');
         return this.articl.authorsOrig;
       }
       return [];
