@@ -20,7 +20,7 @@
       </li>
 
       <li class="articl-details">
-        <p class="authors-list">
+        <p class="authors-list" v-if="authorsList?.length">
           {{ authorsList }}
         </p>
         <details v-if="!articl?.wpPost?.ID">
