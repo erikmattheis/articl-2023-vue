@@ -2,10 +2,6 @@
   <article>
     <h1>Forgot password</h1>
     <form>
-      <input
-        type="hidden"
-        name="username"
-        autocomplete="username">
       <label for="email">Email
         <input
           id="email"
