@@ -79,42 +79,16 @@ export default {
       return toFormattedUserDateTime(this.note.createdAt);
     },
   },
-
   beforeMount() {
     if (this.passedNote.id) {
       this.note = this.passedNote;
       this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
     }
   },
-  /*
-  beforeRouteEnter(to, from, next) {
-    console.log('beforeRouteEnter');
-    next((vm) => {
-      const module = vm;
-      module.loaded = true; // set the "loaded" flag on the component instance
-    });
-  },
-  beforeRouteLeave(to, from, next) {
-
-    if (this.loaded && to.params.id === this.note.id) {
-      this.noteCreated = false;
-      this.buttonDisabled = false;
-
-      this.fullTextOriginal = this.fullText;
-      this.note.fullText = this.fullText;
-      this.isLoading = false;
-      this.formAction = false;
-    }
-    next();
-  },
-  */
   methods: {
     noteUpdated(note) {
-      console.log('passing uop');
-      this.noteWasUpdated = true;
       console.log('passing uop 2');
       this.$emit('note-updated', note);
-      console.log('passing uop 3');
     },
   },
 };

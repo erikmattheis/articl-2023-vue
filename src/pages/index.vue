@@ -18,7 +18,6 @@ import { mapGetters } from 'vuex';
 import DirectoryActions from '@/components/layout/DirectoryActions.vue';
 import CategoriesList from '@/components/layout/CategoriesList.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -84,12 +83,14 @@ export default {
 
         this.title = results.category[0]?.title;
 
+        /*
         const description = results.category[0]?.description;
 
-        setTitleAndDescription({
+        setTitleAndDescriptionMixin({
           title: this.title,
           description,
         });
+        */
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       } finally {
@@ -109,7 +110,6 @@ export default {
         notes: result.data.notes,
       };
     },
-
   },
 };
 </script>

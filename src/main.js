@@ -29,6 +29,7 @@ import router from './router';
 import store from './store/index';
 
 import isLoggedInMixin from './mixins/isLoggedInMixin';
+import setTitleAndDescriptionMixin from './mixins/setTitleAndDescriptionMixin';
 import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
@@ -44,6 +45,7 @@ window.addEventListener('unhandledrejection', (event) => {
 });
 
 app.mixin(isLoggedInMixin);
+app.mixin(setTitleAndDescriptionMixin);
 
 let secure = true;
 

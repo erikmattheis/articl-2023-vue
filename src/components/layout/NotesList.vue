@@ -43,7 +43,6 @@ export default {
   methods: {
     noteUpdated(note) {
       this.notes.find(({ id }) => id === note.id).fullText = note.fullText;
-      this.noteWasUpdated = true;
     },
   },
 };

@@ -120,11 +120,15 @@ export default {
           });
 
           this.noteCreated = true;
-          this.$emit('note-updated', result.data);
-          if (id) {
+
+          if (this.note?.id) {
+            console.log('note updated');
+            this.$store.dispatch('categoryPages/setNote', result.data);
             this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
           } else {
-            this.$router.push({ name: 'TabNotes', params: { slug: this.$route.params.slug } });
+            console.log('note created');
+            this.$store.dispatch('categoryPages/addNote', result.data);
+            this.$router.push({ name: 'TabNotes' });
           }
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);

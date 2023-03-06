@@ -42,6 +42,22 @@ export default {
     notes: (context, payload) => {
       context.commit('SET_NOTES', payload);
     },
+    setNote(context, payload) {
+      const { notes } = context.state;
+
+      const newNotes = notes.map((note) => {
+        if (note.id === payload.id) {
+          return payload;
+        }
+        return note;
+      });
+      context.commit('SET_NOTES', newNotes);
+    },
+    addNote: (context, payload) => {
+      const { notes } = context.state;
+      const newNotes = notes.unshift(payload);
+      context.commit('SET_NOTES', newNotes);
+    },
     breadcrumbs: (context, payload) => {
       context.commit('SET_BREADCRUMBS', payload);
     },

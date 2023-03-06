@@ -50,22 +50,27 @@ const router = createRouter({
         name: 'TabNotes',
         path: 'notes',
         component: TabNotes,
-        children: [{
-          name: 'editNote',
-          path: 'edit/:id',
-          component: editNote,
-        },
-        {
-          name: 'editNoteSuccess',
-          path: 'edited/:id',
-          component: editNote,
-        },
-        {
-          name: 'deleteNote',
-          path: 'delete/:id',
-          component: deleteNote,
-        }],
+        children: [
+        /*
+
+        */
+          {
+            name: 'editNote',
+            path: 'edit/:id',
+            component: editNote,
+          },
+          {
+            name: 'editNoteSuccess',
+            path: 'edited/:id',
+            component: editNote,
+          },
+          {
+            name: 'deleteNote',
+            path: 'delete/:id',
+            component: deleteNote,
+          }],
       },
+
       {
         name: 'TabQuestionsAnswers',
         path: 'qa',
