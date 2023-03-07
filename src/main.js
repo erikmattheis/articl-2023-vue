@@ -38,11 +38,11 @@ const app = createApp(App);
 app.config.errorHandler = (error) => {
   store.dispatch('errors/setError', error);
 };
-*/
 
 window.addEventListener('unhandledrejection', (event) => {
   store.dispatch('errors/setError', event.reason);
 });
+*/
 
 app.mixin(isLoggedInMixin);
 app.mixin(setTitleAndDescriptionMixin);
@@ -70,7 +70,7 @@ axiosInstance.interceptors.request.use(
 const HTTP_UNAUTHORIZED = 401;
 const HTTP_FORBIDDEN = 403;
 
-// Register HTTP interceptor
+// Register unauthorized HTTP error interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -92,6 +92,7 @@ axiosInstance.interceptors.response.use(
   },
 );
 
+// Register forbidden HTTP error interceptor
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
