@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="errorTitle"
+    v-if="errorMessage || errorStack"
     class="modal-container"
     @click.prevent="close()"
     @keyup.enter="close()">
@@ -20,7 +20,7 @@
             aria-label="Close"
             class="close"
             @click.prevent="close()" />
-          <h2>{{ errorTitle }}</h2>
+          <h2>Error</h2>
         </header>
         <section>
           <div
@@ -32,17 +32,11 @@
           </div>
           <div class="info">
             <ul>
-              <li v-if="errorFileName">
-                Error in file: {{ errorFileName }}
-              </li>
-              <li v-if="errorLineNumber">
-                On line: {{ errorLineNumber }}
-              </li>
               <li v-if="errorMessage">
-                Message: {{ errorMessage }}
+                {{ errorMessage }}
               </li>
               <li v-if="errorStack">
-                <small>Stack: {{ errorStack }}</small>
+                <small>{{ errorStack }}</small>
               </li>
             </ul>
           </div>
@@ -69,11 +63,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      errorTitle: 'errors/errorTitle',
       errorMessage: 'errors/errorMessage',
-      errorDetail: 'errors/errorDetail',
-      errorLineNumber: 'errors/errorLineNumber',
-      errorFileName: 'errors/errorFileName',
       errorStack: 'errors/errorStack',
     }),
   },

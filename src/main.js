@@ -67,39 +67,41 @@ axiosInstance.interceptors.request.use(
   (error) => error,
 );
 
-axiosInstance.interceptors.response.use(async (response) => response, async (error) => {
-  const { status } = error;
-  if (status === 403) {
-    // check if refresh token is still valid
-    const { refreshTokenExpires } = store.state.tokens;
-    if (refreshTokenExpires > Date.now()) {
+const HTTP_UNAUTHORIZED = 401;
+const HTTP_FORBIDDEN = 403;
+
+// Register HTTP interceptor
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const { status } = error;
+    if (status === HTTP_UNAUTHORIZED) {
       try {
+        // Attempt to refresh the access token
         await store.dispatch('tokens/refreshSession');
+        // Retry the original request
+        return axiosInstance(error.config);
       } catch (err) {
-        // session renewal failed, redirect to login page
+        // Logout user and redirect to login page
         store.dispatch('users/logout');
         router.push({ name: 'login' });
-        return Promise.reject(err);
+        return Promise.reject(error);
       }
     }
-    // refresh token is expired, redirect to login page
-    store.dispatch('users/logout');
-    router.push({ name: 'login' });
-  } else if (status === 401) {
-    // check if refresh token is still valid
-    const { refreshTokenExpires } = store.state.tokens;
-    if (refreshTokenExpires > Date.now()) {
-      try {
-        await store.dispatch('tokens/refreshSession');
-      } catch (err) {
-        // session renewal failed, redirect to login page
-        store.dispatch('users/logout');
-        router.push({ name: 'login' });
-      }
+    return Promise.reject(error);
+  },
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const { status } = error;
+    if (status === HTTP_FORBIDDEN) {
+      router.push({ name: 'Forbidden' });
     }
-  }
-  return Promise.reject(error);
-});
+    return Promise.reject(error);
+  },
+);
 
 app.use(router);
 
