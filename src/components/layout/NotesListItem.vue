@@ -3,8 +3,9 @@
     <div class="container">
       <div>
         <p v-if="$route.name==='editNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully updated.</ins></p>
-        <p>{{ note.fullText }}</p>
-        <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }} {{ noteDate }}</small>
+        <p v-html="note.fullText"></p>
+        <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}<br>
+        {{ note.createdAt }}</small>
       </div>
       <div v-if="noteIsUsers && isLoggedInMixin" class="box">
         <div class="row-admin-box">
@@ -87,7 +88,6 @@ export default {
   },
   methods: {
     noteUpdated(note) {
-      console.log('passing uop 2');
       this.$emit('note-updated', note);
     },
   },
