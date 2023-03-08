@@ -127,10 +127,10 @@ export default {
       breadcrumbs: 'categoryPages/breadcrumbs',
     }),
     category() {
-      return this.breadcrumbs[this.breadcrumbs.length - 1].slug;
+      return this.breadcrumbs[this.breadcrumbs.length - 1].title;
     },
     parentCategory() {
-      return this.breadcrumbs[this.breadcrumbs.length - 2].slug;
+      return this.breadcrumbs[this.breadcrumbs.length - 2].title;
     },
   },
   mounted() {
