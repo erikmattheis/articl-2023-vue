@@ -8,11 +8,10 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   mounted: () => {
-    setTitleAndDescription({
+    this.setTitleAndDescriptionMixin({
       title: 'Not Found',
     });
   },

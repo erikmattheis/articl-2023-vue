@@ -205,7 +205,6 @@ Please include rewriting these instructions if they can be clearer or more disti
 
 import selectCountries from '@/components/ui/SelectCountries.vue';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { scoreChars, validateEmail } from '@/services/userService';
 import axiosInstance from '@/services/axiosService';
 
@@ -326,7 +325,7 @@ export default {
       this.isLoading = false;
     }
 
-    setTitleAndDescription({
+    this.setTitleAndDescriptionMixin({
       title: 'Articl.net User',
     });
   },

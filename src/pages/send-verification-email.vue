@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -16,7 +15,7 @@ export default {
     try {
       this.sendEmail();
 
-      setTitleAndDescription({
+      this.setTitleAndDescriptionMixin({
         title: 'Verification sent',
       });
     } catch (error) {

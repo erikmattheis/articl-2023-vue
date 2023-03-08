@@ -93,7 +93,7 @@ import { mapGetters } from 'vuex';
 import InputTypeahead from '@/components/ui/InputTypeahead.vue';
 
 export default {
-  name: 'TheArticlsFormSearch',
+  name: 'TheArticlsSearchForm',
   components: {
     InputTypeahead,
   },
@@ -179,6 +179,7 @@ export default {
     },
   },
   created() {
+    this.setTitleAndDescriptionMixin({ title: 'Search for articles' });
     this.$store.dispatch(
       'articlsParams/types',
       this.$store.state.articlsParams.allTypes,

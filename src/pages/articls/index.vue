@@ -182,7 +182,6 @@
 import inputTypeahead from '@/components/ui/InputTypeahead.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import { fetchData } from '@/services/fetchingService';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -235,8 +234,8 @@ export default {
       this.getCurrentArticl(this.id);
     }
 
-    setTitleAndDescription({
-      title: `${this.formAction}Articl`,
+    setTitleAndDescriptionMixin({
+      title: `${this.formAction} Articl`,
     });
   },
   methods: {
@@ -339,7 +338,9 @@ export default {
 
           this.year = '';
 
-          // Object.assign(this, result.data);
+          setTitleAndDescriptionMixin({
+            title: `${this.formAction} Articl`,
+          });
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
         }

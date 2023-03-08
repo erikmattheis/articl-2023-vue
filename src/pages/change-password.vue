@@ -1,8 +1,9 @@
 <template>
   <article>
-    <h1>Reset Password</h1>
+    <h1>Change Password</h1>
     <form>
       <!--
+        TODOO
       <label for="password">Current password
         <div class="toggle-password">
           <input
@@ -16,12 +17,6 @@
         </div>
       </label>
       -->
-      <label for="username">Username
-        <input
-          id="username"
-          v-model="username"
-          autocomplete="username">
-      </label>
       <label for="newPassword">New password
         <small
           v-if="passwordComplexity < 3"
@@ -74,7 +69,6 @@
 
 <script>
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import { scoreChars, validateEmail } from '@/services/userService';
 import axiosInstance from '@/services/axiosService';
 
@@ -105,8 +99,8 @@ export default {
     },
   },
   mounted: () => {
-    setTitleAndDescription({
-      title: 'Reset Password',
+    this.setTitleAndDescriptionMixin({
+      title: 'Change Password',
     });
   },
   methods: {

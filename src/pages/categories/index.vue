@@ -144,6 +144,8 @@ export default {
     } else {
       this.isLoading = false;
     }
+
+    this.setTitleAndDescriptionMixin({ title: this.formAction });
   },
   params: {
     id: String,
@@ -241,6 +243,10 @@ export default {
             parentSlug: this.parentSlug,
           };
 
+          const titleVerb = id ? 'Edited' : 'Created';
+
+          this.setTitleAndDescriptionMixin({ title: `Category ${titleVerb}` });
+
           if (id) {
             data.oldSlug = this.oldSlug;
           }
@@ -253,12 +259,11 @@ export default {
 
           this.success = true;
 
-          this.$store.dispatch('modals/setSuccessTitle', 'Category ppdated.');
+          this.$store.dispatch('modals/setSuccessTitle', `Category ${titleVerb}`);
 
-          const actionDescription = this.id ? 'updated' : 'created';
           this.$store.dispatch(
             'modals/setSuccessMessage',
-            `The category was successfully ${actionDescription}.`,
+            `The category was successfully ${titleVerb}.`,
           );
           if (Number(this.parentSlug) === 0) {
             this.$router.push({ name: 'homePage' });

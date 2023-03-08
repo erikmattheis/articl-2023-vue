@@ -2,7 +2,7 @@
   <article>
     <h1>Search Articls</h1>
     <div class="grid">
-      <the-articls-form-search />
+      <the-articls-search-form />
       <div>
         <the-articls-search-params />
       </div>
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import TheArticlsFormSearch from '@/components/layout/TheArticlsSearchForm.vue';
+import TheArticlsSearchForm from '@/components/layout/TheArticlsSearchForm.vue';
 import TheArticlsSearchParams from '@/components/layout/TheArticlsSearchParams.vue';
 
 export default {
   name: 'ArticlsSearch',
   components: {
-    TheArticlsFormSearch,
+    TheArticlsSearchForm,
     TheArticlsSearchParams,
   },
 };

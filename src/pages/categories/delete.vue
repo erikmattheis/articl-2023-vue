@@ -36,6 +36,7 @@ export default {
   mounted() {
     this.slug = this.$route.params.slug;
     this.getCurrentCategory(this.slug);
+    this.setTitleAndDescriptionMixin({ title: 'Delete Category and Descendents' });
   },
   methods: {
     async getCurrentCategory(slug) {

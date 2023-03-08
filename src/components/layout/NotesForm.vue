@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -66,7 +65,7 @@ export default {
       this.formAction = 'Edit';
     }
 
-    setTitleAndDescription({
+    this.setTitleAndDescriptionMixin({
       title: `${this.formAction} Note`,
     });
   },
@@ -120,6 +119,11 @@ export default {
           });
 
           this.noteCreated = true;
+
+          const resultVerb = this.note?.id ? 'Updated' : 'Created';
+          this.setTitleAndDescriptionMixin({
+            title: `Note ${resultVerb}`,
+          });
 
           if (this.note?.id) {
             this.$store.dispatch('categoryPages/setNote', result.data);

@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>Forgot password</h1>
+    <h1>Forgot Password</h1>
     <form>
       <label for="email">Email
         <input
@@ -30,7 +30,6 @@
 
 <script>
 import validateEmail from '@/services/emailValidationService';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -43,7 +42,7 @@ export default {
     result: null,
   }),
   mounted: () => {
-    setTitleAndDescription({
+    this.setTitleAndDescriptionMixin({
       title: 'Forgot pass',
     });
   },

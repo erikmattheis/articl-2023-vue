@@ -40,6 +40,12 @@ export default {
       notes: 'categoryPages/notes',
     }),
   },
+  created() {
+    /* TODO get category name */
+    this.setTitleAndDescriptionMixin({
+      title: 'Articl Notes',
+    });
+  },
   methods: {
     noteUpdated(note) {
       this.notes.find(({ id }) => id === note.id).fullText = note.fullText;

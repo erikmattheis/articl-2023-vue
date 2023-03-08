@@ -50,6 +50,11 @@ export default {
       immediate: true,
     },
   },
+  created() {
+    this.setTitleAndDescriptionMixin({
+      title: 'Articl Home',
+    });
+  },
   methods: {
     async updateData() {
       try {
@@ -83,14 +88,12 @@ export default {
 
         this.title = results.category[0]?.title;
 
-        /*
         const description = results.category[0]?.description;
 
-        setTitleAndDescriptionMixin({
+        this.setTitleAndDescriptionMixin({
           title: this.title,
           description,
         });
-        */
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       } finally {

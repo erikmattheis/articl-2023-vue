@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -66,8 +65,8 @@ export default {
       this.formAction = 'Edit';
     }
 
-    setTitleAndDescription({
-      title: `${this.formAction} Note`,
+    this.setTitleAndDescriptionMixin({
+      title: `${this.formAction} Q and A`,
     });
   },
   methods: {
@@ -117,6 +116,12 @@ export default {
             method: verb,
             url,
             data,
+          });
+
+          const resultVerb = this.note?.id ? 'PATCH' : 'POST';
+
+          this.setTitleAndDescriptionMixin({
+            title: `${resultVerb} Q and A`,
           });
 
           this.noteCreated = true;

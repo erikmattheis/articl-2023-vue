@@ -38,6 +38,10 @@ export default {
     this.slug = this.$route.params.slug;
     this.type = this.$route.params.type;
     this.title = this.$route.params.title;
+
+    this.setTitleAndDescriptionMixin({
+      title: `Delete Articl "${this.title}"`,
+    });
   },
   methods: {
 
@@ -48,6 +52,10 @@ export default {
         await this.submitDelete(this.id);
 
         this.deleted = true;
+
+        this.setTitleAndDescriptionMixin({
+          title: 'Articl Deleted',
+        });
 
         this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
 

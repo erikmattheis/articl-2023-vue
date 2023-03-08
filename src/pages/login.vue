@@ -43,7 +43,6 @@
 <script>
 import { mapGetters } from 'vuex';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 
 export default {
   name: 'LoginPage',
@@ -66,8 +65,8 @@ export default {
     }),
   },
   mounted: () => {
-    setTitleAndDescription({
-      title: 'Login',
+    this.setTitleAndDescriptionMixin({
+      title: 'Articl Login',
     });
   },
 
