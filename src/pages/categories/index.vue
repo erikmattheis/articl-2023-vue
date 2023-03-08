@@ -6,8 +6,7 @@
     <h1 v-else>
       Success
     </h1>
-{{  category }} {{ parentCategory }}
-{{ this.breadcrumbs }}
+{{ breadcrumbs }}
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="title">Title
@@ -127,10 +126,10 @@ export default {
       breadcrumbs: 'categoryPages/breadcrumbs',
     }),
     category() {
-      return this.breadcrumbs[this.breadcrumbs.length - 1].title;
+      return this.breadcrumbs[this.breadcrumbs.length - 1]?.title;
     },
     parentCategory() {
-      return this.breadcrumbs[this.breadcrumbs.length - 2].title;
+      return this.breadcrumbs[this.breadcrumbs.length - 2]?.title;
     },
   },
   mounted() {
@@ -215,10 +214,7 @@ export default {
         const result = await axiosInstance({
           method: 'GET',
           url: '/categories/ai-summary',
-          params: {
-            category: this.category,
-            parentCategory: this.parentCategory,
-          },
+          params: { category: this.category, parentCategory: this.parentCategory },
         });
 
         this.AISummary = result.data;
