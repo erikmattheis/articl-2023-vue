@@ -122,11 +122,9 @@ export default {
           this.noteCreated = true;
 
           if (this.note?.id) {
-            console.log('note updated');
             this.$store.dispatch('categoryPages/setNote', result.data);
             this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
           } else {
-            console.log('note created');
             this.$store.dispatch('categoryPages/addNote', result.data);
             this.$router.push({ name: 'TabNotes' });
           }

@@ -6,7 +6,7 @@
     <h1 v-else>
       Success
     </h1>
-{{ breadcrumbs }}
+
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="title">Title
@@ -210,7 +210,7 @@ export default {
     async getAISummary() {
       try {
         this.buttonDisabled = true;
-        console.log(this.category, this.parentCategory);
+
         const result = await axiosInstance({
           method: 'GET',
           url: '/categories/ai-summary',

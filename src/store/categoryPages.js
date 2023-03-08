@@ -25,7 +25,6 @@ export default {
       state.notes = payload;
     },
     SET_BREADCRUMBS: (state, payload) => {
-      console.log('SET_BREADCRUMBS', payload);
       state.breadcrumbs = payload;
     },
   },
