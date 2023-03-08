@@ -6,7 +6,8 @@
     <h1 v-else>
       Success
     </h1>
-
+{{  category }} {{ parentCategory }}
+{{ this.breadcrumbs }}
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="title">Title
@@ -15,7 +16,6 @@
             v-model="title"
             type="text"
             name="title"></label>
-            <!--
         <button
           type="button"
           :aria-busy="aiButtonDisabled"
@@ -29,7 +29,7 @@
             name="AISummary"
             rows="10"
             cols="70" /></label>
-            -->
+
         <label for="description">Description
           <textarea
             id="description"
@@ -75,6 +75,7 @@
 
 <script>
 
+import { mapGetters } from 'vuex';
 import CardNotification from '@/components/ui/CardNotification.vue';
 import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
 import axiosInstance from '@/services/axiosService';
@@ -122,10 +123,19 @@ export default {
 
       return str;
     },
-
+    ...mapGetters({
+      breadcrumbs: 'categoryPages/breadcrumbs',
+    }),
+    category() {
+      return this.breadcrumbs[this.breadcrumbs.length - 1].slug;
+    },
+    parentCategory() {
+      return this.breadcrumbs[this.breadcrumbs.length - 2].slug;
+    },
   },
   mounted() {
     this.parentSlug = this.$route.query.parentSlug;
+
     this.id = this.$route.params.id;
 
     this.formAction = this.id ? 'Edit' : 'Create';
@@ -201,12 +211,13 @@ export default {
     async getAISummary() {
       try {
         this.buttonDisabled = true;
-
+        console.log(this.category, this.parentCategory);
         const result = await axiosInstance({
           method: 'GET',
           url: '/categories/ai-summary',
           params: {
-            text: this.title,
+            category: this.category,
+            parentCategory: this.parentCategory,
           },
         });
 
