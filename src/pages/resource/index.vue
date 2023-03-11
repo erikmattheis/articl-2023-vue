@@ -23,7 +23,6 @@ import { mapGetters } from 'vuex';
 import CategoriesTabs from '@/components/layout/CategoriesTabs.vue';
 import DirectoryActions from '@/components/layout/DirectoryActions.vue';
 import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
-import { setTitleAndDescription } from '@/services/htmlMetaService';
 import axiosInstance from '@/services/axiosService';
 
 export default {
@@ -92,7 +91,7 @@ export default {
 
         const description = results.category[0]?.description;
 
-        setTitleAndDescription({
+        this.setTitleAndDescriptionMixin({
           title: this.title,
           description,
         });

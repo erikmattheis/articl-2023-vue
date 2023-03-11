@@ -234,7 +234,7 @@ export default {
       this.getCurrentArticl(this.id);
     }
 
-    setTitleAndDescriptionMixin({
+    this.setTitleAndDescriptionMixin({
       title: `${this.formAction} Articl`,
     });
   },
@@ -338,8 +338,9 @@ export default {
 
           this.year = '';
 
-          setTitleAndDescriptionMixin({
-            title: `${this.formAction} Articl`,
+          const resultVerb = id ? 'Created' : 'Edited';
+          this.setTitleAndDescriptionMixin({
+            title: `Articl ${resultVerb}`,
           });
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);
