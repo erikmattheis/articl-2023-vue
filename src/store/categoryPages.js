@@ -9,9 +9,13 @@ export default {
     QAndAs: [],
     treeLevel: undefined,
     breadcrumbs: [],
+    count: 0,
   }),
 
   mutations: {
+    SET_COUNT: (state, payload) => {
+      state.count = payload;
+    },
     SET_CATEGORIES: (state, payload) => {
       state.categories = payload;
     },
@@ -30,6 +34,9 @@ export default {
   },
 
   actions: {
+    count: (context, payload) => {
+      context.commit('SET_COUNT', payload);
+    },
     categories: (context, payload) => {
       context.commit('SET_CATEGORIES', payload);
     },
@@ -68,6 +75,8 @@ export default {
     },
   },
   getters: {
+
+    count: (state) => state.count,
 
     categories: (state) => state.categories,
 

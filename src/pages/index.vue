@@ -62,6 +62,9 @@ export default {
 
         const results = await this.fetchData();
 
+        if (results.count) {
+          this.$store.dispatch('categoryPages/count', results.count);
+        }
         if (results.categories?.length) {
           this.$store.dispatch('categoryPages/categories', results.categories);
         } else {
@@ -111,6 +114,7 @@ export default {
         categories: result.data.categories,
         category: result.data.category,
         notes: result.data.notes,
+        count: result.data.count,
       };
     },
   },

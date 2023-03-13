@@ -19,7 +19,7 @@
           </li>
           <li>
             <router-link to="/">
-              Articl.net
+              Articl.net {{ countMessage }}
             </router-link>
           </li>
         </ul>
@@ -162,11 +162,13 @@ export default {
     theme: '',
   }),
   computed: {
-
     ...mapGetters({
+      articlCount: 'categoryPages/count',
       accessTokenExpires: 'tokens/accessTokenExpires',
     }),
-
+    countMessage() {
+      return `${this.articlCount} articles`;
+    },
   },
 
   created() {
