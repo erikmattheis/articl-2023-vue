@@ -326,7 +326,7 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: 'Articl.net User',
+      title: 'Articl.net Login',
     });
   },
 

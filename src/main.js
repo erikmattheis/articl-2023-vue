@@ -34,6 +34,20 @@ import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
+let secure = true;
+
+if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
+  secure = false;
+}
+
+app.use(router);
+
+app.use(VueCookies, {
+  secure,
+});
+
+app.use(store);
+
 /*
 app.config.errorHandler = (error) => {
   store.dispatch('errors/setError', error);
@@ -46,12 +60,6 @@ window.addEventListener('unhandledrejection', (event) => {
 
 app.mixin(isLoggedInMixin);
 app.mixin(setTitleAndDescriptionMixin);
-
-let secure = true;
-
-if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
-  secure = false;
-}
 
 axiosInstance.interceptors.request.use(
   (request) => {
@@ -103,13 +111,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-app.use(router);
-
-app.use(VueCookies, {
-  secure,
-});
-
-app.use(store);
 
 app.mount('#app');
