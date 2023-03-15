@@ -4,7 +4,7 @@
       <li>
         <router-link
           :to="{ name: 'homePage'}">
-          Home
+          <small>Home</small>
         </router-link>
       </li>
       <li
@@ -13,9 +13,9 @@
         <router-link
           v-if="index !== breadcrumbs.length - 1"
           :to="{ name: index < 3 ? 'TabCategories':'ArticlsList', params: { slug : breadcrumb.slug } }">
-          {{ breadcrumb.title }}
+        <small>{{ breadcrumb.title }}</small>
         </router-link>
-        <span v-else> {{ breadcrumb.title }}</span>
+        <span v-else><small>{{ breadcrumb.title }}</small></span>
       </li>
     </ul>
   </nav>
@@ -33,3 +33,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+body ul {
+  display: block;
+}
+
+body li {
+  padding-top: 0;
+  padding-bottom: calc(var(--nav-element-spacing-vertical) * 0.5);
+  vertical-align:top !important
+}
+</style>
