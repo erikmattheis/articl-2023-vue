@@ -102,7 +102,7 @@ export default {
   }),
   computed: {
     aiButtonDisabled() {
-      return !this.title || this.buttonDisabled;
+      return !this.title || this.isLoading;
     },
     slug() {
       if (!this.title) {
@@ -125,14 +125,12 @@ export default {
     ...mapGetters({
       breadcrumbs: 'categoryPages/breadcrumbs',
     }),
-    category() {
-      return this.breadcrumbs[this.breadcrumbs.length - 1]?.title;
-    },
     parentCategory() {
       return this.breadcrumbs[this.breadcrumbs.length - 2]?.title;
     },
   },
   mounted() {
+    this.isLoading = false;
     this.parentSlug = this.$route.query.parentSlug;
 
     this.id = this.$route.params.id;
@@ -212,11 +210,15 @@ export default {
     async getAISummary() {
       try {
         this.buttonDisabled = true;
-
+        const data = {
+          category: this.title,
+          parentCategory: this.parentCategory,
+        };
+        console.log('data', data);
         const result = await axiosInstance({
-          method: 'GET',
+          method: 'POST',
           url: '/categories/ai-summary',
-          params: { category: this.category, parentCategory: this.parentCategory },
+          data,
         });
 
         this.AISummary = result.data;
