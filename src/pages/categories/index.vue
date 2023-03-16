@@ -22,13 +22,13 @@
           <span v-if="!aiButtonDisabled">Get AI Description</span>
         </button>
         <label for="AISummary">AI Summary
+          <p v-if="AIError">{{ AIError }}</p>
           <textarea
             id="AISummary"
             v-model="AISummary"
             name="AISummary"
             rows="10"
             cols="70" /></label>
-
         <label for="description">Description
           <textarea
             id="description"
@@ -91,18 +91,18 @@ export default {
     chrs: 0,
     description: null,
     AISummary: null,
+    AIError: null,
     errorMessage: '',
     formAction: '',
     isLoading: true,
     oldSlug: null,
-    parentSlug: null,
     result: null,
     success: false,
     title: null,
   }),
   computed: {
     aiButtonDisabled() {
-      return !this.title || this.isLoading;
+      return this.buttonDisabled || this.isLoading;
     },
     slug() {
       if (!this.title) {
@@ -125,9 +125,6 @@ export default {
     ...mapGetters({
       breadcrumbs: 'categoryPages/breadcrumbs',
     }),
-    parentCategory() {
-      return this.breadcrumbs[this.breadcrumbs.length - 2]?.title;
-    },
   },
   mounted() {
     this.isLoading = false;
@@ -140,6 +137,7 @@ export default {
     if (this.id) {
       this.getCurrentCategory(this.id);
     } else {
+      this.getParentCategory(this.parentSlug);
       this.isLoading = false;
     }
 
@@ -148,7 +146,6 @@ export default {
   params: {
     id: String,
   },
-
   methods: {
     async getCurrentCategory(id) {
       try {
@@ -167,18 +164,39 @@ export default {
         this.$store.dispatch('errors/setError', error);
       }
     },
+    async getParentCategory(parentSlug) {
+      try {
+        this.isLoading = true;
+
+        const result = await this.getCategoryBySlug(parentSlug);
+
+        this.parentSlug = result.data.slug;
+
+        this.isLoading = false;
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      }
+    },
     async getCategory(id) {
       return axiosInstance({
         method: 'GET',
         url: `/categories/${id}`,
       });
     },
+    async getCategoryBySlug(slug) {
+      return axiosInstance({
+        method: 'GET',
+        url: '/categories/',
+        oparams: {
+          slug,
+        },
+      });
+    },
     resetFormErrors() {
       this.success = null;
-
       this.result = null;
-
       this.errorMessage = '';
+      this.AIError = '';
     },
     checkForm() {
       this.resetFormErrors();
@@ -210,18 +228,26 @@ export default {
     async getAISummary() {
       try {
         this.buttonDisabled = true;
+        this.AIError = '';
+
         const data = {
           category: this.title,
           parentCategory: this.parentCategory,
         };
-        console.log('data', data);
+
         const result = await axiosInstance({
           method: 'POST',
           url: '/categories/ai-summary',
           data,
         });
 
-        this.AISummary = result.data;
+        if (result.data?.status === 200) {
+          this.AISummary = result.data;
+        } else if (result.data?.message) {
+          this.AIError = result.data.message;
+        } else {
+          this.AIError = 'There was an error getting the AI summary.';
+        }
       } catch (error) {
         this.$store.dispatch('errors/setError', error);
       } finally {
