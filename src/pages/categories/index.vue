@@ -137,7 +137,6 @@ export default {
     if (this.id) {
       this.getCurrentCategory(this.id);
     } else {
-      this.getParentCategory(this.parentSlug);
       this.isLoading = false;
     }
 
@@ -158,19 +157,6 @@ export default {
         this.slug = decodeURIComponent(this.slug);
 
         this.oldSlug = decodeURIComponent(result.data.slug);
-
-        this.isLoading = false;
-      } catch (error) {
-        this.$store.dispatch('errors/setError', error);
-      }
-    },
-    async getParentCategory(parentSlug) {
-      try {
-        this.isLoading = true;
-
-        const result = await this.getCategoryBySlug(parentSlug);
-
-        this.parentSlug = result.data.slug;
 
         this.isLoading = false;
       } catch (error) {
