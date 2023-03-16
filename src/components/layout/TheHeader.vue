@@ -19,7 +19,7 @@
           </li>
           <li>
             <router-link to="/">
-              Articl.net {{ countMessage }}
+              Articl.net <span v-if="articlCount">{{ countMessage }}</span>
             </router-link>
           </li>
         </ul>
