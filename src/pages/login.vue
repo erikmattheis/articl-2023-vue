@@ -9,7 +9,6 @@
           name="username"
           type="text"
           autocomplete="username"></label>
-
       <label for="password">Password
         <div class="toggle-password">
           <input
@@ -69,7 +68,6 @@ export default {
       title: 'Articl Login',
     });
   },
-
   methods: {
     resetFormErrors() {
       this.errorMessage = '';

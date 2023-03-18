@@ -34,13 +34,13 @@ import axiosInstance from './services/axiosService';
 
 const app = createApp(App);
 
+app.use(router);
+
 let secure = true;
 
 if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
   secure = false;
 }
-
-app.use(router);
 
 app.use(VueCookies, {
   secure,

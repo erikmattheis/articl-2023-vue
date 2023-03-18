@@ -207,6 +207,7 @@ import selectCountries from '@/components/ui/SelectCountries.vue';
 import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
 import { scoreChars, validateEmail } from '@/services/userService';
 import axiosInstance from '@/services/axiosService';
+import isLoggedInMixin from '@/mixins/isLoggedInMixin';
 
 export default {
   name: 'UsersPage',
@@ -329,7 +330,7 @@ export default {
       title: 'Articl.net Login',
     });
   },
-
+  mixins: [isLoggedInMixin],
   methods: {
     async logout() {
       await this.$store.dispatch('users/logout');

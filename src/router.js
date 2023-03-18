@@ -11,14 +11,14 @@ import loginPage from '@/pages/login.vue';
 import deleteNote from '@/components/layout/NotesDelete.vue';
 import editNote from '@/components/layout/NotesForm.vue';
 import notFound from '@/pages/NotFound.vue';
-
+import TabQuestionsAnswers from '@/components/layout/QAndAList.vue';
 import resetPasswordPage from '@/pages/change-password.vue';
 import usersPage from '@/pages/users/index.vue';
 import verifyEmailPage from '@/pages/verify-email.vue';
 import TabCategories from '@/components/layout/CategoriesList.vue';
 import TabNotes from '@/components/layout/NotesList.vue';
 import ArticlsList from '@/components/layout/ArticlsList.vue';
-import TabQuestionsAnswers from '@/components/layout/QAndAList.vue';
+import forbiddenPage from '@/pages/forbidden.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -161,6 +161,12 @@ const router = createRouter({
       name: 'DeleteArticlPage',
       path: '/articls/delete/:id/:slug/:type/:title',
       component: DeleteArticlPage,
+    },
+
+    {
+      name: 'forbidden',
+      path: '/forbidden',
+      component: forbiddenPage,
     },
 
     {

@@ -75,17 +75,17 @@ export default {
   getters: {
 
     tokens: (state) => ({
-      accessTokenExpires: state.accessTokenExpires * 1000,
+      accessTokenExpires: state.accessTokenExpires,
       accessTokenValue: state.accessTokenValue,
-      refreshTokenExpires: state.refreshTokenExpires * 1000,
+      refreshTokenExpires: state.refreshTokenExpires,
       refreshTokenValue: state.refreshTokenValue,
     }),
 
-    accessTokenExpires: (state) => state.accessTokenExpires * 1000,
+    accessTokenExpires: (state) => state.accessTokenExpires,
 
     accessTokenValue: (state) => state.accessTokenValue,
 
-    refreshTokenExpires: (state) => state.refreshTokenExpires * 1000,
+    refreshTokenExpires: (state) => state.refreshTokenExpires,
 
     refreshTokenValue: (state) => state.refreshTokenValue,
   },

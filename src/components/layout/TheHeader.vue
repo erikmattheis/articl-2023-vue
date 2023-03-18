@@ -170,7 +170,6 @@ export default {
       return `${this.articlCount} articles`;
     },
   },
-
   created() {
     const theme = VueCookies.get('data-theme');
 
@@ -225,7 +224,6 @@ export default {
         currentSize = currentSize || 16;
         newSize = parseFloat(currentSize) * factor;
       }
-
       document.documentElement.style.setProperty(
         '--font-size',
         `${newSize}px`,
@@ -238,7 +236,6 @@ export default {
       VueCookies.remove('font-size');
       this.$router.push('/');
     },
-
   },
 };
 </script>
