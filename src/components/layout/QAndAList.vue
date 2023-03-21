@@ -1,6 +1,12 @@
 <template>
   <div class="tab-content">
-    <h2>Q and A</h2>
+    <h2>Q &amp; A</h2>
+
+    <details>
+      <summary>Add Q &amp; A</summary>
+      <q-and-as-form />
+    </details>
+
     <ul>
       <li
         v-for="QAndA in QAndAs || [] "
@@ -14,9 +20,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import QAndAListItem from '@/components/layout/QAndAListItem.vue';
+import QAndAsForm from '@/components/layout/QAndAsForm.vue';
 
 export default {
   components: {
+    QAndAsForm,
     QAndAListItem,
   },
   props: {

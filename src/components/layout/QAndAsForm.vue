@@ -1,10 +1,35 @@
 <template>
     <form>
-      <label for="fullText">
+      <label for="question">Question
         <textarea
-          id="fullText"
-          v-model="fullText"
-          name="fullText" /></label>
+          id="question"
+          v-model="QandAs.question"
+          name="question" /></label>
+
+          <div
+            v-for="(answer, index) in QandAs.answers"
+            :key="answer.id">
+            <div class="grid">
+              <label
+                for="`answer${index}`">Answer
+                <input
+                  :id="`answer${index}`"
+                  v-model="answer.answer"
+                  :name="`answer${index}`"
+                  autocomplete="off"></label>
+              <label
+                for="`nameLast${index}`">Correct<br />
+                <input
+                  type="checkbox"
+                  :id="`correct${index}`"
+                  v-model="answer.correct"
+                  :name="`correct${index}`"></label>
+            </div>
+
+            <a role="button" @click.prevent="removeAnswer(index)" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Remove Answer</a>
+            <a v-if="index === QandAs.answers.length + 1" role="button" @click.prevent="addAnswer()" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Add Answer</a>
+
+          </div>
           <div class="grid">
             <div class="grid-right">
               <a
@@ -15,16 +40,16 @@
                 @click.prevent="cancel()"
                 @keyup.esc.prevent="cancel()">Cancel</a>
 
-            <a
-              href
-              class="a"
-              tabindex="0"
-              role="button"
-              :aria-disabled="buttonDisabled"
-              :aria-busy="buttonDisabled"
-              @click.prevent="submitForm()"
-              @keyup.enter.prevent="submitForm()">
-              {{ !note?.id ? "Create" : "Edit" }} Note</a>
+              <a
+                href
+                class="a"
+                tabindex="0"
+                role="button"
+                :aria-disabled="buttonDisabled"
+                :aria-busy="buttonDisabled"
+                @click.prevent="submitForm()"
+                @keyup.enter.prevent="submitForm()">
+                {{ !QandAs?.id ? "Create" : "Edit" }} QandAs</a>
             </div>
           </div>
     </form>
@@ -36,32 +61,37 @@ import axiosInstance from '@/services/axiosService';
 
 export default {
   props: {
-    passedNote: {
+    passedQandAs: {
       type: Object,
-      default: () => { },
+      default: () => ({
+        question: '',
+        answers: [{
+          answer: '',
+          correct: null,
+        },
+        ],
+      }),
     },
   },
-  emits: ['note-updated'],
+  emits: ['QandAs-updated'],
   data() {
     return {
-      note: {},
-      fullText: '',
-      fullTextOriginal: '',
+      QandAs: {},
       isLoading: false,
       formAction: false,
-      noteCreated: false,
+      QandAsCreated: false,
       buttonDisabled: false,
     };
   },
 
   mounted() {
-    this.note = this.passedNote;
+    this.QandAs = this.passedQandAs;
 
-    if (!this.note?.id) {
+    if (!this.QandAs?.id) {
       this.formAction = 'Create';
     } else {
-      this.fullText = this.note.fullText;
-      this.fullTextOriginal = this.note.fullText;
+      this.question = this.QandAs.question;
+      this.questionOriginal = this.QandAs.question;
       this.formAction = 'Edit';
     }
 
@@ -70,9 +100,18 @@ export default {
     });
   },
   methods: {
+    addAnswer() {
+      this.QandAs.answers.push({
+        answer: '',
+        correct: false,
+      });
+    },
+    removeAnswer(index) {
+      this.QandAs.answers.splice(index, 1);
+    },
     cancel() {
-      this.fullText = this.fullTextOriginal;
-      this.$router.push({ name: 'TabNotes' });
+      this.question = this.questionOriginal;
+      this.$router.push({ name: 'TabQandAs' });
     },
     resetFormErrors() {
       this.errorMessage = '';
@@ -82,8 +121,8 @@ export default {
 
       let passed = true;
 
-      if (this.fullText === '') {
-        this.errorMessage = 'Please enter the text of the note.';
+      if (this.question === '') {
+        this.errorMessage = 'Please enter the text of the QandAs.';
 
         passed = false;
       }
@@ -91,15 +130,16 @@ export default {
       return passed;
     },
     async submitForm() {
-      let url = '/notes/';
+      let url = '/QandAs/';
 
-      const id = this.note?.id;
+      const id = this.QandAs?.id;
       const data = {
-        fullText: this.fullText,
+        question: this.question,
+        answers: this.answers,
       };
 
       if (id) {
-        url = `/notes/${id}`;
+        url = `/QandAs/${id}`;
       } else {
         data.slug = this.$route.params.slug;
       }
@@ -110,7 +150,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = this.note?.id ? 'PATCH' : 'POST';
+          const verb = this.QandAs?.id ? 'PATCH' : 'POST';
 
           const result = await axiosInstance({
             method: verb,
@@ -118,18 +158,18 @@ export default {
             data,
           });
 
-          const resultVerb = this.note?.id ? 'PATCH' : 'POST';
+          const resultVerb = this.QandAs?.id ? 'PATCH' : 'POST';
 
           this.setTitleAndDescriptionMixin({
             title: `${resultVerb} Q and A`,
           });
 
-          this.noteCreated = true;
-          this.$emit('note-updated', result.data);
+          this.QandAsCreated = true;
+          this.$emit('QandAs-updated', result.data);
           if (id) {
-            this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
+            this.$router.push({ name: 'editQandAsuccess', params: { id: this.QandAs.id } });
           } else {
-            this.$router.push({ name: 'TabNotes', params: { slug: this.$route.params.slug } });
+            this.$router.push({ name: 'TabQandAs', params: { slug: this.$route.params.slug } });
           }
         } else {
           this.$store.dispatch('errors/setError', this.errorMessage);

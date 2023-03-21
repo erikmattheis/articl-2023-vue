@@ -139,9 +139,11 @@
               <option value="Web">
                 Web
               </option>
+              <!---
               <option value="Images">
                 Images
               </option>
+              -->
               <option value="Presentations">
                 Presentations
               </option>
