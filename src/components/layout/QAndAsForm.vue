@@ -9,7 +9,7 @@
           <div
             v-for="(answer, index) in QandAs.answers"
             :key="answer.id">
-            <div class="grid">
+            <div class="grid grid-answer">
               <label
                 for="`answer${index}`">Answer
                 <input
@@ -199,4 +199,8 @@ form {
 textarea {
   width: 100%;
 }
+.grid-answer {
+  grid-template-columns: min-content min-content min-content;
+}
+
 </style>

@@ -77,7 +77,7 @@ export default {
 }
 
 .inline-block {
-  display: inline
+  display: inline;
 }
 
 .row-admin-container {
@@ -156,9 +156,12 @@ export default {
 
 .nav-tabs {
   margin-bottom: 0;
-  column-gap: 0;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  width: 100%;
 }
 
 .nav-tabs li,
@@ -169,7 +172,7 @@ export default {
   border-style: solid;
   border-color: $grey-100;
   border: 1px solid transparent;
-  display: inline-block;
+  display: flex;
   padding: var(--nav-element-spacing-horizontal);
   vertical-align: middle;
   margin-bottom: 0;
@@ -228,28 +231,6 @@ export default {
   .active {
     border: 1px solid $grey-100;
     border-bottom: 1px solid var(--background-color);
-  }
-
-  .nav-tabs {
-    margin-bottom: 0;
-    column-gap: 0;
-    position: relative;
-    z-index: 10;
-  }
-
-  .nav-tabs li,
-  .note-actions li,
-  .articl-actions li {
-    border-width: 1px;
-    border-right-width: 0;
-    border-style: solid;
-    border-color: $grey-100;
-    border: 1px solid transparent;
-    display: inline-block;
-    padding: calc(var(--nav-element-spacing-horizontal) * 0.25);
-    vertical-align: middle;
-    margin-bottom: 0;
-    column-gap: 0;
   }
 
   .nav-tabs li:last-child,

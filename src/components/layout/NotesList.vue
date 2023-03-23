@@ -3,7 +3,7 @@
     <h2>Notes ({{notes?.length}})</h2>
 
     <details>
-      <summary>Add Q & A</summary>
+      <summary>Add Note</summary>
       <notes-form />
     </details>
 
