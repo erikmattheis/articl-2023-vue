@@ -5,31 +5,39 @@
           id="question"
           v-model="QandAs.question"
           name="question" /></label>
+          <draggable-items
+            v-model="QandAs.answers"
+            tag="li"
+            item-key="id"
+            handle=".handle"
+            ghost-class="ghost"
+            @change="onUpdateAnswersOrderValues">
+            <template #item="{ element, index}">
+                <div class="grid grid-answer">
+                  <label
+                    :for="`answer${index}`">Answer
+                    <input
+                      type="text"
+                      :id="`answer${index}`"
+                      v-model="element.answer"
+                      :name="`answer${index}`"
+                      autocomplete="off"></label>
+                  <label
+                    :for="`nameLast${index}`">Correct<br />
+                    <input
+                      type="checkbox"
+                      :id="`correct${index}`"
+                      v-model="element.correct"
+                      :name="`correct${index}`"></label>
+                  <question-answer-actions
+                    @remove="removeAnswer"
+                    @add="addAnswer" />
+                <a role="button" @click.prevent="removeAnswer(index)" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Remove Answer</a>
+                <a v-if="index === QandAs.answers.length + 1" role="button" @click.prevent="addAnswer()" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Add Answer</a>
+              </div>
+            </template>
+          </draggable-items>
 
-          <div
-            v-for="(answer, index) in QandAs.answers"
-            :key="answer.id">
-            <div class="grid grid-answer">
-              <label
-                for="`answer${index}`">Answer
-                <input
-                  :id="`answer${index}`"
-                  v-model="answer.answer"
-                  :name="`answer${index}`"
-                  autocomplete="off"></label>
-              <label
-                for="`nameLast${index}`">Correct<br />
-                <input
-                  type="checkbox"
-                  :id="`correct${index}`"
-                  v-model="answer.correct"
-                  :name="`correct${index}`"></label>
-            </div>
-
-            <a role="button" @click.prevent="removeAnswer(index)" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Remove Answer</a>
-            <a v-if="index === QandAs.answers.length + 1" role="button" @click.prevent="addAnswer()" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Add Answer</a>
-
-          </div>
           <div class="grid">
             <div class="grid-right">
               <a
@@ -58,20 +66,32 @@
 
 <script>
 import axiosInstance from '@/services/axiosService';
+import DraggableItems from 'vuedraggable';
+import QuestionAnswerActions from '@/components/layout/QuestionAnswerActions.vue';
 
 export default {
   props: {
     passedQandAs: {
       type: Object,
       default: () => ({
-        question: '',
+        QAndAs: '',
         answers: [{
+          id: null,
           answer: '',
-          correct: null,
+          correct: false,
+        },
+        {
+          id: null,
+          answer: '',
+          correct: false,
         },
         ],
       }),
     },
+  },
+  components: {
+    DraggableItems,
+    QuestionAnswerActions,
   },
   emits: ['QandAs-updated'],
   data() {
@@ -129,6 +149,7 @@ export default {
 
       return passed;
     },
+
     async submitForm() {
       let url = '/QandAs/';
 
@@ -180,6 +201,51 @@ export default {
         this.buttonDisabled = false;
       }
     },
+    updateAnswerOrderValues() {
+      try {
+        this.QandAs.answers.forEach((obj, index) => {
+          const objRef = obj;
+
+          objRef.order = index;
+        });
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      }
+    },
+    async saveAnswerOrderValues() {
+      try {
+        const order = this.QandAs.answers.map((obj) => ({
+          id: obj.id,
+          order: obj.order,
+        }));
+
+        await this.saveAnswersOrder(order);
+      } catch (error) {
+        this.$store.dispatch('errors/setError', error);
+      }
+    },
+
+    async saveAnswersOrder(order) {
+      this.isLoading = true;
+
+      const result = await axiosInstance({
+        method: 'POST',
+        url: '/answers/order',
+        data: {
+          order,
+        },
+      });
+
+      this.isLoading = false;
+
+      return result.data;
+    },
+
+    onUpdateAnswersOrderValues() {
+      this.updateAnswerOrderValues(this.answerTypeCurrent);
+
+      this.saveAnswerOrderValues(this.answerTypeCurrent);
+    },
   },
 };
 </script>
@@ -199,8 +265,8 @@ form {
 textarea {
   width: 100%;
 }
+
 .grid-answer {
   grid-template-columns: min-content min-content min-content;
 }
-
 </style>
