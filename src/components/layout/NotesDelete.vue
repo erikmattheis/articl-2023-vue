@@ -7,7 +7,7 @@
     </p>
     <form>
       <button :aria-busy="buttonDisabled"
-@click.prevent="deleteNote()">Delete</button>
+@click.prevent="$router.push({name: 'TabNotes', params: {slug}})">Cancel</button>
       <button :aria-busy="buttonDisabled"
 @click.prevent="deleteNote()">Delete</button>
     </form>
@@ -25,14 +25,12 @@ export default {
     fullText: "",
     nameFirst: "",
     nameLast: "",
-    prevRoute: {},
+    slug: "",
   }),
   mounted() {
     this.id = this.$route.params.id;
     this.getCurrentNote(this.id);
-  },
-  beforeRouteEnter(to, from) {
-    this.prevRoute = from;
+    this.slug = this.$route.params.slug;
   },
   methods: {
     async getCurrentNote(id) {

@@ -3,20 +3,16 @@
     <h1>Delete Articl</h1>
     <p>Really delete "{{ title }}"?</p>
     <form>
-      <button
-        :aria-busy="buttonDisabled"
-        @click.prevent="deleteArticl()">
-        Delete
-      </button>
+      <button :aria-busy="buttonDisabled"
+@click.prevent="deleteArticl()">Delete</button>
     </form>
   </article>
   <article v-else>
     <h1>Articl Deleted</h1>
-    <a
-      tabindex="0"
-      href
-      @click.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })"
-      @keyup.enter.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })">Return to Category Page </a>
+    <a tabindex="0"
+href
+@click.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })"
+@keyup.enter.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })">Return to Category Page </a>
   </article>
 </template>
 
@@ -44,7 +40,6 @@ export default {
     });
   },
   methods: {
-
     async deleteArticl() {
       try {
         this.buttonDisabled = true;
@@ -59,10 +54,7 @@ export default {
 
         this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
 
-        this.$store.dispatch(
-          "modals/setSuccessMessage",
-          `The articl "${this.title}" has been permanently deleted.`,
-        );
+        this.$store.dispatch("modals/setSuccessMessage", `The articl "${this.title}" has been permanently deleted.`);
         this.deleted = true;
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
@@ -92,15 +84,15 @@ export default {
 
 <style scoped>
 .grid {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .grid a {
-  display:inline-block;
+  display: inline-block;
 }
 a {
   align-self: center;
   justify-self: center;
-  border:0;
+  border: 0;
 }
 </style>

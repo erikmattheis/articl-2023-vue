@@ -84,28 +84,6 @@ export default {
       this.QAndAIsUsers = this.passedQAndA?.author?.id === this.user?.id;
     }
   },
-  /*
-  beforeRouteEnter(to, from, next) {
-    console.log('beforeRouteEnter');
-    next((vm) => {
-      const module = vm;
-      module.loaded = true; // set the "loaded" flag on the component instance
-    });
-  },
-  beforeRouteLeave(to, from, next) {
-
-    if (this.loaded && to.params.id === this.QAndA.id) {
-      this.QAndACreated = false;
-      this.buttonDisabled = false;
-
-      this.fullTextOriginal = this.fullText;
-      this.QAndA.fullText = this.fullText;
-      this.isLoading = false;
-      this.formAction = false;
-    }
-    next();
-  },
-  */
   methods: {
     QAndAUpdated(QAndA) {
       console.log("passing uop");
