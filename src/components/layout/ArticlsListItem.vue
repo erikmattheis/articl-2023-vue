@@ -20,7 +20,8 @@
       </li>
 
       <li class="articl-details">
-        <p class="authors-list" v-if="authorsList?.length">
+        <p class="authors-list"
+v-if="authorsList?.length">
           {{ authorsList }}
         </p>
         <details v-if="!articl?.wpPost?.ID">
@@ -137,10 +138,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import ArticlActions from '@/components/layout/ArticlActions.vue';
-import { highlightedSubstring, isNumber, noCaseIndexOf } from '@/services/stringsService';
+import ArticlActions from "@/components/layout/ArticlActions.vue";
+import { highlightedSubstring, isNumber, noCaseIndexOf } from "@/services/stringsService";
 
 export default {
   components: {
@@ -157,32 +158,32 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      params: 'articlsParams/params',
+      params: "articlsParams/params",
     }),
     monthStr() {
       if (!isNumber(Number(this.articl.month))) {
         return this.articl.month;
       }
 
-      return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.articl.month - 1];
+      return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][this.articl.month - 1];
     },
     linkMessage() {
       try {
-        return `Read article on ${(new URL(this.articl.url)).hostname.replace('www.', '')}`;
+        return `Read article on ${(new URL(this.articl.url)).hostname.replace("www.", "")}`;
       } catch {
-        return 'Malformed url';
+        return "Malformed url";
       }
     },
     authorsList() {
       if (this.articl?.authors?.map && this.articl?.authors?.length) {
         let list;
-        if (typeof this.articl.authors[0] === 'string') {
+        if (typeof this.articl.authors[0] === "string") {
           list = this.articl.authors;
         } else {
           list = this.articl.authors.map((author) => (author.nameFirst ? `${author.nameFirst} ${author.nameLast}` : author));
         }
 
-        return list.join(', ');
+        return list.join(", ");
       }
       if (this.articl?.authorsOrig?.length) {
         return this.articl.authorsOrig;

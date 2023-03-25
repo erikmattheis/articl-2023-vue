@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
+import VueFeather from "vue-feather";
 
 export default {
   components: {
@@ -40,19 +40,19 @@ export default {
   props: {
     id: {
       type: String,
-      default: '',
+      default: "",
     },
     title: {
       type: String,
-      default: '',
+      default: "",
     },
     slug: {
       type: String,
-      default: '',
+      default: "",
     },
     type: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data() {

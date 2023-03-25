@@ -1,10 +1,10 @@
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 const charCounts = (val) => ({
-  numUpper: val.length - val.replace(/[A-Z]/g, '').length,
-  numLower: val.length - val.replace(/[a-z]/g, '').length,
-  numDigit: val.length - val.replace(/[0-9]/g, '').length,
-  numSpecial: val.length - val.replace(/\W|_/g, '').length,
+  numUpper: val.length - val.replace(/[A-Z]/g, "").length,
+  numLower: val.length - val.replace(/[a-z]/g, "").length,
+  numDigit: val.length - val.replace(/[0-9]/g, "").length,
+  numSpecial: val.length - val.replace(/\W|_/g, "").length,
 });
 
 const scoreChars = (val) => {
@@ -36,7 +36,7 @@ const validateEmail = (email) => {
 
 const login = async ({ username, password }) => {
   try {
-    const data = await axiosInstance.post('/auth/login', { username, password });
+    const data = await axiosInstance.post("/auth/login", { username, password });
     return data;
   } catch (error) {
     throw new Error(error);
@@ -45,7 +45,7 @@ const login = async ({ username, password }) => {
 
 const logout = async ({ accessToken }) => {
   try {
-    await axiosInstance.post('/auth/logout', { accessToken });
+    await axiosInstance.post("/auth/logout", { accessToken });
   } catch (error) {
     throw new Error(error);
   }

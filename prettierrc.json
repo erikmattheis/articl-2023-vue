@@ -1,0 +1,7 @@
+{
+  "singleQuote": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "vueIndentScriptAndStyle": true,
+  "quoteProps": "consistent",
+  "jsxSingleQuote": true
+}

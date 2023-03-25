@@ -1,10 +1,10 @@
-const { defineConfig } = require('@vue/cli-service');
+const { defineConfig } = require("@vue/cli-service");
 
 module.exports = defineConfig({
   transpileDependencies: true,
   /* eslint-disable no-param-reassign */
   configureWebpack: (config) => {
-    config.devtool = 'source-map';
+    config.devtool = "source-map";
   },
   css: {
     loaderOptions: {

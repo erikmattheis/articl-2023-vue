@@ -17,16 +17,16 @@
 </template>
 
 <script>
-import { groupBy } from 'lodash';
-import { mapGetters } from 'vuex';
+import { groupBy } from "lodash";
+import { mapGetters } from "vuex";
 
-import CategoriesTabs from '@/components/layout/CategoriesTabs.vue';
-import DirectoryActions from '@/components/layout/DirectoryActions.vue';
-import TheBreadcrumbs from '@/components/layout/TheBreadcrumbs.vue';
-import axiosInstance from '@/services/axiosService';
+import CategoriesTabs from "@/components/layout/CategoriesTabs.vue";
+import DirectoryActions from "@/components/layout/DirectoryActions.vue";
+import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'CategoryPage',
+  name: "CategoryPage",
   components: {
     CategoriesTabs,
     DirectoryActions,
@@ -35,21 +35,21 @@ export default {
   data() {
     return {
       isLoading: true,
-      title: '',
-      slug: '',
+      title: "",
+      slug: "",
     };
   },
   computed: {
     ...mapGetters({
-      treeLevel: 'categoryPages/treeLevel',
-      articls: 'categoryPages/articls',
-      articlTypes: 'categoryPages/articlTypes',
-      categories: 'categoryPages/categories',
-      notes: 'categoryPages/notes',
+      treeLevel: "categoryPages/treeLevel",
+      articls: "categoryPages/articls",
+      articlTypes: "categoryPages/articlTypes",
+      categories: "categoryPages/categories",
+      notes: "categoryPages/notes",
     }),
   },
   watch: {
-    '$route.params.slug': {
+    "$route.params.slug": {
       handler() {
         this.updateData();
       },
@@ -64,27 +64,27 @@ export default {
         const results = await this.fetchData(this.$route.params.slug);
 
         if (results.categories?.length) {
-          this.$store.dispatch('categoryPages/categories', results.categories);
+          this.$store.dispatch("categoryPages/categories", results.categories);
         } else {
-          this.$store.dispatch('categoryPages/categories', []);
+          this.$store.dispatch("categoryPages/categories", []);
         }
 
         if (results.breadcrumbs?.length) {
-          this.$store.dispatch('categoryPages/breadcrumbs', results.breadcrumbs);
+          this.$store.dispatch("categoryPages/breadcrumbs", results.breadcrumbs);
         } else {
-          this.$store.dispatch('categoryPages/breadcrumbs', []);
+          this.$store.dispatch("categoryPages/breadcrumbs", []);
         }
 
         if (results.articls) {
-          this.$store.dispatch('categoryPages/articls', results.articls);
-          this.$store.dispatch('categoryPages/articlTypes', results.articlTypes);
+          this.$store.dispatch("categoryPages/articls", results.articls);
+          this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
         } else {
-          this.$store.dispatch('categoryPages/articls', []);
-          this.$store.dispatch('categoryPages/articlTypes', []);
+          this.$store.dispatch("categoryPages/articls", []);
+          this.$store.dispatch("categoryPages/articlTypes", []);
         }
 
         if (results.notes?.length) {
-          this.$store.dispatch('categoryPages/notes', results.notes);
+          this.$store.dispatch("categoryPages/notes", results.notes);
         }
 
         this.title = results.category[0]?.title;
@@ -96,7 +96,7 @@ export default {
           description,
         });
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.isLoading = false;
       }
@@ -104,8 +104,8 @@ export default {
 
     async fetchData(slug) {
       const result = await axiosInstance({
-        method: 'GET',
-        url: `/resource/${slug || ''}`,
+        method: "GET",
+        url: `/resource/${slug || ""}`,
       });
 
       return {

@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import DraggableItems from 'vuedraggable';
-import { mapGetters } from 'vuex';
+import DraggableItems from "vuedraggable";
+import { mapGetters } from "vuex";
 
-import ArticlsListItem from '@/components/layout/ArticlsListItem.vue';
-import axiosInstance from '@/services/axiosService';
+import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'ArticlsList',
+  name: "ArticlsList",
   components: {
     DraggableItems,
     ArticlsListItem,
@@ -55,11 +55,11 @@ export default {
       type: Array,
     },
     type: {
-      default: () => '',
+      default: () => "",
       type: String,
     },
     slug: {
-      default: () => '',
+      default: () => "",
       type: String,
     },
   },
@@ -70,8 +70,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      articls: 'categoryPages/articls',
-      articlTypes: 'categoryPages/articlTypes',
+      articls: "categoryPages/articls",
+      articlTypes: "categoryPages/articlTypes",
     }),
   },
   mounted() {
@@ -87,7 +87,7 @@ export default {
           objRef.order = index;
         });
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
 
@@ -100,7 +100,7 @@ export default {
 
         await this.saveArticlsOrder(order);
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
 
@@ -108,8 +108,8 @@ export default {
       this.isLoading = true;
 
       const result = await axiosInstance({
-        method: 'POST',
-        url: '/articls/order',
+        method: "POST",
+        url: "/articls/order",
         data: {
           order,
         },

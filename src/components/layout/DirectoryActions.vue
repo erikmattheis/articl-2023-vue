@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'DirectoryActions',
+  name: "DirectoryActions",
   props: {
     treeLevel: {
       type: Number,

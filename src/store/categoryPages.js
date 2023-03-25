@@ -35,19 +35,19 @@ export default {
 
   actions: {
     count: (context, payload) => {
-      context.commit('SET_COUNT', payload);
+      context.commit("SET_COUNT", payload);
     },
     categories: (context, payload) => {
-      context.commit('SET_CATEGORIES', payload);
+      context.commit("SET_CATEGORIES", payload);
     },
     articls: (context, payload) => {
-      context.commit('SET_ARTICLS', payload);
+      context.commit("SET_ARTICLS", payload);
     },
     articlTypes: (context, payload) => {
-      context.commit('SET_ARTICL_TYPES', payload);
+      context.commit("SET_ARTICL_TYPES", payload);
     },
     notes: (context, payload) => {
-      context.commit('SET_NOTES', payload);
+      context.commit("SET_NOTES", payload);
     },
     setNote(context, payload) {
       const { notes } = context.state;
@@ -58,20 +58,20 @@ export default {
         }
         return note;
       });
-      context.commit('SET_NOTES', newNotes);
+      context.commit("SET_NOTES", newNotes);
     },
     addNote: (context, payload) => {
       const { notes } = context.state;
       const newNotes = notes.unshift(payload);
-      context.commit('SET_NOTES', newNotes);
+      context.commit("SET_NOTES", newNotes);
     },
     breadcrumbs: (context, payload) => {
-      context.commit('SET_BREADCRUMBS', payload);
+      context.commit("SET_BREADCRUMBS", payload);
     },
     removeNote: (context, payload) => {
       const { notes } = context.state;
       const newNotes = notes.filter((note) => note.id !== payload);
-      context.commit('SET_NOTES', newNotes);
+      context.commit("SET_NOTES", newNotes);
     },
   },
   getters: {

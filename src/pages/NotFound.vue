@@ -12,7 +12,7 @@
 export default {
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: 'Not Found',
+      title: "Not Found",
     });
   },
 };

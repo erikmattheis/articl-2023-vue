@@ -7,7 +7,8 @@
         <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}<br>
         {{ note.createdAt }}</small>
       </div>
-      <div v-if="noteIsUsers && isLoggedInMixin" class="box">
+      <div v-if="noteIsUsers && isLoggedInMixin"
+class="box">
         <div class="row-admin-box">
           <router-link
             role="button"
@@ -43,11 +44,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import NotesDelete from '@/components/layout/NotesDelete.vue';
-import NotesForm from '@/components/layout/NotesForm.vue';
-import VueFeather from 'vue-feather';
-import { toFormattedUserDateTime } from '@/services/dateTimesService';
+import { mapGetters } from "vuex";
+import NotesDelete from "@/components/layout/NotesDelete.vue";
+import NotesForm from "@/components/layout/NotesForm.vue";
+import VueFeather from "vue-feather";
+import { toFormattedUserDateTime } from "@/services/dateTimesService";
 
 export default {
   components: {
@@ -68,10 +69,10 @@ export default {
       noteIsUsers: false,
     };
   },
-  emits: ['note-updated'],
+  emits: ["note-updated"],
   computed: {
     ...mapGetters({
-      user: 'users/user',
+      user: "users/user",
     }),
     routeName() {
       return this.$route.name;
@@ -88,7 +89,7 @@ export default {
   },
   methods: {
     noteUpdated(note) {
-      this.$emit('note-updated', note);
+      this.$emit("note-updated", note);
     },
   },
 };

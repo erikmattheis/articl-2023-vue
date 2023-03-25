@@ -35,34 +35,28 @@ SCSS  4  124  164  64  352
  * total, 4650, 7816
  *** */
 
-import TheFooter from '@/components/layout/TheFooter.vue';
-import TheHeader from '@/components/layout/TheHeader.vue';
-import ModalError from '@/components/ui/ModalError.vue';
-import ModalSuccess from '@/components/ui/ModalSuccess.vue';
+import TheFooter from "@/components/layout/TheFooter.vue";
+import TheHeader from "@/components/layout/TheHeader.vue";
+import ModalError from "@/components/ui/ModalError.vue";
+import ModalSuccess from "@/components/ui/ModalSuccess.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-
     TheHeader,
     TheFooter,
     ModalError,
     ModalSuccess,
   },
-  data: () => ({
-
-  }),
+  data: () => ({}),
   mounted() {
-    const user = this.$cookies.get('user');
+    const user = this.$cookies.get("user");
     if (user) {
-      this.$store.dispatch('users/setUser', user);
+      this.$store.dispatch("users/setUser", user);
     }
   },
-  methods: {
-
-  },
+  methods: {},
 };
-
 </script>
 
 <style lang="scss">
@@ -115,12 +109,12 @@ export default {
 }
 
 .fade-enter-active {
-  transition: opacity .1s ease;
-  transition-delay: .1s;
+  transition: opacity 0.1s ease;
+  transition-delay: 0.1s;
 }
 
 .fade-leave-active {
-  transition: opacity .1s ease;
+  transition: opacity 0.1s ease;
 }
 
 .fade-leave-to,
@@ -214,17 +208,16 @@ export default {
 }
 
 @media (max-width: map-get($breakpoints, "sm")) {
-
   article {
     padding: calc(var(--block-spacing-horizontal) * 0.25);
   }
 
   .nav-tabs-margin {
-    margin: calc(var(--nav-element-spacing-vertical)*0.5) calc(var(--nav-element-spacing-vertical) * 0.5);
+    margin: calc(var(--nav-element-spacing-vertical) * 0.5) calc(var(--nav-element-spacing-vertical) * 0.5);
   }
 
   .nav-tabs-inner-margin {
-    margin: 0 calc(var(--nav-element-spacing-vertical) *0.5);
+    margin: 0 calc(var(--nav-element-spacing-vertical) * 0.5);
   }
 
   .nav-tabs li.active,
@@ -266,7 +259,7 @@ export default {
 
 .sr {
   display: inline-block;
-  line-height: .5rem;
+  line-height: 0.5rem;
   text-indent: -10000px;
 }
 
@@ -360,7 +353,6 @@ ul li {
 }
 
 @media prefers-reduced-motion {
-
   .fade-leave-to,
   .fade-enter-from {
     opacity: 1;

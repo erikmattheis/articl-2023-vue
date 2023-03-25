@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
   props: {
@@ -41,12 +41,12 @@ export default {
       default: () => { },
     },
   },
-  emits: ['note-updated'],
+  emits: ["note-updated"],
   data() {
     return {
       note: {},
-      fullText: '',
-      fullTextOriginal: '',
+      fullText: "",
+      fullTextOriginal: "",
       isLoading: false,
       formAction: false,
       noteCreated: false,
@@ -58,11 +58,11 @@ export default {
     this.note = this.passedNote;
 
     if (!this.note?.id) {
-      this.formAction = 'Create';
+      this.formAction = "Create";
     } else {
       this.fullText = this.note.fullText;
       this.fullTextOriginal = this.note.fullText;
-      this.formAction = 'Edit';
+      this.formAction = "Edit";
     }
 
     this.setTitleAndDescriptionMixin({
@@ -72,18 +72,18 @@ export default {
   methods: {
     cancel() {
       this.fullText = this.fullTextOriginal;
-      this.$router.push({ name: 'TabNotes' });
+      this.$router.push({ name: "TabNotes" });
     },
     resetFormErrors() {
-      this.errorMessage = '';
+      this.errorMessage = "";
     },
     checkForm() {
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.fullText === '') {
-        this.errorMessage = 'Please enter the text of the note.';
+      if (this.fullText === "") {
+        this.errorMessage = "Please enter the text of the note.";
 
         passed = false;
       }
@@ -91,7 +91,7 @@ export default {
       return passed;
     },
     async submitForm() {
-      let url = '/notes/';
+      let url = "/notes/";
 
       const id = this.note?.id;
       const data = {
@@ -110,7 +110,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = this.note?.id ? 'PATCH' : 'POST';
+          const verb = this.note?.id ? "PATCH" : "POST";
 
           const result = await axiosInstance({
             method: verb,
@@ -120,23 +120,23 @@ export default {
 
           this.noteCreated = true;
 
-          const resultVerb = this.note?.id ? 'Updated' : 'Created';
+          const resultVerb = this.note?.id ? "Updated" : "Created";
           this.setTitleAndDescriptionMixin({
             title: `Note ${resultVerb}`,
           });
 
           if (this.note?.id) {
-            this.$store.dispatch('categoryPages/setNote', result.data);
-            this.$router.push({ name: 'editNoteSuccess', params: { id: this.note.id } });
+            this.$store.dispatch("categoryPages/setNote", result.data);
+            this.$router.push({ name: "editNoteSuccess", params: { id: this.note.id } });
           } else {
-            this.$store.dispatch('categoryPages/addNote', result.data);
-            this.$router.push({ name: 'TabNotes' });
+            this.$store.dispatch("categoryPages/addNote", result.data);
+            this.$router.push({ name: "TabNotes" });
           }
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }

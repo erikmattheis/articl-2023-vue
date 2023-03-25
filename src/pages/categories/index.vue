@@ -74,13 +74,13 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
-import CardNotification from '@/components/ui/CardNotification.vue';
-import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
-import axiosInstance from '@/services/axiosService';
+import { mapGetters } from "vuex";
+import CardNotification from "@/components/ui/CardNotification.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'CreateCategoryPage',
+  name: "CreateCategoryPage",
   components: {
     CardNotification,
     LoadingPlaceholder,
@@ -92,8 +92,8 @@ export default {
     description: null,
     AISummary: null,
     AIError: null,
-    errorMessage: '',
-    formAction: '',
+    errorMessage: "",
+    formAction: "",
     isLoading: true,
     oldSlug: null,
     result: null,
@@ -106,24 +106,24 @@ export default {
     },
     slug() {
       if (!this.title) {
-        return '';
+        return "";
       }
 
       let str = this.title.replace(
         /\s/g,
-        '-',
+        "-",
       );
 
       str = str.toLowerCase();
 
       str = encodeURIComponent(str);
 
-      str = str.replace(/'/g, '%27');
+      str = str.replace(/'/g, "%27");
 
       return str;
     },
     ...mapGetters({
-      breadcrumbs: 'categoryPages/breadcrumbs',
+      breadcrumbs: "categoryPages/breadcrumbs",
     }),
   },
   mounted() {
@@ -132,7 +132,7 @@ export default {
 
     this.id = this.$route.params.id;
 
-    this.formAction = this.id ? 'Edit' : 'Create';
+    this.formAction = this.id ? "Edit" : "Create";
 
     if (this.id) {
       this.getCurrentCategory(this.id);
@@ -160,19 +160,19 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async getCategory(id) {
       return axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/categories/${id}`,
       });
     },
     async getCategoryBySlug(slug) {
       return axiosInstance({
-        method: 'GET',
-        url: '/categories/',
+        method: "GET",
+        url: "/categories/",
         oparams: {
           slug,
         },
@@ -181,8 +181,8 @@ export default {
     resetFormErrors() {
       this.success = null;
       this.result = null;
-      this.errorMessage = '';
-      this.AIError = '';
+      this.errorMessage = "";
+      this.AIError = "";
     },
     checkForm() {
       this.resetFormErrors();
@@ -192,19 +192,19 @@ export default {
       if (!this.title) {
         this.titleInvalid = true;
 
-        this.errorMessage = 'Please enter a title.';
+        this.errorMessage = "Please enter a title.";
 
         passed = false;
       } else if (!this.slug) {
         this.slugInvalid = true;
 
-        this.errorMessage = 'Please enter a slug.';
+        this.errorMessage = "Please enter a slug.";
 
         passed = false;
       } else if (!this.parentSlug) {
         this.parentIdInvalid = true;
 
-        this.errorMessage = 'Please select a parent category.';
+        this.errorMessage = "Please select a parent category.";
 
         passed = false;
       }
@@ -214,7 +214,7 @@ export default {
     async getAISummary() {
       try {
         this.buttonDisabled = true;
-        this.AIError = '';
+        this.AIError = "";
 
         const data = {
           category: this.title,
@@ -222,8 +222,8 @@ export default {
         };
 
         const result = await axiosInstance({
-          method: 'POST',
-          url: '/categories/ai-summary',
+          method: "POST",
+          url: "/categories/ai-summary",
           data,
         });
 
@@ -232,10 +232,10 @@ export default {
         } else if (result.data?.message) {
           this.AIError = result.data.message;
         } else {
-          this.AIError = 'There was an error getting the AI summary.';
+          this.AIError = "There was an error getting the AI summary.";
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
@@ -247,8 +247,8 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = id ? 'PUT' : 'POST';
-          const possiblyEmtyId = id || '';
+          const verb = id ? "PUT" : "POST";
+          const possiblyEmtyId = id || "";
           const data = {
             title: this.title,
             slug: this.slug,
@@ -257,7 +257,7 @@ export default {
             parentSlug: this.parentSlug,
           };
 
-          const titleVerb = id ? 'Edited' : 'Created';
+          const titleVerb = id ? "Edited" : "Created";
 
           this.setTitleAndDescriptionMixin({ title: `Category ${titleVerb}` });
 
@@ -273,28 +273,28 @@ export default {
 
           this.success = true;
 
-          this.$store.dispatch('modals/setSuccessTitle', `Category ${titleVerb}`);
+          this.$store.dispatch("modals/setSuccessTitle", `Category ${titleVerb}`);
 
           this.$store.dispatch(
-            'modals/setSuccessMessage',
+            "modals/setSuccessMessage",
             `The category was successfully ${titleVerb}.`,
           );
           if (Number(this.parentSlug) === 0) {
-            this.$router.push({ name: 'homePage' });
+            this.$router.push({ name: "homePage" });
           } else {
-            this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+            this.$router.push({ name: "categoryPage", params: { slug: this.parentSlug } });
           }
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
     },
     removePunctuation(str) {
-      return str.replace(/[^\w\s']|_/g, '').replace(/\s+/g, ' ');
+      return str.replace(/[^\w\s']|_/g, "").replace(/\s+/g, " ");
     },
 
   },

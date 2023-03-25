@@ -21,16 +21,16 @@ Please include rewriting these instructions if they can be clearer or more disti
 
 */
 
-import { createApp } from 'vue';
-import VueCookies from 'vue-cookies';
+import { createApp } from "vue";
+import VueCookies from "vue-cookies";
 
-import App from './App.vue';
-import router from './router';
-import store from './store/index';
+import App from "./App.vue";
+import router from "./router";
+import store from "./store/index";
 
-import isLoggedInMixin from './mixins/isLoggedInMixin';
-import setTitleAndDescriptionMixin from './mixins/setTitleAndDescriptionMixin';
-import axiosInstance from './services/axiosService';
+import isLoggedInMixin from "./mixins/isLoggedInMixin";
+import setTitleAndDescriptionMixin from "./mixins/setTitleAndDescriptionMixin";
+import axiosInstance from "./services/axiosService";
 
 const app = createApp(App);
 
@@ -38,7 +38,7 @@ app.use(router);
 
 let secure = true;
 
-if (window.location.hostname === '192.168.1.130' || window.location.hostname === 'localhost') {
+if (window.location.hostname === "192.168.1.130" || window.location.hostname === "localhost") {
   secure = false;
 }
 
@@ -66,7 +66,7 @@ axiosInstance.interceptors.request.use(
     const req = request;
     const { accessTokenValue } = store.state.tokens;
 
-    if (accessTokenValue && req.url !== '/auth/refresh-tokens') {
+    if (accessTokenValue && req.url !== "/auth/refresh-tokens") {
       req.headers.Authorization = `Bearer ${accessTokenValue}`;
     }
 
@@ -86,13 +86,13 @@ axiosInstance.interceptors.response.use(
     if (status === HTTP_UNAUTHORIZED) {
       try {
         // Attempt to refresh the access token
-        await store.dispatch('tokens/refreshSession');
+        await store.dispatch("tokens/refreshSession");
         // Retry the original request
         return axiosInstance(error.config);
       } catch (err) {
         // Logout user and redirect to login page
-        store.dispatch('users/logout');
-        router.push({ name: 'login' });
+        store.dispatch("users/logout");
+        router.push({ name: "login" });
         return Promise.reject(error);
       }
     }
@@ -106,10 +106,10 @@ axiosInstance.interceptors.response.use(
   (error) => {
     const { status } = error;
     if (status === HTTP_FORBIDDEN) {
-      router.push({ name: 'Forbidden' });
+      router.push({ name: "Forbidden" });
     }
     return Promise.reject(error);
   },
 );
 
-app.mount('#app');
+app.mount("#app");

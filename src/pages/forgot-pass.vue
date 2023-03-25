@@ -29,21 +29,21 @@
 </template>
 
 <script>
-import validateEmail from '@/services/emailValidationService';
-import axiosInstance from '@/services/axiosService';
+import validateEmail from "@/services/emailValidationService";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'ForgotPass',
+  name: "ForgotPass",
   data: () => ({
     email: null,
     emailInvalid: null,
-    errorMessage: '',
+    errorMessage: "",
     buttonDisabled: false,
     result: null,
   }),
   mounted: () => {
     this.setTitleAndDescriptionMixin({
-      title: 'Forgot pass',
+      title: "Forgot pass",
     });
   },
   methods: {
@@ -54,7 +54,7 @@ export default {
     },
     checkForm() {
       if (!this.email || !validateEmail.validateEmail(this.email)) {
-        this.errorMessage = 'Please enter a valid email address';
+        this.errorMessage = "Please enter a valid email address";
 
         return false;
       }
@@ -69,16 +69,16 @@ export default {
           this.buttonDisabled = true;
 
           const result = await axiosInstance({
-            method: 'POST',
-            url: '/auth/forgot-password',
+            method: "POST",
+            url: "/auth/forgot-password",
             data: {
               email: this.email,
             },
           });
 
-          this.$store.dispatch('modals/setSuccessTitle', 'Email sent');
+          this.$store.dispatch("modals/setSuccessTitle", "Email sent");
 
-          this.$store.dispatch('modals/setSuccessMessage', 'Check your email for instructions how to reset your password.');
+          this.$store.dispatch("modals/setSuccessMessage", "Check your email for instructions how to reset your password.");
 
           if (result?.data?.message) {
             this.result = result.data.message;
@@ -86,10 +86,10 @@ export default {
             this.result = result.response;
           }
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }

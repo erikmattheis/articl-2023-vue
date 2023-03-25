@@ -147,38 +147,38 @@
 </template>
 
 <script>
-import VueCookies from 'vue-cookies';
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueCookies from "vue-cookies";
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'TheHeader',
+  name: "TheHeader",
   components: {
     VueFeather,
   },
   data: () => ({
-    theme: '',
+    theme: "",
   }),
   computed: {
     ...mapGetters({
-      articlCount: 'categoryPages/count',
-      accessTokenExpires: 'tokens/accessTokenExpires',
+      articlCount: "categoryPages/count",
+      accessTokenExpires: "tokens/accessTokenExpires",
     }),
     countMessage() {
       return `${this.articlCount} articles`;
     },
   },
   created() {
-    const theme = VueCookies.get('data-theme');
+    const theme = VueCookies.get("data-theme");
 
-    this.theme = theme !== 'dark' ? 'light' : 'dark';
+    this.theme = theme !== "dark" ? "light" : "dark";
 
-    document.documentElement.setAttribute('data-theme', this.theme);
+    document.documentElement.setAttribute("data-theme", this.theme);
 
-    if (VueCookies.isKey('font-size')) {
-      this.changeTextSize(VueCookies.get('font-size'));
+    if (VueCookies.isKey("font-size")) {
+      this.changeTextSize(VueCookies.get("font-size"));
     } else {
       this.changeTextSize(1);
     }
@@ -186,26 +186,26 @@ export default {
   methods: {
     async toggleTheme() {
       try {
-        this.theme = this.theme === 'light' ? 'dark' : 'light';
+        this.theme = this.theme === "light" ? "dark" : "light";
 
-        document.documentElement.setAttribute('data-theme', this.theme);
+        document.documentElement.setAttribute("data-theme", this.theme);
 
-        VueCookies.set('data-theme', this.theme);
+        VueCookies.set("data-theme", this.theme);
 
         await axiosInstance({
-          method: 'PATCH',
-          url: '/users/me',
+          method: "PATCH",
+          url: "/users/me",
           data: {
             theme: this.theme,
             fontSize: this.fontSize,
           },
         });
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async logout() {
-      await this.$store.dispatch('users/logout');
+      await this.$store.dispatch("users/logout");
     },
     getDefaultProperty(tag, prop) {
       const elem = document.createElement(tag);
@@ -217,24 +217,24 @@ export default {
     changeTextSize(factor) {
       let newSize;
       if (factor === 1) {
-        newSize = this.getDefaultProperty('body', '--font-size');
+        newSize = this.getDefaultProperty("body", "--font-size");
         newSize = parseFloat(newSize) || 16;
       } else {
-        let currentSize = getComputedStyle(document.documentElement).getPropertyValue('--font-size');
+        let currentSize = getComputedStyle(document.documentElement).getPropertyValue("--font-size");
         currentSize = currentSize || 16;
         newSize = parseFloat(currentSize) * factor;
       }
       document.documentElement.style.setProperty(
-        '--font-size',
+        "--font-size",
         `${newSize}px`,
       );
-      VueCookies.set('font-size', factor);
+      VueCookies.set("font-size", factor);
     },
     clearLocalData() {
-      this.$store.dispatch('tokens/clearTokens', false);
-      VueCookies.remove('data-theme');
-      VueCookies.remove('font-size');
-      this.$router.push('/');
+      this.$store.dispatch("tokens/clearTokens", false);
+      VueCookies.remove("data-theme");
+      VueCookies.remove("font-size");
+      this.$router.push("/");
     },
   },
 };

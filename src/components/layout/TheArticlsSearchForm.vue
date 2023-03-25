@@ -87,13 +87,13 @@
 </template>
 
 <script>
-import { debounce } from 'lodash';
-import { mapGetters } from 'vuex';
+import { debounce } from "lodash";
+import { mapGetters } from "vuex";
 
-import InputTypeahead from '@/components/ui/InputTypeahead.vue';
+import InputTypeahead from "@/components/ui/InputTypeahead.vue";
 
 export default {
-  name: 'TheArticlsSearchForm',
+  name: "TheArticlsSearchForm",
   components: {
     InputTypeahead,
   },
@@ -108,14 +108,14 @@ export default {
   computed: {
     queryUC: (val) => val[0].toUpperCase() + val.substring(1),
     ...mapGetters({
-      years: 'articlsParams/years',
+      years: "articlsParams/years",
     }),
     text: {
       get() {
         return this.$store.state.articlsParams.text;
       },
       set(value) {
-        this.$store.dispatch('articlsParams/text', value);
+        this.$store.dispatch("articlsParams/text", value);
       },
     },
     title: {
@@ -123,7 +123,7 @@ export default {
         return this.$store.state.articlsParams.title;
       },
       set(value) {
-        this.$store.dispatch('articlsParams/title', value);
+        this.$store.dispatch("articlsParams/title", value);
       },
     },
     journal: {
@@ -131,7 +131,7 @@ export default {
         return this.$store.state.articlsParams.journal;
       },
       set(value) {
-        this.$store.dispatch('articlsParams/journal', value);
+        this.$store.dispatch("articlsParams/journal", value);
       },
     },
     authors: {
@@ -139,7 +139,7 @@ export default {
         return this.$store.state.articlsParams.authors;
       },
       set(value) {
-        this.$store.dispatch('articlsParams/authors', value);
+        this.$store.dispatch("articlsParams/authors", value);
       },
     },
     yearComparison: {
@@ -147,7 +147,7 @@ export default {
         return this.$store.state.articlsParams.yearComparison;
       },
       set(value) {
-        this.$store.dispatch('articlsParams/yearComparison', value);
+        this.$store.dispatch("articlsParams/yearComparison", value);
       },
     },
     year: {
@@ -156,10 +156,10 @@ export default {
       },
       set(value) {
         if (Number(value) === Number(this.yearsStart)) {
-          this.$store.dispatch('articlsParams/yearComparison', 'after');
+          this.$store.dispatch("articlsParams/yearComparison", "after");
         }
 
-        this.$store.dispatch('articlsParams/year', value);
+        this.$store.dispatch("articlsParams/year", value);
       },
     },
     types: {
@@ -167,57 +167,57 @@ export default {
         return this.$store.state.articlsParams.types;
       },
       set(value) {
-        this.$store.dispatch('articlsParams/types', value);
+        this.$store.dispatch("articlsParams/types", value);
       },
     },
   },
   watch: {
     yearComparison: {
       handler(newValue) {
-        this.$store.dispatch('articlsParams/yearComparison', newValue);
+        this.$store.dispatch("articlsParams/yearComparison", newValue);
       },
     },
   },
   created() {
-    this.setTitleAndDescriptionMixin({ title: 'Search for articles' });
+    this.setTitleAndDescriptionMixin({ title: "Search for articles" });
     this.$store.dispatch(
-      'articlsParams/types',
+      "articlsParams/types",
       this.$store.state.articlsParams.allTypes,
     );
 
     this.onTitleChange = debounce(this.onTitleChange, 200);
   },
   unmounted() {
-    this.$store.dispatch('articlsParams/text', undefined);
+    this.$store.dispatch("articlsParams/text", undefined);
 
-    this.$store.dispatch('articlsParams/title', undefined);
+    this.$store.dispatch("articlsParams/title", undefined);
 
-    this.$store.dispatch('articlsParams/journal', undefined);
+    this.$store.dispatch("articlsParams/journal", undefined);
 
-    this.$store.dispatch('articlsParams/authors', undefined);
+    this.$store.dispatch("articlsParams/authors", undefined);
 
-    this.$store.dispatch('articlsParams/yearComparison', undefined);
+    this.$store.dispatch("articlsParams/yearComparison", undefined);
 
-    this.$store.dispatch('articlsParams/types', []);
+    this.$store.dispatch("articlsParams/types", []);
   },
   methods: {
     onTypesChange(event) {
-      this.$store.dispatch('articlsParams/types', event.target.value);
+      this.$store.dispatch("articlsParams/types", event.target.value);
     },
     onYearChange(event) {
-      this.$store.dispatch('articlsParams/year', event.target.value);
+      this.$store.dispatch("articlsParams/year", event.target.value);
     },
     onJournalChange(event) {
-      this.$store.dispatch('articlsParams/journal', event.value);
+      this.$store.dispatch("articlsParams/journal", event.value);
     },
     onAuthorsChange(event) {
-      this.$store.dispatch('articlsParams/authors', event.value);
+      this.$store.dispatch("articlsParams/authors", event.value);
     },
     onTitleChange(event) {
-      this.$store.dispatch('articlsParams/title', event.target.value);
+      this.$store.dispatch("articlsParams/title", event.target.value);
     },
     onYearComparisonChange(event) {
-      this.$store.dispatch('articlsParams/yearComparison', event.target.value);
+      this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
   },
 };

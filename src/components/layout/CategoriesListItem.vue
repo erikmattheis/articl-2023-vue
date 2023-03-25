@@ -15,10 +15,10 @@
 
 <script>
 
-import CategoryActions from '@/components/layout/CategoryActions.vue';
+import CategoryActions from "@/components/layout/CategoryActions.vue";
 
 export default {
-  name: 'CategoriesListItem',
+  name: "CategoriesListItem",
 
   components: {
     CategoryActions,
@@ -34,12 +34,12 @@ export default {
     },
     slug: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   computed: {
     tabName() {
-      return this.treeLevel !== 3 ? 'TabCategories' : 'ArticlsList';
+      return this.treeLevel !== 3 ? "TabCategories" : "ArticlsList";
     },
   },
 

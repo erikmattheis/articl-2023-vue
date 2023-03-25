@@ -1,20 +1,20 @@
-import store from '@/store';
+import store from "@/store";
 
 const setTitle = (title) => {
   document.title = title;
 };
 const setMetaDescription = (metaDescription) => {
-  let meta = document.querySelector('meta[name="description"]');
+  let meta = document.querySelector("meta[name=\"description\"]");
 
   if (!meta) {
-    meta = document.createElement('meta');
+    meta = document.createElement("meta");
 
-    meta.name = 'description';
+    meta.name = "description";
 
     document
-      .getElementsByTagName('head')[0]
+      .getElementsByTagName("head")[0]
       .appendChild(meta)
-      .setAttribute('content', metaDescription);
+      .setAttribute("content", metaDescription);
   } else {
     meta.content = metaDescription;
   }
@@ -24,7 +24,7 @@ const setTitleAndDescription = (object) => {
 
   setMetaDescription(object.description);
 
-  store.dispatch('metas/setMetaDescriptionAndDocumentTitle', {
+  store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
     title: object.title,
     description: object.description,
   });

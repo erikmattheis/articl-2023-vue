@@ -13,15 +13,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
-import DirectoryActions from '@/components/layout/DirectoryActions.vue';
-import CategoriesList from '@/components/layout/CategoriesList.vue';
-import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
-import axiosInstance from '@/services/axiosService';
+import DirectoryActions from "@/components/layout/DirectoryActions.vue";
+import CategoriesList from "@/components/layout/CategoriesList.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'HomePage',
+  name: "HomePage",
   components: {
     LoadingPlaceholder,
     CategoriesList,
@@ -30,20 +30,20 @@ export default {
   data() {
     return {
       isLoading: true,
-      title: '',
+      title: "",
     };
   },
   computed: {
     ...mapGetters({
-      articls: 'categoryPages/articls',
-      articlTypes: 'categoryPages/articlTypes',
-      categories: 'categoryPages/categories',
-      notes: 'categoryPages/notes',
-      user: 'users/user',
+      articls: "categoryPages/articls",
+      articlTypes: "categoryPages/articlTypes",
+      categories: "categoryPages/categories",
+      notes: "categoryPages/notes",
+      user: "users/user",
     }),
   },
   watch: {
-    '$route.params.slug': {
+    "$route.params.slug": {
       handler() {
         this.updateData();
       },
@@ -52,7 +52,7 @@ export default {
   },
   created() {
     this.setTitleAndDescriptionMixin({
-      title: 'Articl Home',
+      title: "Articl Home",
     });
   },
   methods: {
@@ -63,30 +63,30 @@ export default {
         const results = await this.fetchData();
 
         if (results.count) {
-          this.$store.dispatch('categoryPages/count', results.count);
+          this.$store.dispatch("categoryPages/count", results.count);
         }
         if (results.categories?.length) {
-          this.$store.dispatch('categoryPages/categories', results.categories);
+          this.$store.dispatch("categoryPages/categories", results.categories);
         } else {
-          this.$store.dispatch('categoryPages/categories', []);
+          this.$store.dispatch("categoryPages/categories", []);
         }
 
         if (results.breadcrumbs?.length) {
-          this.$store.dispatch('categoryPages/breadcrumbs', results.breadcrumbs);
+          this.$store.dispatch("categoryPages/breadcrumbs", results.breadcrumbs);
         } else {
-          this.$store.dispatch('categoryPages/breadcrumbs', []);
+          this.$store.dispatch("categoryPages/breadcrumbs", []);
         }
 
         if (results.articls) {
-          this.$store.dispatch('categoryPages/articls', results.articls);
-          this.$store.dispatch('categoryPages/articlTypes', results.articlTypes);
+          this.$store.dispatch("categoryPages/articls", results.articls);
+          this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
         } else {
-          this.$store.dispatch('categoryPages/articls', []);
-          this.$store.dispatch('categoryPages/articlTypes', []);
+          this.$store.dispatch("categoryPages/articls", []);
+          this.$store.dispatch("categoryPages/articlTypes", []);
         }
 
         if (results.notes?.length) {
-          this.$store.dispatch('categoryPages/notes', results.notes);
+          this.$store.dispatch("categoryPages/notes", results.notes);
         }
 
         this.title = results.category[0]?.title;
@@ -98,7 +98,7 @@ export default {
           description,
         });
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.isLoading = false;
       }
@@ -106,8 +106,8 @@ export default {
 
     async fetchData() {
       const result = await axiosInstance({
-        method: 'GET',
-        url: '/resource/0',
+        method: "GET",
+        url: "/resource/0",
       });
 
       return {

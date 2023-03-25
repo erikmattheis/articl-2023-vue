@@ -32,8 +32,15 @@
                   <question-answer-actions
                     @remove="removeAnswer"
                     @add="addAnswer" />
-                <a role="button" @click.prevent="removeAnswer(index)" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Remove Answer</a>
-                <a v-if="index === QandAs.answers.length + 1" role="button" @click.prevent="addAnswer()" @keyup.enter.prevent="removeAnswer(index)" tabindex="0">Add Answer</a>
+                <a role="button"
+@click.prevent="removeAnswer(index)"
+@keyup.enter.prevent="removeAnswer(index)"
+tabindex="0">Remove Answer</a>
+                <a v-if="index === QandAs.answers.length + 1"
+role="button"
+@click.prevent="addAnswer()"
+@keyup.enter.prevent="removeAnswer(index)"
+tabindex="0">Add Answer</a>
               </div>
             </template>
           </draggable-items>
@@ -65,24 +72,24 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
-import DraggableItems from 'vuedraggable';
-import QuestionAnswerActions from '@/components/layout/QuestionAnswerActions.vue';
+import axiosInstance from "@/services/axiosService";
+import DraggableItems from "vuedraggable";
+import QuestionAnswerActions from "@/components/layout/QuestionAnswerActions.vue";
 
 export default {
   props: {
     passedQandAs: {
       type: Object,
       default: () => ({
-        QAndAs: '',
+        QAndAs: "",
         answers: [{
           id: null,
-          answer: '',
+          answer: "",
           correct: false,
         },
         {
           id: null,
-          answer: '',
+          answer: "",
           correct: false,
         },
         ],
@@ -93,7 +100,7 @@ export default {
     DraggableItems,
     QuestionAnswerActions,
   },
-  emits: ['QandAs-updated'],
+  emits: ["QandAs-updated"],
   data() {
     return {
       QandAs: {},
@@ -108,11 +115,11 @@ export default {
     this.QandAs = this.passedQandAs;
 
     if (!this.QandAs?.id) {
-      this.formAction = 'Create';
+      this.formAction = "Create";
     } else {
       this.question = this.QandAs.question;
       this.questionOriginal = this.QandAs.question;
-      this.formAction = 'Edit';
+      this.formAction = "Edit";
     }
 
     this.setTitleAndDescriptionMixin({
@@ -122,7 +129,7 @@ export default {
   methods: {
     addAnswer() {
       this.QandAs.answers.push({
-        answer: '',
+        answer: "",
         correct: false,
       });
     },
@@ -131,18 +138,18 @@ export default {
     },
     cancel() {
       this.question = this.questionOriginal;
-      this.$router.push({ name: 'TabQandAs' });
+      this.$router.push({ name: "TabQandAs" });
     },
     resetFormErrors() {
-      this.errorMessage = '';
+      this.errorMessage = "";
     },
     checkForm() {
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.question === '') {
-        this.errorMessage = 'Please enter the text of the QandAs.';
+      if (this.question === "") {
+        this.errorMessage = "Please enter the text of the QandAs.";
 
         passed = false;
       }
@@ -151,7 +158,7 @@ export default {
     },
 
     async submitForm() {
-      let url = '/QandAs/';
+      let url = "/QandAs/";
 
       const id = this.QandAs?.id;
       const data = {
@@ -171,7 +178,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = this.QandAs?.id ? 'PATCH' : 'POST';
+          const verb = this.QandAs?.id ? "PATCH" : "POST";
 
           const result = await axiosInstance({
             method: verb,
@@ -179,24 +186,24 @@ export default {
             data,
           });
 
-          const resultVerb = this.QandAs?.id ? 'PATCH' : 'POST';
+          const resultVerb = this.QandAs?.id ? "PATCH" : "POST";
 
           this.setTitleAndDescriptionMixin({
             title: `${resultVerb} Q and A`,
           });
 
           this.QandAsCreated = true;
-          this.$emit('QandAs-updated', result.data);
+          this.$emit("QandAs-updated", result.data);
           if (id) {
-            this.$router.push({ name: 'editQandAsuccess', params: { id: this.QandAs.id } });
+            this.$router.push({ name: "editQandAsuccess", params: { id: this.QandAs.id } });
           } else {
-            this.$router.push({ name: 'TabQandAs', params: { slug: this.$route.params.slug } });
+            this.$router.push({ name: "TabQandAs", params: { slug: this.$route.params.slug } });
           }
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
@@ -209,7 +216,7 @@ export default {
           objRef.order = index;
         });
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async saveAnswerOrderValues() {
@@ -221,7 +228,7 @@ export default {
 
         await this.saveAnswersOrder(order);
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
 
@@ -229,8 +236,8 @@ export default {
       this.isLoading = true;
 
       const result = await axiosInstance({
-        method: 'POST',
-        url: '/answers/order',
+        method: "POST",
+        url: "/answers/order",
         data: {
           order,
         },

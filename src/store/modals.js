@@ -22,23 +22,23 @@ export default {
   },
   actions: {
     setSuccessTitle: (context, payload) => {
-      context.commit('SET_SUCCESS_TITLE', payload);
+      context.commit("SET_SUCCESS_TITLE", payload);
     },
     setSuccessMessage: (context, payload) => {
-      context.commit('SET_SUCCESS_MESSAGE', payload);
+      context.commit("SET_SUCCESS_MESSAGE", payload);
     },
     clearSuccess: (context) => {
-      context.commit('SET_SUCCESS_TITLE', '');
+      context.commit("SET_SUCCESS_TITLE", "");
 
-      context.commit('SET_SUCCESS_MESSAGE', '');
+      context.commit("SET_SUCCESS_MESSAGE", "");
     },
     setErrorMessage: (context, payload) => {
-      context.commit('SET_ERROR_MESSAGE', payload);
+      context.commit("SET_ERROR_MESSAGE", payload);
     },
     clearError: (context) => {
-      context.commit('SET_ERROR_TITLE', '');
+      context.commit("SET_ERROR_TITLE", "");
 
-      context.commit('SET_ERROR_MESSAGE', '');
+      context.commit("SET_ERROR_MESSAGE", "");
     },
   },
   getters: {

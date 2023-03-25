@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name: 'LoadingPlaceholder',
+  name: "LoadingPlaceholder",
   methods: {
     pickWidth: (min, max) => Math.floor(Math.random() * (max - min + 1) + min),
   },

@@ -50,26 +50,26 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
-import { mapGetters } from 'vuex';
+import VueFeather from "vue-feather";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     VueFeather,
   },
   data: () => ({
-    title: '',
-    showErrorStack: '',
+    title: "",
+    showErrorStack: "",
   }),
   computed: {
     ...mapGetters({
-      errorMessage: 'errors/errorMessage',
-      errorStack: 'errors/errorStack',
+      errorMessage: "errors/errorMessage",
+      errorStack: "errors/errorStack",
     }),
   },
   methods: {
     close() {
-      this.$store.dispatch('errors/clearError');
+      this.$store.dispatch("errors/clearError");
     },
   },
 };

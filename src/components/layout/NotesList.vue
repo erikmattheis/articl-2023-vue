@@ -10,19 +10,20 @@
     <ul v-if="notes && notes.length">
       <li v-for="note in notes || []"
         :key="note.id">
-        <notes-list-item :passed-note="note" @note-updated="noteUpdated"/>
+        <notes-list-item :passed-note="note"
+@note-updated="noteUpdated" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import NotesForm from '@/components/layout/NotesForm.vue';
-import NotesListItem from '@/components/layout/NotesListItem.vue';
+import { mapGetters } from "vuex";
+import NotesForm from "@/components/layout/NotesForm.vue";
+import NotesListItem from "@/components/layout/NotesListItem.vue";
 
 export default {
-  name: 'TabNotes',
+  name: "TabNotes",
   components: { NotesListItem, NotesForm },
   props: {
     items: {
@@ -37,13 +38,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      notes: 'categoryPages/notes',
+      notes: "categoryPages/notes",
     }),
   },
   created() {
     /* TODO get category name */
     this.setTitleAndDescriptionMixin({
-      title: 'Articl Notes',
+      title: "Articl Notes",
     });
   },
   methods: {

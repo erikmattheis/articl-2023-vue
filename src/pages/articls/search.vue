@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import TheArticlsSearchForm from '@/components/layout/TheArticlsSearchForm.vue';
-import TheArticlsSearchParams from '@/components/layout/TheArticlsSearchParams.vue';
+import TheArticlsSearchForm from "@/components/layout/TheArticlsSearchForm.vue";
+import TheArticlsSearchParams from "@/components/layout/TheArticlsSearchParams.vue";
 
 export default {
-  name: 'ArticlsSearch',
+  name: "ArticlsSearch",
   components: {
     TheArticlsSearchForm,
     TheArticlsSearchParams,

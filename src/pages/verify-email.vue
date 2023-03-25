@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'VerifyEmailPage',
+  name: "VerifyEmailPage",
 
   data: () => ({
     resultTitle: null,
@@ -22,10 +22,10 @@ export default {
       await this.submitForm();
 
       this.setTitleAndDescriptionMixin({
-        title: 'Email Verification',
+        title: "Email Verification",
       });
     } catch (error) {
-      this.$store.dispatch('errors/setError', error);
+      this.$store.dispatch("errors/setError", error);
     }
   },
   methods: {
@@ -33,14 +33,14 @@ export default {
       this.isLoading = true;
 
       const response = await axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/auth/verify-email?token=${this.$route.query.token}`,
       });
 
       if (response?.status === 204) {
-        this.resultTitle = 'Email verified';
+        this.resultTitle = "Email verified";
       } else {
-        this.$store.dispatch('errors/setError', response);
+        this.$store.dispatch("errors/setError", response);
       }
 
       this.isLoading = false;

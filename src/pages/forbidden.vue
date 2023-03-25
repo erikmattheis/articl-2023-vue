@@ -10,10 +10,10 @@
 <script>
 
 export default {
-  name: 'ForbiddenPage',
+  name: "ForbiddenPage",
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: 'Not Found',
+      title: "Not Found",
     });
   },
 };

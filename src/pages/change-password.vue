@@ -68,12 +68,12 @@
 </template>
 
 <script>
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
-import { scoreChars, validateEmail } from '@/services/userService';
-import axiosInstance from '@/services/axiosService';
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
+import { scoreChars, validateEmail } from "@/services/userService";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'PasswordReset',
+  name: "PasswordReset",
   components: {
     theButtonToggleHidden,
   },
@@ -82,11 +82,11 @@ export default {
     password: null,
     newPassword: null,
     newPassword2: null,
-    newPasswordType: 'password',
-    newPassword2Type: 'password',
+    newPasswordType: "password",
+    newPassword2Type: "password",
     buttonDisabled: false,
     passwordComplexity: 0,
-    errorMessage: '',
+    errorMessage: "",
     success: false,
     result: null,
     chrs: 0,
@@ -100,7 +100,7 @@ export default {
   },
   mounted: () => {
     this.setTitleAndDescriptionMixin({
-      title: 'Change Password',
+      title: "Change Password",
     });
   },
   methods: {
@@ -108,10 +108,10 @@ export default {
       let passed = true;
 
       if (this.newPassword?.length < 8) {
-        this.errorMessage = 'Passwords are at least eight characters.';
+        this.errorMessage = "Passwords are at least eight characters.";
         passed = false;
       } else if (this.newPassword !== this.newPassword2) {
-        this.errorMessage = 'Passwords do not mach.';
+        this.errorMessage = "Passwords do not mach.";
         passed = false;
       }
 
@@ -130,8 +130,8 @@ export default {
           this.buttonDisabled = true;
 
           await axiosInstance({
-            method: 'POST',
-            url: '/auth/change-password',
+            method: "POST",
+            url: "/auth/change-password",
             data: {
               username: this.username,
               newPassword: this.newPassword,
@@ -139,17 +139,17 @@ export default {
             },
           });
 
-          this.$store.dispatch('modals/setSuccessTitle', 'Password updated');
+          this.$store.dispatch("modals/setSuccessTitle", "Password updated");
 
           this.$store.dispatch(
-            'modals/setSuccessMessage',
-            'You have successfully changed your password.',
+            "modals/setSuccessMessage",
+            "You have successfully changed your password.",
           );
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }

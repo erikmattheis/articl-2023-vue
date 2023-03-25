@@ -31,21 +31,21 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
+import VueFeather from "vue-feather";
 
 export default {
-  name: 'CategoryActions',
+  name: "CategoryActions",
   components: {
     VueFeather,
   },
   props: {
     id: {
       type: String,
-      default: '',
+      default: "",
     },
     slug: {
       type: String,
-      default: '',
+      default: "",
     },
   },
 };

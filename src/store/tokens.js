@@ -1,15 +1,15 @@
 import {
   clearJWTTokens, getJWTToken, setJWTTokens, refreshJWTSession,
-} from '@/services/tokensService';
+} from "@/services/tokensService";
 
 export default {
   namespaced: true,
 
   state: () => ({
-    accessTokenExpires: getJWTToken('accessTokenExpires'),
-    accessTokenValue: getJWTToken('accessTokenValue'),
-    refreshTokenExpires: getJWTToken('refreshTokenExpires'),
-    refreshTokenValue: getJWTToken('refreshTokenValue'),
+    accessTokenExpires: getJWTToken("accessTokenExpires"),
+    accessTokenValue: getJWTToken("accessTokenValue"),
+    refreshTokenExpires: getJWTToken("refreshTokenExpires"),
+    refreshTokenValue: getJWTToken("refreshTokenValue"),
   }),
 
   mutations: {
@@ -33,35 +33,35 @@ export default {
 
   actions: {
     setTokens: (context, payload) => {
-      context.commit('SET_ACCESS_TOKEN_EXPIRES', payload.access.expires);
-      context.commit('SET_ACCESS_TOKEN_VALUE', payload.access.token);
-      context.commit('SET_REFRESH_TOKEN_EXPIRES', payload.refresh.expires);
-      context.commit('SET_REFRESH_TOKEN_VALUE', payload.refresh.token);
+      context.commit("SET_ACCESS_TOKEN_EXPIRES", payload.access.expires);
+      context.commit("SET_ACCESS_TOKEN_VALUE", payload.access.token);
+      context.commit("SET_REFRESH_TOKEN_EXPIRES", payload.refresh.expires);
+      context.commit("SET_REFRESH_TOKEN_VALUE", payload.refresh.token);
       setJWTTokens(payload);
     },
     clearTokens: (context, payload) => {
-      context.commit('SET_ACCESS_TOKEN_EXPIRES', '');
-      context.commit('SET_ACCESS_TOKEN_VALUE', '');
+      context.commit("SET_ACCESS_TOKEN_EXPIRES", "");
+      context.commit("SET_ACCESS_TOKEN_VALUE", "");
       if (!payload.rememberMe) {
-        context.commit('SET_REFRESH_TOKEN_EXPIRES', '');
-        context.commit('SET_REFRESH_TOKEN_VALUE', '');
+        context.commit("SET_REFRESH_TOKEN_EXPIRES", "");
+        context.commit("SET_REFRESH_TOKEN_VALUE", "");
         clearJWTTokens(payload.rememberMe);
       }
     },
     accessTokenExpires: (context, payload) => {
-      context.commit('SET_ACCESS_TOKEN_EXPIRES', payload);
+      context.commit("SET_ACCESS_TOKEN_EXPIRES", payload);
     },
 
     accessTokenValue: (context, payload) => {
-      context.commit('SET_ACCESS_TOKEN_VALUE', payload);
+      context.commit("SET_ACCESS_TOKEN_VALUE", payload);
     },
 
     refreshTokenExpires: (context, payload) => {
-      context.commit('SET_REFRESH_TOKEN_EXPIRES', payload);
+      context.commit("SET_REFRESH_TOKEN_EXPIRES", payload);
     },
 
     refreshTokenValue: (context, payload) => {
-      context.commit('SET_REFRESH_TOKEN_VALUE', payload);
+      context.commit("SET_REFRESH_TOKEN_VALUE", payload);
     },
 
     async refreshSession({ state }) {

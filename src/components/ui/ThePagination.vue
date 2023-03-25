@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: 'ThePagination',
+  name: "ThePagination",
   props: {
     numberOfButtons: {
       type: Number,
@@ -50,7 +50,7 @@ export default {
     },
   },
   emits: [
-    'page-changed',
+    "page-changed",
   ],
   computed: {
     isInFirstPage() {
@@ -111,7 +111,7 @@ export default {
         return;
       }
 
-      this.$emit('page-changed', 1);
+      this.$emit("page-changed", 1);
     },
     onClickPreviousPage() {
       if (this.isInFirstPage) {
@@ -120,10 +120,10 @@ export default {
 
       this.currentPage -= 1;
 
-      this.$emit('page-changed', this.currentPage);
+      this.$emit("page-changed", this.currentPage);
     },
     onClickPage(page) {
-      this.$emit('page-changed', page);
+      this.$emit("page-changed", page);
     },
     onClickNextPage() {
       if (this.isInLastPage) {
@@ -132,14 +132,14 @@ export default {
 
       this.currentPage += 1;
 
-      this.$emit('page-changed', this.currentPage);
+      this.$emit("page-changed", this.currentPage);
     },
     onClickLastPage() {
       if (this.isInLastPage) {
         return;
       }
 
-      this.$emit('page-changed', this.totalPages);
+      this.$emit("page-changed", this.totalPages);
     },
     isPageActive(page) {
       return this.currentPage === page;

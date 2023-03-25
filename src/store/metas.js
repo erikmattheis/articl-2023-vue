@@ -16,9 +16,9 @@ export default {
     setMetaDescriptionAndDocumentTitle: (context, {
       title, description,
     }) => {
-      context.commit('SET_DOCUMENT_TITLE', title);
+      context.commit("SET_DOCUMENT_TITLE", title);
 
-      context.commit('SET_META_DESCRIPTION', description);
+      context.commit("SET_META_DESCRIPTION", description);
     },
   },
   getters: {

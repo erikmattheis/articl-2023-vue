@@ -35,9 +35,9 @@
   </template>
 </template>
 <script>
-import { debounce } from 'lodash';
-import VueFeather from 'vue-feather';
-import axiosInstance from '@/services/axiosService';
+import { debounce } from "lodash";
+import VueFeather from "vue-feather";
+import axiosInstance from "@/services/axiosService";
 
 export default {
   components: {
@@ -45,16 +45,16 @@ export default {
   },
   props: {
     src: {
-      type: String, default: '',
+      type: String, default: "",
     },
     query: {
-      type: String, default: '',
+      type: String, default: "",
     },
     inputValue: {
-      type: String, default: '',
+      type: String, default: "",
     },
     labelValue: {
-      type: String, default: '',
+      type: String, default: "",
     },
   },
   emits: {
@@ -65,7 +65,7 @@ export default {
     current: -1,
     loading: false,
     selectFirst: true,
-    stringValue: '',
+    stringValue: "",
   }),
   computed: {
     hasItems() {
@@ -89,7 +89,7 @@ export default {
   },
   mounted() {
     this.$refs.input.addEventListener(
-      'blur',
+      "blur",
       () => {
         // it will work now
       },
@@ -112,9 +112,9 @@ export default {
         this.cancel();
 
         if (!this.stringValue) {
-          this.$emit('typeaheadUpdated', {
+          this.$emit("typeaheadUpdated", {
             field: this.query,
-            value: '',
+            value: "",
           });
 
           this.removeItems();
@@ -124,7 +124,7 @@ export default {
 
         this.hit();
 
-        this.$emit('typeaheadUpdated', {
+        this.$emit("typeaheadUpdated", {
           field: this.query,
           value: this.stringValue,
         });
@@ -143,7 +143,7 @@ export default {
 
         this.hit();
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
 
@@ -204,7 +204,7 @@ export default {
     onHit(val) {
       this.stringValue = val;
 
-      this.$emit('typeaheadUpdated', {
+      this.$emit("typeaheadUpdated", {
         field: this.query, value: val,
       });
     },

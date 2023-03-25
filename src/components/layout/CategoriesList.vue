@@ -20,21 +20,21 @@
 </template>
 
 <script>
-import DraggableItems from 'vuedraggable';
-import { mapGetters } from 'vuex';
-import axiosInstance from '@/services/axiosService';
+import DraggableItems from "vuedraggable";
+import { mapGetters } from "vuex";
+import axiosInstance from "@/services/axiosService";
 
-import CategoriesListItem from '@/components/layout/CategoriesListItem.vue';
+import CategoriesListItem from "@/components/layout/CategoriesListItem.vue";
 
 export default {
-  name: 'TabCategories',
+  name: "TabCategories",
   components: {
     DraggableItems,
     CategoriesListItem,
   },
   data() {
     return {
-      TabName: '',
+      TabName: "",
     };
   },
   computed: {
@@ -43,16 +43,16 @@ export default {
         return this.categories.map((a) => a);
       },
       set(newValue) {
-        this.$store.dispatch('categoryPages/categories', newValue);
+        this.$store.dispatch("categoryPages/categories", newValue);
       },
     },
     ...mapGetters({
-      categories: 'categoryPages/categories',
-      treeLevel: 'categoryPages/treeLevel',
+      categories: "categoryPages/categories",
+      treeLevel: "categoryPages/treeLevel",
     }),
   },
   mounted() {
-    this.TabName = this.treeLevel > 3 ? 'ArticlsList' : 'TabCategories';
+    this.TabName = this.treeLevel > 3 ? "ArticlsList" : "TabCategories";
   },
   methods: {
     updateOrderValues() {
@@ -62,9 +62,9 @@ export default {
 
           objRef.order = index;
         });
-        this.$store.dispatch('categoryPages/categories', this.categories);
+        this.$store.dispatch("categoryPages/categories", this.categories);
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
 
@@ -77,7 +77,7 @@ export default {
 
         await this.saveOrder(order);
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
 
@@ -85,8 +85,8 @@ export default {
       this.isLoading = true;
 
       const result = await axiosInstance({
-        method: 'POST',
-        url: '/categories/order',
+        method: "POST",
+        url: "/categories/order",
         data: {
           order,
         },

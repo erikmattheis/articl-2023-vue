@@ -1,149 +1,149 @@
-import store from '@/store';
+import store from "@/store";
 
-const errorAction = 'errors/setError';
+const errorAction = "errors/setError";
 
 // Parse the ID from the URL
 const getId = (url) => {
   let id = url;
 
-  if (url.charAt(url.length - 1) === '/') {
+  if (url.charAt(url.length - 1) === "/") {
     id = url.slice(0, Math.max(0, url.length - 1));
   }
 
-  return id.slice(Math.max(0, id.lastIndexOf('/') + 1));
+  return id.slice(Math.max(0, id.lastIndexOf("/") + 1));
 };
 const getDB = (url) => {
   try {
-    if (url.includes('pmc')) return 'pmc';
+    if (url.includes("pmc")) return "pmc";
 
-    if (url.includes('pubmed.')) return 'pubmed';
+    if (url.includes("pubmed.")) return "pubmed";
   } catch (error) {
     store.dispatch(errorAction, error);
   }
 
-  return '';
+  return "";
 };
 //  Authors as found in Pubmed Data
 const extractAuthorsPMC = (element) => {
-  if (!element.querySelector('surname')?.textContent) {
-    return '';
+  if (!element.querySelector("surname")?.textContent) {
+    return "";
   }
 
-  let authors = element.querySelector('surname') ? `${element.querySelector('surname')?.textContent} ` : '';
+  let authors = element.querySelector("surname") ? `${element.querySelector("surname")?.textContent} ` : "";
 
-  authors += element.querySelector('given-names') ? `${element.querySelector('given-names')?.textContent} ` : '';
+  authors += element.querySelector("given-names") ? `${element.querySelector("given-names")?.textContent} ` : "";
 
-  authors += element.querySelector('degrees') ? `${element.querySelector('degrees')?.textContent}<br><br>` : '';
+  authors += element.querySelector("degrees") ? `${element.querySelector("degrees")?.textContent}<br><br>` : "";
 
   return authors;
 };
 const extractAuthorsPubMed = (element) => {
-  if (!element.querySelector('LastName')?.textContent) {
-    return '';
+  if (!element.querySelector("LastName")?.textContent) {
+    return "";
   }
 
-  let authors = '';
+  let authors = "";
 
-  const hasLastName = element.querySelector('LastName')?.textContent;
+  const hasLastName = element.querySelector("LastName")?.textContent;
 
-  authors += hasLastName ? element.querySelector('LastName').textContent : '';
+  authors += hasLastName ? element.querySelector("LastName").textContent : "";
 
-  const hasFirstName = element.querySelector('FirstName')?.textContent;
+  const hasFirstName = element.querySelector("FirstName")?.textContent;
 
-  authors += hasFirstName ? element.querySelector('FirstName').textContent : '<br><br>';
+  authors += hasFirstName ? element.querySelector("FirstName").textContent : "<br><br>";
 
   return authors;
 };
 
 const extractAuthorsObjectsPubMed = (element) => {
-  if (!element.querySelector('LastName')?.textContent) {
+  if (!element.querySelector("LastName")?.textContent) {
     return {};
   }
 
-  let affl = element.querySelectorAll('Affiliation');
+  let affl = element.querySelectorAll("Affiliation");
   affl = [...affl];
 
   return {
-    nameFirst: element.querySelector('ForeName') ? element.querySelector('ForeName')?.textContent : '',
-    nameLast: element.querySelector('LastName')?.textContent,
+    nameFirst: element.querySelector("ForeName") ? element.querySelector("ForeName")?.textContent : "",
+    nameLast: element.querySelector("LastName")?.textContent,
     affilliations: affl.map((ele) => ele?.textContent),
   };
 };
 // Handle the Async fetch of Pubmed Data
 const api = async (surl) => {
-  const baseUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/';
-  const mode = 'efetch';
+  const baseUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+  const mode = "efetch";
   const database = getDB(surl);
   const id = getId(surl);
-  const type = 'xml';
+  const type = "xml";
   const request = new Request(`${baseUrl}${mode}.fcgi?db=${database}&id=${id}&rettype=abstract&retmode=${type}`);
 
   const results = await fetch(request);
   const str = await results.text();
-  const responseDocument = new DOMParser().parseFromString(str, 'application/xml');
+  const responseDocument = new DOMParser().parseFromString(str, "application/xml");
   const result = {
-    authorsOrig: '',
+    authorsOrig: "",
     authors: [],
   };
 
   switch (database) {
-    case 'pmc': {
-      result.title = responseDocument.querySelectorAll('article-title')[0]?.textContent;
+    case "pmc": {
+      result.title = responseDocument.querySelectorAll("article-title")[0]?.textContent;
 
-      const authorsPMC = responseDocument.querySelectorAll('contrib');
+      const authorsPMC = responseDocument.querySelectorAll("contrib");
 
       authorsPMC.forEach((element) => {
         result.authorsOrig += extractAuthorsPMC(element);
       });
 
-      const temporary = responseDocument.querySelectorAll('aff');
+      const temporary = responseDocument.querySelectorAll("aff");
 
       temporary.forEach((element) => {
         result.affiliation += `${element?.textContent}<br><br>`;
       });
 
-      result.journal = responseDocument.querySelectorAll('journal-title')[0]?.textContent;
+      result.journal = responseDocument.querySelectorAll("journal-title")[0]?.textContent;
 
-      result.year = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('year')[0]?.textContent;
+      result.year = responseDocument.querySelectorAll("pub-date")[0].querySelectorAll("year")[0]?.textContent;
 
-      result.month = responseDocument.querySelectorAll('pub-date')[0].querySelectorAll('month')[0]?.textContent;
+      result.month = responseDocument.querySelectorAll("pub-date")[0].querySelectorAll("month")[0]?.textContent;
 
-      result.abstract = responseDocument.querySelectorAll('abstract')[0]?.textContent;
+      result.abstract = responseDocument.querySelectorAll("abstract")[0]?.textContent;
 
       break;
     }
 
-    case 'pubmed': {
+    case "pubmed": {
       try {
-        result.title = responseDocument.querySelectorAll('ArticleTitle')[0]?.textContent;
+        result.title = responseDocument.querySelectorAll("ArticleTitle")[0]?.textContent;
       } catch (error) {
         throw new Error(error);
       }
 
-      result.doi = responseDocument.querySelectorAll('[IdType=doi]')[0]?.textContent;
+      result.doi = responseDocument.querySelectorAll("[IdType=doi]")[0]?.textContent;
 
-      const authorsPubMed = responseDocument.querySelectorAll('Author');
+      const authorsPubMed = responseDocument.querySelectorAll("Author");
 
       authorsPubMed.forEach((element) => {
         result.authors.push(extractAuthorsObjectsPubMed(element));
         result.authorsOrig += extractAuthorsPubMed(element);
       });
 
-      result.affiliation = responseDocument.querySelectorAll('Affiliation')[0]?.textContent;
+      result.affiliation = responseDocument.querySelectorAll("Affiliation")[0]?.textContent;
 
-      result.journal = responseDocument.querySelectorAll('Title')[0]?.textContent;
+      result.journal = responseDocument.querySelectorAll("Title")[0]?.textContent;
 
-      result.year = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Year')[0]?.textContent;
+      result.year = responseDocument.querySelectorAll("PubMedPubDate")[0].querySelectorAll("Year")[0]?.textContent;
 
-      result.month = responseDocument.querySelectorAll('PubMedPubDate')[0].querySelectorAll('Month')[0]?.textContent;
+      result.month = responseDocument.querySelectorAll("PubMedPubDate")[0].querySelectorAll("Month")[0]?.textContent;
 
-      result.abstract = responseDocument.querySelectorAll('Abstract')[0]?.textContent;
+      result.abstract = responseDocument.querySelectorAll("Abstract")[0]?.textContent;
 
       break;
     }
 
     default: {
-      throw new Error('Unknown function called in scraper');
+      throw new Error("Unknown function called in scraper");
     }
   }
 
@@ -156,72 +156,72 @@ async function scrape(surl) {
   const response = await fetch(url);
   const html = await response.text();
   const parser = new DOMParser();
-  const responseDocument = parser.parseFromString(html, 'text/html');
+  const responseDocument = parser.parseFromString(html, "text/html");
   const result = {
   };
 
   switch (database) {
-    case 'pmc':
+    case "pmc":
       try {
-        result.title = responseDocument.querySelectorAll('h1[class="content-title"]')[0]?.textContent;
+        result.title = responseDocument.querySelectorAll("h1[class=\"content-title\"]")[0]?.textContent;
 
-        result.authors = responseDocument.querySelectorAll('[class="contrib-group fm-author"]') ? responseDocument.querySelectorAll('[class="contrib-group fm-author"]')[0]?.textContent : '';
+        result.authors = responseDocument.querySelectorAll("[class=\"contrib-group fm-author\"]") ? responseDocument.querySelectorAll("[class=\"contrib-group fm-author\"]")[0]?.textContent : "";
 
-        const temporary = responseDocument.querySelectorAll('[class="fm-affl"]');
+        const temporary = responseDocument.querySelectorAll("[class=\"fm-affl\"]");
 
         temporary.forEach((element) => {
           result.affiliation += `${element?.textContent}<br><br>`;
         });
 
-        result.journal = responseDocument.querySelectorAll('li[class="archive"]')[0]?.textContent;
+        result.journal = responseDocument.querySelectorAll("li[class=\"archive\"]")[0]?.textContent;
 
-        result.year = responseDocument.querySelectorAll('li[class="issue-page"]')[0]?.textContent;
+        result.year = responseDocument.querySelectorAll("li[class=\"issue-page\"]")[0]?.textContent;
 
-        result.abstract = responseDocument.querySelectorAll('[class="tsec sec"]')[0]?.textContent;
+        result.abstract = responseDocument.querySelectorAll("[class=\"tsec sec\"]")[0]?.textContent;
       } catch (error) {
         throw new Error(error);
       }
 
       break;
 
-    case 'pubmed':
+    case "pubmed":
       try {
-        result.title = responseDocument.querySelectorAll('[class="heading-title"]')[0]?.textContent;
+        result.title = responseDocument.querySelectorAll("[class=\"heading-title\"]")[0]?.textContent;
 
-        result.authors = responseDocument.querySelectorAll('[class="authors-list"]') ? responseDocument.querySelectorAll('[class="authors-list"]')[0]?.textContent : '';
+        result.authors = responseDocument.querySelectorAll("[class=\"authors-list\"]") ? responseDocument.querySelectorAll("[class=\"authors-list\"]")[0]?.textContent : "";
 
-        result.affiliation = responseDocument.querySelectorAll('[class="affiliations"] ul')[0]?.textContent;
+        result.affiliation = responseDocument.querySelectorAll("[class=\"affiliations\"] ul")[0]?.textContent;
 
-        result.journal = responseDocument.querySelectorAll('#full-view-journal-trigger')[0]?.textContent;
+        result.journal = responseDocument.querySelectorAll("#full-view-journal-trigger")[0]?.textContent;
 
-        const yearTry = responseDocument.querySelectorAll('span[class="cit"]')[0]?.textContent;
+        const yearTry = responseDocument.querySelectorAll("span[class=\"cit\"]")[0]?.textContent;
 
-        [result.year] = yearTry.split(' ');
+        [result.year] = yearTry.split(" ");
 
-        const monthTry = responseDocument.querySelectorAll('span[class="cit"]')[0]?.textContent;
+        const monthTry = responseDocument.querySelectorAll("span[class=\"cit\"]")[0]?.textContent;
 
-        [, result.month] = monthTry.split(' ');
+        [, result.month] = monthTry.split(" ");
 
-        result.abstract = responseDocument.querySelectorAll('#enc-abstract')[0]?.textContent;
+        result.abstract = responseDocument.querySelectorAll("#enc-abstract")[0]?.textContent;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
 
       break;
 
     default:
-      throw new Error('Unknown condition passed to scraper.');
+      throw new Error("Unknown condition passed to scraper.");
   }
 }
 
 const download = (filename, text) => {
-  const element = document.createElement('a');
+  const element = document.createElement("a");
 
-  element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
+  element.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
 
-  element.setAttribute('download', filename);
+  element.setAttribute("download", filename);
 
-  element.style.display = 'none';
+  element.style.display = "none";
 
   document.body.append(element);
 
@@ -238,13 +238,13 @@ const generateJSON = (result) => {
   const jsonAbstract = result.abstract;
   const jsonJournal = result.journal;
   const object = {
-    title: jsonTitle.replace('"', "'"),
-    authors: jsonAuthors.replace('"', "'"),
-    affiliation: jsonAffiliation.replace('"', "'"),
-    journal: jsonJournal.replace('"', "'"),
-    publication_year: jsonYear.replace('"', "'"),
-    publication_month: jsonMonth.replace('"', "'"),
-    abstract: jsonAbstract.replace('"', "'"),
+    title: jsonTitle.replace("\"", "'"),
+    authors: jsonAuthors.replace("\"", "'"),
+    affiliation: jsonAffiliation.replace("\"", "'"),
+    journal: jsonJournal.replace("\"", "'"),
+    publication_year: jsonYear.replace("\"", "'"),
+    publication_month: jsonMonth.replace("\"", "'"),
+    abstract: jsonAbstract.replace("\"", "'"),
   };
   const jsonOutput = JSON.stringify(object, null, 2); // TypeError: Converting circular structure to JSON
 
@@ -253,41 +253,41 @@ const generateJSON = (result) => {
 };
 const scraper = (url) => {
   switch (new URL(url).hostname) {
-    case 'pubmed.ncbi.nlm.nih.gov':
+    case "pubmed.ncbi.nlm.nih.gov":
       return api(url);
 
-    case 'www.ncbi.nlm.nih.gov':
+    case "www.ncbi.nlm.nih.gov":
       return api(url);
 
-    case 'pubs.rsna.org':
-      return Promise.reject(new Error('pubs.rsna.org not implemented'));
+    case "pubs.rsna.org":
+      return Promise.reject(new Error("pubs.rsna.org not implemented"));
 
-    case 'www.ajronline.org':
-      return Promise.reject(new Error('www.ajronline.org not implemented'));
+    case "www.ajronline.org":
+      return Promise.reject(new Error("www.ajronline.org not implemented"));
 
-    case 'www.jultrasoundmed.org':
-      return Promise.reject(new Error('wwww.jultrasoundmed.org not implemented'));
+    case "www.jultrasoundmed.org":
+      return Promise.reject(new Error("wwww.jultrasoundmed.org not implemented"));
 
-    case 'jnm.snmjournals.org':
-      return Promise.reject(new Error('jnm.snmjournals.org not implemented'));
+    case "jnm.snmjournals.org":
+      return Promise.reject(new Error("jnm.snmjournals.org not implemented"));
 
-    case 'www.ajnr.org':
-      return Promise.reject(new Error('wwww.ajnr.org not implemented'));
+    case "www.ajnr.org":
+      return Promise.reject(new Error("wwww.ajnr.org not implemented"));
 
-    case 'www.jvir.org':
-      return Promise.reject(new Error('www.jvir.org not implemented'));
+    case "www.jvir.org":
+      return Promise.reject(new Error("www.jvir.org not implemented"));
 
-    case 'www.youtube.com':
-      return Promise.reject(new Error('wwww.youtube.com not implemented'));
+    case "www.youtube.com":
+      return Promise.reject(new Error("wwww.youtube.com not implemented"));
 
-    case 'journals.aps.org':
+    case "journals.aps.org":
       return api(url);
 
-    case 'journals.xxxxx.org':
+    case "journals.xxxxx.org":
       return scrape(url);
 
     default:
-      return Promise.reject(new Error('Unknown domain: not implemented'));
+      return Promise.reject(new Error("Unknown domain: not implemented"));
   }
 };
 const fetchData = async (url) => scraper(url);

@@ -773,17 +773,17 @@ export default {
   props: {
     country: {
       type: String,
-      default: '',
+      default: "",
     },
     ariaInvalid: {
       type: Boolean,
       default: null,
     },
   },
-  emits: ['change-country'],
+  emits: ["change-country"],
   data() {
     return {
-      modelValue: '',
+      modelValue: "",
     };
   },
   watch: {
@@ -797,7 +797,7 @@ export default {
   methods: {
 
     changeCountry($event) {
-      this.$emit('change-country', $event.target.value);
+      this.$emit("change-country", $event.target.value);
     },
 
   },

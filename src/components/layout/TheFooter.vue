@@ -9,7 +9,7 @@
 <script>
 export default {
   data: () => ({
-    year: '',
+    year: "",
   }),
   created() {
     this.year = new Date().getFullYear();

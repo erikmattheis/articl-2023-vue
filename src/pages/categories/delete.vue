@@ -15,19 +15,19 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'DeleteCategory',
+  name: "DeleteCategory",
   components: {
   },
   data: () => ({
     buttonDisabled: false,
     categories: [],
-    title: '',
-    slug: '',
-    parentSlug: '',
-    id: '',
+    title: "",
+    slug: "",
+    parentSlug: "",
+    id: "",
   }),
   params: {
 
@@ -36,7 +36,7 @@ export default {
   mounted() {
     this.slug = this.$route.params.slug;
     this.getCurrentCategory(this.slug);
-    this.setTitleAndDescriptionMixin({ title: 'Delete Category and Descendents' });
+    this.setTitleAndDescriptionMixin({ title: "Delete Category and Descendents" });
   },
   methods: {
     async getCurrentCategory(slug) {
@@ -50,12 +50,12 @@ export default {
         this.id = result.data?.category[0]?.id;
         this.isLoading = false;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async getCategory(slug) {
       return axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/resource/${slug}`,
       });
     },
@@ -65,27 +65,27 @@ export default {
 
         await this.submitDelete(this.id);
 
-        this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
+        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
 
         this.$store.dispatch(
-          'modals/setSuccessMessage',
+          "modals/setSuccessMessage",
           `The category "${this.title}" has been permanently deleted.`,
         );
         if (Number(this.parentSlug) === 0) {
-          this.$router.push({ name: 'homePage' });
+          this.$router.push({ name: "homePage" });
         } else {
-          this.$router.push({ name: 'categoryPage', params: { slug: this.parentSlug } });
+          this.$router.push({ name: "categoryPage", params: { slug: this.parentSlug } });
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
     },
     async submitDelete(id) {
       return axiosInstance({
-        method: 'DELETE',
-        url: '/categories',
+        method: "DELETE",
+        url: "/categories",
         data: {
           id,
         },

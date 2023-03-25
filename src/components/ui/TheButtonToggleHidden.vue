@@ -439,13 +439,13 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
+import VueFeather from "vue-feather";
 
 export default {
   components: {
     VueFeather,
   },
-  emits: ['show'],
+  emits: ["show"],
   data: () => ({
     show: false,
   }),

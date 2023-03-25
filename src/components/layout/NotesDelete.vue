@@ -1,33 +1,39 @@
 <template>
   <template v-if="!deleted">
-    <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
+    <p>
+      Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{
+        fullText?.substring(0, 64)
+      }}" by {{ nameFirst }} {{ nameLast }}?
+    </p>
     <form>
-      <button
-        :aria-busy="buttonDisabled"
-        @click.prevent="deleteNote()">
-        Delete
-      </button>
+      <button :aria-busy="buttonDisabled"
+@click.prevent="deleteNote()">Delete</button>
+      <button :aria-busy="buttonDisabled"
+@click.prevent="deleteNote()">Delete</button>
     </form>
   </template>
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
   data: () => ({
     buttonDisabled: true,
     deleted: false,
-    id: '',
-    fullText: '',
-    nameFirst: '',
-    nameLast: '',
+    id: "",
+    fullText: "",
+    nameFirst: "",
+    nameLast: "",
+    prevRoute: {},
   }),
   mounted() {
     this.id = this.$route.params.id;
     this.getCurrentNote(this.id);
   },
-
+  beforeRouteEnter(to, from) {
+    this.prevRoute = from;
+  },
   methods: {
     async getCurrentNote(id) {
       try {
@@ -39,12 +45,12 @@ export default {
           this.nameLast = result.data.author.nameLast;
           this.buttonDisabled = false;
         } else {
-          this.$store.dispatch('errors/setError', 'No note found.');
+          this.$store.dispatch("errors/setError", "No note found.");
         }
 
         this.isLoading = false;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async deleteNote() {
@@ -54,24 +60,24 @@ export default {
         await this.submitDelete(this.id);
 
         this.deleted = true;
-        this.$store.dispatch('categoryPages/removeNote', this.id);
+        this.$store.dispatch("categoryPages/removeNote", this.id);
 
         this.deleted = true;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async getNote(id) {
       return axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/notes/${id}`,
       });
     },
 
     async submitDelete(id) {
       return axiosInstance({
-        method: 'DELETE',
-        url: '/notes',
+        method: "DELETE",
+        url: "/notes",
         data: {
           id,
         },
@@ -83,15 +89,15 @@ export default {
 
 <style scoped>
 .grid {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .grid a {
-  display:inline-block;
+  display: inline-block;
 }
 a {
   align-self: center;
   justify-self: center;
-  border:0;
+  border: 0;
 }
 </style>

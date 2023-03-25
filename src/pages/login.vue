@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import theButtonToggleHidden from '@/components/ui/TheButtonToggleHidden.vue';
+import { mapGetters } from "vuex";
+import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
 
 export default {
-  name: 'LoginPage',
+  name: "LoginPage",
   components: {
     theButtonToggleHidden,
   },
@@ -55,34 +55,34 @@ export default {
     passwordInvalid: null,
     showPassword: false,
     buttonDisabled: false,
-    passwordType: 'password',
+    passwordType: "password",
   }),
   computed: {
     ...mapGetters({
-      user: 'users/user',
-      tokens: 'tokens/tokens',
+      user: "users/user",
+      tokens: "tokens/tokens",
     }),
   },
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: 'Articl Login',
+      title: "Articl Login",
     });
   },
   methods: {
     resetFormErrors() {
-      this.errorMessage = '';
+      this.errorMessage = "";
     },
     checkForm() {
       let passed = true;
 
       if (!this.username) {
-        this.errorMessage = 'Please enter your username.';
+        this.errorMessage = "Please enter your username.";
 
         passed = false;
       }
 
       if (!this.password) {
-        this.errorMessage = 'Please enter your password.';
+        this.errorMessage = "Please enter your password.";
 
         passed = false;
       }
@@ -95,55 +95,55 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          await this.$store.dispatch('users/login', {
+          await this.$store.dispatch("users/login", {
             password: this.password,
             username: this.username,
           });
 
           this.resetFormErrors();
 
-          this.$cookies.set('accessTokenExpires', this.tokens.accessTokenExpires);
-          this.$cookies.set('accessTokenValue', this.tokens.accessTokenValue);
-          this.$cookies.set('refreshTokenExpires', this.tokens.refreshTokenExpires);
-          this.$cookies.set('refreshTokenValue', this.tokens.refreshTokenValue);
-          this.$cookies.set('user', this.user);
+          this.$cookies.set("accessTokenExpires", this.tokens.accessTokenExpires);
+          this.$cookies.set("accessTokenValue", this.tokens.accessTokenValue);
+          this.$cookies.set("refreshTokenExpires", this.tokens.refreshTokenExpires);
+          this.$cookies.set("refreshTokenValue", this.tokens.refreshTokenValue);
+          this.$cookies.set("user", this.user);
 
-          const theme = this.user?.theme !== 'dark' ? 'light' : 'dark';
+          const theme = this.user?.theme !== "dark" ? "light" : "dark";
 
           this.$cookies.set(
-            'data-theme',
+            "data-theme",
             theme,
           );
 
           document.documentElement.setAttribute(
-            'data-theme',
+            "data-theme",
             theme,
           );
 
           const fontSize = this.user?.fontSize !== 16 ? this.user?.fontSize : 16;
 
           this.$cookies.set(
-            'font-size',
+            "font-size",
             fontSize,
           );
 
           if (
             this.$route.query.redirect
-          && this.$route.query.redirect !== '/login'
+          && this.$route.query.redirect !== "/login"
           ) {
             this.$router.push({
               path: this.$route.query.redirect,
             });
           } else {
             this.$router.push({
-              name: 'homePage',
+              name: "homePage",
             });
           }
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }

@@ -21,17 +21,17 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'DeleteArticlPage',
+  name: "DeleteArticlPage",
   data: () => ({
     buttonDisabled: false,
     deleted: false,
-    id: '',
-    slug: '',
-    type: '',
-    title: '',
+    id: "",
+    slug: "",
+    type: "",
+    title: "",
   }),
   mounted() {
     this.id = this.$route.params.id;
@@ -54,33 +54,33 @@ export default {
         this.deleted = true;
 
         this.setTitleAndDescriptionMixin({
-          title: 'Articl Deleted',
+          title: "Articl Deleted",
         });
 
-        this.$store.dispatch('modals/setSuccessTitle', 'Deletion successful.');
+        this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");
 
         this.$store.dispatch(
-          'modals/setSuccessMessage',
+          "modals/setSuccessMessage",
           `The articl "${this.title}" has been permanently deleted.`,
         );
         this.deleted = true;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
     },
     async getArticl(id) {
       return axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/articls/${id}`,
       });
     },
 
     async submitDelete(id) {
       return axiosInstance({
-        method: 'DELETE',
-        url: '/articls',
+        method: "DELETE",
+        url: "/articls",
         data: {
           id,
         },

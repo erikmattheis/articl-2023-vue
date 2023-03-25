@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import VueFeather from 'vue-feather';
+import VueFeather from "vue-feather";
 
 export default {
   components: {
@@ -45,11 +45,11 @@ export default {
   props: {
     id: {
       type: String,
-      default: '',
+      default: "",
     },
     answer: {
       type: String,
-      default: '',
+      default: "",
     },
     correct: {
       type: Boolean,
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     deleteAnswer(id) {
-      this.$emit('delete-answer', id);
+      this.$emit("delete-answer", id);
     },
   },
 };

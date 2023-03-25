@@ -6,7 +6,8 @@
         <p>{{ QAndA.fullText }}</p>
         <small>–{{ QAndA.author?.nameFirst }} {{ QAndA.author?.nameLast }} {{ QAndADate }}</small>
       </div>
-      <div v-if="QAndAIsUsers && isLoggedInMixin" class="box">
+      <div v-if="QAndAIsUsers && isLoggedInMixin"
+class="box">
         <div class="row-admin-box">
           <router-link
             role="button"
@@ -42,13 +43,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import VueFeather from 'vue-feather';
-import QAndAsDelete from '@/components/layout/QAndAsDelete.vue';
-import QAndAsForm from '@/components/layout/QAndAsForm.vue';
+import { mapGetters } from "vuex";
+import VueFeather from "vue-feather";
+import QAndAsDelete from "@/components/layout/QAndAsDelete.vue";
+import QAndAsForm from "@/components/layout/QAndAsForm.vue";
 
 export default {
-  name: 'QAndAListItem',
+  name: "QAndAListItem",
   components: {
     QAndAsDelete,
     QAndAsForm,
@@ -67,10 +68,10 @@ export default {
       QAndAIsUsers: false,
     };
   },
-  emits: ['QAndA-updated'],
+  emits: ["QAndA-updated"],
   computed: {
     ...mapGetters({
-      user: 'users/user',
+      user: "users/user",
     }),
     routeName() {
       return this.$route.name;
@@ -107,11 +108,11 @@ export default {
   */
   methods: {
     QAndAUpdated(QAndA) {
-      console.log('passing uop');
+      console.log("passing uop");
       this.QAndAWasUpdated = true;
-      console.log('passing uop 2');
-      this.$emit('QAndA-updated', QAndA);
-      console.log('passing uop 3');
+      console.log("passing uop 2");
+      this.$emit("QAndA-updated", QAndA);
+      console.log("passing uop 3");
     },
   },
 };

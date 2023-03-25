@@ -1,24 +1,22 @@
 <template>
   <article>
-    <h1 v-if="!success">
-      {{ formAction }} Articl
-    </h1>
+    <h1 v-if="!success">{{ formAction }} Articl</h1>
     <template v-else>
       <h1>Articl Created</h1>
       <ul>
         <li>
-          <a
-            tabindex="0"
-            href
-            @click.prevent="$router.go()"
-            @keyup.enter.prevent="$router.go()">Create another articl in the same category</a>
+          <a tabindex="0"
+href
+@click.prevent="$router.go()"
+@keyup.enter.prevent="$router.go()">Create another articl in the same category</a>
         </li>
         <li>
           <a
             tabindex="0"
             href
-            @click.prevent="$router.push(`/resource/${ slug }/articls`)"
-            @keyup.enter.prevent="$router.push(`/resource/${ slug }/articls`)">Return to Category Page </a>
+            @click.prevent="$router.push(`/resource/${slug}/articls`)"
+            @keyup.enter.prevent="$router.push(`/resource/${slug}/articls`)">Return to Category Page
+          </a>
         </li>
       </ul>
     </template>
@@ -26,55 +24,46 @@
     <template v-if="!isLoading && !success">
       <form>
         <template v-if="!id">
-          <label for="url">URL
-            <input
-              id="url"
-              v-model="url"
-              type="text"
-              name="url"></label>
-          <button
-            type="button"
-            :aria-busy="buttonFetchDisabled"
-            @click.prevent="getData()">
+          <label for="url">URL <input id="url"
+v-model="url"
+type="text"
+name="url" /></label>
+          <button type="button"
+:aria-busy="buttonFetchDisabled"
+@click.prevent="getData()">
             FETCH DATA
           </button>
         </template>
         <label for="title">Title
-          <input
-            id="title"
-            v-model="title"
-            name="title"
-            autocomplete="off">
+          <input id="title"
+v-model="title"
+name="title"
+autocomplete="off" />
         </label>
 
-        <label
-          v-if="doi"
-          for="doi">DOI
-          <input
-            id="doi"
-            v-model="doi"
-            name="doi"
-            autocomplete="off">
+        <label v-if="doi"
+for="doi">DOI
+          <input id="doi"
+v-model="doi"
+name="doi"
+autocomplete="off" />
         </label>
 
-        <fieldset
-          v-for="(author, index) in authors"
-          :key="author.id">
+        <fieldset v-for="(author, index) in authors"
+:key="author.id">
           <div class="grid">
-            <label
-              for="`nameFirst${index}`">First name
+            <label for="`nameFirst${index}`">First name
               <input
                 :id="`nameFirst${index}`"
                 v-model="author.nameFirst"
                 :name="`nameFirst${index}`"
-                autocomplete="off"></label>
-            <label
-              for="`nameLast${index}`">Last name
+                autocomplete="off" /></label>
+            <label for="`nameLast${index}`">Last name
               <input
                 :id="`nameLast${index}`"
                 v-model="author.nameLast"
                 :name="`nameLast${index}`"
-                autocomplete="off"></label>
+                autocomplete="off" /></label>
           </div>
 
           <label
@@ -86,73 +75,48 @@
               id="`affiliation${affilIndex}`"
               v-model="author.affilliations[affilIndex]"
               name="`affiliation${affilIndex}`"
-              autocomplete="off"></label>
+              autocomplete="off" /></label>
         </fieldset>
 
-        <label for="journal">Journal
-          <input
-            id="journal"
-            v-model="journal"
-            name="journal"
-            autocomplete="off"></label>
+        <label for="journal">Journal <input id="journal"
+v-model="journal"
+name="journal"
+autocomplete="off" /></label>
 
-        <label for="year">Publication Year
-          <input
-            id="year"
-            v-model="year"
-            name="year"
-            autocomplete="off"></label>
+        <label for="year">Publication Year <input id="year"
+v-model="year"
+name="year"
+autocomplete="off" /></label>
 
-        <label for="month">Publication Month
-          <input
-            id="month"
-            v-model="month"
-            name="month"
-            autocomplete="off"></label>
+        <label for="month">Publication Month <input id="month"
+v-model="month"
+name="month"
+autocomplete="off" /></label>
 
-        <label for="abstract">Abstract
-          <input
-            id="abstract"
-            v-model="abstract"
-            name="abstract"
-            autocomplete="off"></label>
+        <label for="abstract">Abstract <input id="abstract"
+v-model="abstract"
+name="abstract"
+autocomplete="off" /></label>
 
         <label for="type">Link type
-          <select
-            id="type"
-            v-model="type"
-            name="type"
-            autocomplete="off">
+          <select id="type"
+v-model="type"
+name="type"
+autocomplete="off">
             <optgroup value="Resources">
-              <option value="Review (OA)">
-                Review (OA)
-              </option>
-              <option value="Review (OA)">
-                Review (PA)
-              </option>
-              <option value="Research (OA)">
-                Research (OA)
-              </option>
-              <option value="Research (PA)">
-                Research (PA)
-              </option>
-              <option value="Web">
-                Web
-              </option>
+              <option value="Review (OA)">Review (OA)</option>
+              <option value="Review (OA)">Review (PA)</option>
+              <option value="Research (OA)">Research (OA)</option>
+              <option value="Research (PA)">Research (PA)</option>
+              <option value="Web">Web</option>
               <!---
               <option value="Images">
                 Images
               </option>
               -->
-              <option value="Presentations">
-                Presentations
-              </option>
-              <option value="Videos">
-                Videos
-              </option>
-              <option value="Podcast">
-                Podcast
-              </option>
+              <option value="Presentations">Presentations</option>
+              <option value="Videos">Videos</option>
+              <option value="Podcast">Podcast</option>
             </optgroup>
           </select></label>
 
@@ -163,17 +127,15 @@
           label-value="Category slug"
           @update-value="onTypeaheadHit"
           @keyup="onTypeaheadHit" />
-        <button
-          type="button"
-          :aria-busy="buttonDisabled"
-          @click.prevent="submitForm(id)">
+        <button type="button"
+:aria-busy="buttonDisabled"
+@click.prevent="submitForm(id)">
           {{ !id ? "Create" : "Edit" }} Articl
         </button>
       </form>
     </template>
-    <transition
-      name="fade"
-      mode="out-in">
+    <transition name="fade"
+mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </article>
@@ -181,13 +143,13 @@
 
 <script>
 // import cardNotification from '@/components/ui/CardNotification.vue';
-import inputTypeahead from '@/components/ui/InputTypeahead.vue';
-import LoadingPlaceholder from '@/components/ui/LoadingPlaceholder.vue';
-import { fetchData } from '@/services/fetchingService';
-import axiosInstance from '@/services/axiosService';
+import inputTypeahead from "@/components/ui/InputTypeahead.vue";
+import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
+import { fetchData } from "@/services/fetchingService";
+import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: 'EditArticlPage',
+  name: "EditArticlPage",
   components: {
     LoadingPlaceholder,
     inputTypeahead,
@@ -196,34 +158,34 @@ export default {
   props: {
     editId: {
       type: String,
-      default: '',
+      default: "",
     },
   },
 
   data() {
     return {
-      id: '',
-      abstract: '',
-      doi: '',
-      url: '',
-      authorsOrig: '',
+      id: "",
+      abstract: "",
+      doi: "",
+      url: "",
+      authorsOrig: "",
       authors: [],
       buttonDisabled: false,
       buttonFetchDisabled: false,
       slug: this.$route.query.slug,
-      formAction: '',
+      formAction: "",
       isLoading: true,
-      journal: '',
-      month: '',
+      journal: "",
+      month: "",
       success: false,
-      title: '',
-      type: 'Review (OA)',
-      year: '',
+      title: "",
+      type: "Review (OA)",
+      year: "",
     };
   },
   mounted() {
     this.id = this.editId;
-    this.formAction = this.id ? 'Edit' : 'Create';
+    this.formAction = this.id ? "Edit" : "Create";
     if (!this.id) {
       this.slug = this.$route.query.slug;
 
@@ -251,7 +213,7 @@ export default {
 
         this.isLoading = false;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async getData() {
@@ -265,12 +227,12 @@ export default {
             Object.assign(this, result);
           }
         } catch (error) {
-          this.$store.dispatch('errors/setError', error);
+          this.$store.dispatch("errors/setError", error);
         } finally {
           this.buttonFetchDisabled = false;
         }
       } else {
-        this.$store.dispatch('errors/setError', 'Please enter a URL');
+        this.$store.dispatch("errors/setError", "Please enter a URL");
       }
     },
     resetFormErrors() {
@@ -278,23 +240,23 @@ export default {
 
       this.result = null;
 
-      this.errorMessage = '';
+      this.errorMessage = "";
     },
     checkForm() {
       this.resetFormErrors();
 
       let passed = true;
 
-      if (this.title === '') {
-        this.errorMessage = 'Please enter a title.';
+      if (this.title === "") {
+        this.errorMessage = "Please enter a title.";
 
         passed = false;
-      } else if (this.authors === '') {
-        this.errorMessage = 'Please enter author names.';
+      } else if (this.authors === "") {
+        this.errorMessage = "Please enter author names.";
 
         passed = false;
-      } else if (this.type === '') {
-        this.errorMessage = 'Please choose a type.';
+      } else if (this.type === "") {
+        this.errorMessage = "Please choose a type.";
 
         passed = false;
       }
@@ -310,7 +272,7 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          const verb = id ? 'PUT' : 'POST';
+          const verb = id ? "PUT" : "POST";
           const result = await axiosInstance({
             method: verb,
             url,
@@ -338,17 +300,17 @@ export default {
           this.title = result.data.title;
           this.type = result.data.type;
 
-          this.year = '';
+          this.year = "";
 
-          const resultVerb = id ? 'Created' : 'Edited';
+          const resultVerb = id ? "Created" : "Edited";
           this.setTitleAndDescriptionMixin({
             title: `Articl ${resultVerb}`,
           });
         } else {
-          this.$store.dispatch('errors/setError', this.errorMessage);
+          this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
       }
@@ -356,7 +318,7 @@ export default {
 
     async getArticl(id) {
       return axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/articls/${id}`,
       });
     },

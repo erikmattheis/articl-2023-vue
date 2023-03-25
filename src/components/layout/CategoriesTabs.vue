@@ -39,17 +39,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      slug: '',
+      slug: "",
     };
   },
   computed: {
     ...mapGetters({
-      treeLevel: 'categoryPages/treeLevel',
+      treeLevel: "categoryPages/treeLevel",
     }),
   },
   methods: {

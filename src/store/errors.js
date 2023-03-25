@@ -23,11 +23,11 @@ export default {
 
   actions: {
     setError: (context, payload) => {
-      let errorMessage = 'Unknown error';
-      let errorStack = '';
+      let errorMessage = "Unknown error";
+      let errorStack = "";
 
       if (!payload.okFunction) {
-        context.commit('SET_OK_FUNCTION', () => { });
+        context.commit("SET_OK_FUNCTION", () => { });
       }
       if (payload?.response?.data?.message) {
         errorMessage = payload.response.data.message;
@@ -37,15 +37,15 @@ export default {
         errorStack = payload.response.data.stack;
       }
 
-      context.commit('SET_ERROR_MESSAGE', errorMessage);
+      context.commit("SET_ERROR_MESSAGE", errorMessage);
 
-      context.commit('SET_ERROR_STACK', errorStack);
+      context.commit("SET_ERROR_STACK", errorStack);
     },
 
     clearError: (context) => {
-      context.commit('SET_ERROR_MESSAGE', '');
+      context.commit("SET_ERROR_MESSAGE", "");
 
-      context.commit('SET_ERROR_STACK', '');
+      context.commit("SET_ERROR_STACK", "");
     },
   },
 

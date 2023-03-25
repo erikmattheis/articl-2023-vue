@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import QAndAListItem from '@/components/layout/QAndAListItem.vue';
-import QAndAsForm from '@/components/layout/QAndAsForm.vue';
+import { mapGetters } from "vuex";
+import QAndAListItem from "@/components/layout/QAndAListItem.vue";
+import QAndAsForm from "@/components/layout/QAndAsForm.vue";
 
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      QAndAs: 'categoryPages/QAndAs',
+      QAndAs: "categoryPages/QAndAs",
     }),
   },
 };

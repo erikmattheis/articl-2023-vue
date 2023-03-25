@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
   data: () => ({
@@ -16,20 +16,20 @@ export default {
       this.sendEmail();
 
       this.setTitleAndDescriptionMixin({
-        title: 'Verification sent',
+        title: "Verification sent",
       });
     } catch (error) {
-      this.$store.dispatch('errors/setError', error);
+      this.$store.dispatch("errors/setError", error);
     }
   },
   methods: {
     async sendEmail() {
       this.result = await axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/auth/send-verification-email?token=${this.$route.query.token}`,
       });
 
-      this.result = 'Click the link in the email we sent to verify your address.';
+      this.result = "Click the link in the email we sent to verify your address.";
     },
   },
 };

@@ -12,16 +12,16 @@
 </template>
 
 <script>
-import axiosInstance from '@/services/axiosService';
+import axiosInstance from "@/services/axiosService";
 
 export default {
   data: () => ({
     buttonDisabled: true,
     deleted: false,
-    id: '',
-    fullText: '',
-    nameFirst: '',
-    nameLast: '',
+    id: "",
+    fullText: "",
+    nameFirst: "",
+    nameLast: "",
   }),
   mounted() {
     this.id = this.$route.params.id;
@@ -39,12 +39,12 @@ export default {
           this.nameLast = result.data.author.nameLast;
           this.buttonDisabled = false;
         } else {
-          this.$store.dispatch('errors/setError', 'No note found.');
+          this.$store.dispatch("errors/setError", "No note found.");
         }
 
         this.isLoading = false;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async deleteNote() {
@@ -54,24 +54,24 @@ export default {
         await this.submitDelete(this.id);
 
         this.deleted = true;
-        this.$store.dispatch('categoryPages/removeNote', this.id);
+        this.$store.dispatch("categoryPages/removeNote", this.id);
 
         this.deleted = true;
       } catch (error) {
-        this.$store.dispatch('errors/setError', error);
+        this.$store.dispatch("errors/setError", error);
       }
     },
     async getNote(id) {
       return axiosInstance({
-        method: 'GET',
+        method: "GET",
         url: `/notes/${id}`,
       });
     },
 
     async submitDelete(id) {
       return axiosInstance({
-        method: 'DELETE',
-        url: '/notes',
+        method: "DELETE",
+        url: "/notes",
         data: {
           id,
         },
