@@ -78,7 +78,6 @@ export default {
     theButtonToggleHidden,
   },
   data: () => ({
-    username: null,
     password: null,
     newPassword: null,
     newPassword2: null,
@@ -98,7 +97,7 @@ export default {
       },
     },
   },
-  mounted: () => {
+  created() {
     this.setTitleAndDescriptionMixin({
       title: "Change Password",
     });
