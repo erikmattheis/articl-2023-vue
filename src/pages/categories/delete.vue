@@ -3,7 +3,10 @@
     <h1>Delete Category</h1>
 
     <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories  from category navigation.</p>
+
     <form>
+      <button :aria-busy="buttonDisabled"
+        @click.prevent="$router.push({ name: 'TabCategories', params: { slug } })">Cancel</button>
       <button
         v-if="slug"
         :aria-busy="buttonDisabled"

@@ -2,6 +2,8 @@
   <template v-if="!deleted">
     <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
     <form>
+      <button :aria-busy="buttonDisabled"
+@click.prevent="$router.push({ name: 'TabQuestionsAnswers', params: { slug } })">Cancel</button>
       <button
         :aria-busy="buttonDisabled"
         @click.prevent="deleteNote()">
@@ -83,15 +85,16 @@ export default {
 
 <style scoped>
 .grid {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .grid a {
-  display:inline-block;
+  display: inline-block;
 }
+
 a {
   align-self: center;
   justify-self: center;
-  border:0;
+  border: 0;
 }
 </style>

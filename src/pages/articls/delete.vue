@@ -4,15 +4,17 @@
     <p>Really delete "{{ title }}"?</p>
     <form>
       <button :aria-busy="buttonDisabled"
-@click.prevent="deleteArticl()">Delete</button>
+@click.prevent="$router.push({ name: 'ArticlsList', params: { slug } })">Cancel</button>
+      <button :aria-busy="buttonDisabled"
+        @click.prevent="deleteArticl()">Delete</button>
     </form>
   </article>
   <article v-else>
     <h1>Articl Deleted</h1>
     <a tabindex="0"
-href
-@click.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })"
-@keyup.enter.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })">Return to Category Page </a>
+      href
+      @click.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })"
+      @keyup.enter.prevent="$router.push({ name: 'ArticlsList', params: { slug, type } })">Return to Category Page </a>
   </article>
 </template>
 
@@ -90,6 +92,7 @@ export default {
 .grid a {
   display: inline-block;
 }
+
 a {
   align-self: center;
   justify-self: center;
