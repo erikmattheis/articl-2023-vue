@@ -2,8 +2,7 @@
   <article>
     <h1>Change Password</h1>
     <form>
-      <!--
-        TODOO
+
       <label for="password">Current password
         <div class="toggle-password">
           <input
@@ -16,7 +15,7 @@
             @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
         </div>
       </label>
-      -->
+
       <label for="newPassword">New password
         <small
           v-if="passwordComplexity < 3"
