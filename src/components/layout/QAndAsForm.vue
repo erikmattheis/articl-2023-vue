@@ -12,7 +12,7 @@
             handle=".handle"
             ghost-class="ghost"
             @change="onUpdateAnswersOrderValues">
-            <template #item="{ element, index}">
+            <template #item="{ element, index }">
                 <div class="grid grid-answer">
                   <label
                     :for="`answer${index}`">Answer
@@ -47,24 +47,15 @@ tabindex="0">Add Answer</a>
 
           <div class="grid">
             <div class="grid-right">
-              <a
-                href
-                class="a"
-                tabindex="0"
-                role="button"
-                @click.prevent="cancel()"
-                @keyup.esc.prevent="cancel()">Cancel</a>
+              <button :aria-busy="buttonDisabled"
+                @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</button>
 
-              <a
-                href
-                class="a"
-                tabindex="0"
-                role="button"
+
+              <button
                 :aria-disabled="buttonDisabled"
                 :aria-busy="buttonDisabled"
-                @click.prevent="submitForm()"
-                @keyup.enter.prevent="submitForm()">
-                {{ !QandAs?.id ? "Create" : "Edit" }} QandAs</a>
+                @click.prevent="submitForm()">
+                {{ !QandAs?.id ? "Create" : "Edit" }} QandAs</button>
             </div>
           </div>
     </form>

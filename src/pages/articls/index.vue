@@ -127,6 +127,9 @@ autocomplete="off">
           label-value="Category slug"
           @update-value="onTypeaheadHit"
           @keyup="onTypeaheadHit" />
+
+          <button :aria-busy="buttonDisabled"
+                @click.prevent="$router.push({ name: 'ArticlsList', params: { slug } })">Cancel</button>
         <button type="button"
 :aria-busy="buttonDisabled"
 @click.prevent="submitForm(id)">
