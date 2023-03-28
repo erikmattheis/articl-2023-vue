@@ -457,12 +457,14 @@ export default {
               this.$store.dispatch("modals/setSuccessTitle", "User Created");
 
               this.$store.dispatch("modals/setSuccessMessage", `Please click on the link in the verification email that was sent to ${this.email}.`);
+
+              this.$router.push("/");
+
             } else {
               this.$store.dispatch("modals/setSuccessTitle", "User Updated");
 
               this.$store.dispatch("modals/setSuccessMessage", "Your account information was successfully updated.");
             }
-            this.$router.push("/");
           } else {
             this.$store.dispatch("errors/setError", "Unknown response.");
           }
