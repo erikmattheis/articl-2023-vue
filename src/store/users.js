@@ -33,11 +33,14 @@ export default {
     async login({ dispatch }, { username, password }) {
       try {
         const response = await userLogin({ username, password });
+
         const { data } = response;
         const tokens = convertStringDatesToMS(data.tokens);
         dispatch("tokens/setTokens", tokens, { root: true });
         dispatch("setUser", data.user);
+
       } catch (error) {
+        console.log("error here",error.message)
         throw new Error(error);
       }
     },

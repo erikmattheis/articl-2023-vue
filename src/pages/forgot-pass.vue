@@ -20,11 +20,6 @@
     <p v-if="result">
       {{ result }}
     </p>
-    <p
-      v-if="errorMessage"
-      class="error">
-      {{ errorMessage }}
-    </p>
   </article>
 </template>
 
@@ -41,7 +36,7 @@ export default {
     buttonDisabled: false,
     result: null,
   }),
-  mounted: () => {
+  mounted() {
     this.setTitleAndDescriptionMixin({
       title: "Forgot pass",
     });

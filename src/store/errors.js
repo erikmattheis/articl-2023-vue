@@ -25,7 +25,7 @@ export default {
     setError: (context, payload) => {
       let errorMessage = "Unknown error";
       let errorStack = "";
-
+console.log(payload.message)
       if (!payload.okFunction) {
         context.commit("SET_OK_FUNCTION", () => { });
       }

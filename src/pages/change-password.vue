@@ -80,6 +80,7 @@ export default {
     password: null,
     newPassword: null,
     newPassword2: null,
+    passwordType: "password",
     newPasswordType: "password",
     newPassword2Type: "password",
     buttonDisabled: false,
@@ -101,6 +102,7 @@ export default {
       title: "Change Password",
     });
   },
+  // eslint-disable-next-line no-undef
   methods: {
     checkForm() {
       let passed = true;
@@ -131,7 +133,7 @@ export default {
             method: "POST",
             url: "/auth/change-password",
             data: {
-              username: this.username,
+              password: this.password,
               newPassword: this.newPassword,
               newPassword2: this.newPassword2,
             },
