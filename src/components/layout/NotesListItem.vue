@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div :key="note.id">
     <div class="container">
       <div>
-        <p v-if="$route.name==='editNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully updated.</ins></p>
+        <p v-if="$route.name === 'editNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully updated.</ins></p>
         <p v-html="note.fullText"></p>
         <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}<br>
         {{ note.createdAt }}</small>
@@ -12,7 +12,7 @@ class="box">
         <div class="row-admin-box">
           <router-link
             role="button"
-            :to="{ name: 'editNote', params:{ id: note.id }}">
+            :to="{ name: 'editNote', params: { id: note.id } }">
             <vue-feather
               size="0.7rem"
               type="edit"
@@ -21,7 +21,7 @@ class="box">
 
           <router-link
             role="button"
-            :to="{ name: 'deleteNote', params: { id: note?.id }}">
+            :to="{ name: 'deleteNote', params: { id: note?.id } }">
             <vue-feather
               size="0.7rem"
               type="delete"
@@ -59,7 +59,7 @@ export default {
   props: {
     passedNote: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
   },
   data() {
@@ -86,6 +86,21 @@ export default {
       this.note = this.passedNote;
       this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
     }
+    this.$watch(
+      () => this.$store.getters["categoryPages/notes"],
+      (notes) => {
+        const note = notes.find((n) => n.id === this.passedNote.id);
+        if (note) {
+          this.note = note;
+        }
+      },
+    );
+  },
+  watch: {
+    passedNote: function (newNote) {
+      this.note = newNote;
+      this.noteIsUsers = newNote?.author?.id === this.user?.id;
+    },
   },
   methods: {
     noteUpdated(note) {
@@ -95,12 +110,11 @@ export default {
 };
 </script>
 <style scoped type="scss">
-  .container {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: minmax(min-content, 1fr) min-content;
-    color: #444;
-    border-bottom: 1px solid var(--muted-border-color);
-  }
-
+.container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: minmax(min-content, 1fr) min-content;
+  color: #444;
+  border-bottom: 1px solid var(--muted-border-color);
+}
 </style>

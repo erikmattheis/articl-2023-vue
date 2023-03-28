@@ -1,6 +1,6 @@
 <template>
   <div class="tab-content">
-    <h2>Notes ({{notes?.length}})</h2>
+    <h2>Notes</h2>
 
     <details>
       <summary>Add Note</summary>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import NotesForm from "@/components/layout/NotesForm.vue";
 import NotesListItem from "@/components/layout/NotesListItem.vue";
 
@@ -37,8 +37,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      notes: "categoryPages/notes",
+    ...mapState({
+      notes: (state) => state.categoryPages.notes,
     }),
   },
   created() {

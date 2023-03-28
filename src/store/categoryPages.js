@@ -49,16 +49,15 @@ export default {
     notes: (context, payload) => {
       context.commit("SET_NOTES", payload);
     },
-    setNote(context, payload) {
-      const { notes } = context.state;
-
-      const newNotes = notes.map((note) => {
+    setNote({ commit, state }, payload) {
+      const newNotes = state.notes.map((note) => {
         if (note.id === payload.id) {
-          return payload;
+          return { ...note, ...payload };
+        } else {
+          return note;
         }
-        return note;
       });
-      context.commit("SET_NOTES", newNotes);
+      commit("SET_NOTES", newNotes);
     },
     addNote: (context, payload) => {
       const { notes } = context.state;
