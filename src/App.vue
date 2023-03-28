@@ -317,6 +317,10 @@ body > div {
   padding-top: 0;
 }
 
+[role=button] {
+  margin-right: calc(var(--spacing) * .5);
+}
+
 input:not([type="checkbox"], [type="radio"], [type="range"]) {
   height: initial;
 }
@@ -353,6 +357,7 @@ ul li {
 }
 
 @media prefers-reduced-motion {
+
   .fade-leave-to,
   .fade-enter-from {
     opacity: 1;

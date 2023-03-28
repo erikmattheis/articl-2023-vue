@@ -7,13 +7,18 @@
           name="fullText" /></label>
           <div class="grid">
             <div class="grid-right">
-              <button :aria-busy="buttonDisabled"
-                @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</button>
-            <button
+              <a :aria-busy="buttonDisabled"
+              href
+                role="button"
+                @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</a>
+                
+            <a
+            href
+            role="button"
               :aria-disabled="buttonDisabled"
               :aria-busy="buttonDisabled"
               @click.prevent="submitForm()">
-              {{ !note?.id ? "Create" : "Edit" }} Note</button>
+              {{ !note?.id ? "Create" : "Edit" }} Note</a>
             </div>
           </div>
     </form>
