@@ -114,6 +114,7 @@
             <option value="Student">Student</option>
             <option value="Resident">Resident</option>
             <option value="Physician">Physician</option>
+            <option value="Fellow">Fellow</option>
             <option value="Allied Healthcare Profession">Allied Healthcare Profession</option>
           </select>
         </label>

@@ -4,8 +4,10 @@
     <main>
       <router-view v-slot="{ Component }">
         <component :is="Component" />
-      </router-view>
+
+    </router-view>
     </main>
+    
     <the-footer />
   </div>
   <modal-error />
