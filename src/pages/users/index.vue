@@ -127,7 +127,7 @@
             :aria-invalid="educationInvalid"
             autocomplete="education"
             @blur="elementBlurred"></label>
-        <label for="institution">Institution
+        <label for="institution">Current Institution
           <input
             id="institution"
             v-model="institution"
@@ -413,7 +413,6 @@ export default {
       if (this.countryInvalid) {
         errorMessages.push("Please enter your country.");
       }
-
       if (errorMessages.length) {
         this.errorMessage = errorMessages.join(",");
         this.$store.dispatch("errors/setError", this.errorMessage);

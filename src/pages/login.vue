@@ -28,8 +28,12 @@
         <span v-if="!buttonDisabled">Login</span>
       </button>
     </form>
-    <router-link to="/forgot-pass">
-      Forgot pass
+    Forgot <router-link to="/forgot-pass">
+      password
+    </router-link>
+    or
+    <router-link to="/forgot-username">
+      username
     </router-link>
     <router-link
       to="/users"
@@ -129,7 +133,7 @@ export default {
 
           if (
             this.$route.query.redirect
-          && this.$route.query.redirect !== "/login"
+            && this.$route.query.redirect !== "/login"
           ) {
             this.$router.push({
               path: this.$route.query.redirect,

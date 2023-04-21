@@ -6,6 +6,7 @@ import deleteCategoryPage from "@/pages/categories/delete.vue";
 import createCategoryPage from "@/pages/categories/index.vue";
 import categoryPage from "@/pages/resource/index.vue";
 import forgotPassPage from "@/pages/forgot-pass.vue";
+import forgotUsernamePage from "@/pages/forgot-username.vue";
 import homePage from "@/pages/index.vue";
 import loginPage from "@/pages/login.vue";
 import deleteNote from "@/components/layout/NotesDelete.vue";
@@ -106,6 +107,12 @@ const router = createRouter({
       name: "forgotPassPage",
       path: "/forgot-pass",
       component: forgotPassPage,
+    },
+
+    {
+      name: "forgotUsernamePage",
+      path: "/forgot-username",
+      component: forgotUsernamePage,
     },
 
     {
