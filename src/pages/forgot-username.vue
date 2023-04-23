@@ -14,7 +14,7 @@
         type="submit"
         :aria-busy="buttonDisabled"
         @click.prevent="submitForm()">
-        <span v-if="!buttonDisabled">Reset</span>
+        <span v-if="!buttonDisabled">Send email with username</span>
       </button>
     </form>
     <p v-if="result">
@@ -28,7 +28,7 @@ import validateEmail from "@/services/emailValidationService";
 import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: "ForgotPass",
+  name: "ForgotUsername",
   data: () => ({
     email: null,
     emailInvalid: null,
@@ -48,6 +48,7 @@ export default {
       this.result = null;
     },
     checkForm() {
+
       if (!this.email || !validateEmail.validateEmail(this.email)) {
         this.errorMessage = "Please enter a valid email address";
 
@@ -59,13 +60,12 @@ export default {
     async submitForm() {
       try {
         this.resetForm();
-
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
           const result = await axiosInstance({
             method: "POST",
-            url: "/auth/forgot-password",
+            url: "/auth/forgot-username",
             data: {
               email: this.email,
             },
@@ -81,6 +81,7 @@ export default {
             this.result = result.response;
           }
         } else {
+          console.log("error", this.errorMessage);
           this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
