@@ -3,19 +3,6 @@
     <h1>Change Password</h1>
     <form>
 
-      <label for="password">Current password
-        <div class="toggle-password">
-          <input
-            id="password"
-            v-model="password"
-            :type="passwordType"
-            autocomplete="current-password">
-          <the-button-toggle-hidden
-            class="toggle-password-mask"
-            @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
-        </div>
-      </label>
-
       <label for="newPassword">New password
         <small
           v-if="passwordComplexity < 3"
@@ -68,7 +55,7 @@
 
 <script>
 import theButtonToggleHidden from "@/components/ui/TheButtonToggleHidden.vue";
-import { scoreChars, validateEmail } from "@/services/userService";
+import { scoreChars } from "@/services/userService";
 import axiosInstance from "@/services/axiosService";
 
 export default {
@@ -93,7 +80,7 @@ export default {
   watch: {
     newPassword: {
       handler(val) {
-        this.passwordComplexity = this.scoreChars(val);
+        this.passwordComplexity = scoreChars(val);
       },
     },
   },
@@ -129,13 +116,14 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
+          console.log("this.$route.query.token", this.$route.query.token)
+
           await axiosInstance({
             method: "POST",
             url: "/auth/change-password",
             data: {
-              password: this.password,
-              newPassword: this.newPassword,
-              newPassword2: this.newPassword2,
+              token: this.$route.query.token,
+              password: this.newPassword,
             },
           });
 
@@ -154,8 +142,6 @@ export default {
         this.buttonDisabled = false;
       }
     },
-    scoreChars,
-    validateEmail,
   },
 };
 </script>
