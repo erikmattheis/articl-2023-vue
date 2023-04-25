@@ -1,7 +1,7 @@
 <template>
   <article>
     <h1 v-if="!success">
-      {{ formAction }}  category
+      {{ formAction }} category
     </h1>
     <h1 v-else>
       Success
@@ -28,7 +28,8 @@
             v-model="AISummary"
             name="AISummary"
             rows="10"
-            cols="70" /></label>
+            cols="70" />
+        </label>
         <label for="description">Description
           <textarea
             id="description"
@@ -140,10 +141,9 @@ export default {
       this.isLoading = false;
     }
 
-    this.setTitleAndDescriptionMixin({ title: this.formAction });
-  },
-  params: {
-    id: String,
+    this.setTitleAndDescriptionMixin({
+      title: `${this.formAction} Category`,
+    });
   },
   methods: {
     async getCurrentCategory(id) {
@@ -166,7 +166,7 @@ export default {
     async getCategory(id) {
       return axiosInstance({
         method: "GET",
-        url: `/categories/${id}`,
+        url: `/ categories / ${id}`,
       });
     },
     async getCategoryBySlug(slug) {
@@ -267,7 +267,7 @@ export default {
 
           await axiosInstance({
             method: verb,
-            url: `/categories/${possiblyEmtyId}`,
+            url: `/ categories / ${possiblyEmtyId}`,
             data,
           });
 

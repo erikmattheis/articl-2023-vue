@@ -13,7 +13,6 @@
       v-if="isLoggedInMixin"
       :tree-level="treeLevel" />
   </article>
-
 </template>
 
 <script>
@@ -87,7 +86,7 @@ export default {
           this.$store.dispatch("categoryPages/notes", results.notes);
         }
 
-        this.title = results.category[0]?.title;
+        this.title = results.category[0]?.titleHtml;
 
         const description = results.category[0]?.description;
 

@@ -40,9 +40,7 @@ export default {
       });
 
       this.success = true;
-
       this.result = result.data;
-
       this.buttonDisabled = false;
     },
   },
