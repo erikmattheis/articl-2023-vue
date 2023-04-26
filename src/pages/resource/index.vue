@@ -55,6 +55,11 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.setTitleAndDescriptionMixin({
+      title: `${this.formAction} Articl`,
+    });
+  },
   methods: {
     async updateData() {
       try {
@@ -86,12 +91,14 @@ export default {
           this.$store.dispatch("categoryPages/notes", results.notes);
         }
 
-        this.title = results.category[0]?.titleHtml;
+        this.title = results.category[0]?.title;
+
+        this.titleHtml = results.category[0]?.titleHtml;
 
         const description = results.category[0]?.description;
 
         this.setTitleAndDescriptionMixin({
-          title: this.title,
+          title: this.titleHtml,
           description,
         });
       } catch (error) {

@@ -2,7 +2,7 @@
   <div class="row-admin-box">
     <router-link
       role="button"
-      :to="{ name: 'editArticl', params:{ editId:id }}">
+      :to="{ name: 'editArticl', params: { editId: id } }">
       <vue-feather
         size="0.7rem"
         type="edit"
@@ -11,7 +11,7 @@
 
     <router-link
       role="button"
-      :to="{ name: 'DeleteArticlPage', params: { id, title, slug, type }}">
+      :to="{ name: 'DeleteArticlPage', params: { id, title, slug, type } }">
       <vue-feather
         size="0.7rem"
         type="delete"
@@ -21,7 +21,8 @@
     <a
       role="button"
       class="handle"
-      href="#"><div class="sr">Reorder articl</div>
+      href="#">
+      <div class="sr">Reorder articl</div>
       <vue-feather
         size="0.7rem"
         type="move"
@@ -65,15 +66,16 @@ export default {
 
 <style scoped>
 .grid {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .grid a {
-  display:inline-block;
+  display: inline-block;
 }
+
 a {
   align-self: center;
   justify-self: center;
-  border:0;
+  border: 0;
 }
 </style>

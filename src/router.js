@@ -4,7 +4,6 @@ import DeleteArticlPage from "@/pages/articls/delete.vue";
 // import searchArticls from '@/pages/articls/search.vue';
 import deleteCategoryPage from "@/pages/categories/delete.vue";
 import createCategoryPage from "@/pages/categories/index.vue";
-import importCategoriesPage from "@/pages/categories/import-categories.vue";
 import categoryPage from "@/pages/resource/index.vue";
 import forgotPassPage from "@/pages/forgot-pass.vue";
 import forgotUsernamePage from "@/pages/forgot-username.vue";
@@ -176,11 +175,6 @@ const router = createRouter({
       path: "/forbidden",
       component: forbiddenPage,
     },
-    {
-      name: "importCategoriesPage",
-      path: "/categories/:slug?",
-      component: importCategoriesPage,
-    },
 
     {
       name: "NotFound", path: "/:notFound(.*)", component: notFound,
@@ -188,7 +182,12 @@ const router = createRouter({
   ],
 });
 
-
-
+/*
+    {
+      name: "importCategoriesPage",
+      path: "/categories/:slug?",
+      component: importCategoriesPage,
+    },
+*/
 
 export default router;
