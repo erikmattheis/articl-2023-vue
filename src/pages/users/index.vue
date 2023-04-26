@@ -305,7 +305,7 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: "Articl.net Login",
+      title: "Articl.net User Account",
     });
   },
   mixins: [isLoggedInMixin],
@@ -351,6 +351,10 @@ export default {
         this.theme = result.theme !== "dark" ? "light" : "dark";
 
         this.fontSize = result.fontSize ? result.fontSize : "";
+
+        this.setTitleAndDescriptionMixin({
+          title: `Articl.net User ${this.username}`
+        });
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       } finally {
