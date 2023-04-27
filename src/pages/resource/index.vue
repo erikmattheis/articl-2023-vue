@@ -40,11 +40,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      treeLevel: "categoryPages/treeLevel",
-      articls: "categoryPages/articls",
-      articlTypes: "categoryPages/articlTypes",
-      categories: "categoryPages/categories",
-      notes: "categoryPages/notes",
+      treeLevel: "resources/treeLevel",
+      articls: "resources/articls",
+      articlTypes: "resources/articlTypes",
+      categories: "resources/categories",
+      notes: "resources/notes",
     }),
   },
   watch: {
@@ -68,27 +68,27 @@ export default {
         const results = await this.fetchData(this.$route.params.slug);
 
         if (results.categories?.length) {
-          this.$store.dispatch("categoryPages/categories", results.categories);
+          this.$store.dispatch("resources/categories", results.categories);
         } else {
-          this.$store.dispatch("categoryPages/categories", []);
+          this.$store.dispatch("resources/categories", []);
         }
 
         if (results.breadcrumbs?.length) {
-          this.$store.dispatch("categoryPages/breadcrumbs", results.breadcrumbs);
+          this.$store.dispatch("resources/breadcrumbs", results.breadcrumbs);
         } else {
-          this.$store.dispatch("categoryPages/breadcrumbs", []);
+          this.$store.dispatch("resources/breadcrumbs", []);
         }
 
         if (results.articls) {
-          this.$store.dispatch("categoryPages/articls", results.articls);
-          this.$store.dispatch("categoryPages/articlTypes", results.articlTypes);
+          this.$store.dispatch("resources/articls", results.articls);
+          this.$store.dispatch("resources/articlTypes", results.articlTypes);
         } else {
-          this.$store.dispatch("categoryPages/articls", []);
-          this.$store.dispatch("categoryPages/articlTypes", []);
+          this.$store.dispatch("resources/articls", []);
+          this.$store.dispatch("resources/articlTypes", []);
         }
 
         if (results.notes?.length) {
-          this.$store.dispatch("categoryPages/notes", results.notes);
+          this.$store.dispatch("resources/notes", results.notes);
         }
 
         this.title = results.category[0]?.title;

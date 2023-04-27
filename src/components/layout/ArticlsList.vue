@@ -70,8 +70,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      articls: "categoryPages/articls",
-      articlTypes: "categoryPages/articlTypes",
+      articls: "resources/articls",
+      articlTypes: "resources/articlTypes",
     }),
   },
   mounted() {

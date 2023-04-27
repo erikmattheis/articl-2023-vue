@@ -2,13 +2,14 @@
   <div :key="note.id">
     <div class="container">
       <div>
-        <p v-if="$route.name === 'editNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully updated.</ins></p>
+        <p v-if="$route.name === 'editNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully
+            updated.</ins></p>
         <p v-html="note.fullText"></p>
         <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}<br>
-        {{ note.createdAt }}</small>
+          {{ note.createdAt }}</small>
       </div>
       <div v-if="noteIsUsers && isLoggedInMixin"
-class="box">
+        class="box">
         <div class="row-admin-box">
           <router-link
             role="button"
@@ -87,7 +88,7 @@ export default {
       this.noteIsUsers = this.passedNote?.author?.id === this.user?.id;
     }
     this.$watch(
-      () => this.$store.getters["categoryPages/notes"],
+      () => this.$store.getters["resources/notes"],
       (notes) => {
         const note = notes.find((n) => n.id === this.passedNote.id);
         if (note) {

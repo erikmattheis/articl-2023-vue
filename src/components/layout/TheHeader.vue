@@ -163,7 +163,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      articlCount: "categoryPages/count",
+      articlCount: "resources/count",
       accessTokenExpires: "tokens/accessTokenExpires",
     }),
     countMessage() {
@@ -241,7 +241,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 details[role=list],
 details summary,
 details[role=list] summary:not([role]):focus {
@@ -251,7 +250,7 @@ details[role=list] summary:not([role]):focus {
 }
 
 details summary::after {
-  display:none !important;
+  display: none !important;
 }
 
 svg {

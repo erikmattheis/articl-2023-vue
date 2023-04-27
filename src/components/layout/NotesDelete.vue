@@ -7,9 +7,9 @@
     </p>
     <form>
       <button :aria-busy="buttonDisabled"
-@click.prevent="$router.push({name: 'TabNotes', params: {slug}})">Cancel</button>
+        @click.prevent="$router.push({ name: 'TabNotes', params: { slug } })">Cancel</button>
       <button :aria-busy="buttonDisabled"
-@click.prevent="deleteNote()">Delete</button>
+        @click.prevent="deleteNote()">Delete</button>
     </form>
   </template>
 </template>
@@ -58,7 +58,7 @@ export default {
         await this.submitDelete(this.id);
 
         this.deleted = true;
-        this.$store.dispatch("categoryPages/removeNote", this.id);
+        this.$store.dispatch("resources/removeNote", this.id);
 
         this.deleted = true;
       } catch (error) {
@@ -93,6 +93,7 @@ export default {
 .grid a {
   display: inline-block;
 }
+
 a {
   align-self: center;
   justify-self: center;

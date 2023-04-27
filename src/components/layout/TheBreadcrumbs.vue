@@ -3,7 +3,7 @@
     <ul>
       <li>
         <router-link
-          :to="{ name: 'homePage'}">
+          :to="{ name: 'homePage' }">
           <small>Home</small>
         </router-link>
       </li>
@@ -12,8 +12,8 @@
         :key="breadcrumb">
         <router-link
           v-if="index !== breadcrumbs.length - 1"
-          :to="{ name: index < 3 ? 'TabCategories':'ArticlsList', params: { slug : breadcrumb.slug } }">
-        <small>{{ breadcrumb.title }}</small>
+          :to="{ name: index < 3 ? 'TabCategories' : 'ArticlsList', params: { slug: breadcrumb.slug } }">
+          <small>{{ breadcrumb.title }}</small>
         </router-link>
         <span v-else><small>{{ breadcrumb.title }}</small></span>
       </li>
@@ -28,7 +28,7 @@ export default {
   name: "TheBreadcrumbs",
   computed: {
     ...mapGetters({
-      breadcrumbs: "categoryPages/breadcrumbs",
+      breadcrumbs: "resources/breadcrumbs",
     }),
   },
 };
@@ -42,6 +42,6 @@ body ul {
 body li {
   padding-top: 0;
   padding-bottom: calc(var(--nav-element-spacing-vertical) * 0.5);
-  vertical-align:top !important
+  vertical-align: top !important
 }
 </style>

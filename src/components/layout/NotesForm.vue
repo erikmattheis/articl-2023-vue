@@ -1,28 +1,27 @@
 <template>
-    <form>
-      <label for="fullText">
-        <textarea
-          id="fullText"
-          v-model="fullText"
-          name="fullText" /></label>
-          <div class="grid">
-            <div class="grid-right">
-              <a :aria-busy="buttonDisabled"
-              href
-                role="button"
-                @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</a>
-                
-            <a
-            href
-            role="button"
-              :aria-disabled="buttonDisabled"
-              :aria-busy="buttonDisabled"
-              @click.prevent="submitForm()">
-              {{ !note?.id ? "Create" : "Edit" }} Note</a>
-            </div>
-          </div>
-    </form>
+  <form>
+    <label for="fullText">
+      <textarea
+        id="fullText"
+        v-model="fullText"
+        name="fullText" /></label>
+    <div class="grid">
+      <div class="grid-right">
+        <a :aria-busy="buttonDisabled"
+          href
+          role="button"
+          @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</a>
 
+        <a
+          href
+          role="button"
+          :aria-disabled="buttonDisabled"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()">
+          {{ !note?.id ? "Create" : "Edit" }} Note</a>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -120,10 +119,10 @@ export default {
           });
 
           if (this.note?.id) {
-            this.$store.dispatch("categoryPages/setNote", result.data);
+            this.$store.dispatch("resources/setNote", result.data);
             this.$router.push({ name: "editNoteSuccess", params: { id: this.note.id } });
           } else {
-            this.$store.dispatch("categoryPages/addNote", result.data);
+            this.$store.dispatch("resources/addNote", result.data);
             this.$router.push({ name: "TabNotes" });
           }
         } else {

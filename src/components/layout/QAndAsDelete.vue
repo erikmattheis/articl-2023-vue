@@ -1,9 +1,10 @@
 <template>
   <template v-if="!deleted">
-    <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}" by {{ nameFirst }} {{ nameLast }}?</p>
+    <p>Really delete the note <span v-if="fullText?.length > 64"> that begins, </span> "{{ fullText?.substring(0, 64) }}"
+      by {{ nameFirst }} {{ nameLast }}?</p>
     <form>
       <button :aria-busy="buttonDisabled"
-@click.prevent="$router.push({ name: 'TabQuestionsAnswers', params: { slug } })">Cancel</button>
+        @click.prevent="$router.push({ name: 'TabQuestionsAnswers', params: { slug } })">Cancel</button>
       <button
         :aria-busy="buttonDisabled"
         @click.prevent="deleteNote()">
@@ -56,7 +57,7 @@ export default {
         await this.submitDelete(this.id);
 
         this.deleted = true;
-        this.$store.dispatch("categoryPages/removeNote", this.id);
+        this.$store.dispatch("resources/removeNote", this.id);
 
         this.deleted = true;
       } catch (error) {

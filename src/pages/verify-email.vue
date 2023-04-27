@@ -24,8 +24,13 @@ export default {
       this.setTitleAndDescriptionMixin({
         title: "Email Verification",
       });
+
     } catch (error) {
       this.$store.dispatch("errors/setError", error);
+
+      this.setTitleAndDescriptionMixin({
+        title: "Email Verification Failed.",
+      });
     }
   },
   methods: {

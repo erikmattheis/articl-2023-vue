@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      QAndAs: "categoryPages/QAndAs",
+      QAndAs: "resources/QAndAs",
     }),
   },
 };

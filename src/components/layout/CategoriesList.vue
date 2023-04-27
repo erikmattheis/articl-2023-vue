@@ -43,12 +43,12 @@ export default {
         return this.categories.map((a) => a);
       },
       set(newValue) {
-        this.$store.dispatch("categoryPages/categories", newValue);
+        this.$store.dispatch("resources/categories", newValue);
       },
     },
     ...mapGetters({
-      categories: "categoryPages/categories",
-      treeLevel: "categoryPages/treeLevel",
+      categories: "resources/categories",
+      treeLevel: "resources/treeLevel",
     }),
   },
   mounted() {
@@ -62,7 +62,7 @@ export default {
 
           objRef.order = index;
         });
-        this.$store.dispatch("categoryPages/categories", this.categories);
+        this.$store.dispatch("resources/categories", this.categories);
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       }
@@ -109,7 +109,6 @@ export default {
 </script>
 
 <style scoped>
-
 li {
   overflow-x: hidden;
 }

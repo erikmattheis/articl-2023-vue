@@ -124,7 +124,7 @@ export default {
       return str;
     },
     ...mapGetters({
-      breadcrumbs: "categoryPages/breadcrumbs",
+      breadcrumbs: "resources/breadcrumbs",
     }),
   },
   mounted() {

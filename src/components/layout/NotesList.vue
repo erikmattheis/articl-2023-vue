@@ -11,7 +11,7 @@
       <li v-for="note in notes || []"
         :key="note.id">
         <notes-list-item :passed-note="note"
-@note-updated="noteUpdated" />
+          @note-updated="noteUpdated" />
       </li>
     </ul>
   </div>
@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     ...mapState({
-      notes: (state) => state.categoryPages.notes,
+      notes: (state) => state.resources.notes,
     }),
   },
   created() {
