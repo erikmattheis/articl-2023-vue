@@ -2,7 +2,8 @@
   <article>
     <h1>Delete Category</h1>
 
-    <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories  from category navigation.</p>
+    <p>Really delete "{{ title }}"? This will remove {{ categories.length }} descendent categories from category
+      navigation.</p>
 
     <form>
       <button :aria-busy="buttonDisabled"
@@ -36,9 +37,9 @@ export default {
 
   },
 
-  mounted() {
+  async mounted() {
     this.slug = this.$route.params.slug;
-    this.getCurrentCategory(this.slug);
+    await this.getCurrentCategory(this.slug);
     this.setTitleAndDescriptionMixin({ title: "Delete Category and Descendents" });
   },
   methods: {

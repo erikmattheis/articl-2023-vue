@@ -117,7 +117,7 @@ export default {
 
       str = str.toLowerCase();
 
-      str = encodeURIComponent(str);
+      str = encodeURI(str);
 
       str = str.replace(/'/g, "%27");
 
@@ -154,9 +154,7 @@ export default {
 
         Object.assign(this, result.data);
 
-        this.slug = decodeURIComponent(this.slug);
-
-        this.oldSlug = decodeURIComponent(result.data.slug);
+        this.oldSlug = result.data.slug;
 
         this.isLoading = false;
       } catch (error) {
@@ -166,7 +164,7 @@ export default {
     async getCategory(id) {
       return axiosInstance({
         method: "GET",
-        url: `/ categories / ${id}`,
+        url: `/categories/${id}`,
       });
     },
     async getCategoryBySlug(slug) {
@@ -267,7 +265,7 @@ export default {
 
           await axiosInstance({
             method: verb,
-            url: `/ categories / ${possiblyEmtyId}`,
+            url: `/categories/${possiblyEmtyId}`,
             data,
           });
 

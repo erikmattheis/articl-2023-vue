@@ -11,7 +11,7 @@
 
     <router-link
       role="button"
-      :to="{ name: 'DeleteArticlPage', params: { id, title, slug, type } }">
+      :to="{ name: 'DeleteArticlPage', params: { id } }">
       <vue-feather
         size="0.7rem"
         type="delete"

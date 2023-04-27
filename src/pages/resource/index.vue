@@ -57,7 +57,7 @@ export default {
   },
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: `${this.formAction} Articl`,
+      title: "Resource",
     });
   },
   methods: {

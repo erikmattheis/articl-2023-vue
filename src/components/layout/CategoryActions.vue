@@ -2,7 +2,7 @@
   <div class="row-admin-box box">
     <router-link
       role="button"
-      :to="{ name: 'editCategory', params: { id }}">
+      :to="{ name: 'editCategory', params: { id } }">
       <vue-feather
         size="0.7rem"
         type="edit"
@@ -11,7 +11,7 @@
 
     <router-link
       role="button"
-      :to="{ name: 'deleteCategory', params: { slug }}">
+      :to="{ name: 'deleteCategory', params: { slug: decodeURIComponent(slug) } }">
       <vue-feather
         size="0.7rem"
         type="delete"
@@ -21,7 +21,8 @@
     <a
       role="button"
       class="handle"
-      href="#"><div class="sr">Reorder category</div>
+      href="#">
+      <div class="sr">Reorder category</div>
       <vue-feather
         size="0.7rem"
         type="move"
@@ -55,7 +56,6 @@ export default {
 a {
   align-self: center;
   justify-self: center;
-  border:0;
+  border: 0;
 }
-
 </style>
