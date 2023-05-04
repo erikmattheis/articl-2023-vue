@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import createArticlPage from "@/pages/articls/index.vue";
 import DeleteArticlPage from "@/pages/articls/delete.vue";
-// import searchArticls from '@/pages/articls/search.vue';
+import searchArticls from "@/pages/articls/search.vue";
 import deleteCategoryPage from "@/pages/categories/delete.vue";
 import createCategoryPage from "@/pages/categories/index.vue";
 import categoryPage from "@/pages/resource/index.vue";
@@ -25,19 +25,18 @@ const router = createRouter({
   history: createWebHistory(),
 
   routes: [
-
     {
       name: "homePage",
       path: "/",
       component: homePage,
     },
-    /*
+
     {
-      name: 'searchArticls',
-      path: '/articls',
+      name: "searchArticls",
+      path: "/articls",
       component: searchArticls,
     },
-*/
+
     {
       name: "categoryPage",
       path: "/resource/:slug",

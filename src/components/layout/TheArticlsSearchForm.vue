@@ -17,41 +17,49 @@
     <div
       v-show="(activeTab === 0)"
       class="active tab-content">
-      <label for="title">Title <input
-        id="title"
-        v-model="title"
-        type="text"></label>
+      <the-articls-search-filter />
     </div>
     <div
       v-show="activeTab === 1"
       class="active tab-content">
+      <input type="checkbox"
+        v-model="showJournalField" /> Journal
       <input-typeahead
+        v-if="showJournalField"
         src="/articls/values/journal"
         :input-value="journal"
         label-value="Journal"
         query="journal"
         @typeahead-updated="onJournalChange" />
+      <input type="checkbox"
+        v-model="showAuthorsField" /> Author
       <input-typeahead
+        v-if="showAuthorsField"
         src="/articls/values/authors"
         :input-value="authors"
         label-value="Authors"
         query="authors"
         @typeahead-updated="onAuthorsChange" />
-      <label for="yearComparison">Year published <label
-        v-if="yearsStart === Number(year)"
-        for="year"
-        class="horizontal"><input
-          v-model="yearComparison"
-          type="radio"
-          value="after"
-          name="yearComparison"> After </label>
+
+      <input type="checkbox"
+        v-model="showYearField" /> Year
+      <section v-if="showYearField">
+        <label for="yearComparison">Year published</label>
+        <label v-if="yearsStart === Number(year)"
+          for="year"
+          class="horizontal"><input
+            v-model="yearComparison"
+            type="radio"
+            value="after"
+            name="yearComparison"> After</label>
         <label
-          v-for="comparison in yearComparisons"
-          v-else
+          v-if="yearsStart !== Number(year)"
           :key="comparison"
           for="yearComparison"
           class="horizontal"><input
+            v-for="comparison in yearComparisons"
             v-model="yearComparison"
+            :key="comparison"
             type="radio"
             :value="comparison"
             name="yearComparison"> {{ comparison }} </label>
@@ -63,39 +71,43 @@
             v-for="i in years"
             :key="i"> {{ i }} </option>
         </select>
-        <div class="grid">
-          <div>
-            <fieldset>
-              <legend>Type</legend>
-              <label
-                v-for="articlType in allTypes"
-                :key="articlType"
-                :for="articlType">
-                <input
-                  :id="articlType"
-                  v-model="types"
-                  type="checkbox"
-                  :value="articlType"
-                  checked="checked">{{ articlType }}</label>
-            </fieldset>
-          </div>
-
+      </section>
+      <input type="checkbox"
+        v-model="showTypesField" /> Type
+      <div class="grid"
+        v-if="showTypesField">
+        <div>
+          <fieldset>
+            <legend>Type</legend>
+            <label
+              v-for="articlType in allTypes"
+              :key="articlType"
+              :for="articlType">
+              <input
+                :id="articlType"
+                v-model="types"
+                type="checkbox"
+                :value="articlType"
+                checked="checked">{{ articlType }}</label>
+          </fieldset>
         </div>
-      </label>
+      </div>
     </div>
   </form>
 </template>
 
 <script>
-import { debounce } from "lodash";
+
 import { mapGetters } from "vuex";
 
 import InputTypeahead from "@/components/ui/InputTypeahead.vue";
+import TheArticlsSearchFilter from "@/components/layout/TheArticlsSearchFilter.vue";
 
 export default {
   name: "TheArticlsSearchForm",
   components: {
     InputTypeahead,
+    TheArticlsSearchFilter,
   },
   data() {
     return {
@@ -103,6 +115,12 @@ export default {
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
+      showJournalField: false,
+      showAuthorsField: false,
+      showTypesField: false,
+      showYearField: false,
+      showYearComparisonsField: false,
+      year: null,
     };
   },
   computed: {
@@ -150,19 +168,15 @@ export default {
         this.$store.dispatch("articlsParams/yearComparison", value);
       },
     },
-    year: {
+    types: {
       get() {
-        return this.$store.state.articlsParams.year;
+        return this.$store.state.articlsParams.types;
       },
       set(value) {
-        if (Number(value) === Number(this.yearsStart)) {
-          this.$store.dispatch("articlsParams/yearComparison", "after");
-        }
-
-        this.$store.dispatch("articlsParams/year", value);
+        this.$store.dispatch("articlsParams/types", value);
       },
     },
-    types: {
+    years: {
       get() {
         return this.$store.state.articlsParams.types;
       },
@@ -174,56 +188,21 @@ export default {
   watch: {
     yearComparison: {
       handler(newValue) {
-        this.$store.dispatch("articlsParams/yearComparison", newValue);
+        this.year = newValue;
       },
     },
   },
   created() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    this.$store.dispatch(
-      "articlsParams/types",
-      this.$store.state.articlsParams.allTypes,
-    );
-
-    this.onTitleChange = debounce(this.onTitleChange, 200);
-  },
-  unmounted() {
-    this.$store.dispatch("articlsParams/text", undefined);
-
-    this.$store.dispatch("articlsParams/title", undefined);
-
-    this.$store.dispatch("articlsParams/journal", undefined);
-
-    this.$store.dispatch("articlsParams/authors", undefined);
-
-    this.$store.dispatch("articlsParams/yearComparison", undefined);
-
-    this.$store.dispatch("articlsParams/types", []);
+    console.log("created",);
   },
   methods: {
-    onTypesChange(event) {
-      this.$store.dispatch("articlsParams/types", event.target.value);
-    },
-    onYearChange(event) {
-      this.$store.dispatch("articlsParams/year", event.target.value);
-    },
-    onJournalChange(event) {
-      this.$store.dispatch("articlsParams/journal", event.value);
-    },
-    onAuthorsChange(event) {
-      this.$store.dispatch("articlsParams/authors", event.value);
-    },
-    onTitleChange(event) {
-      this.$store.dispatch("articlsParams/title", event.target.value);
-    },
-    onYearComparisonChange(event) {
-      this.$store.dispatch("articlsParams/yearComparison", event.target.value);
-    },
+
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 select {
   overflow: scroll;
 }
@@ -237,13 +216,9 @@ select {
 * Nav tabs
 */
 
-.grid>li {
+.grid > li {
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
 }
-
-/*
-* End nav tabs
-*/
 </style>

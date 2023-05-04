@@ -3,9 +3,6 @@
     <h1>Search Articls</h1>
     <div class="grid">
       <the-articls-search-form />
-      <div>
-        <the-articls-search-params />
-      </div>
     </div>
     <articls-list />
   </article>
@@ -13,13 +10,13 @@
 
 <script>
 import TheArticlsSearchForm from "@/components/layout/TheArticlsSearchForm.vue";
-import TheArticlsSearchParams from "@/components/layout/TheArticlsSearchParams.vue";
+import ArticlsList from "@/components/layout/ArticlsList.vue";
 
 export default {
   name: "ArticlsSearch",
   components: {
     TheArticlsSearchForm,
-    TheArticlsSearchParams,
+    ArticlsList
   },
 };
 </script>
