@@ -6,9 +6,9 @@
       <ul>
         <li>
           <a tabindex="0"
-href
-@click.prevent="$router.go()"
-@keyup.enter.prevent="$router.go()">Create another articl in the same category</a>
+            href
+            @click.prevent="$router.go()"
+            @keyup.enter.prevent="$router.go()">Create another articl in the same category</a>
         </li>
         <li>
           <a
@@ -25,32 +25,32 @@ href
       <form>
         <template v-if="!id">
           <label for="url">URL <input id="url"
-v-model="url"
-type="text"
-name="url" /></label>
+              v-model="url"
+              type="text"
+              name="url" /></label>
           <button type="button"
-:aria-busy="buttonFetchDisabled"
-@click.prevent="getData()">
+            :aria-busy="buttonFetchDisabled"
+            @click.prevent="getData()">
             FETCH DATA
           </button>
         </template>
         <label for="title">Title
           <input id="title"
-v-model="title"
-name="title"
-autocomplete="off" />
+            v-model="title"
+            name="title"
+            autocomplete="off" />
         </label>
 
         <label v-if="doi"
-for="doi">DOI
+          for="doi">DOI
           <input id="doi"
-v-model="doi"
-name="doi"
-autocomplete="off" />
+            v-model="doi"
+            name="doi"
+            autocomplete="off" />
         </label>
 
         <fieldset v-for="(author, index) in authors"
-:key="author.id">
+          :key="author.id">
           <div class="grid">
             <label for="`nameFirst${index}`">First name
               <input
@@ -79,30 +79,30 @@ autocomplete="off" />
         </fieldset>
 
         <label for="journal">Journal <input id="journal"
-v-model="journal"
-name="journal"
-autocomplete="off" /></label>
+            v-model="journal"
+            name="journal"
+            autocomplete="off" /></label>
 
         <label for="year">Publication Year <input id="year"
-v-model="year"
-name="year"
-autocomplete="off" /></label>
+            v-model="year"
+            name="year"
+            autocomplete="off" /></label>
 
         <label for="month">Publication Month <input id="month"
-v-model="month"
-name="month"
-autocomplete="off" /></label>
+            v-model="month"
+            name="month"
+            autocomplete="off" /></label>
 
         <label for="abstract">Abstract <input id="abstract"
-v-model="abstract"
-name="abstract"
-autocomplete="off" /></label>
+            v-model="abstract"
+            name="abstract"
+            autocomplete="off" /></label>
 
         <label for="type">Link type
           <select id="type"
-v-model="type"
-name="type"
-autocomplete="off">
+            v-model="type"
+            name="type"
+            autocomplete="off">
             <optgroup value="Resources">
               <option value="Review (OA)">Review (OA)</option>
               <option value="Review (OA)">Review (PA)</option>
@@ -120,6 +120,7 @@ autocomplete="off">
             </optgroup>
           </select></label>
 
+
         <input-typeahead
           src="/categories/titles"
           query="category"
@@ -128,17 +129,17 @@ autocomplete="off">
           @update-value="onTypeaheadHit"
           @keyup="onTypeaheadHit" />
 
-          <button :aria-busy="buttonDisabled"
-                @click.prevent="$router.push({ name: 'ArticlsList', params: { slug } })">Cancel</button>
+        <button :aria-busy="buttonDisabled"
+          @click.prevent="$router.push({ name: 'ArticlsList', params: { slug } })">Cancel</button>
         <button type="button"
-:aria-busy="buttonDisabled"
-@click.prevent="submitForm(id)">
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm(id)">
           {{ !id ? "Create" : "Edit" }} Articl
         </button>
       </form>
     </template>
     <transition name="fade"
-mode="out-in">
+      mode="out-in">
       <loading-placeholder v-if="isLoading" />
     </transition>
   </article>

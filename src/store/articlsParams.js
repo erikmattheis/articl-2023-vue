@@ -13,6 +13,7 @@ export default {
     ],
     text: "",
     authors: "",
+    comparison: "after",
     yearComparisons: ["after", "before", "exactly"],
     journal: "",
     paramsCurrent: {

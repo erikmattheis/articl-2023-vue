@@ -1,117 +1,32 @@
 <template>
   <form>
-    <ul class="nav-tabs">
-      <li :class="{ active: activeTab === 0 }">
-        <a
-          href
-          @click.prevent="activeTab = 0"
-          @keyup.enter.prevent="activeTab = 0">Search</a>
-      </li>
-      <li :class="{ active: activeTab === 1 }">
-        <a
-          href
-          @click.prevent="activeTab = 1"
-          @keyup.enter.prevent="activeTab = 1">More options</a>
-      </li>
-    </ul>
-    <div
-      v-show="(activeTab === 0)"
-      class="active tab-content">
-      <the-articls-search-filter />
-    </div>
-    <div
-      v-show="activeTab === 1"
-      class="active tab-content">
-      <input type="checkbox"
-        v-model="showJournalField" /> Journal
-      <input-typeahead
-        v-if="showJournalField"
-        src="/articls/values/journal"
-        :input-value="journal"
-        label-value="Journal"
-        query="journal"
-        @typeahead-updated="onJournalChange" />
-      <input type="checkbox"
-        v-model="showAuthorsField" /> Author
-      <input-typeahead
-        v-if="showAuthorsField"
-        src="/articls/values/authors"
-        :input-value="authors"
-        label-value="Authors"
-        query="authors"
-        @typeahead-updated="onAuthorsChange" />
-
-      <input type="checkbox"
-        v-model="showYearField" /> Year
-      <section v-if="showYearField">
-        <label for="yearComparison">Year published</label>
-        <label v-if="yearsStart === Number(year)"
-          for="year"
-          class="horizontal"><input
-            v-model="yearComparison"
-            type="radio"
-            value="after"
-            name="yearComparison"> After</label>
-        <label
-          v-if="yearsStart !== Number(year)"
-          :key="comparison"
-          for="yearComparison"
-          class="horizontal"><input
-            v-for="comparison in yearComparisons"
-            v-model="yearComparison"
-            :key="comparison"
-            type="radio"
-            :value="comparison"
-            name="yearComparison"> {{ comparison }} </label>
-        <select
-          v-model="year"
-          autocomplete="off"
-          @change="onYearChange">
-          <option
-            v-for="i in years"
-            :key="i"> {{ i }} </option>
-        </select>
-      </section>
-      <input type="checkbox"
-        v-model="showTypesField" /> Type
-      <div class="grid"
-        v-if="showTypesField">
-        <div>
-          <fieldset>
-            <legend>Type</legend>
-            <label
-              v-for="articlType in allTypes"
-              :key="articlType"
-              :for="articlType">
-              <input
-                :id="articlType"
-                v-model="types"
-                type="checkbox"
-                :value="articlType"
-                checked="checked">{{ articlType }}</label>
-          </fieldset>
-        </div>
-      </div>
-    </div>
+    <label for="q">Search <input
+        id="q"
+        v-model="q"
+        type="text"
+        @mouseup="searchAll"></label>
+    <!--
+    <button @click.prevent="submitForm">Search</button> <vue-feather type="filter"
+      size="0.7rem" />
+      -->
   </form>
 </template>
 
 <script>
 
 import { mapGetters } from "vuex";
+import { debounce } from "lodash";
 
-import InputTypeahead from "@/components/ui/InputTypeahead.vue";
-import TheArticlsSearchFilter from "@/components/layout/TheArticlsSearchFilter.vue";
+import axiosInstance from "@/services/axiosService";
 
 export default {
   name: "TheArticlsSearchForm",
   components: {
-    InputTypeahead,
-    TheArticlsSearchFilter,
+
   },
   data() {
     return {
-      activeTab: 0,
+      results: [],
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
@@ -121,6 +36,7 @@ export default {
       showYearField: false,
       showYearComparisonsField: false,
       year: null,
+      q: "",
     };
   },
   computed: {
@@ -192,13 +108,48 @@ export default {
       },
     },
   },
-  created() {
+  mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    console.log("created",);
-  },
-  methods: {
+    this.searchAll = debounce(this.searchAll, 200);
 
   },
+  methods: {
+    async searchAll() {
+      console.log("searchAll", this.q);
+      if (this.q.length < 2) {
+        return;
+      }
+
+      const response = await axiosInstance.get("/articls/search", {
+        params: {
+          q: this.q,
+        },
+      });
+      this.results = response.data;
+      console.log("searchAll", this.results);
+    },
+    onTypesChange(event) {
+      this.$store.dispatch("articlsParams/types", this.types);
+      console.log("onTypesChange", event);
+    },
+    onYearChange(event) {
+      console.log("onYearChange", event.target.value);
+      this.$store.dispatch("articlsParams/year", event.target.value);
+    },
+    onJournalChange(event) {
+      this.$store.dispatch("articlsParams/journal", event.value);
+    },
+    onAuthorsChange(event) {
+      this.$store.dispatch("articlsParams/authors", event.value);
+    },
+    onTitleChange(event) {
+      this.$store.dispatch("articlsParams/title", event.target.value);
+    },
+    onYearComparisonChange(event) {
+      console.log("onYearComparisonChange", event.target.value);
+      this.$store.dispatch("articlsParams/yearComparison", event.target.value);
+    },
+  }
 };
 </script>
 

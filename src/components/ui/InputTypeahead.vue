@@ -25,7 +25,7 @@
         <li
           v-for="(item, $index) in items"
           :key="$index"
-          :class="{'active':$index===current, 'no-padding':true}"
+          :class="{ 'active': $index === current, 'no-padding': true }"
           @mousedown="hit"
           @mousemove="setActive($index)">
           <span v-text="item" />
@@ -88,13 +88,6 @@ export default {
     },
   },
   mounted() {
-    this.$refs.input.addEventListener(
-      "blur",
-      () => {
-        // it will work now
-      },
-      true,
-    );
 
     this.setActive = debounce(this.setActive, 10);
 
@@ -249,5 +242,4 @@ label .icon {
 label > :where(input, select, textarea) {
   margin-top: 0;
 }
-
 </style>
