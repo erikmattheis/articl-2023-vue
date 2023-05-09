@@ -9,9 +9,14 @@
       <div class="grid"
         v-for="result in results"
         :key="result.id">
-        <h3>{{ result.title }}<br />
-          {{ result.journal }}</h3>
-        <p>{{ result.score }}</p>
+        <articls-list-item
+          :articl="result"
+          :order="result.order" />
+        <h3><span v-html="highlightMatchedText(result.title)"></span><br />
+          <span v-html="highlightMatchedText(result.journal)"></span>
+        </h3>
+        <span v-html="highlightMatchedText(result.authors)"></span>
+        {{ result.score }}
       </div>
     </section>
     <!--
@@ -27,11 +32,12 @@ import { mapGetters } from "vuex";
 import { debounce } from "lodash";
 
 import axiosInstance from "@/services/axiosService";
+import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
 
 export default {
   name: "TheArticlsSearchForm",
   components: {
-
+    ArticlsListItem
   },
   data() {
     return {
@@ -128,7 +134,6 @@ export default {
   },
   methods: {
     async searchAll(q) {
-      console.log("searcqhAll", q);
       if (q.length < 2) {
         return;
       }
@@ -138,8 +143,8 @@ export default {
           q,
         },
       });
+
       this.results = response.data;
-      console.log("searchAll", this.results);
     },
     onTypesChange(event) {
       this.$store.dispatch("articlsParams/types", this.types);

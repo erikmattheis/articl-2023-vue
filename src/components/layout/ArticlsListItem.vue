@@ -21,7 +21,7 @@
 
       <li class="articl-details">
         <p class="authors-list"
-v-if="authorsList?.length">
+          v-if="authorsList?.length">
           {{ authorsList }}
         </p>
         <details v-if="!articl?.wpPost?.ID">
@@ -42,15 +42,15 @@ v-if="authorsList?.length">
                     {{ affilliation }}
                   </li>
                 </ul>
-              {{ author.nameFirst }} {{ author.nameLast }}
+                {{ author.nameFirst }} {{ author.nameLast }}
 
-              <ul v-if="author.affilliations?.length">
-                <li
-                  v-for="affilliation in author.affilliations"
-                  :key="affilliation">
-                  {{ affilliation }}
-                </li>
-              </ul>
+                <ul v-if="author.affilliations?.length">
+                  <li
+                    v-for="affilliation in author.affilliations"
+                    :key="affilliation">
+                    {{ affilliation }}
+                  </li>
+                </ul>
               </template>
               <template v-else-if="author.length">
                 <span>{{ author }}</span>
@@ -76,10 +76,10 @@ v-if="authorsList?.length">
           {{ highlightedSubstring(articl.authorsOrig, params.authors, "prefix")
           }}<strong
             :class="{
-              'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
-            }">{{
-            highlightedSubstring(articl.authorsOrig, params.authors, "term")
-          }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
+                'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
+              }">{{
+    highlightedSubstring(articl.authorsOrig, params.authors, "term")
+  }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
         </small>
       </li>
 
@@ -120,7 +120,7 @@ v-if="authorsList?.length">
       </li>
 
       <li
-        v-if="articl.url && articl.type=='Images'"
+        v-if="articl.url && articl.type == 'Images'"
         class="articl-details">
         <img
           :src="articl.url"
@@ -201,7 +201,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .container {
   display: grid;
   grid-gap: 10px;
@@ -210,7 +209,7 @@ export default {
 }
 
 li {
-  width:100%;
+  width: 100%;
 
   a {
     cursor: pointer;
@@ -266,5 +265,4 @@ strong:not([class="not-strong"]) {
   width: 100%;
   margin-bottom: 0;
 }
-
 </style>
