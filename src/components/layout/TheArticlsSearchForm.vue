@@ -3,8 +3,17 @@
     <label for="q">Search <input
         id="q"
         v-model="q"
-        type="text"
-        @mouseup="searchAll"></label>
+        type="text"></label>
+
+    <section>
+      <div class="grid"
+        v-for="result in results"
+        :key="result.id">
+        <h3>{{ result.title }}<br />
+          {{ result.journal }}</h3>
+        <p>{{ result.score }}</p>
+      </div>
+    </section>
     <!--
     <button @click.prevent="submitForm">Search</button> <vue-feather type="filter"
       size="0.7rem" />
@@ -107,22 +116,26 @@ export default {
         this.year = newValue;
       },
     },
+    q: {
+      handler(newValue) {
+        this.searchAll(newValue);
+      },
+    },
   },
   mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    this.searchAll = debounce(this.searchAll, 200);
-
+    this.searchAll = this.debounce(this.searchAll, 200);
   },
   methods: {
-    async searchAll() {
-      console.log("searchAll", this.q);
-      if (this.q.length < 2) {
+    async searchAll(q) {
+      console.log("searcqhAll", q);
+      if (q.length < 2) {
         return;
       }
 
       const response = await axiosInstance.get("/articls/search", {
         params: {
-          q: this.q,
+          q,
         },
       });
       this.results = response.data;
@@ -149,6 +162,8 @@ export default {
       console.log("onYearComparisonChange", event.target.value);
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
+    debounce,
+
   }
 };
 </script>
