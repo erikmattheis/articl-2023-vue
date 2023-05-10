@@ -12,7 +12,8 @@
         <articls-list-item
           :articl="result"
           :order="result.order" />
-        <h3><span v-html="highlightMatchedText(result.title)"></span><br />
+        <h3>html title: <span v-html="highlightMatchedText(result.htmlTitle)"></span><br />
+          title:<span v-html="highlightMatchedText(result.title)"></span><br />
           <span v-html="highlightMatchedText(result.journal)"></span>
         </h3>
         <span v-html="highlightMatchedText(result.authors)"></span>
@@ -134,6 +135,7 @@ export default {
   },
   methods: {
     async searchAll(q) {
+      console.log("q", q)
       if (q.length < 2) {
         return;
       }
@@ -143,8 +145,30 @@ export default {
           q,
         },
       });
-
+      console.log("response[0]", this.results[0]);
       this.results = response.data;
+      console.log("response[0]", this.results[0]);
+      console.log("------")
+    },
+    highlightMatchedText(text, searchTerm = this.q) {
+      if (!text || !searchTerm) {
+        return text;
+      }
+      text = this.convertAuthorArrayToString(text);
+      const regex = new RegExp(searchTerm, "gi");
+      return text.replace(regex, "<span style=\"color:green\">$&</span>");
+    },
+    convertAuthorArrayToString(srt) {
+      if (typeof srt === "string") {
+        return srt;
+      }
+      if (typeof srt[0] === "string") {
+        return srt.join(", ");
+      }
+      if (!srt.map) {
+        return srt;
+      }
+      return srt.map((author) => `${author.nameLast}, ${author.nameFirst}`).join(", ");
     },
     onTypesChange(event) {
       this.$store.dispatch("articlsParams/types", this.types);
