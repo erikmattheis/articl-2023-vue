@@ -11,13 +11,16 @@
         :key="result.id">
         <articls-list-item
           :articl="result"
+          :q="q"
           :order="result.order" />
+        <!--
         <h3>html title: <span v-html="highlightMatchedText(result.htmlTitle)"></span><br />
           title:<span v-html="highlightMatchedText(result.title)"></span><br />
           <span v-html="highlightMatchedText(result.journal)"></span>
         </h3>
         <span v-html="highlightMatchedText(result.authors)"></span>
         {{ result.score }}
+        -->
       </div>
     </section>
     <!--
@@ -34,6 +37,7 @@ import { debounce } from "lodash";
 
 import axiosInstance from "@/services/axiosService";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
+import { highlightMatchedText } from "@/services/stringsService";
 
 export default {
   name: "TheArticlsSearchForm",
@@ -132,10 +136,14 @@ export default {
   mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
     this.searchAll = this.debounce(this.searchAll, 200);
+    this.q = this.$route.query.q || "";
   },
   methods: {
     async searchAll(q) {
-      console.log("q", q)
+      this.$router.push({
+        path: this.$route.path,
+        query: { q }
+      });
       if (q.length < 2) {
         return;
       }
@@ -146,29 +154,20 @@ export default {
         },
       });
       console.log("response[0]", this.results[0]);
-      this.results = response.data;
+      this.results = this.highlight(response.data, q);
       console.log("response[0]", this.results[0]);
       console.log("------")
     },
-    highlightMatchedText(text, searchTerm = this.q) {
-      if (!text || !searchTerm) {
-        return text;
+    highlight(articl, q) {
+      for (const key in articl) {
+        if (Object.prototype.hasOwnProperty.call(articl, key)) {
+          const value = articl[key];
+          if (key !== "q") {
+            articl[key] = this.highlightMatchedText(value, q);
+          }
+        }
       }
-      text = this.convertAuthorArrayToString(text);
-      const regex = new RegExp(searchTerm, "gi");
-      return text.replace(regex, "<span style=\"color:green\">$&</span>");
-    },
-    convertAuthorArrayToString(srt) {
-      if (typeof srt === "string") {
-        return srt;
-      }
-      if (typeof srt[0] === "string") {
-        return srt.join(", ");
-      }
-      if (!srt.map) {
-        return srt;
-      }
-      return srt.map((author) => `${author.nameLast}, ${author.nameFirst}`).join(", ");
+      return articl;
     },
     onTypesChange(event) {
       this.$store.dispatch("articlsParams/types", this.types);
@@ -192,7 +191,7 @@ export default {
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
     debounce,
-
+    highlightMatchedText,
   }
 };
 </script>

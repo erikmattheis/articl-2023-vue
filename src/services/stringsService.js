@@ -43,6 +43,28 @@ const toListWithOptionalConjuction = (array, conj = "") => {
   );
 };
 
+const highlightMatchedText = (text, searchTerm) => {
+  if (!text || !searchTerm) {
+    return text;
+  }
+  text = convertAuthorArrayToString(text);
+  const regex = new RegExp(searchTerm, "gi");
+  return text.replace(regex, "<span style=\"color:green\">$&</span>");
+}
+
+const convertAuthorArrayToString = (srt) => {
+  if (typeof srt === "string") {
+    return srt;
+  }
+  if (typeof srt[0] === "string") {
+    return srt.join(", ");
+  }
+  if (!srt.map) {
+    return srt;
+  }
+  return srt.map((author) => `${author.nameLast}, ${author.nameFirst}`).join(", ");
+}
+
 const convertStringDatesToMS = (tokens) => {
   const result = JSON.parse(JSON.stringify(tokens));
 
@@ -65,4 +87,5 @@ export {
   noCaseIndexOf,
   toListWithOptionalConjuction,
   convertStringDatesToMS,
+  highlightMatchedText,
 };
