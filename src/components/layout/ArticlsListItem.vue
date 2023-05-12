@@ -6,8 +6,8 @@
           :data-tooltip="linkMessage"
           :href="articl.url"
           class="box"
-          target="_blank">
-          {{ articl.title }}
+          target="_blank"
+          v-html="articl.title">
         </a>
 
         <articl-actions
@@ -21,8 +21,8 @@
 
       <li class="articl-details">
         <p class="authors-list"
-          v-if="authorsList?.length">
-          {{ authorsList }}
+          v-if="articl?.authors?.length"
+          v-html="articl.authors">
         </p>
         <details v-if="!articl?.wpPost?.ID">
           <summary>
@@ -34,26 +34,25 @@
               :key="index"
               class="grid">
               <template v-if="author.nameFirst?.length || author.nameLast?.length">
-                <span>{{ author.nameFirst }} {{ author.nameLast }}</span>
+                <span v-html="author.nameFirst"></span><span v-html="author.nameLast"></span>
                 <ul>
                   <li
                     v-for="affilliation in author.affilliations"
-                    :key="affilliation">
-                    {{ affilliation }}
+                    :key="affilliation"
+                    v-html="affilliation">
                   </li>
                 </ul>
-                {{ author.nameFirst }} {{ author.nameLast }}
 
                 <ul v-if="author.affilliations?.length">
                   <li
                     v-for="affilliation in author.affilliations"
-                    :key="affilliation">
-                    {{ affilliation }}
+                    :key="affilliation"
+                    v-html="affilliation">
                   </li>
                 </ul>
               </template>
               <template v-else-if="author.length">
-                <span>{{ author }}</span>
+                <span v-html="author"></span>
               </template>
             </li>
           </ul>
@@ -62,31 +61,23 @@
 
       <li
         v-if="articl.journal"
-        class="articl-details">
-        {{ articl.journal }} <span v-if="articl.year">{{ articl.year }}</span> | <a
-          :data-tooltip="linkMessage"
+        class="articl-details"><span v-html="articl.journal"
+          data-tooltip="linkMessage"
           :href="articl.url"
-          target="_blank">{{ articl.url }}</a>
+          target="_blank"></span> <span v-if="articl.year"
+          v-html="articl.year"></span>
       </li>
 
       <li
         v-if="articl.authorsOrig"
-        class="articl-details">
-        <small>
-          {{ highlightedSubstring(articl.authorsOrig, params.authors, "prefix")
-          }}<strong
-            :class="{
-                'not-strong': noCaseIndexOf(articl.authorsOrig, params.authors) === -1,
-              }">{{
-    highlightedSubstring(articl.authorsOrig, params.authors, "term")
-  }}</strong>{{ highlightedSubstring(articl.authorsOrig, params.authors, "suffix") }}
-        </small>
+        class="articl-details"
+        v-html="articl.authorOrig">
       </li>
 
       <li
         v-if="articl.source"
-        class="articl-details">
-        {{ articl.source }}
+        class="articl-details"
+        v-html="articl.source">
       </li>
 
       <li
@@ -94,9 +85,7 @@
         class="articl-details">
         <details>
           <summary>Abstract</summary>
-          <div>
-            {{ articl.abstract }}
-          </div>
+          <div v-html="articl.abstract"></div>
         </details>
       </li>
 
@@ -105,9 +94,7 @@
         class="articl-details">
         <details>
           <summary>Full text</summary>
-          <div>
-            {{ articl.fullText }}
-          </div>
+          <div v-html="articl.fullText"></div>
         </details>
       </li>
 
@@ -124,14 +111,13 @@
         class="articl-details">
         <img
           :src="articl.url"
-          :alt="articl.title"><br>
-        {{ articl.url }}
+          :alt="articl.title">
       </li>
 
       <li
         v-if="articl.imageCaption"
-        class="articl-details">
-        {{ articl.imageCaption }}
+        class="articl-details"
+        v-html="articl.imageCaption">
       </li>
     </ul>
   </div>

@@ -1,9 +1,9 @@
 <template>
   <article>
     <h1>Search Articls</h1>
-    <div class="grid">
-      <the-articls-search-form />
-    </div>
+
+    <the-articls-search-form />
+
     <articls-list />
   </article>
 </template>

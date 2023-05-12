@@ -1,33 +1,43 @@
 <template>
   <form>
-    <label for="q">Search <input
-        id="q"
-        v-model="q"
-        type="text"></label>
+    <div>
+      <label for="q">Search <input
+          id="q"
+          v-model="q"
+          type="text"></label>
+    </div>
 
-    <section>
-      <div class="grid"
-        v-for="result in results"
-        :key="result.id">
-        <articls-list-item
-          :articl="result"
-          :q="q"
-          :order="result.order" />
-        <!--
-        <h3>html title: <span v-html="highlightMatchedText(result.htmlTitle)"></span><br />
-          title:<span v-html="highlightMatchedText(result.title)"></span><br />
-          <span v-html="highlightMatchedText(result.journal)"></span>
-        </h3>
-        <span v-html="highlightMatchedText(result.authors)"></span>
-        {{ result.score }}
-        -->
-      </div>
-    </section>
-    <!--
+    <div class="flex-parent">
+      <label
+        for="searchTitle"
+        v-for="field in allSearchFields  "
+        :key="field">
+        <input
+          :id="field"
+          type="checkbox"
+          :name="field"
+          :checked="searchFields.includes(field)"
+          :aria-checked="searchFields.includes(field)"
+          role="switch"
+          class="checkbox-label"
+          @click="toggle(field)"> {{ field }}</label>
+    </div>
+
+  </form>
+  <section>
+    <div
+      v-for="result in results"
+      :key="result.id">
+      <articls-list-item
+        :articl="result"
+        :q="q"
+        :order="result.order" />
+    </div>
+  </section>
+  <!--
     <button @click.prevent="submitForm">Search</button> <vue-feather type="filter"
       size="0.7rem" />
       -->
-  </form>
 </template>
 
 <script>
@@ -50,52 +60,16 @@ export default {
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
-      showJournalField: false,
-      showAuthorsField: false,
-      showTypesField: false,
-      showYearField: false,
-      showYearComparisonsField: false,
       year: null,
       q: "",
+      allSearchFields: ["title", "author", "journal", "institution", "abstract"],
+      searchFields: ["title", "author", "journal", "institution", "abstract"],
     };
   },
   computed: {
-    queryUC: (val) => val[0].toUpperCase() + val.substring(1),
     ...mapGetters({
       years: "articlsParams/years",
     }),
-    text: {
-      get() {
-        return this.$store.state.articlsParams.text;
-      },
-      set(value) {
-        this.$store.dispatch("articlsParams/text", value);
-      },
-    },
-    title: {
-      get() {
-        return this.$store.state.articlsParams.title;
-      },
-      set(value) {
-        this.$store.dispatch("articlsParams/title", value);
-      },
-    },
-    journal: {
-      get() {
-        return this.$store.state.articlsParams.journal;
-      },
-      set(value) {
-        this.$store.dispatch("articlsParams/journal", value);
-      },
-    },
-    authors: {
-      get() {
-        return this.$store.state.articlsParams.authors;
-      },
-      set(value) {
-        this.$store.dispatch("articlsParams/authors", value);
-      },
-    },
     yearComparison: {
       get() {
         return this.$store.state.articlsParams.yearComparison;
@@ -129,34 +103,45 @@ export default {
     },
     q: {
       handler(newValue) {
-        this.searchAll(newValue);
+        this.searchArticls(newValue, this.searchFields);
       },
+    },
+    searchFields: {
+      handler(newValue) {
+        this.searchArticls(this.q, newValue);
+      },
+      deep: true,
     },
   },
   mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    this.searchAll = this.debounce(this.searchAll, 200);
+    this.searchArticls = this.debounce(this.searchArticls, 200);
     this.q = this.$route.query.q || "";
+    console.log("searchFields", this.$route.query.searchFields);
+    console.log("searchFields2", this.$route.query.searchFields?.length);
+    if (this.$route.query.searchFields?.length) {
+      this.searchFields = this.$route.query.searchFields.split(",");
+    }
+
   },
   methods: {
-    async searchAll(q) {
+
+    async searchArticls(q, searchFields) {
       this.$router.push({
         path: this.$route.path,
-        query: { q }
+        query: { q, searchFields: searchFields.join(",") },
       });
+
       if (q.length < 2) {
         return;
       }
 
       const response = await axiosInstance.get("/articls/search", {
         params: {
-          q,
+          q, searchFields: searchFields.join(",")
         },
       });
-      console.log("response[0]", this.results[0]);
       this.results = this.highlight(response.data, q);
-      console.log("response[0]", this.results[0]);
-      console.log("------")
     },
     highlight(articl, q) {
       for (const key in articl) {
@@ -169,12 +154,17 @@ export default {
       }
       return articl;
     },
-    onTypesChange(event) {
+    toggle(field) {
+      if (this.searchFields.includes(field)) {
+        this.searchFields = this.searchFields.filter((item) => item !== field);
+      } else {
+        this.searchFields.push(field);
+      }
+    },
+    onTypesChange() {
       this.$store.dispatch("articlsParams/types", this.types);
-      console.log("onTypesChange", event);
     },
     onYearChange(event) {
-      console.log("onYearChange", event.target.value);
       this.$store.dispatch("articlsParams/year", event.target.value);
     },
     onJournalChange(event) {
@@ -187,7 +177,6 @@ export default {
       this.$store.dispatch("articlsParams/title", event.target.value);
     },
     onYearComparisonChange(event) {
-      console.log("onYearComparisonChange", event.target.value);
       this.$store.dispatch("articlsParams/yearComparison", event.target.value);
     },
     debounce,
@@ -197,22 +186,21 @@ export default {
 </script>
 
 <style scoped>
-select {
-  overflow: scroll;
+.flex-parent {
+  display: flex;
 }
 
-.horizontal {
+.flex-parent > * {
+  width: min-width;
+  margin-right: 0.5rem;
+}
+
+.checkbox-label {
   display: inline-block;
   margin-right: 0.5rem;
 }
 
-/*
-* Nav tabs
-*/
-
-.grid > li {
-  display: inline-block;
-  margin-top: 0;
-  margin-bottom: 0;
+.checkbox-label::not(:last-child) {
+  margin-right: 0.5rem;
 }
 </style>

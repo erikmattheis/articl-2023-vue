@@ -43,13 +43,17 @@ const toListWithOptionalConjuction = (array, conj = "") => {
   );
 };
 
-const highlightMatchedText = (text, searchTerm) => {
-  if (!text || !searchTerm) {
+const highlightMatchedText = (text, searchTerm) =>{
+  if (!text || text.length === 0 || !searchTerm || searchTerm.length === 0) {
     return text;
   }
   text = convertAuthorArrayToString(text);
   const regex = new RegExp(searchTerm, "gi");
-  return text.replace(regex, "<span style=\"color:green\">$&</span>");
+  if (text.replace) {
+    return text.replace(regex, "<span style=\"color:green\">$&</span>");
+  }
+  return text;
+
 }
 
 const convertAuthorArrayToString = (srt) => {
