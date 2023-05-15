@@ -43,18 +43,7 @@ const toListWithOptionalConjuction = (array, conj = "") => {
   );
 };
 
-const highlightMatchedText = (text, searchTerm) =>{
-  if (!text || text.length === 0 || !searchTerm || searchTerm.length === 0) {
-    return text;
-  }
-  text = convertAuthorArrayToString(text);
-  const regex = new RegExp(searchTerm, "gi");
-  if (text.replace) {
-    return text.replace(regex, "<span style=\"color:green\">$&</span>");
-  }
-  return text;
 
-}
 
 const convertAuthorArrayToString = (srt) => {
   if (typeof srt === "string") {
@@ -68,6 +57,20 @@ const convertAuthorArrayToString = (srt) => {
   }
   return srt.map((author) => `${author.nameLast}, ${author.nameFirst}`).join(", ");
 }
+
+const highlightMatchedText = (text, searchTerm) => {
+  if (!text || text.length === 0 || !searchTerm || searchTerm.length === 0) {
+    return text;
+  }
+  text = convertAuthorArrayToString(text);
+  const regex = new RegExp(searchTerm, "gi");
+  if (text.replace) {
+    return text.replace(regex, "<span style=\"color:green\">$&</span>");
+  }
+  return text;
+
+}
+console.log(highlightMatchedText("hello", "he"));
 
 const convertStringDatesToMS = (tokens) => {
   const result = JSON.parse(JSON.stringify(tokens));

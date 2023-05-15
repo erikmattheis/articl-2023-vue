@@ -115,7 +115,7 @@ export default {
   },
   mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    this.searchArticls = this.debounce(this.searchArticls, 200);
+    this.searchArticls = debounce(this.searchArticls, 200);
     this.q = this.$route.query.q || "";
     console.log("searchFields", this.$route.query.searchFields);
     console.log("searchFields2", this.$route.query.searchFields?.length);
@@ -160,28 +160,15 @@ export default {
       } else {
         this.searchFields.push(field);
       }
+      this.filterArticls(this.searchFields);
     },
-    onTypesChange() {
-      this.$store.dispatch("articlsParams/types", this.types);
-    },
-    onYearChange(event) {
-      this.$store.dispatch("articlsParams/year", event.target.value);
-    },
-    onJournalChange(event) {
-      this.$store.dispatch("articlsParams/journal", event.value);
-    },
-    onAuthorsChange(event) {
-      this.$store.dispatch("articlsParams/authors", event.value);
-    },
-    onTitleChange(event) {
-      this.$store.dispatch("articlsParams/title", event.target.value);
-    },
-    onYearComparisonChange(event) {
-      this.$store.dispatch("articlsParams/yearComparison", event.target.value);
+    filterArticls(searchFields) {
+      this.results.filter((articl) => { return searchFields.includes(articl.type) });
     },
     debounce,
     highlightMatchedText,
-  }
+  },
+
 };
 </script>
 
