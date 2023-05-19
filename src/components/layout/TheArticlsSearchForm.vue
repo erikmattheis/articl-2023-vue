@@ -63,9 +63,9 @@ export default {
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
       year: null,
-      q: "",
+      q: this.$route.query.q || "",
       allSearchFields: ["title", "author", "journal", "institution", "abstract"],
-      searchFields: ["title"],
+      searchFields: this.$route.query.searchFields.split(",") || ["title"],
     };
   },
   computed: {
@@ -98,27 +98,26 @@ export default {
     },
   },
   watch: {
+    articls: {
+      handler(newValue) {
+        this.articls = newValue.map((articl) => {
+          return this.highlight(articl, this.q);
+        });
+      },
+    },
     q: {
-      handler: debounce(async function (newValue) {
+      handler: async function (newValue) {
         this.articls = await this.searchArticls(newValue, this.searchFields);
-      }, 500),
+      },
     },
     searchFields: {
-      handler: debounce(async function (newValue) {
+      handler: async function (newValue) {
         this.articls = await this.searchArticls(this.q, newValue);
-      }, 500),
-    },
-  },
-  searchFields: {
-    async handler(newValue) {
-      this.articls = await this.searchArticls(this.q, newValue);
+      },
     },
   },
   async mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    this.q = this.$route.query.q || "";
-
-    this.searchFields = this.$route.query.searchFields?.split(",") || ["title"];
 
     this.articls = await this.searchArticls(this.q, this.searchFields);
   },
@@ -148,70 +147,75 @@ export default {
       });
       return response.data;
     },
-    /*
     highlight(articl, q) {
       for (const key in articl) {
+        const value = articl[key];
         if (Object.prototype.hasOwnProperty.call(articl, key)) {
-          const value = articl[key];
-          articl[key] = this.highlightMatchedText(value, q);
+          if (key === "authors" && value.map) {
+            articl[key] = value.map((author) => {
+
+              author.nameFirst = this.highlightMatchedText(author.nameFirst, q);
+              author.nameLast = this.highlightMatchedText(author.nameLast, q);
+              return author;
+            });
+          }
         }
-      }
-      return articl;
-    },
-    */
-    toggle(field) {
-      if (this.searchFields.includes(field)) {
-        this.searchFields = this.searchFields.filter((item) => item !== field);
-      } else {
-        this.searchFields.push(field);
-      }
-      this.searchFieldsChanged();
-    },
-    async searchFieldsChanged() {
-      this.articls = await this.searchArticls(this.q, this.searchFields);
-    },
-    filterArticls(articls, q, searchFields) {
-      if (!q.length > 1 || !this.articls.filter) {
-        return articls;
-      }
-      const filtered = articls?.filter((articl) => {
-        for (const key in searchFields) {
-
-          if (Object.prototype.hasOwnProperty.call(articl, key)) {
-            if (key === "authors" && this.stringIsInAuthorName(articl[key], q)) {
-              return true
-            }
-            if (articl[key].toLowerCase && articl[key].toLowerCase().includes(q.toLowerCase())) {
-              return true;
-            }
-          }
-          return false;
-        }
-      });
-      return filtered;
-    },
-    stringIsInAuthorName(authors, q) {
-      if (authors.filter) {
-        return authors.some((author) => {
-
-          if (author?.nameFirst.toLowerCase().includes(q?.toLowerCase())) {
-            return true;
-          }
-          if (author?.nameLast.toLowerCase().includes(q?.toLowerCase())) {
-            return true;
-          }
-
-          return false;
-
-        });
-
+        articl[key] = this.highlightMatchedText(value, q);
       }
     },
-    debounce,
-    highlightMatchedText,
-    urlParamIsFalsy,
   },
-};
+  toggle(field) {
+    if (this.searchFields.includes(field)) {
+      this.searchFields = this.searchFields.filter((item) => item !== field);
+    } else {
+      this.searchFields.push(field);
+    }
+    this.searchFieldsChanged();
+  },
+  async searchFieldsChanged() {
+    this.articls = await this.searchArticls(this.q, this.searchFields);
+  },
+  filterArticls(articls, q, searchFields) {
+    if (!q.length > 1 || !this.articls.filter) {
+      return articls;
+    }
+    const filtered = articls?.filter((articl) => {
+      for (const key in searchFields) {
+
+        if (Object.prototype.hasOwnProperty.call(articl, key)) {
+          if (key === "authors" && this.stringIsInAuthorName(articl[key], q)) {
+            return true
+          }
+          if (articl[key].toLowerCase && articl[key].toLowerCase().includes(q.toLowerCase())) {
+            return true;
+          }
+        }
+        return false;
+      }
+    });
+    return filtered;
+  },
+  stringIsInAuthorName(authors, q) {
+    if (authors.filter) {
+      return authors.some((author) => {
+
+        if (author?.nameFirst.toLowerCase().includes(q?.toLowerCase())) {
+          return true;
+        }
+        if (author?.nameLast.toLowerCase().includes(q?.toLowerCase())) {
+          return true;
+        }
+
+        return false;
+
+      });
+    }
+  },
+  debounce,
+  highlightMatchedText,
+  urlParamIsFalsy,
+}
+
 </script>
 
 <style scoped>

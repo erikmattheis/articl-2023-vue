@@ -127,7 +127,7 @@
 import { mapGetters } from "vuex";
 
 import ArticlActions from "@/components/layout/ArticlActions.vue";
-import { highlightedSubstring, isNumber, noCaseIndexOf, highlightMatchedText } from "@/services/stringsService";
+import { highlightedSubstring, isNumber, noCaseIndexOf } from "@/services/stringsService";
 
 export default {
   components: {
@@ -184,7 +184,6 @@ export default {
   methods: {
     highlightedSubstring,
     noCaseIndexOf,
-    highlightMatchedText,
   },
 
 };
