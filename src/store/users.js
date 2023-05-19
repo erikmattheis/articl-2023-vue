@@ -40,7 +40,6 @@ export default {
         dispatch("setUser", data.user);
 
       } catch (error) {
-        console.log("error here",error.message)
         throw new Error(error);
       }
     },

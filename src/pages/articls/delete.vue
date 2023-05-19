@@ -75,7 +75,6 @@ export default {
         this.isLoading = true;
 
         const result = await this.getArticl(id);
-        console.log(result.data);
         Object.assign(this, result.data);
         this.title = result.data?.category[0]?.title;
         this.parentSlug = result.data?.category[0]?.parentSlug;

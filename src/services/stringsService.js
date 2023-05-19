@@ -70,8 +70,6 @@ const highlightMatchedText = (text, searchTerm) => {
   return text;
 
 }
-console.log(highlightMatchedText("hello", "he"));
-
 const convertStringDatesToMS = (tokens) => {
   const result = JSON.parse(JSON.stringify(tokens));
 
@@ -88,6 +86,10 @@ const convertStringDatesToMS = (tokens) => {
   return result;
 };
 
+function urlParamIsFalsy(param) {
+  return param === "" || param === "null" || param === "undefined";
+}
+
 export {
   highlightedSubstring,
   isNumber,
@@ -95,4 +97,5 @@ export {
   toListWithOptionalConjuction,
   convertStringDatesToMS,
   highlightMatchedText,
+  urlParamIsFalsy,
 };

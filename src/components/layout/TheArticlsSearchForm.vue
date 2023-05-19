@@ -10,7 +10,7 @@
     <div class="flex-parent">
       <label
         for="searchTitle"
-        v-for="field in allSearchFields  "
+        v-for="field in allSearchFields"
         :key="field">
         <input
           :id="field"
@@ -24,14 +24,16 @@
     </div>
 
   </form>
+  articls: {{ articls?.length }}
   <section>
     <div
-      v-for="result in results"
-      :key="result.id">
+      v-for="articl in articls"
+      :key="articl.id">
+      {{ articl.title }}
       <articls-list-item
-        :articl="result"
+        :articl="articl"
         :q="q"
-        :order="result.order" />
+        :order="articl.order" />
     </div>
   </section>
   <!--
@@ -47,7 +49,7 @@ import { debounce } from "lodash";
 
 import axiosInstance from "@/services/axiosService";
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
-import { highlightMatchedText } from "@/services/stringsService";
+import { highlightMatchedText, urlParamIsFalsy } from "@/services/stringsService";
 
 export default {
   name: "TheArticlsSearchForm",
@@ -56,14 +58,14 @@ export default {
   },
   data() {
     return {
-      results: [],
+      articls: [],
       allTypes: this.$store.state.articlsParams.allTypes,
       yearsStart: this.$store.state.articlsParams.yearsStart,
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
       year: null,
       q: "",
       allSearchFields: ["title", "author", "journal", "institution", "abstract"],
-      searchFields: ["title", "author", "journal", "institution", "abstract"],
+      searchFields: ["title"],
     };
   },
   computed: {
@@ -96,79 +98,119 @@ export default {
     },
   },
   watch: {
-    yearComparison: {
-      handler(newValue) {
-        this.year = newValue;
-      },
-    },
     q: {
-      handler(newValue) {
-        this.searchArticls(newValue, this.searchFields);
-      },
+      handler: debounce(async function (newValue) {
+        this.articls = await this.searchArticls(newValue, this.searchFields);
+      }, 500),
     },
     searchFields: {
-      handler(newValue) {
-        this.searchArticls(this.q, newValue);
-      },
-      deep: true,
+      handler: debounce(async function (newValue) {
+        this.articls = await this.searchArticls(this.q, newValue);
+      }, 500),
     },
   },
-  mounted() {
+  searchFields: {
+    async handler(newValue) {
+      this.articls = await this.searchArticls(this.q, newValue);
+    },
+  },
+  async mounted() {
     this.setTitleAndDescriptionMixin({ title: "Search for articles" });
-    this.searchArticls = debounce(this.searchArticls, 200);
     this.q = this.$route.query.q || "";
-    console.log("searchFields", this.$route.query.searchFields);
-    console.log("searchFields2", this.$route.query.searchFields?.length);
-    if (this.$route.query.searchFields?.length) {
-      this.searchFields = this.$route.query.searchFields.split(",");
-    }
 
+    this.searchFields = this.$route.query.searchFields?.split(",") || ["title"];
+
+    this.articls = await this.searchArticls(this.q, this.searchFields);
   },
   methods: {
+    async searchArticls(q, fields) {
+      if (this.urlParamIsFalsy(q)) {
+        return [];
+      }
 
-    async searchArticls(q, searchFields) {
-      this.$router.push({
-        path: this.$route.path,
-        query: { q, searchFields: searchFields.join(",") },
-      });
+      const searchFieldsStr = fields?.join(",") || [];
+
+      if (fields.length || q.length) {
+        this.$router.push({
+          path: this.$route.path,
+          query: { q: q, searchFields: searchFieldsStr },
+        });
+      }
 
       if (q.length < 2) {
-        return;
+        return this.articls;
       }
 
       const response = await axiosInstance.get("/articls/search", {
         params: {
-          q, searchFields: searchFields.join(",")
+          q, searchFields: searchFieldsStr,
         },
       });
-      this.results = this.highlight(response.data, q);
+      return response.data;
     },
+    /*
     highlight(articl, q) {
       for (const key in articl) {
         if (Object.prototype.hasOwnProperty.call(articl, key)) {
           const value = articl[key];
-          if (key !== "q") {
-            articl[key] = this.highlightMatchedText(value, q);
-          }
+          articl[key] = this.highlightMatchedText(value, q);
         }
       }
       return articl;
     },
+    */
     toggle(field) {
       if (this.searchFields.includes(field)) {
         this.searchFields = this.searchFields.filter((item) => item !== field);
       } else {
         this.searchFields.push(field);
       }
-      this.filterArticls(this.searchFields);
+      this.searchFieldsChanged();
     },
-    filterArticls(searchFields) {
-      this.results.filter((articl) => { return searchFields.includes(articl.type) });
+    async searchFieldsChanged() {
+      this.articls = await this.searchArticls(this.q, this.searchFields);
+    },
+    filterArticls(articls, q, searchFields) {
+      if (!q.length > 1 || !this.articls.filter) {
+        return articls;
+      }
+      const filtered = articls?.filter((articl) => {
+        for (const key in searchFields) {
+
+          if (Object.prototype.hasOwnProperty.call(articl, key)) {
+            if (key === "authors" && this.stringIsInAuthorName(articl[key], q)) {
+              return true
+            }
+            if (articl[key].toLowerCase && articl[key].toLowerCase().includes(q.toLowerCase())) {
+              return true;
+            }
+          }
+          return false;
+        }
+      });
+      return filtered;
+    },
+    stringIsInAuthorName(authors, q) {
+      if (authors.filter) {
+        return authors.some((author) => {
+
+          if (author?.nameFirst.toLowerCase().includes(q?.toLowerCase())) {
+            return true;
+          }
+          if (author?.nameLast.toLowerCase().includes(q?.toLowerCase())) {
+            return true;
+          }
+
+          return false;
+
+        });
+
+      }
     },
     debounce,
     highlightMatchedText,
+    urlParamIsFalsy,
   },
-
 };
 </script>
 

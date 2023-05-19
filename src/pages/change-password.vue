@@ -116,8 +116,6 @@ export default {
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
 
-          console.log("this.$route.query.token", this.$route.query.token)
-
           await axiosInstance({
             method: "POST",
             url: "/auth/change-password",

@@ -81,7 +81,6 @@ export default {
             this.result = result.response;
           }
         } else {
-          console.log("error", this.errorMessage);
           this.$store.dispatch("errors/setError", this.errorMessage);
         }
       } catch (error) {
