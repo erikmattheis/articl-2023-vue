@@ -11,3 +11,9 @@
     width: map-get($viewports, "lg");
   }
 }
+
+// TODO: remove this when we have a better solution 
+.green{
+  color: green;
+  background-color: greenyellow;
+}

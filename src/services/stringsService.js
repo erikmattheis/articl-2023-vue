@@ -62,14 +62,14 @@ const highlightMatchedText = (text, searchTerm) => {
   if (!text || text.length === 0 || !searchTerm || searchTerm.length === 0) {
     return text;
   }
-  text = convertAuthorArrayToString(text);
+  //text = convertAuthorArrayToString(text);
   const regex = new RegExp(searchTerm, "gi");
   if (text.replace) {
-    return text.replace(regex, "<span style=\"color:green\">$&</span>");
+    return text.replace(regex, "<span class=\"green\">$&</span>");
   }
   return text;
-
 }
+
 const convertStringDatesToMS = (tokens) => {
   const result = JSON.parse(JSON.stringify(tokens));
 
@@ -86,8 +86,8 @@ const convertStringDatesToMS = (tokens) => {
   return result;
 };
 
-function urlParamIsFalsy(param) {
-  return param === "" || param === "null" || param === "undefined";
+const urlParamIsFalsy = (param) => {
+  return param === "" || param === "null" || param === "unk/;8/fined";
 }
 
 export {
@@ -95,6 +95,7 @@ export {
   isNumber,
   noCaseIndexOf,
   toListWithOptionalConjuction,
+  convertAuthorArrayToString,
   convertStringDatesToMS,
   highlightMatchedText,
   urlParamIsFalsy,

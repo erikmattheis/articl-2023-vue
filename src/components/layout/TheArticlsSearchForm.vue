@@ -24,12 +24,11 @@
     </div>
 
   </form>
-  articls: {{ articls?.length }}
+
   <section>
     <div
       v-for="articl in articls"
       :key="articl.id">
-      {{ articl.title }}
       <articls-list-item
         :articl="articl"
         :q="q"
@@ -65,7 +64,7 @@ export default {
       year: null,
       q: this.$route.query.q || "",
       allSearchFields: ["title", "author", "journal", "institution", "abstract"],
-      searchFields: this.$route.query.searchFields.split(",") || ["title"],
+      searchFields: this.$route.query.searchFields?.split(",") || ["title"],
     };
   },
   computed: {
@@ -98,13 +97,6 @@ export default {
     },
   },
   watch: {
-    articls: {
-      handler(newValue) {
-        this.articls = newValue.map((articl) => {
-          return this.highlight(articl, this.q);
-        });
-      },
-    },
     q: {
       handler: async function (newValue) {
         this.articls = await this.searchArticls(newValue, this.searchFields);
@@ -145,75 +137,83 @@ export default {
           q, searchFields: searchFieldsStr,
         },
       });
-      return response.data;
+
+      const articls = response.data.map((articl) => {
+        return this.highlight(articl, this.q);
+      });
+      return articls;
     },
     highlight(articl, q) {
       for (const key in articl) {
-        const value = articl[key];
         if (Object.prototype.hasOwnProperty.call(articl, key)) {
+          const value = articl[key];
           if (key === "authors" && value.map) {
             articl[key] = value.map((author) => {
-
+              if (!author.nameFirst || !author.nameLast) {
+                return author;
+              }
               author.nameFirst = this.highlightMatchedText(author.nameFirst, q);
               author.nameLast = this.highlightMatchedText(author.nameLast, q);
               return author;
             });
           }
+          articl[key] = this.highlightMatchedText(value, q);
         }
-        articl[key] = this.highlightMatchedText(value, q);
+      }
+      return articl;
+    },
+    debounce,
+    highlightMatchedText,
+    urlParamIsFalsy,
+
+    toggle(field) {
+      if (this.searchFields.includes(field)) {
+        this.searchFields = this.searchFields.filter((item) => item !== field);
+      } else {
+        this.searchFields.push(field);
+      }
+      this.searchFieldsChanged();
+    },
+    async searchFieldsChanged() {
+      this.articls = await this.searchArticls(this.q, this.searchFields);
+    },
+    filterArticls(articls, q, searchFields) {
+      if (!q.length > 1 || !this.articls.filter) {
+        return articls;
+      }
+      const filtered = articls?.filter((articl) => {
+        for (const key in searchFields) {
+
+          if (Object.prototype.hasOwnProperty.call(articl, key)) {
+            if (key === "authors" && this.stringIsInAuthorName(articl[key], q)) {
+              return true
+            }
+            if (articl[key].toLowerCase && articl[key].toLowerCase().includes(q.toLowerCase())) {
+              return true;
+            }
+          }
+          return false;
+        }
+      });
+      return filtered;
+    },
+    stringIsInAuthorName(authors, q) {
+      if (authors.filter) {
+        return authors.some((author) => {
+
+          if (author?.nameFirst.toLowerCase().includes(q?.toLowerCase())) {
+            return true;
+          }
+          if (author?.nameLast.toLowerCase().includes(q?.toLowerCase())) {
+            return true;
+          }
+
+          return false;
+
+        });
       }
     },
   },
-  toggle(field) {
-    if (this.searchFields.includes(field)) {
-      this.searchFields = this.searchFields.filter((item) => item !== field);
-    } else {
-      this.searchFields.push(field);
-    }
-    this.searchFieldsChanged();
-  },
-  async searchFieldsChanged() {
-    this.articls = await this.searchArticls(this.q, this.searchFields);
-  },
-  filterArticls(articls, q, searchFields) {
-    if (!q.length > 1 || !this.articls.filter) {
-      return articls;
-    }
-    const filtered = articls?.filter((articl) => {
-      for (const key in searchFields) {
-
-        if (Object.prototype.hasOwnProperty.call(articl, key)) {
-          if (key === "authors" && this.stringIsInAuthorName(articl[key], q)) {
-            return true
-          }
-          if (articl[key].toLowerCase && articl[key].toLowerCase().includes(q.toLowerCase())) {
-            return true;
-          }
-        }
-        return false;
-      }
-    });
-    return filtered;
-  },
-  stringIsInAuthorName(authors, q) {
-    if (authors.filter) {
-      return authors.some((author) => {
-
-        if (author?.nameFirst.toLowerCase().includes(q?.toLowerCase())) {
-          return true;
-        }
-        if (author?.nameLast.toLowerCase().includes(q?.toLowerCase())) {
-          return true;
-        }
-
-        return false;
-
-      });
-    }
-  },
-  debounce,
-  highlightMatchedText,
-  urlParamIsFalsy,
 }
 
 </script>
