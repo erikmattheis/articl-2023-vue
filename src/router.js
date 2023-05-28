@@ -134,7 +134,7 @@ const router = createRouter({
 
     {
       name: "createCategoryPage",
-      path: "/categories/:slug?",
+      path: "/categories/:id?",
       component: createCategoryPage,
     },
 

@@ -6,7 +6,6 @@
     <h1 v-else>
       Success
     </h1>
-
     <template v-if="!isLoading">
       <form v-if="!success">
         <label for="title">Title
@@ -19,17 +18,18 @@
           type="button"
           :aria-busy="aiButtonDisabled"
           @click.prevent="getAISummary">
-          <span v-if="!aiButtonDisabled">Get AI Description</span>
+          <span v-if="!aiButtonDisabled">{{ aiButtonMessage }}</span>
         </button>
-        <label for="AISummary">AI Summary
-          <p v-if="AIError">{{ AIError }}</p>
-          <textarea
-            id="AISummary"
+        <div v-for="(summary, index) in AISummaries"
+          :key="index">
+          <input
+            type="radio"
+            :id="`summary${index}`"
+            :value="summary"
             v-model="AISummary"
-            name="AISummary"
-            rows="10"
-            cols="70" />
-        </label>
+            :name="`summary${index}`">
+          <label :for="`summary${index}`">{{ summary }}</label>
+        </div>
         <label for="description">Description
           <textarea
             id="description"
@@ -41,7 +41,6 @@
           <input
             id="slug"
             v-model="slug"
-            readonly
             type="text"
             name="slug"></label>
         <label for="parentSlug">Parent slug
@@ -88,10 +87,11 @@ export default {
   },
   data: () => ({
     buttonDisabled: false,
+    aiButtonMessage: "Get AI Summary",
     categories: [],
     chrs: 0,
     description: null,
-    AISummary: null,
+    AISummaries: [],
     AIError: null,
     errorMessage: "",
     formAction: "",
@@ -171,7 +171,7 @@ export default {
       return axiosInstance({
         method: "GET",
         url: "/categories/",
-        oparams: {
+        params: {
           slug,
         },
       });
@@ -210,13 +210,14 @@ export default {
       return passed;
     },
     async getAISummary() {
+
       try {
         this.buttonDisabled = true;
         this.AIError = "";
 
         const data = {
           category: this.title,
-          parentCategory: this.parentCategory,
+          parentCategory: this.breadcrumbs[this.breadcrumbs.length - 1]?.title
         };
 
         const result = await axiosInstance({
@@ -224,15 +225,24 @@ export default {
           url: "/categories/ai-summary",
           data,
         });
-
-        if (result.data?.status === 200) {
-          this.AISummary = result.data;
+        console.log("result", result.data.message, typeof result.data.message);
+        /*
+        if (result.data.message) {
+          console.log("ok error", result.data.message);
+          this.AIError = result.data.message;
+        }
+        else 
+        */
+        if (result.data?.status === 200 && result.data instanceof Array) {
+          this.AISummaries.push(...result.data);
+          this.aiButtonMessage = "Get More AI Summaries";
         } else if (result.data?.message) {
           this.AIError = result.data.message;
         } else {
           this.AIError = "There was an error getting the AI summary.";
         }
       } catch (error) {
+        console.log("getAISummary3", error);
         this.$store.dispatch("errors/setError", error);
       } finally {
         this.buttonDisabled = false;
@@ -251,7 +261,7 @@ export default {
             title: this.title,
             slug: this.slug,
             description: this.description,
-            AISummary: this.AISummary,
+            AISummaries: this.AISummaries,
             parentSlug: this.parentSlug,
           };
 
