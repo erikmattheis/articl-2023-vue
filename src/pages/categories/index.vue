@@ -20,6 +20,19 @@
             v-model="htmlTitle"
             type="text"
             name="htmlTitle"></label>
+        <div v-for="(summary, index) in AISummaries"
+          :key="index">
+          <a @click="selectDescription(summary.message.content, `summary${index}`)">
+            {{ summary.message.content }}
+            <label :for="`summary${index}`">
+              <input
+                type="radio"
+                :id=""
+                v-model="summary.message.content"
+                :name="`summary${index}`">
+              {{ summary.message.content }}
+            </label>
+        </div>
         <button
           type="button"
           :aria-busy="aiButtonDisabled"
@@ -27,15 +40,7 @@
           <span v-if="!aiButtonDisabled">{{ aiButtonMessage }}</span>
         </button>
         AISummaries.length: {{ AISummaries.length }}
-        <div v-for="(summary, index) in AISummaries"
-          :key="index">
-          <input
-            type="radio"
-            :id="`summary${index}`"
-            v-model="summary.message.content"
-            :name="`summary${index}`">
-          <label :for="`summary${index}`">{{ summary }}</label>
-        </div>
+
         <label for="description">Description
           <textarea
             id="description"
@@ -46,7 +51,7 @@
         <label for="slug">Slug
           <input
             id="slug"
-            v-model="slug"
+            :value="slug"
             type="text"
             name="slug"></label>
         <label for="parentSlug">Parent slug
@@ -160,11 +165,15 @@ export default {
 
         const result = await this.getCategory(id);
 
-        Object.assign(this, result.data);
+        this.description = result.data.description;
+        this.order = result.data.order;
+        this.parentSlug = result.data.parentSlug;
+        this.title = result.data.title;
+        this.titleHtml = result.data.titleHtml;
 
         this.oldSlug = result.data.slug;
 
-        this.getAISummary();
+        this.AISummaries = await this.getAISummaries();
 
         this.isLoading = false;
       } catch (error) {
