@@ -13,7 +13,7 @@ export default {
   name: "ForbiddenPage",
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: "Not Found",
+      titleHtml: "Not Found",
     });
   },
 };

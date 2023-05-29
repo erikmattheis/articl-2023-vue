@@ -1,7 +1,7 @@
 import store from "@/store";
 
-const setTitle = (title) => {
-  document.title = title;
+const setTitle = (titleHtml) => {
+  document.title = titleHtml;
 };
 const setMetaDescription = (metaDescription) => {
   let meta = document.querySelector("meta[name=\"description\"]");
@@ -19,14 +19,14 @@ const setMetaDescription = (metaDescription) => {
     meta.content = metaDescription;
   }
 };
-const setTitleAndDescription = (object) => {
-  setTitle(object.title);
+const setTitleAndDescription = (category) => {
+  setTitle(category.titleHtml);
 
-  setMetaDescription(object.description);
+  setMetaDescription(category.description);
 
   store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-    title: object.title,
-    description: object.description,
+    titleHtml: category.titleHtml,
+    description: category.description,
   });
 };
 

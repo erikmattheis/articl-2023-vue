@@ -38,7 +38,7 @@ export default {
   }),
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: "Forgot Username",
+      titleHtml: "Forgot Username",
     });
   },
   methods: {

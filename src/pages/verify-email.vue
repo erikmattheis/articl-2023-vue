@@ -22,14 +22,14 @@ export default {
       await this.submitForm();
 
       this.setTitleAndDescriptionMixin({
-        title: "Email Verification",
+        titleHtml: "Email Verification",
       });
 
     } catch (error) {
       this.$store.dispatch("errors/setError", error);
 
       this.setTitleAndDescriptionMixin({
-        title: "Email Verification Failed.",
+        titleHtml: "Email Verification Failed.",
       });
     }
   },

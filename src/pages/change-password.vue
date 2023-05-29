@@ -86,7 +86,7 @@ export default {
   },
   created() {
     this.setTitleAndDescriptionMixin({
-      title: "Change Password",
+      titleHtml: "Change Password",
     });
   },
   // eslint-disable-next-line no-undef

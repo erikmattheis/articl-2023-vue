@@ -59,7 +59,7 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: `${this.formAction} Note`,
+      titleHtml: `${this.formAction} Note`,
     });
   },
   methods: {
@@ -115,7 +115,7 @@ export default {
 
           const resultVerb = this.note?.id ? "Updated" : "Created";
           this.setTitleAndDescriptionMixin({
-            title: `Note ${resultVerb}`,
+            titleHtml: `Note ${resultVerb}`,
           });
 
           if (this.note?.id) {

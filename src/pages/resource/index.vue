@@ -57,7 +57,7 @@ export default {
   },
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: "Resource",
+      titleHtml: "Resource",
     });
   },
   methods: {
@@ -98,7 +98,7 @@ export default {
         const description = results.category[0]?.description;
 
         this.setTitleAndDescriptionMixin({
-          title: this.titleHtml,
+          titleHtml: this.titleHtml,
           description,
         });
       } catch (error) {

@@ -12,13 +12,13 @@
           <input
             id="username"
             v-model="username"
-            :readonly="isLoggedInMixin"
             type="text"
             name="username"
             autocomplete="username"
             :aria-invalid="usernameInvalid"
             maxlen="64"
             @keyup="removeUsernameWhiteSpace"
+            @focus="usernameFocused"
             @blur="elementBlurred"></label>
 
         <label
@@ -305,7 +305,7 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: "Articl.net User Account",
+      titleHtml: "Articl.net User Account",
     });
   },
   mixins: [isLoggedInMixin],
@@ -353,9 +353,10 @@ export default {
         this.fontSize = result.fontSize ? result.fontSize : "";
 
         this.setTitleAndDescriptionMixin({
-          title: `Articl.net User ${this.username}`
+          titleHtml: `Articl.net User ${this.username}`
         });
       } catch (error) {
+        console.log("error", error);
         this.$store.dispatch("errors/setError", error);
       } finally {
         this.isLoading = false;
@@ -481,6 +482,11 @@ export default {
     },
     removeUsernameWhiteSpace() {
       this.username = this.username.replace(/\s/g, "");
+    },
+    usernameFocused() {
+      if (this.isLoggedInMixin === true) {
+        this.$store.dispatch("errors/setError", "You cannot change your username.");
+      }
     },
     scoreChars,
     validateEmail,

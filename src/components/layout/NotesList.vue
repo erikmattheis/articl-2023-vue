@@ -44,7 +44,7 @@ export default {
   created() {
     /* TODO get category name */
     this.setTitleAndDescriptionMixin({
-      title: "Articl Notes",
+      titleHtml: "Articl Notes",
     });
   },
   methods: {

@@ -203,7 +203,7 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: `${this.formAction} Articl`,
+      titleHtml: `${this.formAction} Articl`,
     });
   },
   methods: {
@@ -308,7 +308,7 @@ export default {
 
           const resultVerb = id ? "Created" : "Edited";
           this.setTitleAndDescriptionMixin({
-            title: `Articl ${resultVerb}`,
+            titleHtml: `Articl ${resultVerb}`,
           });
         } else {
           this.$store.dispatch("errors/setError", this.errorMessage);

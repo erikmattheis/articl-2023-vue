@@ -1,65 +1,64 @@
 <template>
-    <form>
-      <label for="question">Question
-        <textarea
-          id="question"
-          v-model="QandAs.question"
-          name="question" /></label>
-          <draggable-items
-            v-model="QandAs.answers"
-            tag="li"
-            item-key="id"
-            handle=".handle"
-            ghost-class="ghost"
-            @change="onUpdateAnswersOrderValues">
-            <template #item="{ element, index }">
-                <div class="grid grid-answer">
-                  <label
-                    :for="`answer${index}`">Answer
-                    <input
-                      type="text"
-                      :id="`answer${index}`"
-                      v-model="element.answer"
-                      :name="`answer${index}`"
-                      autocomplete="off"></label>
-                  <label
-                    :for="`nameLast${index}`">Correct<br />
-                    <input
-                      type="checkbox"
-                      :id="`correct${index}`"
-                      v-model="element.correct"
-                      :name="`correct${index}`"></label>
-                  <question-answer-actions
-                    @remove="removeAnswer"
-                    @add="addAnswer" />
-                <a role="button"
-@click.prevent="removeAnswer(index)"
-@keyup.enter.prevent="removeAnswer(index)"
-tabindex="0">Remove Answer</a>
-                <a v-if="index === QandAs.answers.length + 1"
-role="button"
-@click.prevent="addAnswer()"
-@keyup.enter.prevent="removeAnswer(index)"
-tabindex="0">Add Answer</a>
-              </div>
-            </template>
-          </draggable-items>
+  <form>
+    <label for="question">Question
+      <textarea
+        id="question"
+        v-model="QandAs.question"
+        name="question" /></label>
+    <draggable-items
+      v-model="QandAs.answers"
+      tag="li"
+      item-key="id"
+      handle=".handle"
+      ghost-class="ghost"
+      @change="onUpdateAnswersOrderValues">
+      <template #item="{ element, index }">
+        <div class="grid grid-answer">
+          <label
+            :for="`answer${index}`">Answer
+            <input
+              type="text"
+              :id="`answer${index}`"
+              v-model="element.answer"
+              :name="`answer${index}`"
+              autocomplete="off"></label>
+          <label
+            :for="`nameLast${index}`">Correct<br />
+            <input
+              type="checkbox"
+              :id="`correct${index}`"
+              v-model="element.correct"
+              :name="`correct${index}`"></label>
+          <question-answer-actions
+            @remove="removeAnswer"
+            @add="addAnswer" />
+          <a role="button"
+            @click.prevent="removeAnswer(index)"
+            @keyup.enter.prevent="removeAnswer(index)"
+            tabindex="0">Remove Answer</a>
+          <a v-if="index === QandAs.answers.length + 1"
+            role="button"
+            @click.prevent="addAnswer()"
+            @keyup.enter.prevent="removeAnswer(index)"
+            tabindex="0">Add Answer</a>
+        </div>
+      </template>
+    </draggable-items>
 
-          <div class="grid">
-            <div class="grid-right">
-              <button :aria-busy="buttonDisabled"
-                @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</button>
+    <div class="grid">
+      <div class="grid-right">
+        <button :aria-busy="buttonDisabled"
+          @click.prevent="$router.push({ name: 'TabNotes', params: { slug: $route.params.slug } })">Cancel</button>
 
 
-              <button
-                :aria-disabled="buttonDisabled"
-                :aria-busy="buttonDisabled"
-                @click.prevent="submitForm()">
-                {{ !QandAs?.id ? "Create" : "Edit" }} QandAs</button>
-            </div>
-          </div>
-    </form>
-
+        <button
+          :aria-disabled="buttonDisabled"
+          :aria-busy="buttonDisabled"
+          @click.prevent="submitForm()">
+          {{ !QandAs?.id ? "Create" : "Edit" }} QandAs</button>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -114,7 +113,7 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: `${this.formAction} Q and A`,
+      titleHtml: `${this.formAction} Q and A`,
     });
   },
   methods: {
@@ -180,7 +179,7 @@ export default {
           const resultVerb = this.QandAs?.id ? "PATCH" : "POST";
 
           this.setTitleAndDescriptionMixin({
-            title: `${resultVerb} Q and A`,
+            titleHtml: `${resultVerb} Q and A`,
           });
 
           this.QandAsCreated = true;

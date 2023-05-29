@@ -14,19 +14,25 @@
             v-model="title"
             type="text"
             name="title"></label>
+        <label for="title">HTML Title
+          <input
+            id="htmlTitle"
+            v-model="htmlTitle"
+            type="text"
+            name="htmlTitle"></label>
         <button
           type="button"
           :aria-busy="aiButtonDisabled"
           @click.prevent="getAISummary">
           <span v-if="!aiButtonDisabled">{{ aiButtonMessage }}</span>
         </button>
+        AISummaries.length: {{ AISummaries.length }}
         <div v-for="(summary, index) in AISummaries"
           :key="index">
           <input
             type="radio"
             :id="`summary${index}`"
-            :value="summary"
-            v-model="AISummary"
+            v-model="summary.message.content"
             :name="`summary${index}`">
           <label :for="`summary${index}`">{{ summary }}</label>
         </div>
@@ -87,7 +93,7 @@ export default {
   },
   data: () => ({
     buttonDisabled: false,
-    aiButtonMessage: "Get AI Summary",
+    aiButtonMessage: "Get AI Summaries",
     categories: [],
     chrs: 0,
     description: null,
@@ -100,17 +106,18 @@ export default {
     result: null,
     success: false,
     title: null,
+    htmlTitle: null,
   }),
   computed: {
     aiButtonDisabled() {
       return this.buttonDisabled || this.isLoading;
     },
     slug() {
-      if (!this.title) {
+      if (!this.htmlTitle) {
         return "";
       }
 
-      let str = this.title.replace(
+      let str = this.htmlTitle.replace(
         /\s/g,
         "-",
       );
@@ -142,12 +149,13 @@ export default {
     }
 
     this.setTitleAndDescriptionMixin({
-      title: `${this.formAction} Category`,
+      titleHtml: `${this.formAction} Category`,
     });
   },
   methods: {
     async getCurrentCategory(id) {
       try {
+
         this.isLoading = true;
 
         const result = await this.getCategory(id);
@@ -155,6 +163,8 @@ export default {
         Object.assign(this, result.data);
 
         this.oldSlug = result.data.slug;
+
+        this.getAISummary();
 
         this.isLoading = false;
       } catch (error) {
@@ -176,6 +186,7 @@ export default {
         },
       });
     },
+
     resetFormErrors() {
       this.success = null;
       this.result = null;
@@ -191,6 +202,13 @@ export default {
         this.titleInvalid = true;
 
         this.errorMessage = "Please enter a title.";
+
+        passed = false;
+      }
+      if (!this.titleHtml) {
+        this.titleHtmlInvalid = true;
+
+        this.errorMessage = "Please enter a HTML title.";
 
         passed = false;
       } else if (!this.slug) {
@@ -209,44 +227,63 @@ export default {
 
       return passed;
     },
-    async getAISummary() {
-
-      try {
-        this.buttonDisabled = true;
-        this.AIError = "";
-
-        const data = {
-          category: this.title,
-          parentCategory: this.breadcrumbs[this.breadcrumbs.length - 1]?.title
-        };
-
-        const result = await axiosInstance({
-          method: "POST",
-          url: "/categories/ai-summary",
-          data,
-        });
-        console.log("result", result.data.message, typeof result.data.message);
-        /*
-        if (result.data.message) {
-          console.log("ok error", result.data.message);
-          this.AIError = result.data.message;
+    async getAISummaries() {
+      console.log("getAISummary");
+      return [
+        {
+          message: {
+            role: "assistant",
+            content: "Multimodality refers to the use of multiple modes or forms of communication, such as text, images, video, and audio, to convey meaning and create a richer and more engaging experience for the audience. It is the combination of different media and communication channels to enhance the effectiveness of communication. This approach recognizes that people process information in different ways and that using multiple modes can make the message more accessible and memorable. Multimodality is commonly used in digital media, but it can also be applied to other forms of communication, such as presentations, advertising, and education."
+          },
+          finish_reason: "stop",
+          index: 0
+        },
+        {
+          message: {
+            role: "assistant",
+            content: "Multimodality refers to the use of multiple modes or forms of communication to convey information or meaning. This can include the use of text, images, video, audio, and other forms of media to create a more engaging and interactive experience for the audience. Multimodality is often used in digital communication, such as websites, social media, and multimedia presentations, to enhance the effectiveness of the message being communicated."
+          },
+          finish_reason: "stop",
+          index: 1
         }
-        else 
-        */
-        if (result.data?.status === 200 && result.data instanceof Array) {
-          this.AISummaries.push(...result.data);
-          this.aiButtonMessage = "Get More AI Summaries";
-        } else if (result.data?.message) {
-          this.AIError = result.data.message;
-        } else {
-          this.AIError = "There was an error getting the AI summary.";
-        }
-      } catch (error) {
-        console.log("getAISummary3", error);
-        this.$store.dispatch("errors/setError", error);
-      } finally {
-        this.buttonDisabled = false;
-      }
+      ];
+      /*
+            try {
+              this.buttonDisabled = true;
+              this.AIError = "";
+      
+              const data = {
+                category: this.title,
+                parentCategory: this.breadcrumbs[this.breadcrumbs.length - 1]?.title
+              };
+      
+              const result = await axiosInstance({
+                method: "POST",
+                url: "/categories/ai-summary",
+                data,
+              });
+              console.log("result", result.data.message, typeof result.data.message);
+      
+              if (result.data.message) {
+                this.AIError = result.data.message;
+              }
+              else
+                if (result.data?.status === 200 && result.data instanceof Array) {
+                  this.AISummaries.push(...result.data);
+                  console.log("this.AISummaries", this.AISummaries);
+                  this.aiButtonMessage = "Get More AI Summaries";
+                } else if (result.data?.message) {
+                  this.AIError = result.data.message;
+                } else {
+                  this.AIError = "There was an error getting the AI summary.";
+                }
+            } catch (error) {
+              console.log("getAISummary3", error);
+              this.$store.dispatch("errors/setError", error);
+            } finally {
+              this.buttonDisabled = false;
+            }
+            */
     },
     async submitForm(id) {
       try {
@@ -259,6 +296,7 @@ export default {
           const possiblyEmtyId = id || "";
           const data = {
             title: this.title,
+            titleHtml: this.titleHtml,
             slug: this.slug,
             description: this.description,
             AISummaries: this.AISummaries,

@@ -38,7 +38,7 @@ export default {
   }),
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: "Forgot pass",
+      titleHtml: "Forgot pass",
     });
   },
   methods: {

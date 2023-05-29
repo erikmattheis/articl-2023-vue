@@ -37,7 +37,7 @@ export default {
     await this.getCurrentArticl(this.id);
 
     this.setTitleAndDescriptionMixin({
-      title: `Delete Articl "${this.title}"`,
+      titleHtml: `Delete Articl "${this.title}"`,
     });
   },
   methods: {
@@ -50,7 +50,7 @@ export default {
         this.deleted = true;
 
         this.setTitleAndDescriptionMixin({
-          title: "Articl Deleted",
+          titleHtml: "Articl Deleted",
         });
 
         this.$store.dispatch("modals/setSuccessTitle", "Deletion successful.");

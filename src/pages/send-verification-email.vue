@@ -16,7 +16,7 @@ export default {
       this.sendEmail();
 
       this.setTitleAndDescriptionMixin({
-        title: "Verification sent",
+        titleHtml: "Verification sent",
       });
     } catch (error) {
       this.$store.dispatch("errors/setError", error);

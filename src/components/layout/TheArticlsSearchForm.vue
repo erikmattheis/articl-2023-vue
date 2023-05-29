@@ -63,7 +63,7 @@ export default {
       yearComparisons: this.$store.state.articlsParams.yearComparisons,
       year: null,
       q: this.$route.query.q || "",
-      allSearchFields: ["title", "author", "journal", "institution", "abstract"],
+      allSearchFields: ["titleHtml", "author", "journal", "institution", "abstract"],
       searchFields: this.$route.query.searchFields?.split(",") || ["title"],
     };
   },
@@ -109,7 +109,7 @@ export default {
     },
   },
   async mounted() {
-    this.setTitleAndDescriptionMixin({ title: "Search for articles" });
+    this.setTitleAndDescriptionMixin({ titleHtml: "Search for articles" });
 
     this.articls = await this.searchArticls(this.q, this.searchFields);
   },

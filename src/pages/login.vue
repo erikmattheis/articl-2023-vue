@@ -17,9 +17,10 @@
             name="password"
             :type="passwordType"
             autocomplete="current-password"><the-button-toggle-hidden
-              class="toggle-password-mask"
-              @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
-        </div></label>
+            class="toggle-password-mask"
+            @show="passwordType = passwordType === 'text' ? 'password' : 'text'" />
+        </div>
+      </label>
       <button
         id="Login"
         type="submit"
@@ -69,7 +70,7 @@ export default {
   },
   mounted() {
     this.setTitleAndDescriptionMixin({
-      title: "Articl Login",
+      titleHtml: "Articl Login",
     });
   },
   methods: {

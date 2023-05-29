@@ -52,7 +52,7 @@ export default {
   },
   created() {
     this.setTitleAndDescriptionMixin({
-      title: "Articl Home",
+      titleHtml: "Articl Home",
     });
   },
   methods: {
@@ -94,7 +94,7 @@ export default {
         const description = results.category[0]?.description;
 
         this.setTitleAndDescriptionMixin({
-          title: this.title,
+          titleHtml: this.title,
           description,
         });
       } catch (error) {
