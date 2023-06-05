@@ -20,14 +20,20 @@ const setMetaDescription = (metaDescription) => {
   }
 };
 const setTitleAndDescription = (category) => {
-  setTitle(category.titleHtml);
+  try {
+    setTitle(category.titleHtml);
 
-  setMetaDescription(category.description);
+    setMetaDescription(category.description);
+  
+    store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
+      titleHtml: category.titleHtml,
+      description: category.description,
+    });
+  }
+  catch (error) {
+    console.log(error);
+  }
 
-  store.dispatch("metas/setMetaDescriptionAndDocumentTitle", {
-    titleHtml: category.titleHtml,
-    description: category.description,
-  });
 };
 
 export {

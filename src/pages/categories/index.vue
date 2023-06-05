@@ -22,16 +22,11 @@
             name="htmlTitle"></label>
         <div v-for="(summary, index) in AISummaries"
           :key="index">
-          <a @click="selectDescription(summary.message.content, `summary${index}`)">
-            {{ summary.message.content }}
-            <label :for="`summary${index}`">
-              <input
-                type="radio"
-                :id=""
-                v-model="summary.message.content"
-                :name="`summary${index}`">
-              {{ summary.message.content }}
-            </label>
+          <a @click.prevent="selectDescription(summary.message.content, `summary${index}`)"><vue-feather
+              size="0.7rem"
+              type="checkquare"
+              aria-label="Use" /></a>
+          {{ summary.message.content }}
         </div>
         <button
           type="button"
@@ -44,7 +39,7 @@
         <label for="description">Description
           <textarea
             id="description"
-            v-model="description"
+            v-model="AISummaries[selectedAISummary].message.content"
             name="description"
             rows="10"
             cols="70" /></label>
@@ -89,12 +84,14 @@ import { mapGetters } from "vuex";
 import CardNotification from "@/components/ui/CardNotification.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import axiosInstance from "@/services/axiosService";
+import VueFeather from "vue-feather";
 
 export default {
   name: "CreateCategoryPage",
   components: {
     CardNotification,
     LoadingPlaceholder,
+    VueFeather,
   },
   data: () => ({
     buttonDisabled: false,
@@ -103,6 +100,7 @@ export default {
     chrs: 0,
     description: null,
     AISummaries: [],
+    selectedAISummary: null,
     AIError: null,
     errorMessage: "",
     formAction: "",
@@ -158,6 +156,9 @@ export default {
     });
   },
   methods: {
+    selectDescription(index) {
+      this.selectedAISummary = index;
+    },
     async getCurrentCategory(id) {
       try {
 
