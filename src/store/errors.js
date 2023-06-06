@@ -23,7 +23,7 @@ export default {
 
   actions: {
     setError: (context, payload) => {
-      let errorMessage = "Unknown error";
+      let errorMessage = payload;
       let errorStack = "";
       if (!payload.okFunction) {
         context.commit("SET_OK_FUNCTION", () => { });

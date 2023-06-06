@@ -20,13 +20,16 @@
             v-model="htmlTitle"
             type="text"
             name="htmlTitle"></label>
+
         <div v-for="(summary, index) in AISummaries"
           :key="index">
-          <a @click.prevent="selectDescription(summary.message.content, `summary${index}`)"><vue-feather
-              size="0.7rem"
-              type="checkquare"
-              aria-label="Use" /></a>
-          {{ summary.message.content }}
+          <label for="selectedDescription">
+            <input type="radio"
+              name="selectedAIDescriptionIndex"
+              id="selectedDescription"
+              :value="index"
+              v-model="selectedAIDescriptionIndex">selectedAIDescriptionIndex: {{ selectedAIDescriptionIndex }}
+            {{ summary.message.content }}</label>
         </div>
         <button
           type="button"
@@ -34,15 +37,15 @@
           @click.prevent="getAISummary">
           <span v-if="!aiButtonDisabled">{{ aiButtonMessage }}</span>
         </button>
-        AISummaries.length: {{ AISummaries.length }}
 
         <label for="description">Description
           <textarea
             id="description"
-            v-model="AISummaries[selectedAISummary].message.content"
+            v-model="selectedDescription"
             name="description"
             rows="10"
-            cols="70" /></label>
+            cols="70"
+            @keyup="editAIDescription" /></label>
         <label for="slug">Slug
           <input
             id="slug"
@@ -84,23 +87,21 @@ import { mapGetters } from "vuex";
 import CardNotification from "@/components/ui/CardNotification.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import axiosInstance from "@/services/axiosService";
-import VueFeather from "vue-feather";
+
 
 export default {
   name: "CreateCategoryPage",
   components: {
     CardNotification,
     LoadingPlaceholder,
-    VueFeather,
   },
   data: () => ({
     buttonDisabled: false,
     aiButtonMessage: "Get AI Summaries",
     categories: [],
     chrs: 0,
-    description: null,
     AISummaries: [],
-    selectedAISummary: null,
+    selectedAIDescriptionIndex: null,
     AIError: null,
     errorMessage: "",
     formAction: "",
@@ -115,6 +116,17 @@ export default {
     aiButtonDisabled() {
       return this.buttonDisabled || this.isLoading;
     },
+    selectedDescription: {
+      get() {
+        return this.AISummaries[this.selectedAIDescriptionIndex]?.message.content
+      },
+      set(newValue) {
+        if (this.AISummaries[this.selectedAIDescriptionIndex]?.message.content) {
+          this.AISummaries[this.selectedAIDescriptionIndex].message.content = newValue;
+        }
+      }
+    },
+
     slug() {
       if (!this.htmlTitle) {
         return "";
@@ -156,8 +168,8 @@ export default {
     });
   },
   methods: {
-    selectDescription(index) {
-      this.selectedAISummary = index;
+    editAIDescription(a) {
+      this.AISummaries[this.selectedAIDescriptionIndex].message.content = a.target.value;
     },
     async getCurrentCategory(id) {
       try {
@@ -166,7 +178,7 @@ export default {
 
         const result = await this.getCategory(id);
 
-        this.description = result.data.description;
+        this.selectedDescription = result.data.description;
         this.order = result.data.order;
         this.parentSlug = result.data.parentSlug;
         this.title = result.data.title;
@@ -196,7 +208,6 @@ export default {
         },
       });
     },
-
     resetFormErrors() {
       this.success = null;
       this.result = null;
@@ -238,7 +249,6 @@ export default {
       return passed;
     },
     async getAISummaries() {
-      console.log("getAISummary");
       return [
         {
           message: {
@@ -308,7 +318,7 @@ export default {
             title: this.title,
             titleHtml: this.titleHtml,
             slug: this.slug,
-            description: this.description,
+            description: this.selectedDescription,
             AISummaries: this.AISummaries,
             parentSlug: this.parentSlug,
           };
