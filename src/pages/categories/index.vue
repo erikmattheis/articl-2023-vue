@@ -20,7 +20,6 @@
             v-model="htmlTitle"
             type="text"
             name="htmlTitle"></label>
-
         <div v-for="(summary, index) in AISummaries"
           :key="index">
           <label for="selectedDescription">
@@ -28,13 +27,15 @@
               name="selectedAIDescriptionIndex"
               id="selectedDescription"
               :value="index"
-              v-model="selectedAIDescriptionIndex">selectedAIDescriptionIndex: {{ selectedAIDescriptionIndex }}
-            {{ summary.message.content }}</label>
+              v-model="selectedAIDescriptionIndex">
+            {{ summary.message?.content }}</label>
+          <p>{{ AIError }}</p>
         </div>
         <button
           type="button"
+          :disabled="!category || aiButtonDisabled"
           :aria-busy="aiButtonDisabled"
-          @click.prevent="getAISummary">
+          @click.prevent="getAISummaries">
           <span v-if="!aiButtonDisabled">{{ aiButtonMessage }}</span>
         </button>
 
@@ -88,7 +89,6 @@ import CardNotification from "@/components/ui/CardNotification.vue";
 import LoadingPlaceholder from "@/components/ui/LoadingPlaceholder.vue";
 import axiosInstance from "@/services/axiosService";
 
-
 export default {
   name: "CreateCategoryPage",
   components: {
@@ -105,7 +105,8 @@ export default {
     AIError: null,
     errorMessage: "",
     formAction: "",
-    isLoading: true,
+    isLoading: null,
+    parentSlug: null,
     oldSlug: null,
     result: null,
     success: false,
@@ -126,7 +127,6 @@ export default {
         }
       }
     },
-
     slug() {
       if (!this.htmlTitle) {
         return "";
@@ -145,12 +145,15 @@ export default {
 
       return str;
     },
+    category() {
+      return this.title || this.htmlTitle;
+    },
     ...mapGetters({
       breadcrumbs: "resources/breadcrumbs",
     }),
   },
   mounted() {
-    this.isLoading = false;
+    this.isLoading = true;
     this.parentSlug = this.$route.query.parentSlug;
 
     this.id = this.$route.params.id;
@@ -186,11 +189,13 @@ export default {
 
         this.oldSlug = result.data.slug;
 
-        this.AISummaries = await this.getAISummaries();
+        await this.getAISummaries();
 
-        this.isLoading = false;
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
+      }
+      finally {
+        this.isLoading = false;
       }
     },
     async getCategory(id) {
@@ -249,6 +254,7 @@ export default {
       return passed;
     },
     async getAISummaries() {
+      /*
       return [
         {
           message: {
@@ -267,43 +273,39 @@ export default {
           index: 1
         }
       ];
-      /*
-            try {
-              this.buttonDisabled = true;
-              this.AIError = "";
-      
-              const data = {
-                category: this.title,
-                parentCategory: this.breadcrumbs[this.breadcrumbs.length - 1]?.title
-              };
-      
-              const result = await axiosInstance({
-                method: "POST",
-                url: "/categories/ai-summary",
-                data,
-              });
-              console.log("result", result.data.message, typeof result.data.message);
-      
-              if (result.data.message) {
-                this.AIError = result.data.message;
-              }
-              else
-                if (result.data?.status === 200 && result.data instanceof Array) {
-                  this.AISummaries.push(...result.data);
-                  console.log("this.AISummaries", this.AISummaries);
-                  this.aiButtonMessage = "Get More AI Summaries";
-                } else if (result.data?.message) {
-                  this.AIError = result.data.message;
-                } else {
-                  this.AIError = "There was an error getting the AI summary.";
-                }
-            } catch (error) {
-              console.log("getAISummary3", error);
-              this.$store.dispatch("errors/setError", error);
-            } finally {
-              this.buttonDisabled = false;
-            }
-            */
+      */
+
+
+
+      try {
+        this.buttonDisabled = true;
+        this.AIError = "";
+        const data = {
+          category: this.category,
+          parentCategory: this.breadcrumbs[this.breadcrumbs.length - 2]?.title || "",
+        };
+
+        const result = await axiosInstance({
+          method: "POST",
+          url: "/categories/ai-summary",
+          data,
+        });
+
+        if (result.data?.status === 200 && result.data?.message instanceof Array) {
+          this.AISummaries.push(...result.data.message);
+          this.aiButtonMessage = "Get More AI Summaries";
+        } else if (result.data?.message) {
+          this.AIError = `Error status ${result.data?.status}: ${result.data.message}`;
+        } else {
+          this.AIError = "There was an unknown error generating AI summaries.";
+        }
+
+      } catch (error) {
+        this.$store.dispatch("errors/setError", error);
+      } finally {
+        this.buttonDisabled = false;
+      }
+
     },
     async submitForm(id) {
       try {
@@ -311,7 +313,7 @@ export default {
 
         if (this.checkForm() === true) {
           this.buttonDisabled = true;
-
+          this.isLoading = true;
           const verb = id ? "PUT" : "POST";
           const possiblyEmtyId = id || "";
           const data = {
@@ -356,6 +358,7 @@ export default {
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       } finally {
+        this.isLoading = false;
         this.buttonDisabled = false;
       }
     },
