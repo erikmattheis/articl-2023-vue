@@ -3,40 +3,40 @@
     <div class="box-placeholder">
       <h2
         class="text-p line"
-        :style="{ width: pickWidth(40,80) + '%' }">
-        r&nbsp;
+        :style="{ width: pickWidth(40, 80) + '%' }">
+        &nbsp;
       </h2>
 
       <ul class="nav-tabs">
         <li
           class="text-p line"
-          :style="{ width: pickWidth(80,100) + '%' }">
-&nbsp;
+          :style="{ width: pickWidth(80, 100) + '%' }">
+          &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }">
-&nbsp;
+          :style="{ width: pickWidth(80, 100) + '%' }">
+          &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }">
-&nbsp;
+          :style="{ width: pickWidth(80, 100) + '%' }">
+          &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }">
-&nbsp;
+          :style="{ width: pickWidth(80, 100) + '%' }">
+          &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(80,100) + '%' }">
-&nbsp;
+          :style="{ width: pickWidth(80, 100) + '%' }">
+          &nbsp;
         </li>
         <li
           class="text-p"
-          :style="{ width: pickWidth(20,100) + '%' }">
-&nbsp;
+          :style="{ width: pickWidth(20, 100) + '%' }">
+          &nbsp;
         </li>
       </ul>
     </div>
@@ -55,6 +55,6 @@ export default {
 <style scoped>
 h2,
 li {
-  text-indent:-999rem;
+  text-indent: -999rem;
 }
 </style>

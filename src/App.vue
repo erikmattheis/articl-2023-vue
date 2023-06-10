@@ -5,9 +5,9 @@
       <router-view v-slot="{ Component }">
         <component :is="Component" />
 
-    </router-view>
+      </router-view>
     </main>
-    
+
     <the-footer />
   </div>
   <modal-error />
@@ -63,6 +63,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/variables";
+@import "./assets/_placeholder.scss";
 @import "~/node_modules/@picocss/pico/scss/pico.scss";
 @import "./assets/maxwidth.scss";
 @import "./assets/styles-override.scss";

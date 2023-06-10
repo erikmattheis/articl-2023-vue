@@ -16,10 +16,10 @@
             name="title"></label>
         <label for="title">HTML Title
           <input
-            id="htmlTitle"
-            v-model="htmlTitle"
+            id="titleHtml"
+            v-model="titleHtml"
             type="text"
-            name="htmlTitle"></label>
+            name="titleHtml"></label>
         <div v-for="(summary, index) in AISummaries"
           :key="index">
           <label for="selectedDescription">
@@ -33,7 +33,7 @@
         </div>
         <button
           type="button"
-          :disabled="!category || aiButtonDisabled"
+          :disabled="!categoryStringFromTitle || aiButtonDisabled"
           :aria-busy="aiButtonDisabled"
           @click.prevent="getAISummaries">
           <span v-if="!aiButtonDisabled">{{ aiButtonMessage }}</span>
@@ -77,7 +77,7 @@
     <transition
       name="fade"
       mode="out-in">
-      <loading-placeholder v-if="isLoading" />
+      <loading-placeholder v-if="isLoading || true" />
     </transition>
   </article>
 </template>
@@ -99,7 +99,6 @@ export default {
     buttonDisabled: false,
     aiButtonMessage: "Get AI Summaries",
     categories: [],
-    chrs: 0,
     AISummaries: [],
     selectedAIDescriptionIndex: null,
     AIError: null,
@@ -107,11 +106,10 @@ export default {
     formAction: "",
     isLoading: null,
     parentSlug: null,
-    oldSlug: null,
     result: null,
     success: false,
     title: null,
-    htmlTitle: null,
+    titleHtml: null,
   }),
   computed: {
     aiButtonDisabled() {
@@ -125,35 +123,49 @@ export default {
         if (this.AISummaries[this.selectedAIDescriptionIndex]?.message.content) {
           this.AISummaries[this.selectedAIDescriptionIndex].message.content = newValue;
         }
+        else {
+          this.AISummaries = [
+            {
+              message: {
+                content: newValue,
+              },
+            }
+          ]
+        }
       }
     },
-    slug() {
-      if (!this.htmlTitle) {
-        return "";
-      }
+    slug: {
+      get() {
+        let str = this.title || this.titleHtml;
+        if (!this.titleHtml || !this.title) {
+          return "";
+        }
 
-      let str = this.htmlTitle.replace(
-        /\s/g,
-        "-",
-      );
+        str = this.titleHtml.replace(
+          /\s/g,
+          "-",
+        );
 
-      str = str.toLowerCase();
+        str = str.toLowerCase();
 
-      str = encodeURI(str);
+        str = encodeURI(str);
 
-      str = str.replace(/'/g, "%27");
+        str = str.replace(/'/g, "%27");
 
-      return str;
+        return str;
+      },
+      set(newValue) {
+        return newValue;
+      },
     },
-    category() {
-      return this.title || this.htmlTitle;
+    categoryStringFromTitle() {
+      return this.title || this.titleHtml;
     },
     ...mapGetters({
       breadcrumbs: "resources/breadcrumbs",
     }),
   },
   mounted() {
-    this.isLoading = true;
     this.parentSlug = this.$route.query.parentSlug;
 
     this.id = this.$route.params.id;
@@ -162,8 +174,6 @@ export default {
 
     if (this.id) {
       this.getCurrentCategory(this.id);
-    } else {
-      this.isLoading = false;
     }
 
     this.setTitleAndDescriptionMixin({
@@ -176,20 +186,17 @@ export default {
     },
     async getCurrentCategory(id) {
       try {
-
         this.isLoading = true;
 
         const result = await this.getCategory(id);
-
+        console.log(result.data)
         this.selectedDescription = result.data.description;
         this.order = result.data.order;
         this.parentSlug = result.data.parentSlug;
         this.title = result.data.title;
-        this.titleHtml = result.data.titleHtml;
-
-        this.oldSlug = result.data.slug;
-
-        await this.getAISummaries();
+        this.titleHtml = result.data.titleHtml || result.data.title;
+        console.log("this.titleHtml", this.titleHtml)
+        this.slug = result.data.slug;
 
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
@@ -254,34 +261,11 @@ export default {
       return passed;
     },
     async getAISummaries() {
-      /*
-      return [
-        {
-          message: {
-            role: "assistant",
-            content: "Multimodality refers to the use of multiple modes or forms of communication, such as text, images, video, and audio, to convey meaning and create a richer and more engaging experience for the audience. It is the combination of different media and communication channels to enhance the effectiveness of communication. This approach recognizes that people process information in different ways and that using multiple modes can make the message more accessible and memorable. Multimodality is commonly used in digital media, but it can also be applied to other forms of communication, such as presentations, advertising, and education."
-          },
-          finish_reason: "stop",
-          index: 0
-        },
-        {
-          message: {
-            role: "assistant",
-            content: "Multimodality refers to the use of multiple modes or forms of communication to convey information or meaning. This can include the use of text, images, video, audio, and other forms of media to create a more engaging and interactive experience for the audience. Multimodality is often used in digital communication, such as websites, social media, and multimedia presentations, to enhance the effectiveness of the message being communicated."
-          },
-          finish_reason: "stop",
-          index: 1
-        }
-      ];
-      */
-
-
-
       try {
         this.buttonDisabled = true;
         this.AIError = "";
         const data = {
-          category: this.category,
+          category: this.categoryStringFromTitle,
           parentCategory: this.breadcrumbs[this.breadcrumbs.length - 2]?.title || "",
         };
 
@@ -328,10 +312,6 @@ export default {
           const titleVerb = id ? "Edited" : "Created";
 
           this.setTitleAndDescriptionMixin({ title: `Category ${titleVerb}` });
-
-          if (id) {
-            data.oldSlug = this.oldSlug;
-          }
 
           await axiosInstance({
             method: verb,
