@@ -182,20 +182,22 @@ export default {
   },
   methods: {
     editAIDescription(a) {
-      this.AISummaries[this.selectedAIDescriptionIndex].message.content = a.target.value;
+
+      if (this.AISummaries[this.selectedAIDescriptionIndex]?.message.content
+        && this.AISummaries[this.selectedAIDescriptionIndex]?.message.content !== a.target.value) {
+        this.AISummaries[this.selectedAIDescriptionIndex].message.content = a.target.value;
+      }
     },
     async getCurrentCategory(id) {
       try {
         this.isLoading = true;
 
         const result = await this.getCategory(id);
-        console.log(result.data)
         this.selectedDescription = result.data.description;
         this.order = result.data.order;
         this.parentSlug = result.data.parentSlug;
         this.title = result.data.title;
         this.titleHtml = result.data.titleHtml || result.data.title;
-        console.log("this.titleHtml", this.titleHtml)
         this.slug = result.data.slug;
 
       } catch (error) {

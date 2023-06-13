@@ -47,13 +47,27 @@ const router = createRouter({
         component: TabCategories,
       },
       {
+        name: "createCategoryPage",
+        path: "categories/:id?",
+        component: createCategoryPage,
+      },
+  
+      {
+        name: "editCategory",
+        path: "categories/edit/:id?",
+        component: createCategoryPage,
+      },
+  
+      {
+        name: "deleteCategory",
+        path: "categories/delete/:slug?",
+        component: deleteCategoryPage,
+      },
+      {
         name: "TabNotes",
         path: "notes",
         component: TabNotes,
         children: [
-        /*
-
-        */
           {
             name: "editNote",
             path: "edit/:id",
@@ -75,6 +89,25 @@ const router = createRouter({
         name: "TabQuestionsAnswers",
         path: "qa",
         component: TabQuestionsAnswers,
+      },
+      {
+        name: "editArticl",
+        path: "articls/edit/:editId",
+        component: createArticlPage,
+        props: true,
+      },
+  
+      {
+        name: "createArticlPage",
+        path: "articls/create/:id",
+        component: createArticlPage,
+      },
+  
+      {
+        name: "DeleteArticlPage",
+        path: "articls/delete/:id",
+        component: DeleteArticlPage,
+        props: true,
       },
       {
         name: "ArticlsList",
@@ -130,44 +163,6 @@ const router = createRouter({
       name: "users",
       path: "/users",
       component: usersPage,
-    },
-
-    {
-      name: "createCategoryPage",
-      path: "/categories/:id?",
-      component: createCategoryPage,
-    },
-
-    {
-      name: "editCategory",
-      path: "/categories/edit/:id?",
-      component: createCategoryPage,
-    },
-
-    {
-      name: "deleteCategory",
-      path: "/categories/delete/:slug?",
-      component: deleteCategoryPage,
-    },
-
-    {
-      name: "editArticl",
-      path: "/articls/:editId",
-      component: createArticlPage,
-      props: true,
-    },
-
-    {
-      name: "createArticlPage",
-      path: "/articls",
-      component: createArticlPage,
-    },
-
-    {
-      name: "DeleteArticlPage",
-      path: "/articls/delete/:id",
-      component: DeleteArticlPage,
-      props: true,
     },
 
     {
