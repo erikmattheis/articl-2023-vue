@@ -99,22 +99,22 @@ export default {
   watch: {
     q: {
       handler: async function (newValue) {
-        this.articls = await this.searchArticls(newValue, this.searchFields);
+        this.articls = await this.SearchArticls(newValue, this.searchFields);
       },
     },
     searchFields: {
       handler: async function (newValue) {
-        this.articls = await this.searchArticls(this.q, newValue);
+        this.articls = await this.SearchArticls(this.q, newValue);
       },
     },
   },
   async mounted() {
     this.setTitleAndDescriptionMixin({ titleHtml: "Search for articles" });
 
-    this.articls = await this.searchArticls(this.q, this.searchFields);
+    this.articls = await this.SearchArticls(this.q, this.searchFields);
   },
   methods: {
-    async searchArticls(q, fields) {
+    async SearchArticls(q, fields) {
       if (this.urlParamIsFalsy(q)) {
         return [];
       }
@@ -175,7 +175,7 @@ export default {
       this.searchFieldsChanged();
     },
     async searchFieldsChanged() {
-      this.articls = await this.searchArticls(this.q, this.searchFields);
+      this.articls = await this.SearchArticls(this.q, this.searchFields);
     },
     filterArticls(articls, q, searchFields) {
       if (!q.length > 1 || !this.articls.filter) {

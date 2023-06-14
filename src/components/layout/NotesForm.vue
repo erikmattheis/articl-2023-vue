@@ -120,7 +120,7 @@ export default {
 
           if (this.note?.id) {
             this.$store.dispatch("resources/setNote", result.data);
-            this.$router.push({ name: "editNoteSuccess", params: { id: this.note.id } });
+            this.$router.push({ name: "EditNoteSuccess", params: { id: this.note.id } });
           } else {
             this.$store.dispatch("resources/addNote", result.data);
             this.$router.push({ name: "TabNotes" });

@@ -11,7 +11,7 @@
 
     <router-link
       role="button"
-      :to="{ name: 'deleteCategory', params: { slug: decodeURIComponent(slug) } }">
+      :to="{ name: 'DeleteCategoryPage', params: { slug: decodeURIComponent(slug) } }">
       <vue-feather
         size="0.7rem"
         type="delete"

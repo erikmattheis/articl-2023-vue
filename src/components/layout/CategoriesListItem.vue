@@ -59,8 +59,9 @@ export default {
 }
 
 li {
-  width:100%;
-  padding:0 !important;
+  width: 100%;
+  padding: 0 !important;
+
   a {
     cursor: pointer;
   }
@@ -69,5 +70,4 @@ li {
 li:hover {
   background-color: var(--primary-nav-background);
 }
-
 </style>

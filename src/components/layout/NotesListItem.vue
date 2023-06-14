@@ -2,7 +2,7 @@
   <div :key="note.id">
     <div class="container">
       <div>
-        <p v-if="$route.name === 'editNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully
+        <p v-if="$route.name === 'EditNoteSuccess' && note?.id === $route.params.id"><ins>Your note was successfully
             updated.</ins></p>
         <p v-html="note.fullText"></p>
         <small>–{{ note.author?.nameFirst }} {{ note.author?.nameLast }}<br>
@@ -13,7 +13,7 @@
         <div class="row-admin-box">
           <router-link
             role="button"
-            :to="{ name: 'editNote', params: { id: note.id } }">
+            :to="{ name: 'EditNote', params: { id: note.id } }">
             <vue-feather
               size="0.7rem"
               type="edit"
@@ -22,7 +22,7 @@
 
           <router-link
             role="button"
-            :to="{ name: 'deleteNote', params: { id: note?.id } }">
+            :to="{ name: 'DeleteNote', params: { id: note?.id } }">
             <vue-feather
               size="0.7rem"
               type="delete"
@@ -33,12 +33,12 @@
     </div>
 
     <notes-form
-      v-if="routeName === 'editNote' && note?.id === $route.params.id && user.id === note.author.id"
+      v-if="routeName === 'EditNote' && note?.id === $route.params.id && user.id === note.author.id"
       :passed-note="note"
       @note-updated="noteUpdated" />
 
     <notes-delete
-      v-else-if="routeName === 'deleteNote' && note?.id === $route.params.id && user.id === note.author.id"
+      v-else-if="routeName === 'DeleteNote' && note?.id === $route.params.id && user.id === note.author.id"
       :passed-note="note" />
 
   </div>

@@ -28,7 +28,7 @@
 
           <li>
             <router-link
-              :to="{ name: 'searchArticls' }"
+              :to="{ name: 'SearchArticls' }"
               class="search-articls">
               <vue-feather
                 size="2rem"

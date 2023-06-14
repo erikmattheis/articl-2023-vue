@@ -25,6 +25,12 @@ export default {
   name: "DeleteCategory",
   components: {
   },
+  params: {
+    slug: {
+      type: String,
+      default: "",
+    },
+  },
   data: () => ({
     buttonDisabled: false,
     categories: [],
@@ -33,34 +39,29 @@ export default {
     parentSlug: "",
     id: "",
   }),
-  params: {
-
-  },
-
   async mounted() {
-    this.slug = this.$route.params.slug;
-    await this.getCurrentCategory(this.slug);
+    this.id = this.$route.params.id;
+    await this.getCurrentCategory(this.id);
     this.setTitleAndDescriptionMixin({ title: "Delete Category and Descendents" });
   },
   methods: {
-    async getCurrentCategory(slug) {
+    async getCurrentCategory(id) {
       try {
         this.isLoading = true;
 
-        const result = await this.getCategory(slug);
+        const result = await this.getCategory(id);
         Object.assign(this, result.data);
         this.title = result.data?.category[0]?.title;
         this.parentSlug = result.data?.category[0]?.parentSlug;
-        this.id = result.data?.category[0]?.id;
         this.isLoading = false;
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       }
     },
-    async getCategory(slug) {
+    async getCategory(id) {
       return axiosInstance({
         method: "GET",
-        url: `/resource/${slug}`,
+        url: `/categories/${id}`,
       });
     },
     async deleteCategory() {
@@ -76,9 +77,9 @@ export default {
           `The category "${this.title}" has been permanently deleted.`,
         );
         if (Number(this.parentSlug) === 0) {
-          this.$router.push({ name: "homePage" });
+          this.$router.push({ name: "HomePage" });
         } else {
-          this.$router.push({ name: "categoryPage", params: { slug: this.parentSlug } });
+          this.$router.push({ name: "CategoryPage", params: { slug: this.parentSlug } });
         }
       } catch (error) {
         this.$store.dispatch("errors/setError", error);

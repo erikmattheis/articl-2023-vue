@@ -96,6 +96,7 @@ export default {
     LoadingPlaceholder,
   },
   data: () => ({
+    id: null,
     buttonDisabled: false,
     aiButtonMessage: "Get AI Summaries",
     categories: [],
@@ -111,6 +112,7 @@ export default {
     title: null,
     titleHtml: null,
   }),
+
   computed: {
     aiButtonDisabled() {
       return this.buttonDisabled || this.isLoading;
@@ -330,9 +332,9 @@ export default {
             `The category was successfully ${titleVerb}.`,
           );
           if (Number(this.parentSlug) === 0) {
-            this.$router.push({ name: "homePage" });
+            this.$router.push({ name: "HomePage" });
           } else {
-            this.$router.push({ name: "categoryPage", params: { slug: this.parentSlug } });
+            this.$router.push({ name: "CategoryPage", params: { slug: this.parentSlug } });
           }
         } else {
           this.$store.dispatch("errors/setError", this.errorMessage);

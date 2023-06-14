@@ -1,67 +1,67 @@
 import { createRouter, createWebHistory } from "vue-router";
-import createArticlPage from "@/pages/articls/index.vue";
+import CreateArticlPage from "@/pages/articls/index.vue";
 import DeleteArticlPage from "@/pages/articls/delete.vue";
-import searchArticls from "@/pages/articls/search.vue";
-import deleteCategoryPage from "@/pages/categories/delete.vue";
-import createCategoryPage from "@/pages/categories/index.vue";
-import categoryPage from "@/pages/resource/index.vue";
-import forgotPassPage from "@/pages/forgot-pass.vue";
-import forgotUsernamePage from "@/pages/forgot-username.vue";
-import homePage from "@/pages/index.vue";
-import loginPage from "@/pages/login.vue";
-import deleteNote from "@/components/layout/NotesDelete.vue";
-import editNote from "@/components/layout/NotesForm.vue";
-import notFound from "@/pages/NotFound.vue";
+import SearchArticls from "@/pages/articls/search.vue";
+import DeleteCategoryPage from "@/pages/categories/delete.vue";
+import CreateCategoryPage from "@/pages/categories/index.vue";
+import CategoryPage from "@/pages/resource/index.vue";
+import ForgotPassPage from "@/pages/forgot-pass.vue";
+import ForgotUsernamePage from "@/pages/forgot-username.vue";
+import HomePage from "@/pages/index.vue";
+import LoginPage from "@/pages/login.vue";
+import DeleteNote from "@/components/layout/NotesDelete.vue";
+import EditNote from "@/components/layout/NotesForm.vue";
+import NotFound from "@/pages/NotFound.vue";
 import TabQuestionsAnswers from "@/components/layout/QAndAList.vue";
-import resetPasswordPage from "@/pages/change-password.vue";
-import usersPage from "@/pages/users/index.vue";
-import verifyEmailPage from "@/pages/verify-email.vue";
+import ResetPasswordPage from "@/pages/change-password.vue";
+import UsersPage from "@/pages/users/index.vue";
+import VerifyEmailPage from "@/pages/verify-email.vue";
 import TabCategories from "@/components/layout/CategoriesList.vue";
 import TabNotes from "@/components/layout/NotesList.vue";
 import ArticlsList from "@/components/layout/ArticlsList.vue";
-import forbiddenPage from "@/pages/forbidden.vue";
+import ForbiddenPage from "@/pages/ForbiddenPage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
 
   routes: [
     {
-      name: "homePage",
+      name: "HomePage",
       path: "/",
-      component: homePage,
+      component: HomePage,
     },
 
     {
-      name: "searchArticls",
+      name: "SearchArticls",
       path: "/articls",
-      component: searchArticls,
+      component: SearchArticls,
     },
 
     {
-      name: "categoryPage",
+      name: "CategoryPage",
       path: "/resource/:slug",
-      component: categoryPage,
+      component: CategoryPage,
       children: [{
         name: "TabCategories",
         path: "",
         component: TabCategories,
       },
       {
-        name: "createCategoryPage",
+        name: "CreateCategoryPage",
         path: "categories/:id?",
-        component: createCategoryPage,
+        component: CreateCategoryPage,
       },
   
       {
         name: "editCategory",
         path: "categories/edit/:id?",
-        component: createCategoryPage,
+        component: CreateCategoryPage,
       },
   
       {
-        name: "deleteCategory",
-        path: "categories/delete/:slug?",
-        component: deleteCategoryPage,
+        name: "DeleteCategoryPage",
+        path: "categories/delete/:id?",
+        component: DeleteCategoryPage,
       },
       {
         name: "TabNotes",
@@ -69,22 +69,21 @@ const router = createRouter({
         component: TabNotes,
         children: [
           {
-            name: "editNote",
+            name: "EditNote",
             path: "edit/:id",
-            component: editNote,
+            component: EditNote,
           },
           {
-            name: "editNoteSuccess",
+            name: "EditNoteSuccess",
             path: "edited/:id",
-            component: editNote,
+            component: EditNote,
           },
           {
-            name: "deleteNote",
+            name: "DeleteNote",
             path: "delete/:id",
-            component: deleteNote,
+            component: DeleteNote,
           }],
       },
-
       {
         name: "TabQuestionsAnswers",
         path: "qa",
@@ -93,14 +92,14 @@ const router = createRouter({
       {
         name: "editArticl",
         path: "articls/edit/:editId",
-        component: createArticlPage,
+        component: CreateArticlPage,
         props: true,
       },
   
       {
-        name: "createArticlPage",
+        name: "CreateArticlPage",
         path: "articls/create/:id",
-        component: createArticlPage,
+        component: CreateArticlPage,
       },
   
       {
@@ -118,61 +117,61 @@ const router = createRouter({
     },
 
     {
-      name: "verifyEmailPage",
+      name: "VerifyEmailPage",
       path: "/verify-email",
-      component: verifyEmailPage,
+      component: VerifyEmailPage,
     },
 
     {
-      name: "loginPage",
+      name: "LoginPage",
       path: "/login",
-      component: loginPage,
+      component: LoginPage,
     },
 
     {
       name: "sendVerificationEmail",
       path: "/send-verification-email",
-      component: resetPasswordPage,
+      component: ResetPasswordPage,
     },
 
     {
-      name: "forgotPassPage",
+      name: "ForgotPassPage",
       path: "/forgot-pass",
-      component: forgotPassPage,
+      component: ForgotPassPage,
     },
 
     {
-      name: "forgotUsernamePage",
+      name: "ForgotUsernamePage",
       path: "/forgot-username",
-      component: forgotUsernamePage,
+      component: ForgotUsernamePage,
     },
 
     {
-      name: "resetPasswordPage",
+      name: "ResetPasswordPage",
       path: "/change-password",
-      component: resetPasswordPage,
+      component: ResetPasswordPage,
     },
 
     {
-      name: "usersPage",
+      name: "UsersPage",
       path: "/users/:id",
-      component: usersPage,
+      component: UsersPage,
     },
 
     {
       name: "users",
       path: "/users",
-      component: usersPage,
+      component: UsersPage,
     },
 
     {
       name: "forbidden",
       path: "/forbidden",
-      component: forbiddenPage,
+      component: ForbiddenPage,
     },
 
     {
-      name: "NotFound", path: "/:notFound(.*)", component: notFound,
+      name: "NotFound", path: "/:NotFound(.*)", component: NotFound,
     },
   ],
 });

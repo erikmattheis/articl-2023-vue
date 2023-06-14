@@ -3,7 +3,7 @@
     <ul>
       <li>
         <router-link
-          :to="{ name: 'homePage' }">
+          :to="{ name: 'HomePage' }">
           <small>Home</small>
         </router-link>
       </li>
