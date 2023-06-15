@@ -50,7 +50,7 @@
         <label for="slug">Slug
           <input
             id="slug"
-            :value="slug"
+            :value="articlSlug"
             type="text"
             name="slug"></label>
         <label for="parentSlug">Parent slug
@@ -106,6 +106,7 @@ export default {
     errorMessage: "",
     formAction: "",
     isLoading: null,
+    slug: null,
     parentSlug: null,
     result: null,
     success: false,
@@ -136,7 +137,7 @@ export default {
         }
       }
     },
-    slug: {
+    editingSlug: {
       get() {
         let str = this.title || this.titleHtml;
         if (!this.titleHtml || !this.title) {

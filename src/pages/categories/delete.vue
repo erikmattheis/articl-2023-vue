@@ -25,12 +25,7 @@ export default {
   name: "DeleteCategory",
   components: {
   },
-  params: {
-    slug: {
-      type: String,
-      default: "",
-    },
-  },
+
   data: () => ({
     buttonDisabled: false,
     categories: [],
