@@ -28,7 +28,7 @@ const router = createRouter({
     {
       name: "HomePage",
       path: "/",
-      component: HomePage,
+      component: HomePage
     },
 
     {
@@ -46,18 +46,20 @@ const router = createRouter({
         path: "",
         component: TabCategories,
       },
-      {
-        name: "CreateCategoryPage",
-        path: "categories/:id?",
-        component: CreateCategoryPage,
-      },
+
   
       {
         name: "editCategory",
         path: "categories/edit/:id?",
         component: CreateCategoryPage,
       },
-  
+
+      {
+        name: "CreateCategoryPage",
+        path: "categories/:id?",
+        component: CreateCategoryPage,
+      },
+      
       {
         name: "DeleteCategoryPage",
         path: "categories/delete/:id?",
@@ -108,6 +110,7 @@ const router = createRouter({
         component: DeleteArticlPage,
         props: true,
       },
+      
       {
         name: "ArticlsList",
         path: "articls/:type?",

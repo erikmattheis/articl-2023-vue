@@ -1,5 +1,6 @@
 <template>
   <ul class="nav-tabs">
+
     <router-link
       v-slot="{ isActive, navigate }"
       custom
@@ -35,6 +36,7 @@
           @keyup.enter.prevent="navigate()"> Q&amp;A </a>
       </li>
     </router-link>
+
   </ul>
 </template>
 

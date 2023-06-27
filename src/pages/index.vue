@@ -1,4 +1,5 @@
 <template>
+  <h1>Hello</h1>
   <article v-if="!isLoading">
     <h2>{{ title }}</h2>
 
@@ -10,6 +11,7 @@
   </article>
 
   <loading-placeholder v-else />
+  isLoading: {{ isLoading }}
 </template>
 
 <script>
@@ -42,18 +44,12 @@ export default {
       user: "users/user",
     }),
   },
-  watch: {
-    "$route.params.slug": {
-      handler() {
-        this.updateData();
-      },
-      immediate: true,
-    },
-  },
+
   created() {
     this.setTitleAndDescriptionMixin({
       titleHtml: "Articl Home",
     });
+    this.updateData();
   },
   methods: {
     async updateData() {
@@ -100,6 +96,7 @@ export default {
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       } finally {
+        console.log("is here loading false")
         this.isLoading = false;
       }
     },

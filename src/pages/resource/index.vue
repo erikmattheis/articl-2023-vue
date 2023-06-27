@@ -64,7 +64,6 @@ export default {
     async updateData() {
       try {
         this.isLoading = true;
-
         const results = await this.fetchData(this.$route.params.slug);
 
         if (results.categories?.length) {

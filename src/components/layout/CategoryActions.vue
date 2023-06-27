@@ -1,5 +1,6 @@
 <template>
   <div class="row-admin-box box">
+
     <router-link
       role="button"
       :to="{ name: 'editCategory', params: { id } }">
@@ -28,6 +29,7 @@
         type="move"
         aria-label="Drag to reorder" />
     </a>
+
   </div>
 </template>
 
@@ -39,12 +41,13 @@ export default {
   components: {
     VueFeather,
   },
+  data() {
+    return {
+      slug: this.$route.params.slug || 0,
+    };
+  },
   props: {
     id: {
-      type: String,
-      default: "",
-    },
-    slug: {
       type: String,
       default: "",
     },
