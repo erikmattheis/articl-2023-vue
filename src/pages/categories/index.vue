@@ -112,6 +112,9 @@ export default {
     success: false,
     title: null,
     titleHtml: null,
+    titleHtmlInvalid: null,
+    slugInvalid: null,
+    parentIdInvalid: null,
   }),
 
   computed: {

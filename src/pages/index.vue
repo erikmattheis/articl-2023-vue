@@ -1,5 +1,4 @@
 <template>
-  <h1>Hello</h1>
   <article v-if="!isLoading">
     <h2>{{ title }}</h2>
 
@@ -11,7 +10,6 @@
   </article>
 
   <loading-placeholder v-else />
-  isLoading: {{ isLoading }}
 </template>
 
 <script>
@@ -46,6 +44,7 @@ export default {
   },
 
   created() {
+    console.log("created")
     this.setTitleAndDescriptionMixin({
       titleHtml: "Articl Home",
     });

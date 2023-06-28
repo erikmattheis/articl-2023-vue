@@ -55,7 +55,10 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
+  created() {
+
+    console.log("this one created")
+
     this.setTitleAndDescriptionMixin({
       titleHtml: "Resource",
     });

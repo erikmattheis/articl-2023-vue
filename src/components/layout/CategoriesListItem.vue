@@ -42,7 +42,9 @@ export default {
       return this.treeLevel !== 3 ? "TabCategories" : "ArticlsList";
     },
   },
-
+  created() {
+    console.log("category.slug", this.category.slug);
+  },
   methods: {
 
   },
