@@ -32,10 +32,6 @@ export default {
       type: Number,
       default: 0,
     },
-    slug: {
-      type: String,
-      default: "",
-    },
   },
   computed: {
     tabName() {

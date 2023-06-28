@@ -25,7 +25,7 @@ import TheBreadcrumbs from "@/components/layout/TheBreadcrumbs.vue";
 import axiosInstance from "@/services/axiosService";
 
 export default {
-  name: "CategoryPage",
+  name: "ResourcePage",
   components: {
     CategoriesTabs,
     DirectoryActions,
@@ -51,8 +51,7 @@ export default {
     "$route.params.slug": {
       handler() {
         this.updateData();
-      },
-      immediate: true,
+      }
     },
   },
   created() {

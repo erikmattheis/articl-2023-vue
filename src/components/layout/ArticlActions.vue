@@ -47,10 +47,6 @@ export default {
       type: String,
       default: "",
     },
-    slug: {
-      type: String,
-      default: "",
-    },
     type: {
       type: String,
       default: "",

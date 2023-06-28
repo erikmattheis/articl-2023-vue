@@ -4,7 +4,7 @@ import DeleteArticlPage from "@/pages/articls/delete.vue";
 import SearchArticls from "@/pages/articls/search.vue";
 import DeleteCategoryPage from "@/pages/categories/delete.vue";
 import CreateCategoryPage from "@/pages/categories/index.vue";
-import CategoryPage from "@/pages/resource/index.vue";
+import ResourcePage from "@/pages/resource/index.vue";
 import ForgotPassPage from "@/pages/forgot-pass.vue";
 import ForgotUsernamePage from "@/pages/forgot-username.vue";
 import HomePage from "@/pages/index.vue";
@@ -38,9 +38,9 @@ const router = createRouter({
     },
 
     {
-      name: "CategoryPage",
+      name: "ResourcePage",
       path: "/resource/:slug",
-      component: CategoryPage,
+      component: ResourcePage,
       children: [{
         name: "TabCategories",
         path: "",
@@ -51,7 +51,7 @@ const router = createRouter({
       {
         name: "editCategory",
         path: "categories/edit/:id?",
-        component: CreateCategoryPage,
+        component: ResourcePage,
       },
 
       {

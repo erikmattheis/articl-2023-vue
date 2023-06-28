@@ -95,7 +95,7 @@ export default {
       } catch (error) {
         this.$store.dispatch("errors/setError", error);
       } finally {
-        console.log("is here loading false")
+        console.log("is here loading false", process.env.NODE_ENV)
         this.isLoading = false;
       }
     },

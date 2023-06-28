@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "NODE_ENV=development vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "node index.js"
@@ -24,7 +24,6 @@
     "vue": "3.2.13",
     "vue-cookies": "^1.8.2",
     "vue-feather": "^2.0.0",
-    "vue-gtag": "^2.0.1",
     "vue-router": "^4.2.2",
     "vuedraggable": "^4.1.0",
     "vuex": "^4.0.0"

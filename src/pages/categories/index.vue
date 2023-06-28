@@ -338,7 +338,7 @@ export default {
           if (Number(this.parentSlug) === 0) {
             this.$router.push({ name: "HomePage" });
           } else {
-            this.$router.push({ name: "CategoryPage", params: { slug: this.parentSlug } });
+            this.$router.push({ name: "ResourcePage", params: { slug: this.parentSlug } });
           }
         } else {
           this.$store.dispatch("errors/setError", this.errorMessage);

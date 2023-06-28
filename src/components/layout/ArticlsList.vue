@@ -58,10 +58,6 @@ export default {
       default: () => "",
       type: String,
     },
-    slug: {
-      default: () => "",
-      type: String,
-    },
   },
   data() {
     return {
