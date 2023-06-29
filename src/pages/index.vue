@@ -119,11 +119,10 @@ export default {
 
 <style
   lang="scss"
-  scoped
->
-pre {
-  overflow: auto;
-  word-break: break-all;
-  white-space: pre-wrap;
-}
+  scoped>
+  pre {
+    overflow: auto;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
 </style>

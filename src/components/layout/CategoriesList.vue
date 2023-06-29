@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import DraggableItems from "vuedraggable";
+import { VueDraggableNext } from "vue-draggable-next";
 import { mapGetters } from "vuex";
 import axiosInstance from "@/services/axiosService";
 
@@ -29,7 +29,7 @@ import CategoriesListItem from "@/components/layout/CategoriesListItem.vue";
 export default {
   name: "TabCategories",
   components: {
-    DraggableItems,
+    DraggableItems: VueDraggableNext,
     CategoriesListItem,
   },
   data() {

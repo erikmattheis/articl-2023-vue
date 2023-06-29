@@ -63,7 +63,7 @@
 
 <script>
 import axiosInstance from "@/services/axiosService";
-import DraggableItems from "vuedraggable";
+import { VueDraggableNext } from "vue-draggable-next";
 import QuestionAnswerActions from "@/components/layout/QuestionAnswerActions.vue";
 
 export default {
@@ -87,7 +87,7 @@ export default {
     },
   },
   components: {
-    DraggableItems,
+    DraggableItems: VueDraggableNext,
     QuestionAnswerActions,
   },
   emits: ["QandAs-updated"],

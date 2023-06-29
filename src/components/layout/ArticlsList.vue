@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import DraggableItems from "vuedraggable";
+import { VueDraggableNext } from "vue-draggable-next";
 import { mapGetters } from "vuex";
 
 import ArticlsListItem from "@/components/layout/ArticlsListItem.vue";
@@ -46,7 +46,7 @@ import axiosInstance from "@/services/axiosService";
 export default {
   name: "ArticlsList",
   components: {
-    DraggableItems,
+    DraggableItems: VueDraggableNext,
     ArticlsListItem,
   },
   props: {
